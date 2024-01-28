@@ -4,11 +4,73 @@ import torch
 from coola import objects_are_equal
 
 from batchtensor.tensor import (
+    chunk_along_batch,
+    chunk_along_seq,
     select_along_batch,
     select_along_seq,
     slice_along_batch,
     slice_along_seq,
 )
+
+INDEX_DTYPES = [torch.int, torch.long]
+
+#######################################
+#     Tests for chunk_along_batch     #
+#######################################
+
+
+def test_chunk_along_batch_chunks_3() -> None:
+    assert objects_are_equal(
+        chunk_along_batch(torch.arange(10).view(5, 2), chunks=3),
+        (
+            torch.tensor([[0, 1], [2, 3]]),
+            torch.tensor([[4, 5], [6, 7]]),
+            torch.tensor([[8, 9]]),
+        ),
+    )
+
+
+def test_chunk_along_batch_chunks_5() -> None:
+    assert objects_are_equal(
+        chunk_along_batch(torch.arange(10).view(5, 2), chunks=5),
+        (
+            torch.tensor([[0, 1]]),
+            torch.tensor([[2, 3]]),
+            torch.tensor([[4, 5]]),
+            torch.tensor([[6, 7]]),
+            torch.tensor([[8, 9]]),
+        ),
+    )
+
+
+#####################################
+#     Tests for chunk_along_seq     #
+#####################################
+
+
+def test_chunk_along_seq_chunks_3() -> None:
+    assert objects_are_equal(
+        chunk_along_seq(torch.arange(10).view(2, 5), chunks=3),
+        (
+            torch.tensor([[0, 1], [5, 6]]),
+            torch.tensor([[2, 3], [7, 8]]),
+            torch.tensor([[4], [9]]),
+        ),
+    )
+
+
+def test_chunk_along_seq_chunks_5() -> None:
+    assert objects_are_equal(
+        chunk_along_seq(torch.arange(10).view(2, 5), chunks=5),
+        (
+            torch.tensor([[0], [5]]),
+            torch.tensor([[1], [6]]),
+            torch.tensor([[2], [7]]),
+            torch.tensor([[3], [8]]),
+            torch.tensor([[4], [9]]),
+        ),
+    )
+
 
 ########################################
 #     Tests for select_along_batch     #
