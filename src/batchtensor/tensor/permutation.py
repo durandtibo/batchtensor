@@ -15,6 +15,10 @@ if TYPE_CHECKING:
 def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.Tensor:
     r"""Permute the tensor along the batch dimension.
 
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
     Args:
         tensor: The tensor to split.
         permutation: The 1-D tensor containing the indices of the
@@ -54,6 +58,10 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
 
 def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.Tensor:
     r"""Permute the tensor along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
 
     Args:
         tensor: The tensor to split.
