@@ -40,6 +40,11 @@ def test_cat_along_batch(tensors: Iterable[torch.Tensor]) -> None:
     )
 
 
+###################################
+#     Tests for cat_along_seq     #
+###################################
+
+
 @pytest.mark.parametrize(
     "tensors",
     [

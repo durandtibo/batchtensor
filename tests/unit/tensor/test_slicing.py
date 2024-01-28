@@ -3,7 +3,36 @@ from __future__ import annotations
 import torch
 from coola import objects_are_equal
 
-from batchtensor.tensor import slice_along_batch, slice_along_seq
+from batchtensor.tensor import (
+    select_along_batch,
+    select_along_seq,
+    slice_along_batch,
+    slice_along_seq,
+)
+
+########################################
+#     Tests for select_along_batch     #
+########################################
+
+
+def test_select_along_batch() -> None:
+    assert objects_are_equal(
+        select_along_batch(torch.arange(10).view(5, 2), index=2),
+        torch.tensor([4, 5]),
+    )
+
+
+######################################
+#     Tests for select_along_seq     #
+######################################
+
+
+def test_select_along_seq() -> None:
+    assert objects_are_equal(
+        select_along_seq(torch.arange(10).view(2, 5), index=2),
+        torch.tensor([2, 7]),
+    )
+
 
 #######################################
 #     Tests for slice_along_batch     #
