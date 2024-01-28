@@ -9,6 +9,8 @@ __all__ = [
     "chunk_along_seq",
     "index_select_along_batch",
     "index_select_along_seq",
+    "permute_along_batch",
+    "permute_along_seq",
     "select_along_batch",
     "select_along_seq",
     "slice_along_batch",
@@ -19,6 +21,7 @@ __all__ = [
 
 from batchtensor.tensor.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.tensor.joining import cat_along_batch, cat_along_seq
+from batchtensor.tensor.permutation import permute_along_batch, permute_along_seq
 from batchtensor.tensor.slicing import (
     chunk_along_batch,
     chunk_along_seq,
