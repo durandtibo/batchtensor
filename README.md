@@ -1,2 +1,3 @@
 # batchtensor
-Functions to manipulate PyTorch tensors
+
+Functions to manipulate batches of PyTorch tensors
