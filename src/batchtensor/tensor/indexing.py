@@ -4,15 +4,16 @@ from __future__ import annotations
 
 __all__ = ["index_select_along_batch", "index_select_along_seq"]
 
-
-import torch
+from typing import TYPE_CHECKING
 
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 
+if TYPE_CHECKING:
 
-def index_select_along_batch(
-    input: torch.Tensor, index: torch.Tensor  # noqa: A002
-) -> torch.Tensor:
+    import torch
+
+
+def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch.Tensor:
     r"""Return a new tensor which indexes the ``input`` tensor along the
     batch dimension using the entries in ``index`` which is a
     ``LongTensor``.
@@ -22,7 +23,7 @@ def index_select_along_batch(
             dimension.
 
     Args:
-        input: The input tensor.
+        tensor: The input tensor.
         index: The 1-D tensor containing the indices to index.
 
     Returns:
@@ -34,10 +35,12 @@ def index_select_along_batch(
     >>> import torch
     >>> from batchtensor.tensor import index_select_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
-    >>> index_select_along_batch(tensor, torch.tensor([2, 4]))
+    >>> out = index_select_along_batch(tensor, torch.tensor([2, 4]))
+    >>> out
     tensor([[4, 5],
             [8, 9]])
-    >>> index_select_along_batch(tensor, torch.tensor([4, 3, 2, 1, 0]))
+    >>> out = index_select_along_batch(tensor, torch.tensor([4, 3, 2, 1, 0]))
+    >>> out
     tensor([[8, 9],
             [6, 7],
             [4, 5],
@@ -46,10 +49,10 @@ def index_select_along_batch(
 
     ```
     """
-    return torch.index_select(input, BATCH_DIM, index)
+    return tensor.index_select(dim=BATCH_DIM, index=index)
 
 
-def index_select_along_seq(input: torch.Tensor, index: torch.Tensor) -> torch.Tensor:  # noqa: A002
+def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.Tensor:
     r"""Return a new tensor which indexes the ``input`` tensor along the
     sequence dimension using the entries in ``index`` which is a
     ``LongTensor``.
@@ -59,7 +62,7 @@ def index_select_along_seq(input: torch.Tensor, index: torch.Tensor) -> torch.Te
             dimension.
 
     Args:
-        input: The input tensor.
+        tensor: The input tensor.
         index: The 1-D tensor containing the indices to index.
 
     Returns:
@@ -71,13 +74,15 @@ def index_select_along_seq(input: torch.Tensor, index: torch.Tensor) -> torch.Te
     >>> import torch
     >>> from batchtensor.tensor import index_select_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
-    >>> index_select_along_seq(tensor, torch.tensor([2, 4]))
+    >>> out = index_select_along_seq(tensor, torch.tensor([2, 4]))
+    >>> out
     tensor([[2, 4],
             [7, 9]])
-    >>> index_select_along_seq(tensor, torch.tensor([4, 3, 2, 1, 0]))
+    >>> out = index_select_along_seq(tensor, torch.tensor([4, 3, 2, 1, 0]))
+    >>> out
     tensor([[4, 3, 2, 1, 0],
             [9, 8, 7, 6, 5]])
 
     ```
     """
-    return torch.index_select(input, SEQ_DIM, index)
+    return tensor.index_select(dim=SEQ_DIM, index=index)
