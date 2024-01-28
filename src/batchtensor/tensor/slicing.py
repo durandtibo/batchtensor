@@ -2,12 +2,74 @@ r"""Contain some indexing functions for tensors."""
 
 from __future__ import annotations
 
-__all__ = ["slice_along_batch", "slice_along_seq"]
+__all__ = ["select_along_batch", "select_along_seq", "slice_along_batch", "slice_along_seq"]
 
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     import torch
+
+
+def select_along_batch(tensor: torch.Tensor, index: int) -> torch.Tensor:
+    r"""Slice the input tensor along the batch dimension at the given
+    index.
+
+    This function returns a view of the original tensor with the batch dimension removed.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        index: The index to select with.
+
+    Returns:
+        The sliced tensor along the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import select_along_batch
+    >>> tensor = torch.arange(10).view(5, 2)
+    >>> select_along_batch(tensor, index=2)
+    tensor([4, 5])
+
+    ```
+    """
+    return tensor[index]
+
+
+def select_along_seq(tensor: torch.Tensor, index: int) -> torch.Tensor:
+    r"""Slice the input tensor along the sequence dimension at the given
+    index.
+
+    This function returns a view of the original tensor with the sequence dimension removed.
+
+    Note:
+        This function assumes the sequence dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        index: The index to select with.
+
+    Returns:
+        The sliced tensor along the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import select_along_seq
+    >>> tensor = torch.arange(10).view(2, 5)
+    >>> select_along_seq(tensor, index=2)
+    tensor([2, 7])
+
+    ```
+    """
+    return tensor[:, index]
 
 
 def slice_along_batch(
