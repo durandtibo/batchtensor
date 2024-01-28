@@ -24,6 +24,10 @@ def index_select_along_batch(
     Returns:
         The indexed tensor along the batch dimension.
 
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
     Example usage:
 
     ```pycon
@@ -56,6 +60,10 @@ def index_select_along_seq(input: torch.Tensor, index: torch.Tensor) -> torch.Te
 
     Returns:
         The indexed tensor along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
 
     Example usage:
 

@@ -7,7 +7,10 @@ __all__ = [
     "cat_along_seq",
     "index_select_along_batch",
     "index_select_along_seq",
+    "slice_along_batch",
+    "slice_along_seq",
 ]
 
 from batchtensor.tensor.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.tensor.joining import cat_along_batch, cat_along_seq
+from batchtensor.tensor.slicing import slice_along_batch, slice_along_seq
