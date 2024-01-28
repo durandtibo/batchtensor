@@ -17,16 +17,16 @@ def index_select_along_batch(
     batch dimension using the entries in ``index`` which is a
     ``LongTensor``.
 
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
     Args:
         input: The input tensor.
         index: The 1-D tensor containing the indices to index.
 
     Returns:
         The indexed tensor along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension.
 
     Example usage:
 
@@ -54,16 +54,16 @@ def index_select_along_seq(input: torch.Tensor, index: torch.Tensor) -> torch.Te
     sequence dimension using the entries in ``index`` which is a
     ``LongTensor``.
 
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
     Args:
         input: The input tensor.
         index: The 1-D tensor containing the indices to index.
 
     Returns:
         The indexed tensor along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Example usage:
 

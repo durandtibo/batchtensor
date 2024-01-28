@@ -15,6 +15,10 @@ def slice_along_batch(
 ) -> torch.Tensor:
     r"""Slice the tensor along the batch dimension.
 
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
     Args:
         tensor: The input tensor.
         start: Specifies the index where the slicing of object starts.
@@ -24,10 +28,6 @@ def slice_along_batch(
 
     Returns:
         The sliced tensor along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension.
 
     Example usage:
 
@@ -58,6 +58,10 @@ def slice_along_seq(
 ) -> torch.Tensor:
     r"""Slice the tensor along the sequence dimension.
 
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
     Args:
         tensor: The input tensor.
         start: Specifies the index where the slicing of object starts.
@@ -67,10 +71,6 @@ def slice_along_seq(
 
     Returns:
         The sliced tensor along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Example usage:
 

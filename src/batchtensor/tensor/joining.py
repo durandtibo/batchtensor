@@ -20,15 +20,15 @@ def cat_along_batch(tensors: torch.Tensor | Iterable[torch.Tensor]) -> torch.Ten
     All tensors must either have the same data type and shape (except
     in the concatenating dimension) or be empty.
 
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
     Args:
         tensors: Specifies the batches to concatenate.
 
     Returns:
         The concatenated tensors along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension.
 
     Example usage:
 
@@ -57,15 +57,15 @@ def cat_along_seq(tensors: torch.Tensor | Iterable[torch.Tensor]) -> torch.Tenso
     All tensors must either have the same data type and shape (except
     in the concatenating dimension) or be empty.
 
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
     Args:
         tensors: Specifies the batches to concatenate.
 
     Returns:
         The concatenated tensors along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Example usage:
 
