@@ -13,6 +13,8 @@ __all__ = [
     "select_along_seq",
     "slice_along_batch",
     "slice_along_seq",
+    "split_along_batch",
+    "split_along_seq",
 ]
 
 from batchtensor.tensor.indexing import index_select_along_batch, index_select_along_seq
@@ -24,4 +26,6 @@ from batchtensor.tensor.slicing import (
     select_along_seq,
     slice_along_batch,
     slice_along_seq,
+    split_along_batch,
+    split_along_seq,
 )

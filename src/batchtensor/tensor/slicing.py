@@ -9,13 +9,18 @@ __all__ = [
     "select_along_seq",
     "slice_along_batch",
     "slice_along_seq",
+    "split_along_batch",
+    "split_along_seq",
 ]
+
 
 from typing import TYPE_CHECKING
 
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     import torch
 
 
@@ -226,3 +231,73 @@ def slice_along_seq(
     ```
     """
     return tensor[:, start:stop:step]
+
+
+def split_along_batch(
+    tensor: torch.Tensor, split_size_or_sections: int | Sequence[int]
+) -> torch.Tensor:
+    r"""Split the tensor into chunks.
+
+    Each chunk is a view of the original tensor.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        split_size_or_sections: Size of a single chunk or list of
+            sizes for each chunk
+
+    Returns:
+        The tensor chunks.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import split_along_batch
+    >>> tensor = torch.arange(10).view(5, 2)
+    >>> split_along_batch(tensor, split_size_or_sections=2)
+    (tensor([[0, 1], [2, 3]]),
+     tensor([[4, 5], [6, 7]]),
+     tensor([[8, 9]]))
+
+    ```
+    """
+    return tensor.split(split_size_or_sections, dim=BATCH_DIM)
+
+
+def split_along_seq(
+    tensor: torch.Tensor, split_size_or_sections: int | Sequence[int]
+) -> torch.Tensor:
+    r"""Split the tensor into chunks.
+
+    Each chunk is a view of the original tensor.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        split_size_or_sections: Size of a single chunk or list of
+            sizes for each chunk
+
+    Returns:
+        The tensor chunks.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import split_along_seq
+    >>> tensor = torch.arange(10).view(2, 5)
+    >>> split_along_seq(tensor, split_size_or_sections=2)
+    (tensor([[0, 1], [5, 6]]),
+     tensor([[2, 3], [7, 8]]),
+     tensor([[4], [9]]))
+
+    ```
+    """
+    return tensor.split(split_size_or_sections, dim=SEQ_DIM)
