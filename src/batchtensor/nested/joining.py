@@ -22,7 +22,8 @@ def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
 
     Note:
         This function assumes the batch dimension is the first
-            dimension of the tensors.
+            dimension of the tensors. All the tensors should have the
+            same batch size.
 
     Args:
         data: The input data to concatenate. The dictionaries must have
@@ -64,7 +65,8 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
 
     Note:
         This function assumes the sequence dimension is the second
-            dimension of the tensors.
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
 
     Args:
         data: The input data to concatenate. The dictionaries must have
