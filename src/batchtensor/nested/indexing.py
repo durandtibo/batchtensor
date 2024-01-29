@@ -1,4 +1,4 @@
-r"""Contain some indexing tensor functions for nested data."""
+r"""Contain some tensor indexing functions for nested data."""
 
 from __future__ import annotations
 
@@ -12,7 +12,6 @@ from batchtensor import tensor
 from batchtensor.recursive import recursive_apply
 
 if TYPE_CHECKING:
-
     import torch
 
 T = TypeVar("T")
