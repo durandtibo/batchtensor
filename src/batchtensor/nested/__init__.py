@@ -11,6 +11,8 @@ __all__ = [
     "permute_along_seq",
     "shuffle_along_batch",
     "shuffle_along_seq",
+    "chunk_along_batch",
+    "chunk_along_seq",
 ]
 
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
@@ -21,3 +23,4 @@ from batchtensor.nested.permutation import (
     shuffle_along_batch,
     shuffle_along_seq,
 )
+from batchtensor.nested.slicing import chunk_along_batch, chunk_along_seq
