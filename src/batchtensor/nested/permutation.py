@@ -4,8 +4,9 @@ from __future__ import annotations
 
 __all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_seq", "shuffle_along_batch"]
 
+
 from functools import partial
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import torch
 
@@ -13,9 +14,12 @@ from batchtensor import tensor
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 from batchtensor.recursive import recursive_apply
 
+if TYPE_CHECKING:
+    from collections.abc import Hashable
 
-def permute_along_batch(data: Any, permutation: torch.Tensor) -> torch.Tensor:
-    r"""Permute the tensor along the batch dimension.
+
+def permute_along_batch(data: Any, permutation: torch.Tensor) -> Any:
+    r"""Permute all the tensors along the batch dimension.
 
     Note:
         This function assumes the batch dimension is the first
@@ -30,6 +34,7 @@ def permute_along_batch(data: Any, permutation: torch.Tensor) -> torch.Tensor:
 
     Returns:
         The data with permuted tensors along the batch dimension.
+            The output data has the same structure as the input data.
 
     Raises:
         RuntimeError: if the shape of the permutation does not match
@@ -50,8 +55,8 @@ def permute_along_batch(data: Any, permutation: torch.Tensor) -> torch.Tensor:
     return recursive_apply(data, partial(tensor.permute_along_batch, permutation=permutation))
 
 
-def permute_along_seq(data: Any, permutation: torch.Tensor) -> torch.Tensor:
-    r"""Permute the tensor along the sequence dimension.
+def permute_along_seq(data: Any, permutation: torch.Tensor) -> Any:
+    r"""Permute all the tensors along the sequence dimension.
 
     Note:
         This function assumes the sequence dimension is the second
@@ -66,6 +71,7 @@ def permute_along_seq(data: Any, permutation: torch.Tensor) -> torch.Tensor:
 
     Returns:
         The data with permuted tensors along the sequence dimension.
+            The output data has the same structure as the input data.
 
     Raises:
         RuntimeError: if the shape of the permutation does not match
@@ -86,8 +92,10 @@ def permute_along_seq(data: Any, permutation: torch.Tensor) -> torch.Tensor:
     return recursive_apply(data, partial(tensor.permute_along_seq, permutation=permutation))
 
 
-def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> torch.Tensor:
-    r"""Shuffle the tensor along the batch dimension.
+def shuffle_along_batch(
+    data: dict[Hashable, torch.Tensor], generator: torch.Generator | None = None
+) -> dict[Hashable, torch.Tensor]:
+    r"""Shuffle all the tensors along the batch dimension.
 
     Note:
         This function assumes the batch dimension is the first
@@ -99,28 +107,32 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
         generator: Specifies an optional random number generator.
 
     Returns:
-        The shuffled tensor.
+        The data with shuffled tensors along the sequence dimension.
+            The output data has the same structure as the input data.
 
     Example usage:
 
     ```pycon
     >>> import torch
     >>> from batchtensor.nested import shuffle_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
-    >>> out = shuffle_along_batch(tensor)
+    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> out = shuffle_along_batch(data)
     >>> out
-    tensor([[...]])
+    {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
     """
+    value = next(iter(data.values()))
     return permute_along_batch(
         data=data,
-        permutation=torch.randperm(tensor.shape[BATCH_DIM], generator=generator),
+        permutation=torch.randperm(value.shape[BATCH_DIM], generator=generator),
     )
 
 
-def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> torch.Tensor:
-    r"""Shuffle the tensor along the batch dimension.
+def shuffle_along_seq(
+    data: dict[Hashable, torch.Tensor], generator: torch.Generator | None = None
+) -> dict[Hashable, torch.Tensor]:
+    r"""Shuffle all the tensors along the batch dimension.
 
     Note:
         This function assumes the sequence dimension is the second
@@ -132,21 +144,23 @@ def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> to
         generator: Specifies an optional random number generator.
 
     Returns:
-        The shuffled tensor.
+        The data with shuffled tensors along the sequence dimension.
+            The output data has the same structure as the input data.
 
     Example usage:
 
     ```pycon
     >>> import torch
     >>> from batchtensor.nested import shuffle_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
-    >>> out = shuffle_along_seq(tensor)
+    >>> data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> out = shuffle_along_seq(data)
     >>> out
-    tensor([[...]])
+    {'a': tensor([[...]]), 'b': tensor([[...]])}
 
     ```
     """
+    value = next(iter(data.values()))
     return permute_along_seq(
         data=data,
-        permutation=torch.randperm(tensor.shape[SEQ_DIM], generator=generator),
+        permutation=torch.randperm(value.shape[SEQ_DIM], generator=generator),
     )
