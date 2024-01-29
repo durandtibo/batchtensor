@@ -1,4 +1,4 @@
-r"""Contain some indexing tensor functions for nested data."""
+r"""Contain some tensor indexing functions for nested data."""
 
 from __future__ import annotations
 
@@ -12,7 +12,6 @@ from batchtensor import tensor
 from batchtensor.recursive import recursive_apply
 
 if TYPE_CHECKING:
-
     import torch
 
 T = TypeVar("T")
@@ -25,7 +24,8 @@ def index_select_along_batch(data: Any, index: torch.Tensor) -> Any:
 
     Note:
         This function assumes the batch dimension is the first
-            dimension of the tensors.
+            dimension of the tensors. All the tensors should have the
+            same batch size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -59,7 +59,8 @@ def index_select_along_seq(data: Any, index: torch.Tensor) -> Any:
 
     Note:
         This function assumes the sequence dimension is the second
-            dimension of the tensors.
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.

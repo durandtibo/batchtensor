@@ -4,17 +4,13 @@ from __future__ import annotations
 
 __all__ = ["cat_along_batch", "cat_along_seq"]
 
-from typing import TYPE_CHECKING
 
 import torch
 
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 
-if TYPE_CHECKING:
-    from collections.abc import Iterable
 
-
-def cat_along_batch(tensors: torch.Tensor | Iterable[torch.Tensor]) -> torch.Tensor:
+def cat_along_batch(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> torch.Tensor:
     r"""Concatenate the given tensors in the batch dimension.
 
     All tensors must either have the same data type and shape (except
@@ -51,7 +47,7 @@ def cat_along_batch(tensors: torch.Tensor | Iterable[torch.Tensor]) -> torch.Ten
     return torch.cat(tensors, dim=BATCH_DIM)
 
 
-def cat_along_seq(tensors: torch.Tensor | Iterable[torch.Tensor]) -> torch.Tensor:
+def cat_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> torch.Tensor:
     r"""Concatenate the given tensors in the sequence dimension.
 
     All tensors must either have the same data type and shape (except
