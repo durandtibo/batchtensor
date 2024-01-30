@@ -8,6 +8,8 @@ from batchtensor.nested import (
     chunk_along_seq,
     select_along_batch,
     select_along_seq,
+    slice_along_batch,
+    slice_along_seq,
 )
 
 INDEX_DTYPES = [torch.int, torch.long]
@@ -157,4 +159,250 @@ def test_select_along_seq_nested() -> None:
             "list": [torch.tensor([7])],
             "dict": {"c": torch.tensor([1.0, 1.0])},
         },
+    )
+
+
+#######################################
+#     Tests for slice_along_batch     #
+#######################################
+
+
+def test_slice_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        slice_along_batch(torch.arange(10).view(5, 2)),
+        torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    )
+
+
+def test_slice_along_batch_tensor_start_2() -> None:
+    assert objects_are_equal(
+        slice_along_batch(torch.arange(10).view(5, 2), start=2),
+        torch.tensor([[4, 5], [6, 7], [8, 9]]),
+    )
+
+
+def test_slice_along_batch_tensor_stop_3() -> None:
+    assert objects_are_equal(
+        slice_along_batch(torch.arange(10).view(5, 2), stop=3),
+        torch.tensor([[0, 1], [2, 3], [4, 5]]),
+    )
+
+
+def test_slice_along_batch_tensor_stop_100() -> None:
+    assert objects_are_equal(
+        slice_along_batch(torch.arange(10).view(5, 2), stop=100),
+        torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    )
+
+
+def test_slice_along_batch_tensor_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_batch(torch.arange(10).view(5, 2), step=2),
+        torch.tensor([[0, 1], [4, 5], [8, 9]]),
+    )
+
+
+def test_slice_along_batch_tensor_start_1_stop_4_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_batch(torch.arange(10).view(5, 2), start=1, stop=4, step=2),
+        torch.tensor([[2, 3], [6, 7]]),
+    )
+
+
+def test_slice_along_batch_dict() -> None:
+    assert objects_are_equal(
+        slice_along_batch({"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}),
+        {
+            "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+            "b": torch.tensor([4, 3, 2, 1, 0]),
+        },
+    )
+
+
+def test_slice_along_batch_dict_start_2() -> None:
+    assert objects_are_equal(
+        slice_along_batch(
+            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}, start=2
+        ),
+        {"a": torch.tensor([[4, 5], [6, 7], [8, 9]]), "b": torch.tensor([2, 1, 0])},
+    )
+
+
+def test_slice_along_batch_dict_stop_3() -> None:
+    assert objects_are_equal(
+        slice_along_batch(
+            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}, stop=3
+        ),
+        {"a": torch.tensor([[0, 1], [2, 3], [4, 5]]), "b": torch.tensor([4, 3, 2])},
+    )
+
+
+def test_slice_along_batch_dict_stop_100() -> None:
+    assert objects_are_equal(
+        slice_along_batch(
+            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}, stop=100
+        ),
+        {
+            "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+            "b": torch.tensor([4, 3, 2, 1, 0]),
+        },
+    )
+
+
+def test_slice_along_batch_dict_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_batch(
+            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}, step=2
+        ),
+        {"a": torch.tensor([[0, 1], [4, 5], [8, 9]]), "b": torch.tensor([4, 2, 0])},
+    )
+
+
+def test_slice_along_batch_dict_start_1_stop_4_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_batch(
+            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])},
+            start=1,
+            stop=4,
+            step=2,
+        ),
+        {"a": torch.tensor([[2, 3], [6, 7]]), "b": torch.tensor([3, 1])},
+    )
+
+
+#####################################
+#     Tests for slice_along_seq     #
+#####################################
+
+
+def test_slice_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        slice_along_seq(torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]])),
+        torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+    )
+
+
+def test_slice_along_seq_tensor_start_2() -> None:
+    assert objects_are_equal(
+        slice_along_seq(torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]), start=2),
+        torch.tensor([[2, 3, 4], [7, 6, 5]]),
+    )
+
+
+def test_slice_along_seq_tensor_stop_3() -> None:
+    assert objects_are_equal(
+        slice_along_seq(torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]), stop=3),
+        torch.tensor([[0, 1, 2], [9, 8, 7]]),
+    )
+
+
+def test_slice_along_seq_tensor_stop_100() -> None:
+    assert objects_are_equal(
+        slice_along_seq(torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]), stop=100),
+        torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+    )
+
+
+def test_slice_along_seq_tensor_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_seq(torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]), step=2),
+        torch.tensor([[0, 2, 4], [9, 7, 5]]),
+    )
+
+
+def test_slice_along_seq_tensor_start_1_stop_4_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_seq(torch.arange(10).view(2, 5), start=1, stop=4, step=2),
+        torch.tensor([[1, 3], [6, 8]]),
+    )
+
+
+def test_slice_along_seq_dict() -> None:
+    assert objects_are_equal(
+        slice_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            }
+        ),
+        {
+            "a": torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+            "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        },
+    )
+
+
+def test_slice_along_seq_dict_start_2() -> None:
+    assert objects_are_equal(
+        slice_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
+            start=2,
+        ),
+        {
+            "a": torch.tensor([[2, 3, 4], [7, 6, 5]]),
+            "b": torch.tensor([[2, 1, 0]]),
+        },
+    )
+
+
+def test_slice_along_seq_dict_stop_3() -> None:
+    assert objects_are_equal(
+        slice_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
+            stop=3,
+        ),
+        {
+            "a": torch.tensor([[0, 1, 2], [9, 8, 7]]),
+            "b": torch.tensor([[4, 3, 2]]),
+        },
+    )
+
+
+def test_slice_along_seq_dict_stop_100() -> None:
+    assert objects_are_equal(
+        slice_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
+            stop=100,
+        ),
+        {
+            "a": torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+            "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        },
+    )
+
+
+def test_slice_along_seq_dict_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
+            step=2,
+        ),
+        {"a": torch.tensor([[0, 2, 4], [9, 7, 5]]), "b": torch.tensor([[4, 2, 0]])},
+    )
+
+
+def test_slice_along_seq_dict_start_1_stop_4_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
+            start=1,
+            stop=4,
+            step=2,
+        ),
+        {"a": torch.tensor([[1, 3], [8, 6]]), "b": torch.tensor([[3, 1]])},
     )
