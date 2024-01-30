@@ -13,7 +13,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.11', '3.10', '3.9' ]
-        coola-version: [ 2.1.1, 2.0.1, 1.13.1, 1.12.1, 1.11.0, 1.10.2 ]
+        coola-version: [ 0.3.0 ]
 
     steps:
       - name: Checkout
