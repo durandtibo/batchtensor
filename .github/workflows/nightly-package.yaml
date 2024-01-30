@@ -29,7 +29,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install "coola[all]"
+          pip install "batchtensor[all]"
 
       - name: Run some checks
         run: |
@@ -57,7 +57,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install coola
+          pip install batchtensor
 
       - name: Run some checks
         run: |
@@ -85,7 +85,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install --pre "coola[all]"
+          pip install --pre "batchtensor[all]"
 
       - name: Run some checks
         run: |
@@ -113,7 +113,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install --pre coola
+          pip install --pre batchtensor
 
       - name: Run some checks
         run: |
@@ -141,7 +141,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install coola coola==${{ matrix.coola-version }}
+          pip install batchtensor coola==${{ matrix.coola-version }}
 
       - name: Run some checks
         run: |
@@ -179,7 +179,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install coola torch==${{ matrix.torch-version }}
+          pip install batchtensor torch==${{ matrix.torch-version }}
 
       - name: Run some checks
         run: |
