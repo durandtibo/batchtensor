@@ -59,3 +59,32 @@
 ## Overview
 
 Functions to manipulate batches of PyTorch tensors
+
+## Installation
+
+We highly recommend installing
+a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/).
+`batchtensor` can be installed from pip using the following command:
+
+```shell
+pip install batchtensor
+```
+
+To make the package as slim as possible, only the minimal packages required to use `batchtensor` are
+installed.
+To include all the dependencies, you can use the following command:
+
+```shell
+pip install batchtensor[all]
+```
+
+Please check the [get started page](https://durandtibo.github.io/batchtensor/get_started) to see how
+to
+install only some specific dependencies or other alternatives to install the library.
+The following is the corresponding `batchtensor` versions and tested dependencies.
+
+| `batchtensor` | `coola`      | `torch`       | `python`      |
+|---------------|--------------|---------------|---------------|
+| `main`        | `>=0.1,<0.4` | `>=1.10,<3.0` | `>=3.9,<3.13` |
+
+<sup>*</sup> indicates an optional dependency
