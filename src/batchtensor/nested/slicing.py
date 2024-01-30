@@ -7,6 +7,8 @@ __all__ = [
     "chunk_along_seq",
     "select_along_batch",
     "select_along_seq",
+    "slice_along_batch",
+    "slice_along_seq",
 ]
 
 from functools import partial
@@ -170,3 +172,81 @@ def select_along_seq(data: Any, index: int) -> Any:
     ```
     """
     return recursive_apply(data, partial(bt.select_along_seq, index=index))
+
+
+def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: int = 1) -> Any:
+    r"""Slice all the tensors along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        start: Specifies the index where the slicing of object starts.
+        stop: Specifies the index where the slicing of object stops.
+            ``None`` means last.
+        step: Specifies the increment between each index for slicing.
+
+    Returns:
+        The sliced tensor along the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import slice_along_batch
+    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> out = slice_along_batch(data, start=2)
+    >>> out
+    {'a': tensor([[4, 5], [6, 7], [8, 9]]), 'b': tensor([2, 1, 0])}
+    >>> out = slice_along_batch(data, stop=3)
+    >>> out
+    {'a': tensor([[0, 1], [2, 3], [4, 5]]), 'b': tensor([4, 3, 2])}
+    >>> out = slice_along_batch(data, step=2)
+    >>> out
+    {'a': tensor([[0, 1], [4, 5], [8, 9]]), 'b': tensor([4, 2, 0])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
+
+
+def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: int = 1) -> Any:
+    r"""Slice all the tensors along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        start: Specifies the index where the slicing of object starts.
+        stop: Specifies the index where the slicing of object stops.
+            ``None`` means last.
+        step: Specifies the increment between each index for slicing.
+
+    Returns:
+        The sliced tensor along the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import slice_along_seq
+    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> out = slice_along_seq(data, start=2)
+    >>> out
+    {'a': tensor([[2, 3, 4], [7, 8, 9]]), 'b': tensor([[2, 1, 0]])}
+    >>> out = slice_along_seq(data, stop=3)
+    >>> out
+    {'a': tensor([[0, 1, 2], [5, 6, 7]]), 'b': tensor([[4, 3, 2]])}
+    >>> out = slice_along_seq(data, step=2)
+    >>> out
+    {'a': tensor([[0, 2, 4], [5, 7, 9]]), 'b': tensor([[4, 2, 0]])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.slice_along_seq, start=start, stop=stop, step=step))

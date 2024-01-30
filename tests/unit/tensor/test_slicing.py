@@ -171,7 +171,7 @@ def test_slice_along_seq_stop_3() -> None:
     )
 
 
-def test_example_batch_slice_along_seq_stop_100() -> None:
+def test_slice_along_seq_stop_100() -> None:
     assert objects_are_equal(
         slice_along_seq(torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]), stop=100),
         torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]),
@@ -182,6 +182,13 @@ def test_slice_along_seq_step_2() -> None:
     assert objects_are_equal(
         slice_along_seq(torch.tensor([[0, 1, 2, 3, 4], [9, 8, 7, 6, 5]]), step=2),
         torch.tensor([[0, 2, 4], [9, 7, 5]]),
+    )
+
+
+def test_slice_along_seq_start_1_stop_4_step_2() -> None:
+    assert objects_are_equal(
+        slice_along_seq(torch.arange(10).view(2, 5), start=1, stop=4, step=2),
+        torch.tensor([[1, 3], [6, 8]]),
     )
 
 
@@ -225,9 +232,9 @@ def test_split_along_batch_split_size_list() -> None:
     )
 
 
-#######################################
+#####################################
 #     Tests for split_along_seq     #
-#######################################
+#####################################
 
 
 def test_split_along_seq_split_size_1() -> None:

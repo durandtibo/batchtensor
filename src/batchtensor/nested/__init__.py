@@ -15,6 +15,8 @@ __all__ = [
     "chunk_along_seq",
     "select_along_batch",
     "select_along_seq",
+    "slice_along_batch",
+    "slice_along_seq",
 ]
 
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
@@ -30,4 +32,6 @@ from batchtensor.nested.slicing import (
     chunk_along_seq,
     select_along_batch,
     select_along_seq,
+    slice_along_batch,
+    slice_along_seq,
 )
