@@ -9,6 +9,8 @@ __all__ = [
     "select_along_seq",
     "slice_along_batch",
     "slice_along_seq",
+    "split_along_batch",
+    "split_along_seq",
 ]
 
 from functools import partial
@@ -18,7 +20,7 @@ from batchtensor import tensor as bt
 from batchtensor.recursive import recursive_apply
 
 if TYPE_CHECKING:
-    from collections.abc import Hashable
+    from collections.abc import Hashable, Sequence
 
     import torch
 
@@ -217,9 +219,9 @@ def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: in
     r"""Slice all the tensors along the batch dimension.
 
     Note:
-        This function assumes the batch dimension is the first
+        This function assumes the sequence dimension is the second
             dimension of the tensors. All the tensors should have the
-            same batch size.
+            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -250,3 +252,93 @@ def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: in
     ```
     """
     return recursive_apply(data, partial(bt.slice_along_seq, start=start, stop=stop, step=step))
+
+
+def split_along_batch(
+    data: dict[Hashable, torch.Tensor], split_size_or_sections: int | Sequence[int]
+) -> tuple[dict[Hashable, torch.Tensor], ...]:
+    r"""Split all the tensors into chunks along the batch dimension.
+
+    Each chunk is a view of the original tensor.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        split_size_or_sections: Size of a single chunk or list of
+            sizes for each chunk
+
+    Returns:
+        The data chuncks.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import split_along_batch
+    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> outputs = split_along_batch(data, split_size_or_sections=2)
+    >>> outputs
+    ({'a': tensor([[0, 1], [2, 3]]), 'b': tensor([4, 3])},
+     {'a': tensor([[4, 5], [6, 7]]), 'b': tensor([2, 1])},
+     {'a': tensor([[8, 9]]), 'b': tensor([0])})
+
+    ```
+    """
+    keys = data.keys()
+    return tuple(
+        [
+            dict(zip(keys, values))
+            for values in zip(
+                *[bt.split_along_batch(tensor, split_size_or_sections) for tensor in data.values()]
+            )
+        ]
+    )
+
+
+def split_along_seq(
+    data: dict[Hashable, torch.Tensor], split_size_or_sections: int | Sequence[int]
+) -> tuple[dict[Hashable, torch.Tensor], ...]:
+    r"""Split all the tensors into chunks along the sequence dimension.
+
+    Each chunk is a view of the original tensor.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        split_size_or_sections: Size of a single chunk or list of
+            sizes for each chunk
+
+    Returns:
+        The data chuncks.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import split_along_seq
+    >>> data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> outputs = split_along_seq(data, split_size_or_sections=2)
+    >>> outputs
+    ({'a': tensor([[0, 1], [5, 6]]), 'b': tensor([[4, 3]])},
+     {'a': tensor([[2, 3], [7, 8]]), 'b': tensor([[2, 1]])},
+     {'a': tensor([[4], [9]]), 'b': tensor([[0]])})
+
+    ```
+    """
+    keys = data.keys()
+    return tuple(
+        [
+            dict(zip(keys, values))
+            for values in zip(
+                *[bt.split_along_seq(tensor, split_size_or_sections) for tensor in data.values()]
+            )
+        ]
+    )
