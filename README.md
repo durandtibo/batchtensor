@@ -83,8 +83,8 @@ to
 install only some specific dependencies or other alternatives to install the library.
 The following is the corresponding `batchtensor` versions and tested dependencies.
 
-| `batchtensor` | `coola`      | `torch`      | `python`      |
-|---------------|--------------|--------------|---------------|
-| `main`        | `>=0.1,<0.4` | `>=1.3,<3.0` | `>=3.9,<3.13` |
+| `batchtensor` | `coola`      | `torch`       | `python`      |
+|---------------|--------------|---------------|---------------|
+| `main`        | `>=0.1,<0.4` | `>=1.10,<3.0` | `>=3.9,<3.13` |
 
 <sup>*</sup> indicates an optional dependency
