@@ -11,6 +11,10 @@ __all__ = [
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "prod_along_batch",
+    "prod_along_seq",
+    "sum_along_batch",
+    "sum_along_seq",
 ]
 
 from functools import partial
@@ -290,3 +294,135 @@ def argmin_along_seq(data: Any, keepdim: bool = False) -> Any:
     ```
     """
     return recursive_apply(data, partial(bt.argmin_along_seq, keepdim=keepdim))
+
+
+def prod_along_batch(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the product of all elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The product of all elements along the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import prod_along_batch
+    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([5, 4, 3, 2, 1])}
+    >>> out = prod_along_batch(data)
+    >>> out
+    {'a': tensor([  0, 945]), 'b': tensor(120)}
+    >>> out = prod_along_batch(data, keepdim=True)
+    >>> out
+    {'a': tensor([[  0, 945]]), 'b': tensor([120])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.prod_along_batch, keepdim=keepdim))
+
+
+def prod_along_seq(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the product of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The product of all elements along the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import prod_along_seq
+    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[5, 4, 3, 2, 1]])}
+    >>> out = prod_along_seq(data)
+    >>> out
+    {'a': tensor([    0, 15120]), 'b': tensor([120])}
+    >>> out = prod_along_seq(data, keepdim=True)
+    >>> out
+    {'a': tensor([[    0], [15120]]), 'b': tensor([[120]])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.prod_along_seq, keepdim=keepdim))
+
+
+def sum_along_batch(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the sum of all elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The sum of all elements along the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import sum_along_batch
+    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> out = sum_along_batch(data)
+    >>> out
+    {'a': tensor([20, 25]), 'b': tensor(10)}
+    >>> out = sum_along_batch(data, keepdim=True)
+    >>> out
+    {'a': tensor([[20, 25]]), 'b': tensor([10])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.sum_along_batch, keepdim=keepdim))
+
+
+def sum_along_seq(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the sum of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The sum of all elements along the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import sum_along_seq
+    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> out = sum_along_seq(data)
+    >>> out
+    {'a': tensor([10, 35]), 'b': tensor([10])}
+    >>> out = sum_along_seq(data, keepdim=True)
+    >>> out
+    {'a': tensor([[10], [35]]), 'b': tensor([[10]])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.sum_along_seq, keepdim=keepdim))
