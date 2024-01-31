@@ -19,10 +19,11 @@ __all__ = [
     "slice_along_seq",
     "split_along_batch",
     "split_along_seq",
+    "repeat_along_seq",
 ]
 
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
-from batchtensor.nested.joining import cat_along_batch, cat_along_seq
+from batchtensor.nested.joining import cat_along_batch, cat_along_seq, repeat_along_seq
 from batchtensor.nested.permutation import (
     permute_along_batch,
     permute_along_seq,
