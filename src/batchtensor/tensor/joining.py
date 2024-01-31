@@ -97,7 +97,6 @@ def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
     Example usage:
 
     ```pycon
-
     >>> import torch
     >>> from batchtensor.tensor import repeat_along_seq
     >>> tensor = torch.arange(10).view(2, 5)

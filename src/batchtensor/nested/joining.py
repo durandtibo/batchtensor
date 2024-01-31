@@ -2,11 +2,13 @@ r"""Contain some tensor joining functions for nested data."""
 
 from __future__ import annotations
 
-__all__ = ["cat_along_batch", "cat_along_seq"]
+__all__ = ["cat_along_batch", "cat_along_seq", "repeat_along_seq"]
 
-from typing import TYPE_CHECKING
+from functools import partial
+from typing import TYPE_CHECKING, Any
 
-from batchtensor import tensor
+from batchtensor import tensor as bt
+from batchtensor.recursive import recursive_apply
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Sequence
@@ -54,7 +56,7 @@ def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
     if not data:
         return {}
     item = data[0]
-    return type(item)({key: tensor.cat_along_batch([d[key] for d in data]) for key in item})
+    return type(item)({key: bt.cat_along_batch([d[key] for d in data]) for key in item})
 
 
 def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable, torch.Tensor]:
@@ -97,4 +99,36 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
     if not data:
         return {}
     item = data[0]
-    return type(item)({key: tensor.cat_along_seq([d[key] for d in data]) for key in item})
+    return type(item)({key: bt.cat_along_seq([d[key] for d in data]) for key in item})
+
+
+def repeat_along_seq(data: Any, repeats: int) -> Any:
+    r"""Repeat all the tensors along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        repeats: Specifies the number of times to repeat
+            the data along the sequence dimension.
+
+    Returns:
+        The tensors repeated along the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import repeat_along_seq
+    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> out = repeat_along_seq(data, 2)
+    >>> out
+    {'a': tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]]),
+     'b': tensor([[4, 3, 2, 1, 0, 4, 3, 2, 1, 0]])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.repeat_along_seq, repeats=repeats))
