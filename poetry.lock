@@ -1710,4 +1710,4 @@ all = []
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "719359a81362de617cec0eef4b2861b826dd3ac45ceeaf9a90f72f85ae39fa92"
+content-hash = "3d6651a7ef4c174b5306952acdcb8368e6cc3240375f9215c4a4dde0f71c686c"
