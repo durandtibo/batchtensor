@@ -13,6 +13,10 @@ from batchtensor.nested import (
     argmax_along_seq,
     argmin_along_batch,
     argmin_along_seq,
+    prod_along_batch,
+    prod_along_seq,
+    sum_along_batch,
+    sum_along_seq,
 )
 from tests.unit.tensor.test_reduction import DTYPES
 
@@ -453,4 +457,240 @@ def test_argmin_along_seq_nested() -> None:
             }
         ),
         {"a": torch.tensor([0, 0]), "b": torch.tensor([4]), "c": [torch.tensor([0])]},
+    )
+
+
+######################################
+#     Tests for prod_along_batch     #
+######################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_batch_tensor(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_batch(torch.arange(10, dtype=dtype).view(5, 2)),
+        torch.tensor([0, 945], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_batch_tensor_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_batch(torch.arange(10, dtype=dtype).view(5, 2), keepdim=True),
+        torch.tensor([[0, 945]], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_batch_dict(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_batch(
+            {"a": torch.arange(10, dtype=dtype).view(5, 2), "b": torch.tensor([5, 4, 3, 2, 1])}
+        ),
+        {"a": torch.tensor([0, 945], dtype=dtype), "b": torch.tensor(120)},
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_batch_dict_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_batch(
+            {"a": torch.arange(10, dtype=dtype).view(5, 2), "b": torch.tensor([5, 4, 3, 2, 1])},
+            keepdim=True,
+        ),
+        {"a": torch.tensor([[0, 945]], dtype=dtype), "b": torch.tensor([120])},
+    )
+
+
+def test_prod_along_batch_nested() -> None:
+    assert objects_are_equal(
+        prod_along_batch(
+            {
+                "a": torch.arange(10, dtype=torch.float).view(5, 2),
+                "b": torch.tensor([5, 4, 3, 2, 1]),
+                "c": [torch.tensor([5, 6, 7, 8, 9])],
+            }
+        ),
+        {
+            "a": torch.tensor([0, 945], dtype=torch.float),
+            "b": torch.tensor(120),
+            "c": [torch.tensor(15120)],
+        },
+    )
+
+
+####################################
+#     Tests for prod_along_seq     #
+####################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_seq_tensor(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_seq(torch.arange(10, dtype=dtype).view(2, 5)),
+        torch.tensor([0, 15120], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_seq_tensor_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
+        torch.tensor([[0], [15120]], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_seq_dict(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_seq(
+            {"a": torch.arange(10, dtype=dtype).view(2, 5), "b": torch.tensor([[5, 4, 3, 2, 1]])}
+        ),
+        {"a": torch.tensor([0, 15120], dtype=dtype), "b": torch.tensor([120])},
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_seq_dict_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_seq(
+            {"a": torch.arange(10, dtype=dtype).view(2, 5), "b": torch.tensor([[5, 4, 3, 2, 1]])},
+            keepdim=True,
+        ),
+        {"a": torch.tensor([[0], [15120]], dtype=dtype), "b": torch.tensor([[120]])},
+    )
+
+
+def test_prod_along_seq_nested() -> None:
+    assert objects_are_equal(
+        prod_along_seq(
+            {
+                "a": torch.arange(10, dtype=torch.float).view(2, 5),
+                "b": torch.tensor([[5, 4, 3, 2, 1]]),
+                "c": [torch.tensor([[5, 6, 7, 8, 9]])],
+            }
+        ),
+        {
+            "a": torch.tensor([0, 15120], dtype=torch.float),
+            "b": torch.tensor([120]),
+            "c": [torch.tensor([15120])],
+        },
+    )
+
+
+#####################################
+#     Tests for sum_along_batch     #
+#####################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_sum_along_batch_tensor(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        sum_along_batch(torch.arange(10, dtype=dtype).view(5, 2)),
+        torch.tensor([20, 25], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_sum_along_batch_tensor_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        sum_along_batch(torch.arange(10, dtype=dtype).view(5, 2), keepdim=True),
+        torch.tensor([[20, 25]], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_sum_along_batch_dict(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        sum_along_batch(
+            {"a": torch.arange(10, dtype=dtype).view(5, 2), "b": torch.tensor([5, 4, 3, 2, 1])}
+        ),
+        {"a": torch.tensor([20, 25], dtype=dtype), "b": torch.tensor(15)},
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_sum_along_batch_dict_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        sum_along_batch(
+            {"a": torch.arange(10, dtype=dtype).view(5, 2), "b": torch.tensor([5, 4, 3, 2, 1])},
+            keepdim=True,
+        ),
+        {"a": torch.tensor([[20, 25]], dtype=dtype), "b": torch.tensor([15])},
+    )
+
+
+def test_sum_along_batch_nested() -> None:
+    assert objects_are_equal(
+        sum_along_batch(
+            {
+                "a": torch.arange(10, dtype=torch.float).view(5, 2),
+                "b": torch.tensor([5, 4, 3, 2, 1]),
+                "c": [torch.tensor([5, 6, 7, 8, 9])],
+            }
+        ),
+        {
+            "a": torch.tensor([20, 25], dtype=torch.float),
+            "b": torch.tensor(15),
+            "c": [torch.tensor(35)],
+        },
+    )
+
+
+###################################
+#     Tests for sum_along_seq     #
+###################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_sum_along_seq_tensor(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        sum_along_seq(torch.arange(10, dtype=dtype).view(2, 5)),
+        torch.tensor([10, 35], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_sum_along_seq_tensor_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        sum_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
+        torch.tensor([[10], [35]], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_sum_along_seq_dict(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        sum_along_seq(
+            {"a": torch.arange(10, dtype=dtype).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+        ),
+        {"a": torch.tensor([10, 35], dtype=dtype), "b": torch.tensor([10])},
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_sum_along_seq_dict_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        sum_along_seq(
+            {"a": torch.arange(10, dtype=dtype).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])},
+            keepdim=True,
+        ),
+        {"a": torch.tensor([[10], [35]], dtype=dtype), "b": torch.tensor([[10]])},
+    )
+
+
+def test_sum_along_seq_nested() -> None:
+    assert objects_are_equal(
+        sum_along_seq(
+            {
+                "a": torch.arange(10, dtype=torch.float).view(2, 5),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+                "c": [torch.tensor([[5, 6, 7, 8, 9]])],
+            }
+        ),
+        {
+            "a": torch.tensor([10, 35], dtype=torch.float),
+            "b": torch.tensor([10]),
+            "c": [torch.tensor([35])],
+        },
     )

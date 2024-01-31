@@ -21,6 +21,8 @@ __all__ = [
     "index_select_along_seq",
     "permute_along_batch",
     "permute_along_seq",
+    "prod_along_batch",
+    "prod_along_seq",
     "repeat_along_seq",
     "select_along_batch",
     "select_along_seq",
@@ -30,6 +32,8 @@ __all__ = [
     "slice_along_seq",
     "split_along_batch",
     "split_along_seq",
+    "sum_along_batch",
+    "sum_along_seq",
 ]
 
 from batchtensor.nested.comparison import argsort_along_batch, argsort_along_seq
@@ -50,6 +54,10 @@ from batchtensor.nested.reduction import (
     argmax_along_seq,
     argmin_along_batch,
     argmin_along_seq,
+    prod_along_batch,
+    prod_along_seq,
+    sum_along_batch,
+    sum_along_seq,
 )
 from batchtensor.nested.slicing import (
     chunk_along_batch,
