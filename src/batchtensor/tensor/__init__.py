@@ -3,6 +3,10 @@ r"""Contain functions to manipulate tensors."""
 from __future__ import annotations
 
 __all__ = [
+    "amax_along_batch",
+    "amax_along_seq",
+    "amin_along_batch",
+    "amin_along_seq",
     "argsort_along_batch",
     "argsort_along_seq",
     "cat_along_batch",
@@ -35,7 +39,14 @@ from batchtensor.tensor.permutation import (
     shuffle_along_batch,
     shuffle_along_seq,
 )
-from batchtensor.tensor.reduction import sum_along_batch, sum_along_seq
+from batchtensor.tensor.reduction import (
+    amax_along_batch,
+    amax_along_seq,
+    amin_along_batch,
+    amin_along_seq,
+    sum_along_batch,
+    sum_along_seq,
+)
 from batchtensor.tensor.slicing import (
     chunk_along_batch,
     chunk_along_seq,
