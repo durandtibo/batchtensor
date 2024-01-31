@@ -22,6 +22,8 @@ __all__ = [
     "slice_along_seq",
     "split_along_batch",
     "split_along_seq",
+    "sum_along_batch",
+    "sum_along_seq",
 ]
 
 from batchtensor.tensor.comparison import argsort_along_batch, argsort_along_seq
@@ -33,6 +35,7 @@ from batchtensor.tensor.permutation import (
     shuffle_along_batch,
     shuffle_along_seq,
 )
+from batchtensor.tensor.reduction import sum_along_batch, sum_along_seq
 from batchtensor.tensor.slicing import (
     chunk_along_batch,
     chunk_along_seq,
