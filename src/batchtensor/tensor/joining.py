@@ -2,7 +2,7 @@ r"""Contain some joining functions for tensors."""
 
 from __future__ import annotations
 
-__all__ = ["cat_along_batch", "cat_along_seq"]
+__all__ = ["cat_along_batch", "cat_along_seq", "repeat_along_seq"]
 
 
 import torch
@@ -80,3 +80,34 @@ def cat_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> tor
     ```
     """
     return torch.cat(tensors, dim=SEQ_DIM)
+
+
+def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
+    r"""Repeat the data along the sequence dimension.
+
+    Args:
+        tensor: The input tensor.
+        repeats: Specifies the number of times to repeat
+            the data along the sequence dimension.
+
+    Returns:
+        A new tensor with the data repeated along the sequence
+            dimension.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from batchtensor.tensor import repeat_along_seq
+    >>> tensor = torch.arange(10).view(2, 5)
+    >>> out = repeat_along_seq(tensor, 2)
+    >>> out
+    tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4],
+            [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]])
+
+    ```
+    """
+    sizes = [1] * tensor.dim()
+    sizes[1] = repeats
+    return tensor.repeat(*sizes)
