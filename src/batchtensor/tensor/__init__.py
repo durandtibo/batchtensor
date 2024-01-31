@@ -19,8 +19,11 @@ __all__ = [
     "slice_along_seq",
     "split_along_batch",
     "split_along_seq",
+    "argsort_along_batch",
+    "argsort_along_seq",
 ]
 
+from batchtensor.tensor.comparison import argsort_along_batch, argsort_along_seq
 from batchtensor.tensor.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.tensor.joining import cat_along_batch, cat_along_seq
 from batchtensor.tensor.permutation import (
