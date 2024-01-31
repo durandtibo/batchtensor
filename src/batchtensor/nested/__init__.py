@@ -7,6 +7,10 @@ __all__ = [
     "amax_along_seq",
     "amin_along_batch",
     "amin_along_seq",
+    "argmax_along_batch",
+    "argmax_along_seq",
+    "argmin_along_batch",
+    "argmin_along_seq",
     "argsort_along_batch",
     "argsort_along_seq",
     "cat_along_batch",
@@ -42,6 +46,10 @@ from batchtensor.nested.reduction import (
     amax_along_seq,
     amin_along_batch,
     amin_along_seq,
+    argmax_along_batch,
+    argmax_along_seq,
+    argmin_along_batch,
+    argmin_along_seq,
 )
 from batchtensor.nested.slicing import (
     chunk_along_batch,
