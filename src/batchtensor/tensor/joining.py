@@ -85,6 +85,10 @@ def cat_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> tor
 def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
     r"""Repeat the data along the sequence dimension.
 
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
     Args:
         tensor: The input tensor.
         repeats: Specifies the number of times to repeat
