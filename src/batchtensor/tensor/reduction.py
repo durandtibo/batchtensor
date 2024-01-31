@@ -11,10 +11,14 @@ __all__ = [
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "max_along_batch",
+    "max_along_seq",
     "mean_along_batch",
     "mean_along_seq",
     "median_along_batch",
     "median_along_seq",
+    "min_along_batch",
+    "min_along_seq",
     "prod_along_batch",
     "prod_along_seq",
     "sum_along_batch",
@@ -291,6 +295,82 @@ def argmin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     return torch.argmin(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
+def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.max:
+    r"""Return the maximum of all elements along the batch dimension.
+
+    Note:
+         This function assumes the batch dimension is the first
+             dimension.
+
+    Args:
+         tensor: The input tensor.
+         keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+         The first tensor will be populated with the maximum values and
+             the second tensor, which must have dtype long, with their
+             indices in the batch dimension.
+
+     Example usage:
+
+     ```pycon
+     >>> import torch
+     >>> from batchtensor.tensor import max_along_batch
+     >>> tensor = torch.arange(10).view(5, 2)
+     >>> out = max_along_batch(tensor)
+     >>> out
+     torch.return_types.max(
+     values=tensor([8, 9]),
+     indices=tensor([4, 4]))
+     >>> out = max_along_batch(tensor, keepdim=True)
+     >>> out
+     torch.return_types.max(
+     values=tensor([[8, 9]]),
+     indices=tensor([[4, 4]]))
+
+     ```
+    """
+    return torch.max(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def max_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.max:
+    r"""Return the maximum of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The first tensor will be populated with the maximum values and
+            the second tensor, which must have dtype long, with their
+            indices in the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import max_along_seq
+    >>> tensor = torch.arange(10).view(2, 5)
+    >>> out = max_along_seq(tensor)
+    >>> out
+    torch.return_types.max(
+    values=tensor([4, 9]),
+    indices=tensor([4, 4]))
+    >>> out = max_along_seq(tensor, keepdim=True)
+    >>> out
+    torch.return_types.max(
+    values=tensor([[4], [9]]),
+    indices=tensor([[4], [4]]))
+
+    ```
+    """
+    return torch.max(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
 def mean_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     r"""Return the mean of all elements along the batch dimension.
 
@@ -367,7 +447,9 @@ def median_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.ret
         keepdim: Whether the output tensor has dim retained or not.
 
     Returns:
-        The median of all elements along the batch dimension.
+        The first tensor will be populated with the median values and
+            the second tensor, which must have dtype long, with their
+            indices in the batch dimension.
 
     Example usage:
 
@@ -403,7 +485,9 @@ def median_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.retur
         keepdim: Whether the output tensor has dim retained or not.
 
     Returns:
-        The median of all elements along the sequence dimension.
+        The first tensor will be populated with the median values and
+            the second tensor, which must have dtype long, with their
+            indices in the sequence dimension.
 
     Example usage:
 
@@ -425,6 +509,82 @@ def median_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.retur
     ```
     """
     return torch.median(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def min_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.min:
+    r"""Return the minimum of all elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The first tensor will be populated with the minimum values and
+            the second tensor, which must have dtype long, with their
+            indices in the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import min_along_batch
+    >>> tensor = torch.arange(10).view(5, 2)
+    >>> out = min_along_batch(tensor)
+    >>> out
+    torch.return_types.min(
+    values=tensor([0, 1]),
+    indices=tensor([0, 0]))
+    >>> out = min_along_batch(tensor, keepdim=True)
+    >>> out
+    torch.return_types.min(
+    values=tensor([[0, 1]]),
+    indices=tensor([[0, 0]]))
+
+    ```
+    """
+    return torch.min(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def min_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.min:
+    r"""Return the minimum of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The first tensor will be populated with the minimum values and
+            the second tensor, which must have dtype long, with their
+            indices in the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import min_along_seq
+    >>> tensor = torch.arange(10).view(2, 5)
+    >>> out = min_along_seq(tensor)
+    >>> out
+    torch.return_types.min(
+    values=tensor([0, 5]),
+    indices=tensor([0, 0]))
+    >>> out = min_along_seq(tensor, keepdim=True)
+    >>> out
+    torch.return_types.min(
+    values=tensor([[0], [5]]),
+    indices=tensor([[0], [0]]))
+
+    ```
+    """
+    return torch.min(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
 def prod_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
