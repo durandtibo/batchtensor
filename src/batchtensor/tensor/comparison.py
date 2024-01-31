@@ -4,6 +4,7 @@ from __future__ import annotations
 
 __all__ = ["argsort_along_batch", "argsort_along_seq"]
 
+from typing import Any
 
 import torch
 
@@ -11,7 +12,7 @@ from batchtensor.constants import BATCH_DIM, SEQ_DIM
 
 
 def argsort_along_batch(
-    tensor: torch.Tensor, descending: bool = False, stable: bool = False
+    tensor: torch.Tensor, descending: bool = False, **kwargs: Any
 ) -> torch.Tensor:
     r"""Return the indices that sort a tensor along the batch dimension
     in ascending order by value.
@@ -24,7 +25,7 @@ def argsort_along_batch(
         tensor: The input tensor.
         descending: Controls the sorting order (ascending or
             descending).
-        stable: Controls the relative order of equivalent elements.
+        kwargs: Additional keywords arguments for ``torch.argsort``.
 
     Returns:
         The indices that sort a tensor along the batch dimension
@@ -44,11 +45,11 @@ def argsort_along_batch(
 
     ```
     """
-    return torch.argsort(tensor, dim=BATCH_DIM, descending=descending, stable=stable)
+    return torch.argsort(tensor, dim=BATCH_DIM, descending=descending, **kwargs)
 
 
 def argsort_along_seq(
-    tensor: torch.Tensor, descending: bool = False, stable: bool = False
+    tensor: torch.Tensor, descending: bool = False, **kwargs: Any
 ) -> torch.Tensor:
     r"""Return the indices that sort a tensor along the sequence
     dimension in ascending order by value.
@@ -61,7 +62,7 @@ def argsort_along_seq(
         tensor: The input tensor.
         descending: Controls the sorting order (ascending or
             descending).
-        stable: Controls the relative order of equivalent elements.
+        kwargs: Additional keywords arguments for ``torch.argsort``.
 
     Returns:
         The indices that sort a tensor along the sequence dimension.
@@ -83,4 +84,4 @@ def argsort_along_seq(
 
     ```
     """
-    return torch.argsort(tensor, dim=SEQ_DIM, descending=descending, stable=stable)
+    return torch.argsort(tensor, dim=SEQ_DIM, descending=descending, **kwargs)
