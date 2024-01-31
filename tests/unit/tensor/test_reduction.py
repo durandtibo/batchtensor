@@ -13,6 +13,10 @@ from batchtensor.tensor import (
     argmax_along_seq,
     argmin_along_batch,
     argmin_along_seq,
+    mean_along_batch,
+    mean_along_seq,
+    median_along_batch,
+    median_along_seq,
     prod_along_batch,
     prod_along_seq,
     sum_along_batch,
@@ -20,6 +24,7 @@ from batchtensor.tensor import (
 )
 
 DTYPES = (torch.float, torch.long)
+FLOATING_DTYPES = (torch.float, torch.double)
 
 
 ######################################
@@ -187,6 +192,92 @@ def test_argmin_along_seq_keepdim_true(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         argmin_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
         torch.tensor([[0], [0]]),
+    )
+
+
+######################################
+#     Tests for mean_along_batch     #
+######################################
+
+
+@pytest.mark.parametrize("dtype", FLOATING_DTYPES)
+def test_mean_along_batch(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        mean_along_batch(torch.arange(10, dtype=dtype).view(5, 2)),
+        torch.tensor([4.0, 5.0], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", FLOATING_DTYPES)
+def test_mean_along_batch_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        mean_along_batch(torch.arange(10, dtype=dtype).view(5, 2), keepdim=True),
+        torch.tensor([[4.0, 5.0]], dtype=dtype),
+    )
+
+
+####################################
+#     Tests for mean_along_seq     #
+####################################
+
+
+@pytest.mark.parametrize("dtype", FLOATING_DTYPES)
+def test_mean_along_seq(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        mean_along_seq(torch.arange(10, dtype=dtype).view(2, 5)),
+        torch.tensor([2.0, 7.0], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", FLOATING_DTYPES)
+def test_mean_along_seq_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        mean_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
+        torch.tensor([[2.0], [7.0]], dtype=dtype),
+    )
+
+
+########################################
+#     Tests for median_along_batch     #
+########################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_median_along_batch(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        median_along_batch(torch.arange(10, dtype=dtype).view(5, 2)),
+        torch.return_types.median([torch.tensor([4, 5], dtype=dtype), torch.tensor([2, 2])]),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_median_along_batch_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        median_along_batch(torch.arange(10, dtype=dtype).view(5, 2), keepdim=True),
+        torch.return_types.median([torch.tensor([[4, 5]], dtype=dtype), torch.tensor([[2, 2]])]),
+    )
+
+
+######################################
+#     Tests for median_along_seq     #
+######################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_median_along_seq(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        median_along_seq(torch.arange(10, dtype=dtype).view(2, 5)),
+        torch.return_types.median([torch.tensor([2, 7], dtype=dtype), torch.tensor([2, 2])]),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_median_along_seq_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        median_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
+        torch.return_types.median(
+            [torch.tensor([[2], [7]], dtype=dtype), torch.tensor([[2], [2]])]
+        ),
     )
 
 

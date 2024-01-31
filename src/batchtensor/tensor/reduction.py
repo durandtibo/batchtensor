@@ -11,6 +11,10 @@ __all__ = [
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "mean_along_batch",
+    "mean_along_seq",
+    "median_along_batch",
+    "median_along_seq",
     "prod_along_batch",
     "prod_along_seq",
     "sum_along_batch",
@@ -285,6 +289,142 @@ def argmin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     ```
     """
     return torch.argmin(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def mean_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+    r"""Return the mean of all elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The mean of all elements along the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import mean_along_batch
+    >>> tensor = torch.arange(10, dtype=torch.float).view(5, 2)
+    >>> out = mean_along_batch(tensor)
+    >>> out
+    tensor([4., 5.])
+    >>> out = mean_along_batch(tensor, keepdim=True)
+    >>> out
+    tensor([[4., 5.]])
+
+    ```
+    """
+    return torch.mean(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def mean_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+    r"""Return the mean of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The mean of all elements along the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import mean_along_seq
+    >>> tensor = torch.arange(10, dtype=torch.float).view(2, 5)
+    >>> out = mean_along_seq(tensor)
+    >>> out
+    tensor([2., 7.])
+    >>> out = mean_along_seq(tensor, keepdim=True)
+    >>> out
+    tensor([[2.], [7.]])
+
+    ```
+    """
+    return torch.mean(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def median_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.median:
+    r"""Return the median of all elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The median of all elements along the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import median_along_batch
+    >>> tensor = torch.arange(10).view(5, 2)
+    >>> out = median_along_batch(tensor)
+    >>> out
+    torch.return_types.median(
+    values=tensor([4, 5]),
+    indices=tensor([2, 2]))
+    >>> out = median_along_batch(tensor, keepdim=True)
+    >>> out
+    torch.return_types.median(
+    values=tensor([[4, 5]]),
+    indices=tensor([[2, 2]]))
+
+    ```
+    """
+    return torch.median(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def median_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.median:
+    r"""Return the median of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The median of all elements along the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import median_along_seq
+    >>> tensor = torch.arange(10).view(2, 5)
+    >>> out = median_along_seq(tensor)
+    >>> out
+    torch.return_types.median(
+    values=tensor([2, 7]),
+    indices=tensor([2, 2]))
+    >>> out = median_along_seq(tensor, keepdim=True)
+    >>> out
+    torch.return_types.median(
+    values=tensor([[2], [7]]),
+    indices=tensor([[2], [2]]))
+
+    ```
+    """
+    return torch.median(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
 def prod_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
