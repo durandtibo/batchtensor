@@ -9,6 +9,10 @@ from batchtensor.tensor import (
     amax_along_seq,
     amin_along_batch,
     amin_along_seq,
+    argmax_along_batch,
+    argmax_along_seq,
+    argmin_along_batch,
+    argmin_along_seq,
     sum_along_batch,
     sum_along_seq,
 )
@@ -97,6 +101,90 @@ def test_amin_along_seq_keepdim_true(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         amin_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
         torch.tensor([[0], [5]], dtype=dtype),
+    )
+
+
+########################################
+#     Tests for argmax_along_batch     #
+########################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_argmax_along_batch(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        argmax_along_batch(torch.arange(10, dtype=dtype).view(5, 2)),
+        torch.tensor([4, 4]),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_argmax_along_batch_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        argmax_along_batch(torch.arange(10, dtype=dtype).view(5, 2), keepdim=True),
+        torch.tensor([[4, 4]]),
+    )
+
+
+######################################
+#     Tests for argmax_along_seq     #
+######################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_argmax_along_seq(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        argmax_along_seq(torch.arange(10, dtype=dtype).view(2, 5)),
+        torch.tensor([4, 4]),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_argmax_along_seq_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        argmax_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
+        torch.tensor([[4], [4]]),
+    )
+
+
+########################################
+#     Tests for argmin_along_batch     #
+########################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_argmin_along_batch(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        argmin_along_batch(torch.arange(10, dtype=dtype).view(5, 2)),
+        torch.tensor([0, 0]),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_argmin_along_batch_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        argmin_along_batch(torch.arange(10, dtype=dtype).view(5, 2), keepdim=True),
+        torch.tensor([[0, 0]]),
+    )
+
+
+######################################
+#     Tests for argmin_along_seq     #
+######################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_argmin_along_seq(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        argmin_along_seq(torch.arange(10, dtype=dtype).view(2, 5)),
+        torch.tensor([0, 0]),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_argmin_along_seq_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        argmin_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
+        torch.tensor([[0], [0]]),
     )
 
 
