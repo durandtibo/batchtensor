@@ -13,6 +13,8 @@ from batchtensor.tensor import (
     argmax_along_seq,
     argmin_along_batch,
     argmin_along_seq,
+    prod_along_batch,
+    prod_along_seq,
     sum_along_batch,
     sum_along_seq,
 )
@@ -185,6 +187,48 @@ def test_argmin_along_seq_keepdim_true(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         argmin_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
         torch.tensor([[0], [0]]),
+    )
+
+
+######################################
+#     Tests for prod_along_batch     #
+######################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_batch(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_batch(torch.arange(10, dtype=dtype).view(5, 2)),
+        torch.tensor([0, 945], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_batch_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_batch(torch.arange(10, dtype=dtype).view(5, 2), keepdim=True),
+        torch.tensor([[0, 945]], dtype=dtype),
+    )
+
+
+####################################
+#     Tests for prod_along_seq     #
+####################################
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_seq(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_seq(torch.arange(10, dtype=dtype).view(2, 5)),
+        torch.tensor([0, 15120], dtype=dtype),
+    )
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_prod_along_seq_keepdim_true(dtype: torch.dtype) -> None:
+    assert objects_are_equal(
+        prod_along_seq(torch.arange(10, dtype=dtype).view(2, 5), keepdim=True),
+        torch.tensor([[0], [15120]], dtype=dtype),
     )
 
 
