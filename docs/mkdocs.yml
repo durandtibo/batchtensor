@@ -25,6 +25,7 @@ nav:
   - Home: index.md
   - get_started.md
   - Reference:
+      - refs/nested.md
       - refs/tensor.md
   - GitHub: https://github.com/durandtibo/batchtensor
 
