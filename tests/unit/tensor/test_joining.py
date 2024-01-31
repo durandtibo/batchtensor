@@ -88,3 +88,37 @@ def test_repeat_along_seq_repeats_2() -> None:
         repeat_along_seq(torch.arange(10).view(2, 5), repeats=2),
         torch.tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]]),
     )
+
+
+def test_repeat_along_seq_repeats_3d() -> None:
+    assert objects_are_equal(
+        repeat_along_seq(torch.arange(20).view(2, 5, 2), repeats=2),
+        torch.tensor(
+            [
+                [
+                    [0, 1],
+                    [2, 3],
+                    [4, 5],
+                    [6, 7],
+                    [8, 9],
+                    [0, 1],
+                    [2, 3],
+                    [4, 5],
+                    [6, 7],
+                    [8, 9],
+                ],
+                [
+                    [10, 11],
+                    [12, 13],
+                    [14, 15],
+                    [16, 17],
+                    [18, 19],
+                    [10, 11],
+                    [12, 13],
+                    [14, 15],
+                    [16, 17],
+                    [18, 19],
+                ],
+            ]
+        ),
+    )
