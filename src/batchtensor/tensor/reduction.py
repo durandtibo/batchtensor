@@ -324,7 +324,7 @@ def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
      indices=tensor([4, 4]))
      >>> out = max_along_batch(tensor, keepdim=True)
      >>> out
-    torch.return_types.max(
+     torch.return_types.max(
      values=tensor([[8, 9]]),
      indices=tensor([[4, 4]]))
 
