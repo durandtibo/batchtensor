@@ -311,24 +311,24 @@ def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
              the second tensor, which must have dtype long, with their
              indices in the batch dimension.
 
-     Example usage:
+    Example usage:
 
-     ```pycon
-     >>> import torch
-     >>> from batchtensor.tensor import max_along_batch
-     >>> tensor = torch.arange(10).view(5, 2)
-     >>> out = max_along_batch(tensor)
-     >>> out
-     torch.return_types.max(
-     values=tensor([8, 9]),
-     indices=tensor([4, 4]))
-     >>> out = max_along_batch(tensor, keepdim=True)
-     >>> out
-     torch.return_types.max(
-     values=tensor([[8, 9]]),
-     indices=tensor([[4, 4]]))
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.tensor import max_along_batch
+    >>> tensor = torch.arange(10).view(5, 2)
+    >>> out = max_along_batch(tensor)
+    >>> out
+    torch.return_types.max(
+    values=tensor([8, 9]),
+    indices=tensor([4, 4]))
+    >>> out = max_along_batch(tensor, keepdim=True)
+    >>> out
+    torch.return_types.max(
+    values=tensor([[8, 9]]),
+    indices=tensor([[4, 4]]))
 
-     ```
+    ```
     """
     return torch.max(tensor, dim=BATCH_DIM, keepdim=keepdim)
 

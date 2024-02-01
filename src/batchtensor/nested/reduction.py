@@ -11,10 +11,14 @@ __all__ = [
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "max_along_batch",
+    "max_along_seq",
     "mean_along_batch",
     "mean_along_seq",
     "median_along_batch",
     "median_along_seq",
+    "min_along_batch",
+    "min_along_seq",
     "prod_along_batch",
     "prod_along_seq",
     "sum_along_batch",
@@ -300,6 +304,96 @@ def argmin_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.argmin_along_seq, keepdim=keepdim))
 
 
+def max_along_batch(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the maximum of all elements along the batch dimension.
+
+    Note:
+         This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+         data: The input data. Each item must be a tensor.
+         keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+         The first tensor will be populated with the maximum values and
+             the second tensor, which must have dtype long, with their
+             indices in the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import max_along_batch
+    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> out = max_along_batch(data)
+    >>> out
+    {'a': torch.return_types.max(
+    values=tensor([8, 9]),
+    indices=tensor([4, 4])),
+    'b': torch.return_types.max(
+    values=tensor(4),
+    indices=tensor(0))}
+    >>> out = max_along_batch(data, keepdim=True)
+    >>> out
+    {'a': torch.return_types.max(
+    values=tensor([[8, 9]]),
+    indices=tensor([[4, 4]])),
+    'b': torch.return_types.max(
+    values=tensor([4]),
+    indices=tensor([0]))}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.max_along_batch, keepdim=keepdim))
+
+
+def max_along_seq(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the maximum of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The first tensor will be populated with the maximum values and
+            the second tensor, which must have dtype long, with their
+            indices in the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import max_along_seq
+    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> out = max_along_seq(data)
+    >>> out
+    {'a': torch.return_types.max(
+    values=tensor([4, 9]),
+    indices=tensor([4, 4])),
+    'b': torch.return_types.max(
+    values=tensor([4]),
+    indices=tensor([0]))}
+    >>> out = max_along_seq(data, keepdim=True)
+    >>> out
+    {'a': torch.return_types.max(
+    values=tensor([[4], [9]]),
+    indices=tensor([[4], [4]])),
+    'b': torch.return_types.max(
+    values=tensor([[4]]),
+    indices=tensor([[0]]))}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.max_along_seq, keepdim=keepdim))
+
+
 def mean_along_batch(data: Any, keepdim: bool = False) -> Any:
     r"""Return the mean of all elements along the batch dimension.
 
@@ -455,6 +549,96 @@ def median_along_seq(data: Any, keepdim: bool = False) -> Any:
     ```
     """
     return recursive_apply(data, partial(bt.median_along_seq, keepdim=keepdim))
+
+
+def min_along_batch(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the minimum of all elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The first tensor will be populated with the minimum values and
+            the second tensor, which must have dtype long, with their
+            indices in the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import min_along_batch
+    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> out = min_along_batch(data)
+    >>> out
+    {'a': torch.return_types.min(
+    values=tensor([0, 1]),
+    indices=tensor([0, 0])),
+    'b': torch.return_types.min(
+    values=tensor(0),
+    indices=tensor(4))}
+    >>> out = min_along_batch(data, keepdim=True)
+    >>> out
+    {'a': torch.return_types.min(
+    values=tensor([[0, 1]]),
+    indices=tensor([[0, 0]])),
+    'b': torch.return_types.min(
+    values=tensor([0]),
+    indices=tensor([4]))}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.min_along_batch, keepdim=keepdim))
+
+
+def min_along_seq(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the minimum of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The first tensor will be populated with the minimum values and
+            the second tensor, which must have dtype long, with their
+            indices in the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import min_along_seq
+    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> out = min_along_seq(data)
+    >>> out
+    {'a': torch.return_types.min(
+    values=tensor([0, 5]),
+    indices=tensor([0, 0])),
+    'b': torch.return_types.min(
+    values=tensor([0]),
+    indices=tensor([4]))}
+    >>> out = min_along_seq(data, keepdim=True)
+    >>> out
+    {'a': torch.return_types.min(
+    values=tensor([[0], [5]]),
+    indices=tensor([[0], [0]])),
+    'b': torch.return_types.min(
+    values=tensor([[0]]),
+    indices=tensor([[4]]))}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.min_along_seq, keepdim=keepdim))
 
 
 def prod_along_batch(data: Any, keepdim: bool = False) -> Any:
