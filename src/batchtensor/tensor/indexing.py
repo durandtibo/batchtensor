@@ -86,5 +86,5 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
         return tensor.index_select(dim=SEQ_DIM, index=index)
     batch_size, seq_len = index.shape[:2]
     batch_index = torch.arange(batch_size).repeat_interleave(seq_len)
-    index = index.flatten()
+    index = index.flatten().long()
     return tensor[batch_index, index].view(batch_size, seq_len, *tensor.shape[2:])
