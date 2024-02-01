@@ -4,13 +4,10 @@ from __future__ import annotations
 
 __all__ = ["index_select_along_batch", "index_select_along_seq"]
 
-from typing import TYPE_CHECKING
+
+import torch
 
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
-
-if TYPE_CHECKING:
-
-    import torch
 
 
 def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch.Tensor:
@@ -85,4 +82,9 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
 
     ```
     """
-    return tensor.index_select(dim=SEQ_DIM, index=index)
+    if index.ndim == 1:
+        return tensor.index_select(dim=SEQ_DIM, index=index)
+    batch_size, seq_len = index.shape[:2]
+    batch_index = torch.arange(batch_size).repeat_interleave(seq_len)
+    index = index.flatten()
+    return tensor[batch_index, index].view(batch_size, seq_len, *tensor.shape[2:])
