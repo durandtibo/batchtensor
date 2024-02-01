@@ -11,6 +11,10 @@ __all__ = [
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "mean_along_batch",
+    "mean_along_seq",
+    "median_along_batch",
+    "median_along_seq",
     "prod_along_batch",
     "prod_along_seq",
     "sum_along_batch",
@@ -294,6 +298,163 @@ def argmin_along_seq(data: Any, keepdim: bool = False) -> Any:
     ```
     """
     return recursive_apply(data, partial(bt.argmin_along_seq, keepdim=keepdim))
+
+
+def mean_along_batch(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the mean of all elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The mean of all elements along the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import mean_along_batch
+    >>> data = {"a": torch.arange(10, dtype=torch.float).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float)}
+    >>> out = mean_along_batch(data)
+    >>> out
+    {'a': tensor([4., 5.]), 'b': tensor(2.)}
+    >>> out = mean_along_batch(data, keepdim=True)
+    >>> out
+    {'a': tensor([[4., 5.]]), 'b': tensor([2.])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.mean_along_batch, keepdim=keepdim))
+
+
+def mean_along_seq(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the mean of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import mean_along_seq
+    >>> data = {'a': torch.arange(10, dtype=torch.float).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]], dtype=torch.float)}
+    >>> out = mean_along_seq(data)
+    >>> out
+    {'a': tensor([2., 7.]), 'b': tensor([2.])}
+    >>> out = mean_along_seq(data, keepdim=True)
+    >>> out
+    {'a': tensor([[2.], [7.]]), 'b': tensor([[2.]])}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.mean_along_seq, keepdim=keepdim))
+
+
+def median_along_batch(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the median of all elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors. All the tensors should have the
+            same batch size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The first tensor will be populated with the median values and
+            the second tensor, which must have dtype long, with their
+            indices in the batch dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import median_along_batch
+    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> out = median_along_batch(data)
+    >>> out
+    {'a': torch.return_types.median(
+    values=tensor([4, 5]),
+    indices=tensor([2, 2])),
+    'b': torch.return_types.median(
+    values=tensor(2),
+    indices=tensor(2))}
+    >>> out = median_along_batch(data, keepdim=True)
+    >>> out
+    {'a': torch.return_types.median(
+    values=tensor([[4, 5]]),
+    indices=tensor([[2, 2]])),
+    'b': torch.return_types.median(
+    values=tensor([2]),
+    indices=tensor([2]))}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.median_along_batch, keepdim=keepdim))
+
+
+def median_along_seq(data: Any, keepdim: bool = False) -> Any:
+    r"""Return the median of all elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The first tensor will be populated with the median values and
+            the second tensor, which must have dtype long, with their
+            indices in the sequence dimension.
+
+    Example usage:
+
+    ```pycon
+    >>> import torch
+    >>> from batchtensor.nested import median_along_seq
+    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> out = median_along_seq(data)
+    >>> out
+    {'a': torch.return_types.median(
+    values=tensor([2, 7]),
+    indices=tensor([2, 2])),
+    'b': torch.return_types.median(
+    values=tensor([2]),
+    indices=tensor([2]))}
+    >>> out = median_along_seq(data, keepdim=True)
+    >>> out
+    {'a': torch.return_types.median(
+    values=tensor([[2], [7]]),
+    indices=tensor([[2], [2]])),
+    'b': torch.return_types.median(
+    values=tensor([[2]]),
+    indices=tensor([[2]]))}
+
+    ```
+    """
+    return recursive_apply(data, partial(bt.median_along_seq, keepdim=keepdim))
 
 
 def prod_along_batch(data: Any, keepdim: bool = False) -> Any:
