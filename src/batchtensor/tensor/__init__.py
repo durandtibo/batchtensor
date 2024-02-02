@@ -17,6 +17,8 @@ __all__ = [
     "cat_along_seq",
     "chunk_along_batch",
     "chunk_along_seq",
+    "cumsum_along_batch",
+    "cumsum_along_seq",
     "index_select_along_batch",
     "index_select_along_seq",
     "max_along_batch",
@@ -47,6 +49,7 @@ __all__ = [
 from batchtensor.tensor.comparison import argsort_along_batch, argsort_along_seq
 from batchtensor.tensor.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.tensor.joining import cat_along_batch, cat_along_seq, repeat_along_seq
+from batchtensor.tensor.math import cumsum_along_batch, cumsum_along_seq
 from batchtensor.tensor.permutation import (
     permute_along_batch,
     permute_along_seq,
