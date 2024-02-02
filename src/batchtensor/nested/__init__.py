@@ -17,6 +17,10 @@ __all__ = [
     "cat_along_seq",
     "chunk_along_batch",
     "chunk_along_seq",
+    "cumprod_along_batch",
+    "cumprod_along_seq",
+    "cumsum_along_batch",
+    "cumsum_along_seq",
     "index_select_along_batch",
     "index_select_along_seq",
     "max_along_batch",
@@ -47,6 +51,12 @@ __all__ = [
 from batchtensor.nested.comparison import argsort_along_batch, argsort_along_seq
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.nested.joining import cat_along_batch, cat_along_seq, repeat_along_seq
+from batchtensor.nested.math import (
+    cumprod_along_batch,
+    cumprod_along_seq,
+    cumsum_along_batch,
+    cumsum_along_seq,
+)
 from batchtensor.nested.permutation import (
     permute_along_batch,
     permute_along_seq,
