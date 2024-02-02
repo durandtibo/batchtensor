@@ -42,13 +42,20 @@ __all__ = [
     "shuffle_along_seq",
     "slice_along_batch",
     "slice_along_seq",
+    "sort_along_batch",
+    "sort_along_seq",
     "split_along_batch",
     "split_along_seq",
     "sum_along_batch",
     "sum_along_seq",
 ]
 
-from batchtensor.nested.comparison import argsort_along_batch, argsort_along_seq
+from batchtensor.nested.comparison import (
+    argsort_along_batch,
+    argsort_along_seq,
+    sort_along_batch,
+    sort_along_seq,
+)
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.nested.joining import cat_along_batch, cat_along_seq, repeat_along_seq
 from batchtensor.nested.math import (
