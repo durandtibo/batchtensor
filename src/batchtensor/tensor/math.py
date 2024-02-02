@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 def cumprod_along_batch(tensor: torch.Tensor) -> torch.Tensor:
-    r"""Return the cumulative sum of elements of input in the batch
+    r"""Return the cumulative product of elements of input in the batch
     dimension.
 
     Note:
@@ -29,7 +29,7 @@ def cumprod_along_batch(tensor: torch.Tensor) -> torch.Tensor:
         tensor: The input tensor.
 
     Returns:
-        The cumulative sum of elements of input in the batch
+        The cumulative product of elements of input in the batch
             dimension.
 
     Example usage:
@@ -37,7 +37,7 @@ def cumprod_along_batch(tensor: torch.Tensor) -> torch.Tensor:
     ```pycon
     >>> import torch
     >>> from batchtensor.tensor import cumprod_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
     >>> out = cumprod_along_batch(tensor)
     >>> out
     tensor([[   1,    2], [   3,    8], [  15,   48], [ 105,  384], [ 945, 3840]])
@@ -48,8 +48,8 @@ def cumprod_along_batch(tensor: torch.Tensor) -> torch.Tensor:
 
 
 def cumprod_along_seq(tensor: torch.Tensor) -> torch.Tensor:
-    r"""Return the cumulative sum of elements of input in the sequence
-    dimension.
+    r"""Return the cumulative product of elements of input in the
+    sequence dimension.
 
     Note:
         This function assumes the sequence dimension is the second
@@ -59,7 +59,7 @@ def cumprod_along_seq(tensor: torch.Tensor) -> torch.Tensor:
         tensor: The input tensor.
 
     Returns:
-        The cumulative sum of elements of input in the sequence
+        The cumulative product of elements of input in the sequence
             dimension.
 
     Example usage:
@@ -67,7 +67,7 @@ def cumprod_along_seq(tensor: torch.Tensor) -> torch.Tensor:
     ```pycon
     >>> import torch
     >>> from batchtensor.tensor import cumprod_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
     >>> out = cumprod_along_seq(tensor)
     >>> out
     tensor([[    1,     2,     6,    24,   120],
