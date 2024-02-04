@@ -299,17 +299,17 @@ def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
-         This function assumes the batch dimension is the first
-             dimension.
+        This function assumes the batch dimension is the first
+            dimension.
 
     Args:
-         tensor: The input tensor.
-         keepdim: Whether the output tensor has dim retained or not.
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
 
     Returns:
-         The first tensor will be populated with the maximum values and
-             the second tensor, which must have dtype long, with their
-             indices in the batch dimension.
+        The first tensor will be populated with the maximum values and
+            the second tensor, which must have dtype long, with their
+            indices in the batch dimension.
 
     Example usage:
 

@@ -24,6 +24,8 @@ theme:
 nav:
   - Home: index.md
   - get_started.md
+  - User Guide:
+      - uguide/tensor.md
   - Reference:
       - refs/nested.md
       - refs/tensor.md
