@@ -102,8 +102,8 @@ function `split_along_batch`:
 ...     "c": torch.tensor([1.0, 2.0, 3.0, 4.0, 5.0]),
 ... }
 >>> split_along_batch(batch, split_size_or_sections=2)
-({'a': tensor([[2, 6], [0, 3]]), 'b': tensor([4, 3]), 'c': tensor([1., 2.])}, 
- {'a': tensor([[4, 9], [8, 1]]), 'b': tensor([2, 1]), 'c': tensor([3., 4.])}, 
+({'a': tensor([[2, 6], [0, 3]]), 'b': tensor([4, 3]), 'c': tensor([1., 2.])},
+ {'a': tensor([[4, 9], [8, 1]]), 'b': tensor([2, 1]), 'c': tensor([3., 4.])},
  {'a': tensor([[5, 7]]), 'b': tensor([0]), 'c': tensor([5.])})
 
 ```
