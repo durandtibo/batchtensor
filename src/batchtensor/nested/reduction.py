@@ -308,16 +308,16 @@ def max_along_batch(data: Any, keepdim: bool = False) -> Any:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
-         This function assumes the batch dimension is the first
+        This function assumes the batch dimension is the first
             dimension of the tensors. All the tensors should have the
             same batch size.
 
     Args:
-         data: The input data. Each item must be a tensor.
-         keepdim: Whether the output tensor has dim retained or not.
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
 
     Returns:
-         The first tensor will be populated with the maximum values and
+        The first tensor will be populated with the maximum values and
              the second tensor, which must have dtype long, with their
              indices in the batch dimension.
 

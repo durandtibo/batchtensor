@@ -20,14 +20,6 @@ It is possible to install all the optional dependencies by running the following
 pip install 'batchtensor[all]'
 ```
 
-This command also installed NumPy and PyTorch.
-It is also possible to install the optional packages manually or to select the packages to install.
-In the following example, only NumPy is installed:
-
-```shell
-pip install batchtensor numpy
-```
-
 ## Installing from source
 
 To install `batchtensor` from source, you can follow the steps below. First, you will need to
