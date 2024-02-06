@@ -8,6 +8,9 @@ from batchtensor import nested
 
 DTYPES = [torch.float, torch.double, torch.long]
 POINTWISE_FUNCTIONS = [
+    (torch.exp, nested.exp),
+    (torch.exp2, nested.exp2),
+    (torch.expm1, nested.expm1),
     (torch.log, nested.log),
     (torch.log2, nested.log2),
     (torch.log10, nested.log10),
