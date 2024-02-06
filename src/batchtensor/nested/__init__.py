@@ -23,6 +23,10 @@ __all__ = [
     "cumsum_along_seq",
     "index_select_along_batch",
     "index_select_along_seq",
+    "log",
+    "log10",
+    "log1p",
+    "log2",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -70,6 +74,7 @@ from batchtensor.nested.permutation import (
     shuffle_along_batch,
     shuffle_along_seq,
 )
+from batchtensor.nested.pointwise import log, log1p, log2, log10
 from batchtensor.nested.reduction import (
     amax_along_batch,
     amax_along_seq,
