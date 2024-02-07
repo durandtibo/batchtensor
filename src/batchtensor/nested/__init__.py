@@ -3,6 +3,7 @@ r"""Contain functions to manipulate nested data."""
 from __future__ import annotations
 
 __all__ = [
+    "abs",
     "amax_along_batch",
     "amax_along_seq",
     "amin_along_batch",
@@ -17,6 +18,7 @@ __all__ = [
     "cat_along_seq",
     "chunk_along_batch",
     "chunk_along_seq",
+    "clamp",
     "cumprod_along_batch",
     "cumprod_along_seq",
     "cumsum_along_batch",
@@ -77,7 +79,17 @@ from batchtensor.nested.permutation import (
     shuffle_along_batch,
     shuffle_along_seq,
 )
-from batchtensor.nested.pointwise import exp, exp2, expm1, log, log1p, log2, log10
+from batchtensor.nested.pointwise import (
+    abs,
+    clamp,
+    exp,
+    exp2,
+    expm1,
+    log,
+    log1p,
+    log2,
+    log10,
+)
 from batchtensor.nested.reduction import (
     amax_along_batch,
     amax_along_seq,
