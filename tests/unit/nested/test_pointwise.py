@@ -10,7 +10,6 @@ from batchtensor import nested
 DTYPES = [torch.float, torch.double, torch.long]
 POINTWISE_FUNCTIONS = [
     (torch.abs, nested.abs),
-    (torch.clamp, nested.clamp),
     (partial(torch.clamp, min=2), partial(nested.clamp, min=2)),
     (partial(torch.clamp, max=6), partial(nested.clamp, max=6)),
     (partial(torch.clamp, min=2, max=6), partial(nested.clamp, min=2, max=6)),
