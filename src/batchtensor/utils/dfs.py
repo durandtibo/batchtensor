@@ -134,7 +134,7 @@ class TensorIterator(BaseTensorIterator[Any]):
                 to ``True`` to overwrite the iterator for a type.
 
         Raises:
-            RuntimeError: if a iterator is already registered for the
+            RuntimeError: if an iterator is already registered for the
                 data type and ``exist_ok=False``.
 
         Example usage:
