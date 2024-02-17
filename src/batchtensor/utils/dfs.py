@@ -73,6 +73,9 @@ class BaseTensorIterator(Generic[T]):
             data: Specifies the data to iterate on.
             state: Specifies the current state, which include the
                 queue.
+
+        Yields:
+            The next ``torch.Tensor`` in the data.
         """
 
 
