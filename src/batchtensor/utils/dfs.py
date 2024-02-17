@@ -3,7 +3,16 @@ Depth-First Search (DFS) strategy."""
 
 from __future__ import annotations
 
-__all__ = ["dfs_tensor"]
+__all__ = [
+    "BaseTensorIterator",
+    "DefaultTensorIterator",
+    "IterableTensorIterator",
+    "MappingTensorIterator",
+    "TensorIterator",
+    "dfs_tensor",
+    "register_iterators",
+    "register_default_iterators",
+]
 
 import logging
 from collections import deque
@@ -207,7 +216,7 @@ def register_iterators(mapping: Mapping[type, BaseTensorIterator]) -> None:
             TensorIterator.add_iterator(typ, op)
 
 
-def register() -> None:
+def register_default_iterators() -> None:
     r"""Register some default iterators."""
     default = DefaultTensorIterator()
     iterable = IterableTensorIterator()
@@ -227,4 +236,4 @@ def register() -> None:
     )
 
 
-register()
+register_default_iterators()
