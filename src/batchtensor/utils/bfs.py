@@ -94,6 +94,17 @@ class IterableTensorIterator(BaseTensorIterator[Iterable]):
             state.queue.append(item)
 
 
+class MappingTensorIterator(BaseTensorIterator[Mapping]):
+    r"""Implement the tensor iterator for mapping objects."""
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def iterate(self, data: Mapping, state: IteratorState) -> None:
+        for item in data.values():
+            state.queue.append(item)
+
+
 class TensorIterator(BaseTensorIterator[Any]):
     """Implement a tensor iterator."""
 
@@ -205,10 +216,13 @@ def register() -> None:
     r"""Register some default iterators."""
     default = DefaultTensorIterator()
     iterable = IterableTensorIterator()
+    mapping = MappingTensorIterator()
     register_iterators(
         {
             Iterable: iterable,
+            Mapping: mapping,
             deque: iterable,
+            dict: mapping,
             list: iterable,
             object: default,
             set: iterable,
