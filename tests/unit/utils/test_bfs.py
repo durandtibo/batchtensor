@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from collections import deque
-from collections.abc import Iterable
+from collections import OrderedDict, deque
+from collections.abc import Iterable, Mapping
 from typing import Any
 from unittest.mock import Mock, patch
 
@@ -13,9 +13,16 @@ from batchtensor.utils.bfs import (
     DefaultTensorIterator,
     IterableTensorIterator,
     IteratorState,
+    MappingTensorIterator,
     TensorIterator,
     bfs_tensor,
 )
+
+
+@pytest.fixture()
+def state() -> IteratorState:
+    return IteratorState(iterator=TensorIterator(), queue=deque())
+
 
 ################################
 #     Tests for bfs_tensor     #
@@ -38,6 +45,8 @@ def test_bfs_tensor_tensor() -> None:
         pytest.param((), id="empty tuple"),
         pytest.param({1, 2, 3}, id="set"),
         pytest.param(set(), id="empty set"),
+        pytest.param({"key1": 1, "key2": 2, "key3": 3}, id="dict"),
+        pytest.param({}, id="empty dict"),
     ],
 )
 def test_bfs_tensor_no_tensor(data: Any) -> None:
@@ -54,6 +63,13 @@ def test_bfs_tensor_no_tensor(data: Any) -> None:
         pytest.param((torch.ones(2, 3), torch.arange(5)), id="tuple with only tensors"),
         pytest.param(
             ("abc", torch.ones(2, 3), 42, torch.arange(5)), id="tuple with non tensor objects"
+        ),
+        pytest.param(
+            {"key1": torch.ones(2, 3), "key2": torch.arange(5)}, id="dict with only tensors"
+        ),
+        pytest.param(
+            {"key1": "abc", "key2": torch.ones(2, 3), "key3": 42, "key4": torch.arange(5)},
+            id="dict with non tensor objects",
         ),
     ],
 )
@@ -76,6 +92,7 @@ def test_bfs_tensor_set(data: Any) -> None:
 
 def test_bfs_tensor_nested_data() -> None:
     data = [
+        {"key1": torch.zeros(1, 1, 1), "key2": torch.arange(10)},
         torch.ones(2, 3),
         [torch.ones(4), -torch.arange(3), [torch.ones(5)]],
         (1, torch.tensor([42.0]), torch.zeros(2)),
@@ -86,6 +103,8 @@ def test_bfs_tensor_nested_data() -> None:
         [
             torch.ones(2, 3),
             torch.arange(5),
+            torch.zeros(1, 1, 1),
+            torch.arange(10),
             torch.ones(4),
             -torch.arange(3),
             torch.tensor([42.0]),
@@ -104,8 +123,7 @@ def test_default_tensor_iterator_str() -> None:
     assert str(DefaultTensorIterator()).startswith("DefaultTensorIterator(")
 
 
-def test_default_tensor_iterator_iterable() -> None:
-    state = IteratorState(iterator=TensorIterator(), queue=deque())
+def test_default_tensor_iterator_iterable(state: IteratorState) -> None:
     DefaultTensorIterator().iterate("abc", state)
     assert state.queue == deque()
 
@@ -115,7 +133,7 @@ def test_default_tensor_iterator_iterable() -> None:
 ############################################
 
 
-def test_iterate_tensor_iterator_str() -> None:
+def test_iterable_tensor_iterator_str() -> None:
     assert str(IterableTensorIterator()).startswith("IterableTensorIterator(")
 
 
@@ -128,8 +146,7 @@ def test_iterate_tensor_iterator_str() -> None:
         pytest.param(deque(), id="empty deque"),
     ],
 )
-def test_iterate_tensor_iterator_iterate_empty(data: Iterable) -> None:
-    state = IteratorState(iterator=TensorIterator(), queue=deque())
+def test_iterable_tensor_iterator_iterate_empty(data: Iterable, state: IteratorState) -> None:
     IterableTensorIterator().iterate(data, state)
     assert state.queue == deque()
 
@@ -142,9 +159,49 @@ def test_iterate_tensor_iterator_iterate_empty(data: Iterable) -> None:
         pytest.param(("abc", torch.ones(2, 3), 42, torch.arange(5)), id="tuple"),
     ],
 )
-def test_iterate_tensor_iterator_iterate(data: Iterable) -> None:
-    state = IteratorState(iterator=TensorIterator(), queue=deque())
+def test_iterable_tensor_iterator_iterate(data: Iterable, state: IteratorState) -> None:
     IterableTensorIterator().iterate(data, state)
+    assert objects_are_equal(list(state.queue), ["abc", torch.ones(2, 3), 42, torch.arange(5)])
+
+
+###########################################
+#     Tests for MappingTensorIterator     #
+###########################################
+
+
+def test_mapping_tensor_iterator_str() -> None:
+    assert str(MappingTensorIterator()).startswith("MappingTensorIterator(")
+
+
+@pytest.mark.parametrize(
+    "data",
+    [
+        pytest.param({}, id="empty dict"),
+        pytest.param(OrderedDict(), id="empty OrderedDict"),
+    ],
+)
+def test_mapping_tensor_iterator_iterate_empty(data: Mapping, state: IteratorState) -> None:
+    MappingTensorIterator().iterate(data, state)
+    assert state.queue == deque()
+
+
+@pytest.mark.parametrize(
+    "data",
+    [
+        pytest.param(
+            {"key1": "abc", "key2": torch.ones(2, 3), "key3": 42, "key4": torch.arange(5)},
+            id="dict",
+        ),
+        pytest.param(
+            OrderedDict(
+                {"key1": "abc", "key2": torch.ones(2, 3), "key3": 42, "key4": torch.arange(5)}
+            ),
+            id="OrderedDict",
+        ),
+    ],
+)
+def test_mapping_tensor_iterator_iterate(data: Mapping, state: IteratorState) -> None:
+    MappingTensorIterator().iterate(data, state)
     assert objects_are_equal(list(state.queue), ["abc", torch.ones(2, 3), 42, torch.arange(5)])
 
 
@@ -183,8 +240,7 @@ def test_iterator_add_iterator_duplicate_exist_ok_false() -> None:
         iterator.add_iterator(list, seq_iterator)
 
 
-def test_iterator_iterate() -> None:
-    state = IteratorState(iterator=TensorIterator(), queue=deque())
+def test_iterator_iterate(state: IteratorState) -> None:
     TensorIterator().iterate(["abc", torch.ones(2, 3), 42, torch.arange(5)], state=state)
     assert objects_are_equal(list(state.queue), ["abc", torch.ones(2, 3), 42, torch.arange(5)])
 
@@ -211,9 +267,11 @@ def test_iterator_find_iterator_incorrect_type() -> None:
 
 
 def test_iterator_registry_default() -> None:
-    assert len(TensorIterator.registry) >= 7
+    assert len(TensorIterator.registry) >= 9
     assert isinstance(TensorIterator.registry[Iterable], IterableTensorIterator)
+    assert isinstance(TensorIterator.registry[Mapping], MappingTensorIterator)
     assert isinstance(TensorIterator.registry[deque], IterableTensorIterator)
+    assert isinstance(TensorIterator.registry[dict], MappingTensorIterator)
     assert isinstance(TensorIterator.registry[list], IterableTensorIterator)
     assert isinstance(TensorIterator.registry[object], DefaultTensorIterator)
     assert isinstance(TensorIterator.registry[set], IterableTensorIterator)
