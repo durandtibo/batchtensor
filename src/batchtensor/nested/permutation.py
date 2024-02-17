@@ -6,16 +6,14 @@ __all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_seq", "shu
 
 
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import torch
 
 from batchtensor import tensor
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 from batchtensor.recursive import recursive_apply
-
-if TYPE_CHECKING:
-    from collections.abc import Hashable
+from batchtensor.utils import dfs_tensor
 
 
 def permute_along_batch(data: Any, permutation: torch.Tensor) -> Any:
@@ -92,9 +90,7 @@ def permute_along_seq(data: Any, permutation: torch.Tensor) -> Any:
     return recursive_apply(data, partial(tensor.permute_along_seq, permutation=permutation))
 
 
-def shuffle_along_batch(
-    data: dict[Hashable, torch.Tensor], generator: torch.Generator | None = None
-) -> dict[Hashable, torch.Tensor]:
+def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> Any:
     r"""Shuffle all the tensors along the batch dimension.
 
     Note:
@@ -122,16 +118,14 @@ def shuffle_along_batch(
 
     ```
     """
-    value = next(iter(data.values()))
+    value = next(dfs_tensor(data))
     return permute_along_batch(
         data=data,
         permutation=torch.randperm(value.shape[BATCH_DIM], generator=generator),
     )
 
 
-def shuffle_along_seq(
-    data: dict[Hashable, torch.Tensor], generator: torch.Generator | None = None
-) -> dict[Hashable, torch.Tensor]:
+def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> Any:
     r"""Shuffle all the tensors along the batch dimension.
 
     Note:
@@ -159,7 +153,7 @@ def shuffle_along_seq(
 
     ```
     """
-    value = next(iter(data.values()))
+    value = next(dfs_tensor(data))
     return permute_along_seq(
         data=data,
         permutation=torch.randperm(value.shape[SEQ_DIM], generator=generator),

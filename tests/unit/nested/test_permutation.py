@@ -45,6 +45,24 @@ def test_permute_along_batch_dict(dtype: torch.dtype) -> None:
     )
 
 
+def test_permute_along_batch_nested() -> None:
+    assert objects_are_equal(
+        permute_along_batch(
+            {
+                "a": torch.tensor([[4, 9], [1, 7], [2, 5], [5, 6], [3, 8]]),
+                "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float),
+                "list": [torch.tensor([5, 6, 7, 8, 9])],
+            },
+            permutation=torch.tensor([2, 4, 1, 3, 0]),
+        ),
+        {
+            "a": torch.tensor([[2, 5], [3, 8], [1, 7], [5, 6], [4, 9]]),
+            "b": torch.tensor([2, 0, 3, 1, 4], dtype=torch.float),
+            "list": [torch.tensor([7, 9, 6, 8, 5])],
+        },
+    )
+
+
 def test_permute_along_batch_incorrect_shape() -> None:
     with pytest.raises(
         RuntimeError,
@@ -83,6 +101,24 @@ def test_permute_along_seq_dict(dtype: torch.dtype) -> None:
     )
 
 
+def test_permute_along_seq_nested() -> None:
+    assert objects_are_equal(
+        permute_along_seq(
+            {
+                "a": torch.tensor([[4, 1, 2, 5, 3], [9, 7, 5, 6, 8]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]], dtype=torch.float),
+                "list": [torch.tensor([[5, 6, 7, 8, 9]])],
+            },
+            permutation=torch.tensor([2, 4, 1, 3, 0]),
+        ),
+        {
+            "a": torch.tensor([[2, 3, 1, 5, 4], [5, 8, 7, 6, 9]]),
+            "b": torch.tensor([[2, 0, 3, 1, 4]], dtype=torch.float),
+            "list": [torch.tensor([[7, 9, 6, 8, 5]])],
+        },
+    )
+
+
 def test_permute_along_seq_incorrect_shape() -> None:
     with pytest.raises(
         RuntimeError,
@@ -99,15 +135,15 @@ def test_permute_along_seq_incorrect_shape() -> None:
 #########################################
 
 
-# @patch(
-#     "batchtensor.nested.permutation.torch.randperm",
-#     lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),
-# )
-# def test_shuffle_along_batch_tensor() -> None:
-#     assert objects_are_equal(
-#         shuffle_along_batch(torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])),
-#         torch.tensor([[6, 7, 8], [3, 4, 5], [9, 10, 11], [0, 1, 2]]),
-#     )
+@patch(
+    "batchtensor.nested.permutation.torch.randperm",
+    lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),
+)
+def test_shuffle_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        shuffle_along_batch(torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])),
+        torch.tensor([[6, 7, 8], [3, 4, 5], [9, 10, 11], [0, 1, 2]]),
+    )
 
 
 @patch(
@@ -120,6 +156,27 @@ def test_shuffle_along_batch_dict() -> None:
         {
             "a": torch.tensor([[4, 5], [8, 9], [2, 3], [6, 7], [0, 1]]),
             "b": torch.tensor([2, 0, 3, 1, 4]),
+        },
+    )
+
+
+@patch(
+    "batchtensor.nested.permutation.torch.randperm",
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+)
+def test_shuffle_along_batch_nested() -> None:
+    assert objects_are_equal(
+        shuffle_along_batch(
+            {
+                "a": torch.tensor([[4, 9], [1, 7], [2, 5], [5, 6], [3, 8]]),
+                "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float),
+                "list": [torch.tensor([5, 6, 7, 8, 9])],
+            }
+        ),
+        {
+            "a": torch.tensor([[2, 5], [3, 8], [1, 7], [5, 6], [4, 9]]),
+            "b": torch.tensor([2, 0, 3, 1, 4], dtype=torch.float),
+            "list": [torch.tensor([7, 9, 6, 8, 5])],
         },
     )
 
@@ -153,15 +210,15 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
 #######################################
 
 
-# @patch(
-#     "batchtensor.nested.permutation.torch.randperm",
-#     lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
-# )
-# def test_shuffle_along_seq_tensor() -> None:
-#     assert objects_are_equal(
-#         shuffle_along_seq(torch.arange(10).view(2, 5)),
-#         torch.tensor([[2, 4, 1, 3, 0], [7, 9, 6, 8, 5]]),
-#     )
+@patch(
+    "batchtensor.nested.permutation.torch.randperm",
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+)
+def test_shuffle_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        shuffle_along_seq(torch.arange(10).view(2, 5)),
+        torch.tensor([[2, 4, 1, 3, 0], [7, 9, 6, 8, 5]]),
+    )
 
 
 @patch(
@@ -174,6 +231,27 @@ def test_shuffle_along_seq_dict() -> None:
         {
             "a": torch.tensor([[2, 4, 1, 3, 0], [7, 9, 6, 8, 5]]),
             "b": torch.tensor([[2, 0, 3, 1, 4]]),
+        },
+    )
+
+
+@patch(
+    "batchtensor.nested.permutation.torch.randperm",
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+)
+def test_shuffle_along_seq_nested() -> None:
+    assert objects_are_equal(
+        shuffle_along_seq(
+            {
+                "a": torch.tensor([[4, 1, 2, 5, 3], [9, 7, 5, 6, 8]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]], dtype=torch.float),
+                "list": [torch.tensor([[5, 6, 7, 8, 9]])],
+            }
+        ),
+        {
+            "a": torch.tensor([[2, 3, 1, 5, 4], [5, 8, 7, 6, 9]]),
+            "b": torch.tensor([[2, 0, 3, 1, 4]], dtype=torch.float),
+            "list": [torch.tensor([[7, 9, 6, 8, 5]])],
         },
     )
 
