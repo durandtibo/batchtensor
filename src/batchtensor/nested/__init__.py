@@ -57,6 +57,7 @@ __all__ = [
     "split_along_seq",
     "sum_along_batch",
     "sum_along_seq",
+    "to",
 ]
 
 from batchtensor.nested.comparison import (
@@ -73,6 +74,7 @@ from batchtensor.nested.math import (
     cumsum_along_batch,
     cumsum_along_seq,
 )
+from batchtensor.nested.misc import to
 from batchtensor.nested.permutation import (
     permute_along_batch,
     permute_along_seq,
