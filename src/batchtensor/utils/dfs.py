@@ -3,7 +3,16 @@ Depth-First Search (DFS) strategy."""
 
 from __future__ import annotations
 
-__all__ = ["dfs_tensor"]
+__all__ = [
+    "BaseTensorIterator",
+    "DefaultTensorIterator",
+    "IterableTensorIterator",
+    "MappingTensorIterator",
+    "TensorIterator",
+    "dfs_tensor",
+    "register_iterators",
+    "register_default_iterators",
+]
 
 import logging
 from collections import deque
@@ -64,6 +73,9 @@ class BaseTensorIterator(Generic[T]):
             data: Specifies the data to iterate on.
             state: Specifies the current state, which include the
                 queue.
+
+        Yields:
+            The next ``torch.Tensor`` in the data.
         """
 
 
@@ -122,7 +134,7 @@ class TensorIterator(BaseTensorIterator[Any]):
                 to ``True`` to overwrite the iterator for a type.
 
         Raises:
-            RuntimeError: if a iterator is already registered for the
+            RuntimeError: if an iterator is already registered for the
                 data type and ``exist_ok=False``.
 
         Example usage:
@@ -207,7 +219,7 @@ def register_iterators(mapping: Mapping[type, BaseTensorIterator]) -> None:
             TensorIterator.add_iterator(typ, op)
 
 
-def register() -> None:
+def register_default_iterators() -> None:
     r"""Register some default iterators."""
     default = DefaultTensorIterator()
     iterable = IterableTensorIterator()
@@ -227,4 +239,4 @@ def register() -> None:
     )
 
 
-register()
+register_default_iterators()
