@@ -25,6 +25,8 @@ __all__ = [
     "chunk_along_batch",
     "chunk_along_seq",
     "clamp",
+    "cos",
+    "cosh",
     "cumprod_along_batch",
     "cumprod_along_seq",
     "cumsum_along_batch",
@@ -55,6 +57,8 @@ __all__ = [
     "select_along_seq",
     "shuffle_along_batch",
     "shuffle_along_seq",
+    "sin",
+    "sinh",
     "slice_along_batch",
     "slice_along_seq",
     "sort_along_batch",
@@ -63,6 +67,8 @@ __all__ = [
     "split_along_seq",
     "sum_along_batch",
     "sum_along_seq",
+    "tan",
+    "tanh",
     "to",
 ]
 
@@ -130,4 +136,17 @@ from batchtensor.nested.slicing import (
     split_along_batch,
     split_along_seq,
 )
-from batchtensor.nested.trigo import acos, acosh, asin, asinh, atan, atanh
+from batchtensor.nested.trigo import (
+    acos,
+    acosh,
+    asin,
+    asinh,
+    atan,
+    atanh,
+    cos,
+    cosh,
+    sin,
+    sinh,
+    tan,
+    tanh,
+)
