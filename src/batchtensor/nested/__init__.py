@@ -4,6 +4,8 @@ from __future__ import annotations
 
 __all__ = [
     "abs",
+    "acos",
+    "acosh",
     "amax_along_batch",
     "amax_along_seq",
     "amin_along_batch",
@@ -14,6 +16,10 @@ __all__ = [
     "argmin_along_seq",
     "argsort_along_batch",
     "argsort_along_seq",
+    "asin",
+    "asinh",
+    "atan",
+    "atanh",
     "cat_along_batch",
     "cat_along_seq",
     "chunk_along_batch",
@@ -124,3 +130,4 @@ from batchtensor.nested.slicing import (
     split_along_batch,
     split_along_seq,
 )
+from batchtensor.nested.trigo import acos, acosh, asin, asinh, atan, atanh
