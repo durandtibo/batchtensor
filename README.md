@@ -142,7 +142,8 @@ The following is the corresponding `batchtensor` versions and tested dependencie
 
 | `batchtensor` | `coola`      | `torch`       | `python`      |
 |---------------|--------------|---------------|---------------|
-| `main`        | `>=0.1,<0.4` | `>=1.11,<3.0` | `>=3.9,<3.13` |
+| `main`        | `>=0.1,<1.0` | `>=1.11,<3.0` | `>=3.9,<3.13` |
+| `0.0.2`       | `>=0.1,<1.0` | `>=1.11,<3.0` | `>=3.9,<3.13` |
 | `0.0.1`       | `>=0.1,<0.4` | `>=1.11,<3.0` | `>=3.9,<3.13` |
 
 <sup>*</sup> indicates an optional dependency
