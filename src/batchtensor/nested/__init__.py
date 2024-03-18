@@ -16,6 +16,7 @@ __all__ = [
     "argmin_along_seq",
     "argsort_along_batch",
     "argsort_along_seq",
+    "as_tensor",
     "asin",
     "asinh",
     "atan",
@@ -80,7 +81,7 @@ from batchtensor.nested.comparison import (
     sort_along_batch,
     sort_along_seq,
 )
-from batchtensor.nested.conversion import from_numpy, to_numpy
+from batchtensor.nested.conversion import as_tensor, from_numpy, to_numpy
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.nested.joining import cat_along_batch, cat_along_seq, repeat_along_seq
 from batchtensor.nested.math import (
