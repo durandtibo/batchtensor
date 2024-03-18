@@ -7,7 +7,7 @@ from coola import objects_are_equal
 from coola.testing import numpy_available
 from coola.utils import is_numpy_available
 
-from batchtensor.nested import from_numpy
+from batchtensor.nested import from_numpy, to_numpy
 
 if is_numpy_available():
     import numpy as np
@@ -67,5 +67,64 @@ def test_from_numpy_nested() -> None:
             ),
             "b": torch.tensor([4.0, 3.0, 2.0, 1.0, 0.0], dtype=torch.float),
             "list": [torch.tensor([5, 6, 7, 8, 9], dtype=torch.long)],
+        },
+    )
+
+
+##############################
+#     Tests for to_numpy     #
+##############################
+
+
+@numpy_available
+def test_to_numpy_array_float32() -> None:
+    assert objects_are_equal(to_numpy(torch.ones(2, 3)), np.ones((2, 3), dtype=np.float32))
+
+
+@numpy_available
+def test_to_numpy_array_float64() -> None:
+    assert objects_are_equal(to_numpy(torch.ones(2, 3, dtype=torch.float64)), np.ones((2, 3)))
+
+
+@numpy_available
+def test_to_numpy_dict() -> None:
+    assert objects_are_equal(
+        to_numpy(
+            {
+                "a": torch.tensor(
+                    [[0.0, 1.0], [2.0, 3.0], [4.0, 5.0], [6.0, 7.0], [8.0, 9.0]],
+                    dtype=torch.float32,
+                ),
+                "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.long),
+            }
+        ),
+        {
+            "a": np.array(
+                [[0.0, 1.0], [2.0, 3.0], [4.0, 5.0], [6.0, 7.0], [8.0, 9.0]], dtype=np.float32
+            ),
+            "b": np.array([4, 3, 2, 1, 0], dtype=int),
+        },
+    )
+
+
+@numpy_available
+def test_to_numpy_nested() -> None:
+    assert objects_are_equal(
+        to_numpy(
+            {
+                "a": torch.tensor(
+                    [[4.0, 9.0], [1.0, 7.0], [2.0, 5.0], [5.0, 6.0], [3.0, 8.0]],
+                    dtype=torch.float64,
+                ),
+                "b": torch.tensor([4.0, 3.0, 2.0, 1.0, 0.0], dtype=torch.float),
+                "list": [torch.tensor([5, 6, 7, 8, 9], dtype=torch.long)],
+            }
+        ),
+        {
+            "a": np.array(
+                [[4.0, 9.0], [1.0, 7.0], [2.0, 5.0], [5.0, 6.0], [3.0, 8.0]], dtype=np.float64
+            ),
+            "b": np.array([4.0, 3.0, 2.0, 1.0, 0.0], dtype=np.float32),
+            "list": [np.array([5, 6, 7, 8, 9], dtype=int)],
         },
     )
