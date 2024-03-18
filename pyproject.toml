@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "batchtensor"
-version = "0.0.3a0"
+version = "0.0.3"
 description = "Functions to manipulate batches of PyTorch tensors"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -27,6 +27,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering",
     "Topic :: Software Development :: Libraries",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
 packages = [
