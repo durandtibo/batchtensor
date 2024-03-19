@@ -85,7 +85,11 @@ class DefaultTensorIterator(BaseTensorIterator[Any]):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}()"
 
-    def iterate(self, data: Any, state: IteratorState) -> Generator[torch.Tensor, None, None]:
+    def iterate(
+        self,
+        data: Any,
+        state: IteratorState,  # noqa: ARG002
+    ) -> Generator[torch.Tensor, None, None]:
         if torch.is_tensor(data):
             yield data
 

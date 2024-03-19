@@ -67,7 +67,7 @@ def test_permute_along_seq_incorrect_shape() -> None:
 
 @patch(
     "batchtensor.tensor.permutation.torch.randperm",
-    lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),
+    lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch() -> None:
     assert objects_are_equal(
@@ -107,7 +107,7 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
 
 @patch(
     "batchtensor.tensor.permutation.torch.randperm",
-    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq() -> None:
     assert objects_are_equal(

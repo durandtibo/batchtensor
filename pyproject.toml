@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "batchtensor"
-version = "0.0.3"
+version = "0.0.4a0"
 description = "Functions to manipulate batches of PyTorch tensors"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -116,6 +116,7 @@ syntax = "google"
 lint.select = [
     "A", # builtins
     "ANN", # annotations
+    "ARG", # flake8-unused-arguments
     "B", # bugbear
     "BLE", # flake8-blind-except
     "C4", # flake8-comprehensions
@@ -174,6 +175,7 @@ lint.ignore = [
 lint.fixable = [
     "A",
     "ANN",
+    "ARG",
     "B",
     "BLE",
     "C4",

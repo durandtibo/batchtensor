@@ -137,7 +137,7 @@ def test_permute_along_seq_incorrect_shape() -> None:
 
 @patch(
     "batchtensor.nested.permutation.torch.randperm",
-    lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),
+    lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch_tensor() -> None:
     assert objects_are_equal(
@@ -148,7 +148,7 @@ def test_shuffle_along_batch_tensor() -> None:
 
 @patch(
     "batchtensor.nested.permutation.torch.randperm",
-    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch_dict() -> None:
     assert objects_are_equal(
@@ -162,7 +162,7 @@ def test_shuffle_along_batch_dict() -> None:
 
 @patch(
     "batchtensor.nested.permutation.torch.randperm",
-    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch_nested() -> None:
     assert objects_are_equal(
@@ -212,7 +212,7 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
 
 @patch(
     "batchtensor.nested.permutation.torch.randperm",
-    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq_tensor() -> None:
     assert objects_are_equal(
@@ -223,7 +223,7 @@ def test_shuffle_along_seq_tensor() -> None:
 
 @patch(
     "batchtensor.nested.permutation.torch.randperm",
-    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq_dict() -> None:
     assert objects_are_equal(
@@ -237,7 +237,7 @@ def test_shuffle_along_seq_dict() -> None:
 
 @patch(
     "batchtensor.nested.permutation.torch.randperm",
-    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),
+    lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq_nested() -> None:
     assert objects_are_equal(

@@ -88,7 +88,7 @@ class DefaultTensorIterator(BaseTensorIterator[Any]):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}()"
 
-    def iterate(self, data: Any, state: IteratorState) -> None:
+    def iterate(self, data: Any, state: IteratorState) -> None:  # noqa: ARG002
         return
 
 
