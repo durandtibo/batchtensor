@@ -18,7 +18,7 @@ import logging
 from collections import deque
 from collections.abc import Generator, Iterable, Mapping
 from dataclasses import dataclass
-from typing import Any, Generic, TypeVar
+from typing import Any, ClassVar, Generic, TypeVar
 
 import torch
 from coola.utils import str_indent, str_mapping
@@ -117,7 +117,7 @@ class MappingTensorIterator(BaseTensorIterator[Mapping]):
 class TensorIterator(BaseTensorIterator[Any]):
     """Implement a tensor iterator."""
 
-    registry: dict[type, BaseTensorIterator] = {}
+    registry: ClassVar[dict[type, BaseTensorIterator]] = {}
 
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(\n  {str_indent(str_mapping(self.registry))}\n)"
