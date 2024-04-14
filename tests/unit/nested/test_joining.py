@@ -105,14 +105,14 @@ def test_repeat_along_seq_tensor_repeats_0() -> None:
 
 def test_repeat_along_seq_tensor_repeats_1() -> None:
     assert objects_are_equal(
-        repeat_along_seq(torch.arange(10).view(2, 5), repeats=1),
+        repeat_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), repeats=1),
         torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
     )
 
 
 def test_repeat_along_seq_tensor_repeats_2() -> None:
     assert objects_are_equal(
-        repeat_along_seq(torch.arange(10).view(2, 5), repeats=2),
+        repeat_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), repeats=2),
         torch.tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]]),
     )
 
@@ -154,7 +154,11 @@ def test_repeat_along_seq_tensor_repeats_3d() -> None:
 def test_repeat_along_seq_dict_repeats_0() -> None:
     assert objects_are_equal(
         repeat_along_seq(
-            {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}, repeats=0
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
+            repeats=0,
         ),
         {"a": torch.zeros(2, 0, dtype=torch.long), "b": torch.zeros(1, 0, dtype=torch.long)},
     )
@@ -163,7 +167,11 @@ def test_repeat_along_seq_dict_repeats_0() -> None:
 def test_repeat_along_seq_dict_repeats_1() -> None:
     assert objects_are_equal(
         repeat_along_seq(
-            {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}, repeats=1
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
+            repeats=1,
         ),
         {
             "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
@@ -175,7 +183,11 @@ def test_repeat_along_seq_dict_repeats_1() -> None:
 def test_repeat_along_seq_dict_repeats_2() -> None:
     assert objects_are_equal(
         repeat_along_seq(
-            {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}, repeats=2
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
+            repeats=2,
         ),
         {
             "a": torch.tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]]),
@@ -227,7 +239,7 @@ def test_repeat_along_seq_dict_nested() -> None:
     assert objects_are_equal(
         repeat_along_seq(
             {
-                "a": torch.arange(10).view(2, 5),
+                "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
                 "b": torch.tensor([[4, 3, 2, 1, 0]]),
                 "list": [torch.tensor([[5, 6, 7, 8, 9]])],
             },

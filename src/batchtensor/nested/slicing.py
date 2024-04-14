@@ -50,7 +50,10 @@ def chunk_along_batch(
 
     >>> import torch
     >>> from batchtensor.nested import chunk_along_batch
-    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> outputs = chunk_along_batch(data, chunks=3)
     >>> outputs
     ({'a': tensor([[0, 1], [2, 3]]), 'b': tensor([4, 3])},
@@ -93,7 +96,7 @@ def chunk_along_seq(
 
     >>> import torch
     >>> from batchtensor.nested import chunk_along_seq
-    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
     >>> outputs = chunk_along_seq(data, chunks=3)
     >>> outputs
     ({'a': tensor([[0, 1], [5, 6]]), 'b': tensor([[4, 3]])},
@@ -135,7 +138,7 @@ def select_along_batch(data: Any, index: int) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import select_along_batch
-    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
     >>> out = select_along_batch(data, index=2)
     >>> out
     {'a': tensor([4, 5]), 'b': tensor(2)}
@@ -170,7 +173,7 @@ def select_along_seq(data: Any, index: int) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import select_along_seq
-    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
     >>> out = select_along_seq(data, index=2)
     >>> out
     {'a': tensor([2, 7]), 'b': tensor([2])}
@@ -204,7 +207,7 @@ def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: 
 
     >>> import torch
     >>> from batchtensor.nested import slice_along_batch
-    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
     >>> out = slice_along_batch(data, start=2)
     >>> out
     {'a': tensor([[4, 5], [6, 7], [8, 9]]), 'b': tensor([2, 1, 0])}
@@ -244,7 +247,7 @@ def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: in
 
     >>> import torch
     >>> from batchtensor.nested import slice_along_seq
-    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
     >>> out = slice_along_seq(data, start=2)
     >>> out
     {'a': tensor([[2, 3, 4], [7, 8, 9]]), 'b': tensor([[2, 1, 0]])}
@@ -286,7 +289,7 @@ def split_along_batch(
 
     >>> import torch
     >>> from batchtensor.nested import split_along_batch
-    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
     >>> outputs = split_along_batch(data, split_size_or_sections=2)
     >>> outputs
     ({'a': tensor([[0, 1], [2, 3]]), 'b': tensor([4, 3])},
@@ -332,7 +335,7 @@ def split_along_seq(
 
     >>> import torch
     >>> from batchtensor.nested import split_along_seq
-    >>> data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {"a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), "b": torch.tensor([[4, 3, 2, 1, 0]])}
     >>> outputs = split_along_seq(data, split_size_or_sections=2)
     >>> outputs
     ({'a': tensor([[0, 1], [5, 6]]), 'b': tensor([[4, 3]])},

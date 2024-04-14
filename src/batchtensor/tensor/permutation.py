@@ -36,7 +36,7 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
 
     >>> import torch
     >>> from batchtensor.tensor import permute_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = permute_along_batch(tensor, torch.tensor([2, 1, 3, 0, 4]))
     >>> out
     tensor([[4, 5],
@@ -82,7 +82,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
 
     >>> import torch
     >>> from batchtensor.tensor import permute_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = permute_along_seq(tensor, torch.tensor([2, 1, 3, 0, 4]))
     >>> out
     tensor([[2, 1, 3, 0, 4],
@@ -121,7 +121,7 @@ def shuffle_along_batch(
 
     >>> import torch
     >>> from batchtensor.tensor import shuffle_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = shuffle_along_batch(tensor)
     >>> out
     tensor([[...]])
@@ -156,7 +156,7 @@ def shuffle_along_seq(
 
     >>> import torch
     >>> from batchtensor.tensor import shuffle_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = shuffle_along_seq(tensor)
     >>> out
     tensor([[...]])

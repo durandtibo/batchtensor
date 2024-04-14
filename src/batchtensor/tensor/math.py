@@ -101,7 +101,7 @@ def cumsum_along_batch(tensor: torch.Tensor) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import cumsum_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = cumsum_along_batch(tensor)
     >>> out
     tensor([[ 0,  1], [ 2,  4], [ 6,  9], [12, 16], [20, 25]])
@@ -132,7 +132,7 @@ def cumsum_along_seq(tensor: torch.Tensor) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import cumsum_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = cumsum_along_seq(tensor)
     >>> out
     tensor([[ 0,  1,  3,  6, 10],

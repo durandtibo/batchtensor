@@ -106,7 +106,7 @@ def cumsum_along_batch(data: Any) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import cumsum_along_batch
-    >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
     >>> out = cumsum_along_batch(data)
     >>> out
     {'a': tensor([[ 0,  1], [ 2,  4], [ 6,  9], [12, 16], [20, 25]]), 'b': tensor([ 4,  7,  9, 10, 10])}
@@ -138,7 +138,7 @@ def cumsum_along_seq(data: Any) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import cumsum_along_seq
-    >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
     >>> out = cumsum_along_seq(data)
     >>> out
     {'a': tensor([[ 0,  1,  3,  6, 10], [ 5, 11, 18, 26, 35]]), 'b': tensor([[ 4,  7,  9, 10, 10]])}

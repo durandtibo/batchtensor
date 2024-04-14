@@ -32,7 +32,7 @@ def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch
 
     >>> import torch
     >>> from batchtensor.tensor import index_select_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = index_select_along_batch(tensor, torch.tensor([2, 4]))
     >>> out
     tensor([[4, 5],
@@ -72,7 +72,7 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
 
     >>> import torch
     >>> from batchtensor.tensor import index_select_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = index_select_along_seq(tensor, torch.tensor([2, 4]))
     >>> out
     tensor([[2, 4],
