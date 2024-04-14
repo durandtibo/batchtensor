@@ -21,7 +21,7 @@ def cat_along_batch(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> t
             dimension.
 
     Args:
-        tensors: Specifies the batches to concatenate.
+        tensors: The tensors to concatenate.
 
     Returns:
         The concatenated tensors along the batch dimension.
@@ -58,7 +58,7 @@ def cat_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> tor
             dimension.
 
     Args:
-        tensors: Specifies the batches to concatenate.
+        tensors: The tensors to concatenate.
 
     Returns:
         The concatenated tensors along the sequence dimension.
@@ -91,8 +91,8 @@ def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
 
     Args:
         tensor: The input tensor.
-        repeats: Specifies the number of times to repeat
-            the data along the sequence dimension.
+        repeats: The number of times to repeat the data along the
+            sequence dimension.
 
     Returns:
         A new tensor with the data repeated along the sequence

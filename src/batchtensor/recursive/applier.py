@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 
 class Applier(BaseApplier[Any]):
-    """Implement the default equality tester."""
+    """Implement the main applier."""
 
     registry: ClassVar[dict[type, BaseApplier]] = {}
 

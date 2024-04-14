@@ -19,7 +19,7 @@ T = TypeVar("T", Mapping, dict)
 
 
 class MappingApplier(BaseApplier[T]):
-    r"""Define a applier for mappings/dictionaries.
+    r"""Define an applier for mappings/dictionaries.
 
     Example usage:
 
