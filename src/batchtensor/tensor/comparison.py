@@ -33,6 +33,7 @@ def argsort_along_batch(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import argsort_along_batch
     >>> tensor = torch.tensor([[2, 6], [0, 3], [4, 9], [8, 1], [5, 7]])
@@ -70,6 +71,7 @@ def argsort_along_seq(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import argsort_along_seq
     >>> tensor = torch.tensor([[7, 3, 0, 8, 5], [1, 9, 6, 4, 2]])
@@ -111,6 +113,7 @@ def sort_along_batch(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import sort_along_batch
     >>> tensor = torch.tensor([[2, 6], [0, 3], [4, 9], [8, 1], [5, 7]])
@@ -154,6 +157,7 @@ def sort_along_seq(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import sort_along_seq
     >>> tensor = torch.tensor([[7, 3, 0, 8, 5], [1, 9, 6, 4, 2]])

@@ -24,8 +24,8 @@ def recursive_apply(data: Any, func: Callable, applier: BaseApplier | None = Non
     r"""Recursively apply a function on all the items in a nested data.
 
     Args:
-        data: Specifies the input data.
-        func: Specifies the function to apply on each item.
+        data: The input data.
+        func: The function to apply on each item.
         applier: Specifies an optional ``BaseApplier`` to customize the
             logic. By default, ``Applier`` is used.
 
@@ -35,6 +35,7 @@ def recursive_apply(data: Any, func: Callable, applier: BaseApplier | None = Non
      Example usage:
 
     ```pycon
+
     >>> from batchtensor.recursive import recursive_apply
     >>> out = recursive_apply({"a": 1, "b": "abc"}, str)
     >>> out

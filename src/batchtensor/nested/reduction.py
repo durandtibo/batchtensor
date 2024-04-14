@@ -50,6 +50,7 @@ def amax_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import amax_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -83,6 +84,7 @@ def amax_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import amax_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -116,6 +118,7 @@ def amin_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import amin_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -149,6 +152,7 @@ def amin_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import amin_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -184,6 +188,7 @@ def argmax_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import argmax_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -219,6 +224,7 @@ def argmax_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import argmax_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -254,6 +260,7 @@ def argmin_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import argmin_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -289,6 +296,7 @@ def argmin_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import argmin_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -324,6 +332,7 @@ def max_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import max_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -369,6 +378,7 @@ def max_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import max_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -412,6 +422,7 @@ def mean_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import mean_along_batch
     >>> data = {"a": torch.arange(10, dtype=torch.float).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float)}
@@ -446,6 +457,7 @@ def mean_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import mean_along_seq
     >>> data = {'a': torch.arange(10, dtype=torch.float).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]], dtype=torch.float)}
@@ -481,6 +493,7 @@ def median_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import median_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -526,6 +539,7 @@ def median_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import median_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -571,6 +585,7 @@ def min_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import min_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -616,6 +631,7 @@ def min_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import min_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -659,6 +675,7 @@ def prod_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import prod_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([5, 4, 3, 2, 1])}
@@ -692,6 +709,7 @@ def prod_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import prod_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[5, 4, 3, 2, 1]])}
@@ -725,6 +743,7 @@ def sum_along_batch(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import sum_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -758,6 +777,7 @@ def sum_along_seq(data: Any, keepdim: bool = False) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import sum_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}

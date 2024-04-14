@@ -47,6 +47,7 @@ def chunk_along_batch(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import chunk_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -89,6 +90,7 @@ def chunk_along_seq(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import chunk_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -130,6 +132,7 @@ def select_along_batch(data: Any, index: int) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import select_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -164,6 +167,7 @@ def select_along_seq(data: Any, index: int) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import select_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -186,10 +190,10 @@ def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: 
 
     Args:
         data: The input data. Each item must be a tensor.
-        start: Specifies the index where the slicing of object starts.
-        stop: Specifies the index where the slicing of object stops.
+        start: The index where the slicing of object starts.
+        stop: The index where the slicing of object stops.
             ``None`` means last.
-        step: Specifies the increment between each index for slicing.
+        step: The increment between each index for slicing.
 
     Returns:
         The sliced tensor along the batch dimension.
@@ -197,6 +201,7 @@ def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: 
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import slice_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -225,10 +230,10 @@ def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: in
 
     Args:
         data: The input data. Each item must be a tensor.
-        start: Specifies the index where the slicing of object starts.
-        stop: Specifies the index where the slicing of object stops.
+        start: The index where the slicing of object starts.
+        stop: The index where the slicing of object stops.
             ``None`` means last.
-        step: Specifies the increment between each index for slicing.
+        step: The increment between each index for slicing.
 
     Returns:
         The sliced tensor along the batch dimension.
@@ -236,6 +241,7 @@ def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: in
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import slice_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -277,6 +283,7 @@ def split_along_batch(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import split_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -322,6 +329,7 @@ def split_along_seq(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import split_along_seq
     >>> data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}

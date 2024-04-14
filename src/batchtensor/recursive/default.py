@@ -22,6 +22,7 @@ class DefaultApplier(BaseApplier[Any]):
     Example usage:
 
     ```pycon
+
     >>> from batchtensor.recursive import DefaultApplier, AutoApplier, ApplyState
     >>> state = ApplyState(applier=AutoApplier())
     >>> applier = DefaultApplier()

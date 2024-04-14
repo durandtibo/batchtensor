@@ -33,6 +33,7 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import permute_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -78,6 +79,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import permute_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -116,6 +118,7 @@ def shuffle_along_batch(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import shuffle_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -150,6 +153,7 @@ def shuffle_along_seq(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import shuffle_along_seq
     >>> tensor = torch.arange(10).view(2, 5)

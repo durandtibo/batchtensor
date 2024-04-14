@@ -37,6 +37,7 @@ def acos(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import acos
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -63,6 +64,7 @@ def acosh(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import acosh
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -88,6 +90,7 @@ def asin(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import asin
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -114,6 +117,7 @@ def asinh(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import asinh
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -139,6 +143,7 @@ def atan(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import atan
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -165,6 +170,7 @@ def atanh(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import atanh
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -190,6 +196,7 @@ def cos(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import cos
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -215,6 +222,7 @@ def cosh(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import cosh
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -240,6 +248,7 @@ def sin(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import sin
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -265,6 +274,7 @@ def sinh(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import sinh
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -290,6 +300,7 @@ def tan(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import tan
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
@@ -315,6 +326,7 @@ def tanh(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import tanh
     >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}

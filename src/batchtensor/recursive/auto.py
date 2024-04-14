@@ -18,7 +18,8 @@ if TYPE_CHECKING:
 
 
 class AutoApplier(BaseApplier[Any]):
-    """Implement the main applier."""
+    """Implement an applier that can automatically call other appliers
+    based on the data type."""
 
     registry: ClassVar[dict[type, BaseApplier]] = {}
 
@@ -30,8 +31,8 @@ class AutoApplier(BaseApplier[Any]):
         r"""Add an applier for a given data type.
 
         Args:
-            data_type: Specifies the data type for this test.
-            applier: Specifies the applier object.
+            data_type: The data type for this test.
+            applier: The applier object.
             exist_ok: If ``False``, ``RuntimeError`` is raised if the
                 data type already exists. This parameter should be set
                 to ``True`` to overwrite the applier for a type.
@@ -65,7 +66,7 @@ class AutoApplier(BaseApplier[Any]):
         r"""Indicate if an applier is registered for the given data type.
 
         Args:
-            data_type: Specifies the data type to check.
+            data_type: The data type to check.
 
         Returns:
             ``True`` if an applier is registered, otherwise ``False``.
@@ -88,7 +89,7 @@ class AutoApplier(BaseApplier[Any]):
         r"""Find the applier associated to an object.
 
         Args:
-            data_type: Specifies the data type to get.
+            data_type: The data type to get.
 
         Returns:
             The applier associated to the data type.
@@ -111,6 +112,11 @@ class AutoApplier(BaseApplier[Any]):
 
 
 def register_appliers(mapping: Mapping[type, BaseApplier]) -> None:
+    r"""Register some appliers to ``AutoApplier``.
+
+    Args:
+        mapping: The mapping of data types and appliers.
+    """
     for typ, op in mapping.items():
         if not AutoApplier.has_applier(typ):  # pragma: no cover
             AutoApplier.add_applier(typ, op)

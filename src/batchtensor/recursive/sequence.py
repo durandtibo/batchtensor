@@ -24,6 +24,7 @@ class SequenceApplier(BaseApplier[T]):
     Example usage:
 
     ```pycon
+
     >>> from batchtensor.recursive import SequenceApplier, AutoApplier, ApplyState
     >>> state = ApplyState(applier=AutoApplier())
     >>> applier = SequenceApplier()

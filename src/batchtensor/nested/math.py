@@ -35,6 +35,7 @@ def cumprod_along_batch(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import cumprod_along_batch
     >>> data = {
@@ -69,6 +70,7 @@ def cumprod_along_seq(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import cumprod_along_seq
     >>> data = {"a": torch.tensor([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]), "b": torch.tensor([[4, 3, 2, 1, 0]])}
@@ -101,6 +103,7 @@ def cumsum_along_batch(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import cumsum_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -132,6 +135,7 @@ def cumsum_along_seq(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import cumsum_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
