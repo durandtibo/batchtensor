@@ -1,8 +1,9 @@
-r"""Contain the main applier that call other appliers."""
+r"""Contain an applier that can automatically call other appliers based
+on the data type."""
 
 from __future__ import annotations
 
-__all__ = ["Applier"]
+__all__ = ["AutoApplier"]
 
 from typing import TYPE_CHECKING, Any, ClassVar
 
@@ -16,7 +17,7 @@ if TYPE_CHECKING:
     from batchtensor.recursive import ApplyState
 
 
-class Applier(BaseApplier[Any]):
+class AutoApplier(BaseApplier[Any]):
     """Implement the main applier."""
 
     registry: ClassVar[dict[type, BaseApplier]] = {}
@@ -42,8 +43,8 @@ class Applier(BaseApplier[Any]):
         Example usage:
 
         ```pycon
-        >>> from batchtensor.recursive import Applier, SequenceApplier
-        >>> Applier.add_applier(list, SequenceApplier(), exist_ok=True)
+        >>> from batchtensor.recursive import AutoApplier, SequenceApplier
+        >>> AutoApplier.add_applier(list, SequenceApplier(), exist_ok=True)
 
         ```
         """
@@ -72,10 +73,10 @@ class Applier(BaseApplier[Any]):
         Example usage:
 
         ```pycon
-        >>> from batchtensor.recursive import Applier
-        >>> Applier.has_applier(list)
+        >>> from batchtensor.recursive import AutoApplier
+        >>> AutoApplier.has_applier(list)
         True
-        >>> Applier.has_applier(str)
+        >>> AutoApplier.has_applier(str)
         False
 
         ```
@@ -95,8 +96,8 @@ class Applier(BaseApplier[Any]):
         Example usage:
 
         ```pycon
-        >>> from batchtensor.recursive import Applier
-        >>> Applier.find_applier(list)
+        >>> from batchtensor.recursive import AutoApplier
+        >>> AutoApplier.find_applier(list)
         SequenceApplier()
 
         ```
@@ -111,5 +112,5 @@ class Applier(BaseApplier[Any]):
 
 def register_appliers(mapping: Mapping[type, BaseApplier]) -> None:
     for typ, op in mapping.items():
-        if not Applier.has_applier(typ):  # pragma: no cover
-            Applier.add_applier(typ, op)
+        if not AutoApplier.has_applier(typ):  # pragma: no cover
+            AutoApplier.add_applier(typ, op)

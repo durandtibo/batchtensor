@@ -7,7 +7,7 @@ __all__ = ["DefaultApplier"]
 
 from typing import TYPE_CHECKING, Any
 
-from batchtensor.recursive.applier import register_appliers
+from batchtensor.recursive.auto import register_appliers
 from batchtensor.recursive.base import BaseApplier
 
 if TYPE_CHECKING:
@@ -22,8 +22,8 @@ class DefaultApplier(BaseApplier[Any]):
     Example usage:
 
     ```pycon
-    >>> from batchtensor.recursive import DefaultApplier, Applier, ApplyState
-    >>> state = ApplyState(applier=Applier())
+    >>> from batchtensor.recursive import DefaultApplier, AutoApplier, ApplyState
+    >>> state = ApplyState(applier=AutoApplier())
     >>> applier = DefaultApplier()
     >>> applier
     DefaultApplier()
