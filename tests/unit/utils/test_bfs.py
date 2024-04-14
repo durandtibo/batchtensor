@@ -56,33 +56,48 @@ def test_bfs_tensor_no_tensor(data: Any) -> None:
 @pytest.mark.parametrize(
     "data",
     [
-        pytest.param([torch.ones(2, 3), torch.arange(5)], id="list with only tensors"),
         pytest.param(
-            ["abc", torch.ones(2, 3), 42, torch.arange(5)], id="list with non tensor objects"
-        ),
-        pytest.param((torch.ones(2, 3), torch.arange(5)), id="tuple with only tensors"),
-        pytest.param(
-            ("abc", torch.ones(2, 3), 42, torch.arange(5)), id="tuple with non tensor objects"
+            [torch.ones(2, 3), torch.tensor([0, 1, 2, 3, 4])], id="list with only tensors"
         ),
         pytest.param(
-            {"key1": torch.ones(2, 3), "key2": torch.arange(5)}, id="dict with only tensors"
+            ["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])],
+            id="list with non tensor objects",
         ),
         pytest.param(
-            {"key1": "abc", "key2": torch.ones(2, 3), "key3": 42, "key4": torch.arange(5)},
+            (torch.ones(2, 3), torch.tensor([0, 1, 2, 3, 4])), id="tuple with only tensors"
+        ),
+        pytest.param(
+            ("abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])),
+            id="tuple with non tensor objects",
+        ),
+        pytest.param(
+            {"key1": torch.ones(2, 3), "key2": torch.tensor([0, 1, 2, 3, 4])},
+            id="dict with only tensors",
+        ),
+        pytest.param(
+            {
+                "key1": "abc",
+                "key2": torch.ones(2, 3),
+                "key3": 42,
+                "key4": torch.tensor([0, 1, 2, 3, 4]),
+            },
             id="dict with non tensor objects",
         ),
     ],
 )
 def test_bfs_tensor_iterable_tensor(data: Any) -> None:
-    assert objects_are_equal(list(bfs_tensor(data)), [torch.ones(2, 3), torch.arange(5)])
+    assert objects_are_equal(
+        list(bfs_tensor(data)), [torch.ones(2, 3), torch.tensor([0, 1, 2, 3, 4])]
+    )
 
 
 @pytest.mark.parametrize(
     "data",
     [
-        pytest.param({torch.ones(2, 3), torch.arange(5)}, id="set with only tensors"),
+        pytest.param({torch.ones(2, 3), torch.tensor([0, 1, 2, 3, 4])}, id="set with only tensors"),
         pytest.param(
-            {"abc", torch.ones(2, 3), 42, torch.arange(5)}, id="set with non tensor objects"
+            {"abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])},
+            id="set with non tensor objects",
         ),
     ],
 )
@@ -92,21 +107,21 @@ def test_bfs_tensor_set(data: Any) -> None:
 
 def test_bfs_tensor_nested_data() -> None:
     data = [
-        {"key1": torch.zeros(1, 1, 1), "key2": torch.arange(10)},
+        {"key1": torch.zeros(1, 1, 1), "key2": torch.tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])},
         torch.ones(2, 3),
-        [torch.ones(4), -torch.arange(3), [torch.ones(5)]],
+        [torch.ones(4), torch.tensor([0, -1, -2]), [torch.ones(5)]],
         (1, torch.tensor([42.0]), torch.zeros(2)),
-        torch.arange(5),
+        torch.tensor([0, 1, 2, 3, 4]),
     ]
     assert objects_are_equal(
         list(bfs_tensor(data)),
         [
             torch.ones(2, 3),
-            torch.arange(5),
+            torch.tensor([0, 1, 2, 3, 4]),
             torch.zeros(1, 1, 1),
-            torch.arange(10),
+            torch.tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
             torch.ones(4),
-            -torch.arange(3),
+            torch.tensor([0, -1, -2]),
             torch.tensor([42.0]),
             torch.zeros(2),
             torch.ones(5),
@@ -154,14 +169,18 @@ def test_iterable_tensor_iterator_iterate_empty(data: Iterable, state: IteratorS
 @pytest.mark.parametrize(
     "data",
     [
-        pytest.param(["abc", torch.ones(2, 3), 42, torch.arange(5)], id="list"),
-        pytest.param(deque(["abc", torch.ones(2, 3), 42, torch.arange(5)]), id="deque"),
-        pytest.param(("abc", torch.ones(2, 3), 42, torch.arange(5)), id="tuple"),
+        pytest.param(["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])], id="list"),
+        pytest.param(
+            deque(["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])]), id="deque"
+        ),
+        pytest.param(("abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])), id="tuple"),
     ],
 )
 def test_iterable_tensor_iterator_iterate(data: Iterable, state: IteratorState) -> None:
     IterableTensorIterator().iterate(data, state)
-    assert objects_are_equal(list(state.queue), ["abc", torch.ones(2, 3), 42, torch.arange(5)])
+    assert objects_are_equal(
+        list(state.queue), ["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])]
+    )
 
 
 ###########################################
@@ -189,12 +208,22 @@ def test_mapping_tensor_iterator_iterate_empty(data: Mapping, state: IteratorSta
     "data",
     [
         pytest.param(
-            {"key1": "abc", "key2": torch.ones(2, 3), "key3": 42, "key4": torch.arange(5)},
+            {
+                "key1": "abc",
+                "key2": torch.ones(2, 3),
+                "key3": 42,
+                "key4": torch.tensor([0, 1, 2, 3, 4]),
+            },
             id="dict",
         ),
         pytest.param(
             OrderedDict(
-                {"key1": "abc", "key2": torch.ones(2, 3), "key3": 42, "key4": torch.arange(5)}
+                {
+                    "key1": "abc",
+                    "key2": torch.ones(2, 3),
+                    "key3": 42,
+                    "key4": torch.tensor([0, 1, 2, 3, 4]),
+                }
             ),
             id="OrderedDict",
         ),
@@ -202,7 +231,9 @@ def test_mapping_tensor_iterator_iterate_empty(data: Mapping, state: IteratorSta
 )
 def test_mapping_tensor_iterator_iterate(data: Mapping, state: IteratorState) -> None:
     MappingTensorIterator().iterate(data, state)
-    assert objects_are_equal(list(state.queue), ["abc", torch.ones(2, 3), 42, torch.arange(5)])
+    assert objects_are_equal(
+        list(state.queue), ["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])]
+    )
 
 
 ####################################
@@ -241,8 +272,12 @@ def test_iterator_add_iterator_duplicate_exist_ok_false() -> None:
 
 
 def test_iterator_iterate(state: IteratorState) -> None:
-    TensorIterator().iterate(["abc", torch.ones(2, 3), 42, torch.arange(5)], state=state)
-    assert objects_are_equal(list(state.queue), ["abc", torch.ones(2, 3), 42, torch.arange(5)])
+    TensorIterator().iterate(
+        ["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])], state=state
+    )
+    assert objects_are_equal(
+        list(state.queue), ["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])]
+    )
 
 
 def test_iterator_has_iterator_true() -> None:

@@ -105,7 +105,7 @@ def to_numpy(data: Any) -> Any:
 
     >>> import numpy as np
     >>> from batchtensor.nested import to_numpy
-    >>> data = {"a": torch.ones(2, 5), "b": torch.arange(5)}
+    >>> data = {"a": torch.ones(2, 5), "b": torch.tensor([0, 1, 2, 3, 4])}
     >>> out = to_numpy(data)
     >>> out
     {'a': array([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]], dtype=float32), 'b': array([0, 1, 2, 3, 4])}

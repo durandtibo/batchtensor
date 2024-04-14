@@ -15,7 +15,7 @@ from batchtensor.nested import to
 def test_to_dtype_tensor() -> None:
     assert objects_are_equal(
         to(torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), dtype=torch.float),
-        torch.arange(10, dtype=torch.float).view(5, 2),
+        torch.tensor([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0], [6.0, 7.0], [8.0, 9.0]]),
     )
 
 
@@ -29,7 +29,7 @@ def test_to_dtype_dict() -> None:
             dtype=torch.float,
         ),
         {
-            "a": torch.arange(10, dtype=torch.float).view(5, 2),
+            "a": torch.tensor([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0], [6.0, 7.0], [8.0, 9.0]]),
             "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float),
         },
     )
@@ -47,7 +47,7 @@ def test_to_device(device: str) -> None:
             device=device,
         ),
         {
-            "a": torch.arange(10, device=device).view(5, 2),
+            "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], device=device),
             "b": torch.tensor([4, 3, 2, 1, 0], device=device),
         },
     )

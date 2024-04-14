@@ -48,7 +48,7 @@ def test_cumprod_along_seq(dtype: torch.dtype) -> None:
 @pytest.mark.parametrize("dtype", DTYPES)
 def test_cumsum_along_batch(dtype: torch.dtype) -> None:
     assert objects_are_equal(
-        cumsum_along_batch(torch.arange(10, dtype=dtype).view(5, 2)),
+        cumsum_along_batch(torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], dtype=dtype)),
         torch.tensor([[0, 1], [2, 4], [6, 9], [12, 16], [20, 25]], dtype=dtype),
     )
 
@@ -61,6 +61,6 @@ def test_cumsum_along_batch(dtype: torch.dtype) -> None:
 @pytest.mark.parametrize("dtype", DTYPES)
 def test_cumsum_along_seq(dtype: torch.dtype) -> None:
     assert objects_are_equal(
-        cumsum_along_seq(torch.arange(10, dtype=dtype).view(2, 5)),
+        cumsum_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], dtype=dtype)),
         torch.tensor([[0, 1, 3, 6, 10], [5, 11, 18, 26, 35]], dtype=dtype),
     )

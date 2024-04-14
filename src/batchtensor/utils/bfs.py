@@ -47,7 +47,7 @@ def bfs_tensor(data: Any) -> Generator[torch.Tensor, None, None]:
 
     >>> import torch
     >>> from batchtensor.utils.bfs import bfs_tensor
-    >>> list(bfs_tensor(["abc", torch.ones(2, 3), 42, torch.arange(5)]))
+    >>> list(bfs_tensor(["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])]))
     [tensor([[1., 1., 1.], [1., 1., 1.]]), tensor([0, 1, 2, 3, 4])]
 
     ```
