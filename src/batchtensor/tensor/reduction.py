@@ -51,7 +51,7 @@ def amax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
 
     >>> import torch
     >>> from batchtensor.tensor import amax_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = amax_along_batch(tensor)
     >>> out
     tensor([8, 9])
@@ -84,7 +84,7 @@ def amax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import amax_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = amax_along_seq(tensor)
     >>> out
     tensor([4, 9])
@@ -117,7 +117,7 @@ def amin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
 
     >>> import torch
     >>> from batchtensor.tensor import amin_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = amin_along_batch(tensor)
     >>> out
     tensor([0, 1])
@@ -150,7 +150,7 @@ def amin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import amin_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = amin_along_seq(tensor)
     >>> out
     tensor([0, 5])
@@ -185,7 +185,7 @@ def argmax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Ten
 
     >>> import torch
     >>> from batchtensor.tensor import argmax_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = argmax_along_batch(tensor)
     >>> out
     tensor([4, 4])
@@ -220,7 +220,7 @@ def argmax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
 
     >>> import torch
     >>> from batchtensor.tensor import argmax_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = argmax_along_seq(tensor)
     >>> out
     tensor([4, 4])
@@ -255,7 +255,7 @@ def argmin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Ten
 
     >>> import torch
     >>> from batchtensor.tensor import argmin_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = argmin_along_batch(tensor)
     >>> out
     tensor([0, 0])
@@ -290,7 +290,7 @@ def argmin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
 
     >>> import torch
     >>> from batchtensor.tensor import argmin_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = argmin_along_seq(tensor)
     >>> out
     tensor([0, 0])
@@ -325,7 +325,7 @@ def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
 
     >>> import torch
     >>> from batchtensor.tensor import max_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = max_along_batch(tensor)
     >>> out
     torch.return_types.max(
@@ -364,7 +364,7 @@ def max_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_t
 
     >>> import torch
     >>> from batchtensor.tensor import max_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = max_along_seq(tensor)
     >>> out
     torch.return_types.max(
@@ -469,7 +469,7 @@ def median_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.ret
 
     >>> import torch
     >>> from batchtensor.tensor import median_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = median_along_batch(tensor)
     >>> out
     torch.return_types.median(
@@ -508,7 +508,7 @@ def median_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.retur
 
     >>> import torch
     >>> from batchtensor.tensor import median_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = median_along_seq(tensor)
     >>> out
     torch.return_types.median(
@@ -547,7 +547,7 @@ def min_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
 
     >>> import torch
     >>> from batchtensor.tensor import min_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = min_along_batch(tensor)
     >>> out
     torch.return_types.min(
@@ -586,7 +586,7 @@ def min_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_t
 
     >>> import torch
     >>> from batchtensor.tensor import min_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = min_along_seq(tensor)
     >>> out
     torch.return_types.min(
@@ -623,7 +623,7 @@ def prod_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
 
     >>> import torch
     >>> from batchtensor.tensor import prod_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = prod_along_batch(tensor)
     >>> out
     tensor([  0, 945])
@@ -656,7 +656,7 @@ def prod_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import prod_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = prod_along_seq(tensor)
     >>> out
     tensor([    0, 15120])
@@ -689,7 +689,7 @@ def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor
 
     >>> import torch
     >>> from batchtensor.tensor import sum_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = sum_along_batch(tensor)
     >>> out
     tensor([20, 25])
@@ -722,7 +722,7 @@ def sum_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import sum_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = sum_along_seq(tensor)
     >>> out
     tensor([10, 35])

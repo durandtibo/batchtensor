@@ -25,7 +25,8 @@ INDEX_DTYPES = [torch.int, torch.long]
 def test_permute_along_batch_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         permute_along_batch(
-            torch.arange(10).view(5, 2), torch.tensor([4, 3, 2, 1, 0], dtype=dtype)
+            torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+            torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         torch.tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1]]),
     )
@@ -35,7 +36,10 @@ def test_permute_along_batch_tensor(dtype: torch.dtype) -> None:
 def test_permute_along_batch_dict(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         permute_along_batch(
-            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])},
+            {
+                "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+                "b": torch.tensor([4, 3, 2, 1, 0]),
+            },
             torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         {
@@ -69,7 +73,10 @@ def test_permute_along_batch_incorrect_shape() -> None:
         match=r"permutation shape \(.*\) is not compatible with tensor shape \(.*\)",
     ):
         permute_along_batch(
-            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])},
+            {
+                "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+                "b": torch.tensor([4, 3, 2, 1, 0]),
+            },
             torch.tensor([4, 3, 2, 1, 0, 2]),
         )
 
@@ -82,7 +89,10 @@ def test_permute_along_batch_incorrect_shape() -> None:
 @pytest.mark.parametrize("dtype", INDEX_DTYPES)
 def test_permute_along_seq_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
-        permute_along_seq(torch.arange(10).view(2, 5), torch.tensor([4, 3, 2, 1, 0], dtype=dtype)),
+        permute_along_seq(
+            torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+            torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
+        ),
         torch.tensor([[4, 3, 2, 1, 0], [9, 8, 7, 6, 5]]),
     )
 
@@ -91,7 +101,10 @@ def test_permute_along_seq_tensor(dtype: torch.dtype) -> None:
 def test_permute_along_seq_dict(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         permute_along_seq(
-            {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])},
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
             torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         {
@@ -125,7 +138,10 @@ def test_permute_along_seq_incorrect_shape() -> None:
         match=r"permutation shape \(.*\) is not compatible with tensor shape \(.*\)",
     ):
         permute_along_seq(
-            {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])},
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            },
             torch.tensor([4, 3, 2, 1, 0, 2]),
         )
 
@@ -152,7 +168,12 @@ def test_shuffle_along_batch_tensor() -> None:
 )
 def test_shuffle_along_batch_dict() -> None:
     assert objects_are_equal(
-        shuffle_along_batch({"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}),
+        shuffle_along_batch(
+            {
+                "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+                "b": torch.tensor([4, 3, 2, 1, 0]),
+            }
+        ),
         {
             "a": torch.tensor([[4, 5], [8, 9], [2, 3], [6, 7], [0, 1]]),
             "b": torch.tensor([2, 0, 3, 1, 4]),
@@ -182,7 +203,10 @@ def test_shuffle_along_batch_nested() -> None:
 
 
 def test_shuffle_along_batch_same_random_seed() -> None:
-    data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    data = {
+        "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        "b": torch.tensor([4, 3, 2, 1, 0]),
+    }
     assert objects_are_equal(
         shuffle_along_batch(data, get_torch_generator(1)),
         shuffle_along_batch(data, get_torch_generator(1)),
@@ -190,7 +214,10 @@ def test_shuffle_along_batch_same_random_seed() -> None:
 
 
 def test_shuffle_along_batch_different_random_seeds() -> None:
-    data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    data = {
+        "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        "b": torch.tensor([4, 3, 2, 1, 0]),
+    }
     assert not objects_are_equal(
         shuffle_along_batch(data, get_torch_generator(1)),
         shuffle_along_batch(data, get_torch_generator(2)),
@@ -198,7 +225,10 @@ def test_shuffle_along_batch_different_random_seeds() -> None:
 
 
 def test_shuffle_along_batch_multiple_shuffle() -> None:
-    data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
+    data = {
+        "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        "b": torch.tensor([4, 3, 2, 1, 0]),
+    }
     generator = get_torch_generator(1)
     assert not objects_are_equal(
         shuffle_along_batch(data, generator), shuffle_along_batch(data, generator)
@@ -216,7 +246,7 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
 )
 def test_shuffle_along_seq_tensor() -> None:
     assert objects_are_equal(
-        shuffle_along_seq(torch.arange(10).view(2, 5)),
+        shuffle_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])),
         torch.tensor([[2, 4, 1, 3, 0], [7, 9, 6, 8, 5]]),
     )
 
@@ -227,7 +257,12 @@ def test_shuffle_along_seq_tensor() -> None:
 )
 def test_shuffle_along_seq_dict() -> None:
     assert objects_are_equal(
-        shuffle_along_seq({"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}),
+        shuffle_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+                "b": torch.tensor([[4, 3, 2, 1, 0]]),
+            }
+        ),
         {
             "a": torch.tensor([[2, 4, 1, 3, 0], [7, 9, 6, 8, 5]]),
             "b": torch.tensor([[2, 0, 3, 1, 4]]),
@@ -257,7 +292,10 @@ def test_shuffle_along_seq_nested() -> None:
 
 
 def test_shuffle_along_seq_same_random_seed() -> None:
-    data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+    data = {
+        "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    }
     assert objects_are_equal(
         shuffle_along_seq(data, get_torch_generator(1)),
         shuffle_along_seq(data, get_torch_generator(1)),
@@ -265,7 +303,10 @@ def test_shuffle_along_seq_same_random_seed() -> None:
 
 
 def test_shuffle_along_seq_different_random_seeds() -> None:
-    data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+    data = {
+        "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    }
     assert not objects_are_equal(
         shuffle_along_seq(data, get_torch_generator(1)),
         shuffle_along_seq(data, get_torch_generator(2)),
@@ -273,7 +314,10 @@ def test_shuffle_along_seq_different_random_seeds() -> None:
 
 
 def test_shuffle_along_seq_multiple_shuffle() -> None:
-    data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+    data = {
+        "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    }
     generator = get_torch_generator(1)
     assert not objects_are_equal(
         shuffle_along_seq(data, generator), shuffle_along_seq(data, generator)

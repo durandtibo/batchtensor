@@ -16,7 +16,10 @@ INDEX_DTYPES = [torch.int, torch.long]
 @pytest.mark.parametrize("dtype", INDEX_DTYPES)
 def test_index_select_along_batch_2(dtype: torch.dtype) -> None:
     assert objects_are_equal(
-        index_select_along_batch(torch.arange(10).view(5, 2), torch.tensor([2, 4], dtype=dtype)),
+        index_select_along_batch(
+            torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+            torch.tensor([2, 4], dtype=dtype),
+        ),
         torch.tensor([[4, 5], [8, 9]]),
     )
 
@@ -25,7 +28,8 @@ def test_index_select_along_batch_2(dtype: torch.dtype) -> None:
 def test_index_select_along_batch_5(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         index_select_along_batch(
-            torch.arange(10).view(5, 2), torch.tensor([4, 3, 2, 1, 0], dtype=dtype)
+            torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+            torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         torch.tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1]]),
     )
@@ -35,7 +39,8 @@ def test_index_select_along_batch_5(dtype: torch.dtype) -> None:
 def test_index_select_along_batch_7(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         index_select_along_batch(
-            torch.arange(10).view(5, 2), torch.tensor([4, 3, 2, 1, 0, 2, 0], dtype=dtype)
+            torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+            torch.tensor([4, 3, 2, 1, 0, 2, 0], dtype=dtype),
         ),
         torch.tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1], [4, 5], [0, 1]]),
     )
@@ -50,7 +55,9 @@ def test_index_select_along_batch_7(dtype: torch.dtype) -> None:
 @pytest.mark.parametrize("dtype", INDEX_DTYPES)
 def test_index_select_along_seq_2(dtype: torch.dtype, index: torch.Tensor) -> None:
     assert objects_are_equal(
-        index_select_along_seq(torch.arange(10).view(2, 5), index.to(dtype=dtype)),
+        index_select_along_seq(
+            torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), index.to(dtype=dtype)
+        ),
         torch.tensor([[2, 4], [7, 9]]),
     )
 
@@ -59,7 +66,8 @@ def test_index_select_along_seq_2(dtype: torch.dtype, index: torch.Tensor) -> No
 def test_index_select_along_seq_5(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         index_select_along_seq(
-            torch.arange(10).view(2, 5), torch.tensor([4, 3, 2, 1, 0], dtype=dtype)
+            torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+            torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         torch.tensor([[4, 3, 2, 1, 0], [9, 8, 7, 6, 5]]),
     )
@@ -69,7 +77,8 @@ def test_index_select_along_seq_5(dtype: torch.dtype) -> None:
 def test_index_select_along_seq_7(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         index_select_along_seq(
-            torch.arange(10).view(2, 5), torch.tensor([4, 3, 2, 1, 0, 2, 0], dtype=dtype)
+            torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+            torch.tensor([4, 3, 2, 1, 0, 2, 0], dtype=dtype),
         ),
         torch.tensor([[4, 3, 2, 1, 0, 2, 0], [9, 8, 7, 6, 5, 7, 5]]),
     )
@@ -77,7 +86,9 @@ def test_index_select_along_seq_7(dtype: torch.dtype) -> None:
 
 def test_index_select_along_seq_per_batch_index() -> None:
     assert objects_are_equal(
-        index_select_along_seq(torch.arange(10).view(2, 5), torch.tensor([[2, 4], [1, 3]])),
+        index_select_along_seq(
+            torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), torch.tensor([[2, 4], [1, 3]])
+        ),
         torch.tensor([[2, 4], [6, 8]]),
     )
 

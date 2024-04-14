@@ -17,7 +17,8 @@ INDEX_DTYPES = [torch.int, torch.long]
 def test_index_select_along_batch_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         index_select_along_batch(
-            torch.arange(10).view(5, 2), torch.tensor([4, 3, 2, 1, 0], dtype=dtype)
+            torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+            torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         torch.tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1]]),
     )
@@ -27,7 +28,10 @@ def test_index_select_along_batch_tensor(dtype: torch.dtype) -> None:
 def test_index_select_along_batch_dict(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         index_select_along_batch(
-            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([[5], [4], [3], [2], [1]])},
+            {
+                "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+                "b": torch.tensor([[5], [4], [3], [2], [1]]),
+            },
             torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         {
@@ -46,7 +50,8 @@ def test_index_select_along_batch_dict(dtype: torch.dtype) -> None:
 def test_index_select_along_seq_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         index_select_along_seq(
-            torch.arange(10).view(2, 5), torch.tensor([4, 3, 2, 1, 0], dtype=dtype)
+            torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+            torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         torch.tensor([[4, 3, 2, 1, 0], [9, 8, 7, 6, 5]]),
     )
@@ -56,7 +61,10 @@ def test_index_select_along_seq_tensor(dtype: torch.dtype) -> None:
 def test_index_select_along_seq_dict(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         index_select_along_seq(
-            {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[5, 4, 3, 2, 1]])},
+            {
+                "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+                "b": torch.tensor([[5, 4, 3, 2, 1]]),
+            },
             torch.tensor([4, 3, 2, 1, 0], dtype=dtype),
         ),
         {

@@ -46,7 +46,7 @@ def chunk_along_batch(tensor: torch.Tensor, chunks: int) -> tuple[torch.Tensor, 
 
     >>> import torch
     >>> from batchtensor.tensor import chunk_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> outputs = chunk_along_batch(tensor, chunks=3)
     >>> outputs
     (tensor([[0, 1], [2, 3]]),
@@ -80,7 +80,7 @@ def chunk_along_seq(tensor: torch.Tensor, chunks: int) -> tuple[torch.Tensor, ..
 
     >>> import torch
     >>> from batchtensor.tensor import chunk_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> outputs = chunk_along_seq(tensor, chunks=3)
     >>> outputs
     (tensor([[0, 1], [5, 6]]),
@@ -115,7 +115,7 @@ def select_along_batch(tensor: torch.Tensor, index: int) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import select_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = select_along_batch(tensor, index=2)
     >>> out
     tensor([4, 5])
@@ -148,7 +148,7 @@ def select_along_seq(tensor: torch.Tensor, index: int) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import select_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> out = select_along_seq(tensor, index=2)
     >>> out
     tensor([2, 7])
@@ -183,7 +183,7 @@ def slice_along_batch(
 
     >>> import torch
     >>> from batchtensor.tensor import slice_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> out = slice_along_batch(tensor, start=2)
     >>> out
     tensor([[4, 5],
@@ -274,7 +274,7 @@ def split_along_batch(
 
     >>> import torch
     >>> from batchtensor.tensor import split_along_batch
-    >>> tensor = torch.arange(10).view(5, 2)
+    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
     >>> outputs = split_along_batch(tensor, split_size_or_sections=2)
     >>> outputs
     (tensor([[0, 1], [2, 3]]),
@@ -311,7 +311,7 @@ def split_along_seq(
 
     >>> import torch
     >>> from batchtensor.tensor import split_along_seq
-    >>> tensor = torch.arange(10).view(2, 5)
+    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     >>> outputs = split_along_seq(tensor, split_size_or_sections=2)
     >>> outputs
     (tensor([[0, 1], [5, 6]]),

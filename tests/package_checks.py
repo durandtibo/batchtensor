@@ -15,7 +15,10 @@ def check_nested() -> None:
 
     assert objects_are_equal(
         index_select_along_batch(
-            {"a": torch.arange(10).view(5, 2), "b": torch.tensor([[5], [4], [3], [2], [1]])},
+            {
+                "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+                "b": torch.tensor([[5], [4], [3], [2], [1]]),
+            },
             torch.tensor([4, 3, 2, 1, 0]),
         ),
         {
@@ -39,7 +42,9 @@ def check_tensor() -> None:
     from batchtensor.tensor import index_select_along_batch
 
     assert objects_are_equal(
-        index_select_along_batch(torch.arange(10).view(5, 2), torch.tensor([4, 3, 2, 1, 0])),
+        index_select_along_batch(
+            torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), torch.tensor([4, 3, 2, 1, 0])
+        ),
         torch.tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1]]),
     )
 

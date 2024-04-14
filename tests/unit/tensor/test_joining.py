@@ -78,14 +78,14 @@ def test_repeat_along_seq_repeats_0() -> None:
 
 def test_repeat_along_seq_repeats_1() -> None:
     assert objects_are_equal(
-        repeat_along_seq(torch.arange(10).view(2, 5), repeats=1),
+        repeat_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), repeats=1),
         torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
     )
 
 
 def test_repeat_along_seq_repeats_2() -> None:
     assert objects_are_equal(
-        repeat_along_seq(torch.arange(10).view(2, 5), repeats=2),
+        repeat_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), repeats=2),
         torch.tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]]),
     )
 
