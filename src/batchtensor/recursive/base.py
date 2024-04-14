@@ -27,9 +27,9 @@ class BaseApplier(ABC, Generic[T]):
         data.
 
         Args:
-            data: Specifies the input data.
-            func: Specifies the function to apply on each item.
-            state: Specifies the current state.
+            data: The input data.
+            func: The function to apply on each item.
+            state: The current state.
 
         Returns:
             The transformed data.

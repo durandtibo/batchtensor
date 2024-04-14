@@ -32,6 +32,7 @@ def argsort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> A
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import argsort_along_batch
     >>> data = {
@@ -71,6 +72,7 @@ def argsort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import argsort_along_seq
     >>> data = {'a': torch.tensor([[7, 3, 0, 8, 5], [1, 9, 6, 4, 2]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
@@ -110,6 +112,7 @@ def sort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import sort_along_batch
     >>> data = {
@@ -162,6 +165,7 @@ def sort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import sort_along_seq
     >>> data = {'a': torch.tensor([[7, 3, 0, 8, 5], [1, 9, 6, 4, 2]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}

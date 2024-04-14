@@ -48,6 +48,7 @@ def amax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import amax_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -80,6 +81,7 @@ def amax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import amax_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -112,6 +114,7 @@ def amin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import amin_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -144,6 +147,7 @@ def amin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import amin_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -178,6 +182,7 @@ def argmax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Ten
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import argmax_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -212,6 +217,7 @@ def argmax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import argmax_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -246,6 +252,7 @@ def argmin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Ten
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import argmin_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -280,6 +287,7 @@ def argmin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import argmin_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -314,6 +322,7 @@ def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import max_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -352,6 +361,7 @@ def max_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_t
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import max_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -388,6 +398,7 @@ def mean_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import mean_along_batch
     >>> tensor = torch.arange(10, dtype=torch.float).view(5, 2)
@@ -420,6 +431,7 @@ def mean_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import mean_along_seq
     >>> tensor = torch.arange(10, dtype=torch.float).view(2, 5)
@@ -454,6 +466,7 @@ def median_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.ret
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import median_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -492,6 +505,7 @@ def median_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.retur
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import median_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -530,6 +544,7 @@ def min_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import min_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -568,6 +583,7 @@ def min_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_t
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import min_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -604,6 +620,7 @@ def prod_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import prod_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -636,6 +653,7 @@ def prod_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import prod_along_seq
     >>> tensor = torch.arange(10).view(2, 5)
@@ -668,6 +686,7 @@ def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import sum_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -700,6 +719,7 @@ def sum_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import sum_along_seq
     >>> tensor = torch.arange(10).view(2, 5)

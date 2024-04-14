@@ -41,6 +41,7 @@ def permute_along_batch(data: Any, permutation: torch.Tensor) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import permute_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -78,6 +79,7 @@ def permute_along_seq(data: Any, permutation: torch.Tensor) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import permute_along_seq
     >>> data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}
@@ -109,6 +111,7 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import shuffle_along_batch
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -144,6 +147,7 @@ def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> An
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import shuffle_along_seq
     >>> data = {"a": torch.arange(10).view(2, 5), "b": torch.tensor([[4, 3, 2, 1, 0]])}

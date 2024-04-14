@@ -34,6 +34,7 @@ def as_tensor(
     Example usage:
 
     ```pycon
+
     >>> import numpy as np
     >>> from batchtensor.nested import as_tensor
     >>> data = {"a": np.ones((2, 5), dtype=np.float32), "b": np.arange(5), "c": 42}
@@ -68,6 +69,7 @@ def from_numpy(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import numpy as np
     >>> from batchtensor.nested import from_numpy
     >>> data = {"a": np.ones((2, 5), dtype=np.float32), "b": np.arange(5)}
@@ -100,6 +102,7 @@ def to_numpy(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import numpy as np
     >>> from batchtensor.nested import to_numpy
     >>> data = {"a": torch.ones(2, 5), "b": torch.arange(5)}

@@ -24,6 +24,7 @@ class MappingApplier(BaseApplier[T]):
     Example usage:
 
     ```pycon
+
     >>> from batchtensor.recursive import MappingApplier, AutoApplier, ApplyState
     >>> state = ApplyState(applier=AutoApplier())
     >>> applier = MappingApplier()

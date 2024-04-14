@@ -29,6 +29,7 @@ def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import index_select_along_batch
     >>> tensor = torch.arange(10).view(5, 2)
@@ -68,6 +69,7 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.tensor import index_select_along_seq
     >>> tensor = torch.arange(10).view(2, 5)

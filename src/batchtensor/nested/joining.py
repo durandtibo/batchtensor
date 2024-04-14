@@ -37,6 +37,7 @@ def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import cat_along_batch
     >>> data = [
@@ -80,6 +81,7 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import cat_along_seq
     >>> data = [
@@ -112,7 +114,7 @@ def repeat_along_seq(data: Any, repeats: int) -> Any:
 
     Args:
         data: The input data. Each item must be a tensor.
-        repeats: Specifies the number of times to repeat
+        repeats: The number of times to repeat
             the data along the sequence dimension.
 
     Returns:
@@ -121,6 +123,7 @@ def repeat_along_seq(data: Any, repeats: int) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import repeat_along_seq
     >>> data = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}

@@ -37,6 +37,7 @@ def index_select_along_batch(data: Any, index: torch.Tensor) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import index_select_along_batch
     >>> tensors = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
@@ -72,6 +73,7 @@ def index_select_along_seq(data: Any, index: torch.Tensor) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import index_select_along_seq
     >>> tensors = {'a': torch.arange(10).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]])}

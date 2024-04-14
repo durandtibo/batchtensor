@@ -35,6 +35,7 @@ def abs(data: Any) -> Any:  # noqa: A001
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import abs
     >>> data = {
@@ -65,6 +66,7 @@ def clamp(data: Any, min: float | None = None, max: float | None = None) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import clamp
     >>> data = {
@@ -93,6 +95,7 @@ def exp(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import exp
     >>> data = {
@@ -121,6 +124,7 @@ def exp2(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import exp2
     >>> data = {
@@ -149,6 +153,7 @@ def expm1(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import expm1
     >>> data = {
@@ -177,6 +182,7 @@ def log(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import log
     >>> data = {
@@ -206,6 +212,7 @@ def log2(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import log2
     >>> data = {
@@ -235,6 +242,7 @@ def log10(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import log10
     >>> data = {
@@ -263,6 +271,7 @@ def log1p(data: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import log1p
     >>> data = {

@@ -36,7 +36,7 @@ def dfs_tensor(data: Any) -> Generator[torch.Tensor, None, None]:
     structure.
 
     Args:
-        data: Specifies the data to iterate on.
+        data: The data to iterate on.
 
     Yields:
         The next ``torch.Tensor`` in the data.
@@ -44,6 +44,7 @@ def dfs_tensor(data: Any) -> Generator[torch.Tensor, None, None]:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.utils.dfs import dfs_tensor
     >>> list(dfs_tensor(["abc", torch.ones(2, 3), 42, torch.arange(5)]))
@@ -70,8 +71,8 @@ class BaseTensorIterator(Generic[T]):
         r"""Iterate over the data and add the items to the queue.
 
         Args:
-            data: Specifies the data to iterate on.
-            state: Specifies the current state, which include the
+            data: The data to iterate on.
+            state: The current state, which include the
                 queue.
 
         Yields:
@@ -131,8 +132,8 @@ class TensorIterator(BaseTensorIterator[Any]):
         r"""Add an iterator for a given data type.
 
         Args:
-            data_type: Specifies the data type for this test.
-            iterator: Specifies the iterator object.
+            data_type: The data type for this test.
+            iterator: The iterator object.
             exist_ok: If ``False``, ``RuntimeError`` is raised if the
                 data type already exists. This parameter should be set
                 to ``True`` to overwrite the iterator for a type.
@@ -167,7 +168,7 @@ class TensorIterator(BaseTensorIterator[Any]):
         type.
 
         Args:
-            data_type: Specifies the data type to check.
+            data_type: The data type to check.
 
         Returns:
             ``True`` if an iterator is registered, otherwise ``False``.
@@ -190,7 +191,7 @@ class TensorIterator(BaseTensorIterator[Any]):
         r"""Find the iterator associated to an object.
 
         Args:
-            data_type: Specifies the data type to get.
+            data_type: The data type to get.
 
         Returns:
             The iterator associated to the data type.
@@ -216,7 +217,7 @@ def register_iterators(mapping: Mapping[type, BaseTensorIterator]) -> None:
     r"""Register some iterators.
 
     Args:
-        mapping: Specifies the iterators to register.
+        mapping: The iterators to register.
     """
     for typ, op in mapping.items():
         if not TensorIterator.has_iterator(typ):  # pragma: no cover

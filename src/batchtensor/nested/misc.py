@@ -23,6 +23,7 @@ def to(data: Any, *args: Any, **kwargs: Any) -> Any:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from batchtensor.nested import to
     >>> data = {"a": torch.arange(10).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0])}
