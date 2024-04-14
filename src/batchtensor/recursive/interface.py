@@ -1,5 +1,5 @@
-r"""Contain the main function to recursively apply a function on nested
-data."""
+r"""Contain the main public functions to recursively apply a function on
+nested data."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ __all__ = ["recursive_apply"]
 
 from typing import TYPE_CHECKING, Any
 
-from batchtensor.recursive.applier import Applier
+from batchtensor.recursive.auto import AutoApplier
 from batchtensor.recursive.state import ApplyState
 
 if TYPE_CHECKING:
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from batchtensor.recursive import BaseApplier
 
 
-_applier = Applier()
+_applier = AutoApplier()
 
 
 def recursive_apply(data: Any, func: Callable, applier: BaseApplier | None = None) -> Any:

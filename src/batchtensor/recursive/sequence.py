@@ -7,7 +7,7 @@ __all__ = ["SequenceApplier"]
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, TypeVar
 
-from batchtensor.recursive.applier import register_appliers
+from batchtensor.recursive.auto import register_appliers
 from batchtensor.recursive.base import BaseApplier
 
 if TYPE_CHECKING:
@@ -24,8 +24,8 @@ class SequenceApplier(BaseApplier[T]):
     Example usage:
 
     ```pycon
-    >>> from batchtensor.recursive import SequenceApplier, Applier, ApplyState
-    >>> state = ApplyState(applier=Applier())
+    >>> from batchtensor.recursive import SequenceApplier, AutoApplier, ApplyState
+    >>> state = ApplyState(applier=AutoApplier())
     >>> applier = SequenceApplier()
     >>> applier
     SequenceApplier()

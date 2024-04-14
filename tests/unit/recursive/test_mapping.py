@@ -6,12 +6,12 @@ import pytest
 import torch
 from coola import objects_are_equal
 
-from batchtensor.recursive import Applier, ApplyState, MappingApplier
+from batchtensor.recursive import ApplyState, AutoApplier, MappingApplier
 
 
 @pytest.fixture()
 def state() -> ApplyState:
-    return ApplyState(applier=Applier())
+    return ApplyState(applier=AutoApplier())
 
 
 ####################################
