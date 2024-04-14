@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from coola import objects_are_equal
 
 from batchtensor.recursive import recursive_apply

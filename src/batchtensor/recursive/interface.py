@@ -14,20 +14,16 @@ from batchtensor.recursive.state import ApplyState
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from batchtensor.recursive import BaseApplier
-
 
 _applier = AutoApplier()
 
 
-def recursive_apply(data: Any, func: Callable, applier: BaseApplier | None = None) -> Any:
+def recursive_apply(data: Any, func: Callable) -> Any:
     r"""Recursively apply a function on all the items in a nested data.
 
     Args:
         data: The input data.
         func: The function to apply on each item.
-        applier: Specifies an optional ``BaseApplier`` to customize the
-            logic. By default, ``Applier`` is used.
 
     Returns:
         The transformed data.
@@ -35,7 +31,6 @@ def recursive_apply(data: Any, func: Callable, applier: BaseApplier | None = Non
      Example usage:
 
     ```pycon
-
     >>> from batchtensor.recursive import recursive_apply
     >>> out = recursive_apply({"a": 1, "b": "abc"}, str)
     >>> out
@@ -43,5 +38,4 @@ def recursive_apply(data: Any, func: Callable, applier: BaseApplier | None = Non
 
     ```
     """
-    applier = applier or _applier
-    return _applier.apply(data=data, func=func, state=ApplyState(applier))
+    return _applier.apply(data=data, func=func, state=ApplyState(_applier))
