@@ -31,6 +31,7 @@ def recursive_apply(data: Any, func: Callable) -> Any:
      Example usage:
 
     ```pycon
+
     >>> from batchtensor.recursive import recursive_apply
     >>> out = recursive_apply({"a": 1, "b": "abc"}, str)
     >>> out
