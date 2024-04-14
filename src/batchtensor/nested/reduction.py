@@ -428,7 +428,7 @@ def mean_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import mean_along_batch
-    >>> data = {"a": torch.arange(10, dtype=torch.float).view(5, 2), "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float)}
+    >>> data = {"a": torch.tensor([[0., 1.], [2., 3.], [4., 5.], [6., 7.], [8., 9.]]), "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float)}
     >>> out = mean_along_batch(data)
     >>> out
     {'a': tensor([4., 5.]), 'b': tensor(2.)}
@@ -463,7 +463,7 @@ def mean_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import mean_along_seq
-    >>> data = {'a': torch.arange(10, dtype=torch.float).view(2, 5), 'b': torch.tensor([[4, 3, 2, 1, 0]], dtype=torch.float)}
+    >>> data = {'a': torch.tensor([[0., 1., 2., 3., 4.], [5., 6., 7., 8., 9.]]), 'b': torch.tensor([[4, 3, 2, 1, 0]], dtype=torch.float)}
     >>> out = mean_along_seq(data)
     >>> out
     {'a': tensor([2., 7.]), 'b': tensor([2.])}

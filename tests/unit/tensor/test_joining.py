@@ -71,7 +71,9 @@ def test_cat_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -
 
 def test_repeat_along_seq_repeats_0() -> None:
     assert objects_are_equal(
-        repeat_along_seq(torch.arange(10, dtype=torch.float).view(2, 5), repeats=0),
+        repeat_along_seq(
+            torch.tensor([[0.0, 1.0, 2.0, 3.0, 4.0], [5.0, 6.0, 7.0, 8.0, 9.0]]), repeats=0
+        ),
         torch.zeros(2, 0),
     )
 
@@ -92,7 +94,15 @@ def test_repeat_along_seq_repeats_2() -> None:
 
 def test_repeat_along_seq_repeats_3d() -> None:
     assert objects_are_equal(
-        repeat_along_seq(torch.arange(20).view(2, 5, 2), repeats=2),
+        repeat_along_seq(
+            torch.tensor(
+                [
+                    [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]],
+                    [[10, 11], [12, 13], [14, 15], [16, 17], [18, 19]],
+                ]
+            ),
+            repeats=2,
+        ),
         torch.tensor(
             [
                 [

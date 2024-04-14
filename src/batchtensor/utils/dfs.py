@@ -47,7 +47,7 @@ def dfs_tensor(data: Any) -> Generator[torch.Tensor, None, None]:
 
     >>> import torch
     >>> from batchtensor.utils.dfs import dfs_tensor
-    >>> list(dfs_tensor(["abc", torch.ones(2, 3), 42, torch.arange(5)]))
+    >>> list(dfs_tensor(["abc", torch.ones(2, 3), 42, torch.tensor([0, 1, 2, 3, 4])]))
     [tensor([[1., 1., 1.], [1., 1., 1.]]), tensor([0, 1, 2, 3, 4])]
 
     ```

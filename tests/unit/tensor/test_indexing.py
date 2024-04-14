@@ -96,7 +96,13 @@ def test_index_select_along_seq_per_batch_index() -> None:
 def test_index_select_along_seq_extra_dims() -> None:
     assert objects_are_equal(
         index_select_along_seq(
-            torch.arange(20).view(2, 5, 2), index=torch.tensor([[2, 0], [4, 3]])
+            torch.tensor(
+                [
+                    [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]],
+                    [[10, 11], [12, 13], [14, 15], [16, 17], [18, 19]],
+                ]
+            ),
+            index=torch.tensor([[2, 0], [4, 3]]),
         ),
         torch.tensor([[[4, 5], [0, 1]], [[18, 19], [16, 17]]]),
     )
