@@ -108,7 +108,7 @@ def shuffle_along_batch(
 
     Args:
         tensor: The tensor to split.
-        generator: Specifies an optional random number generator.
+        generator: An optional random number generator.
 
     Returns:
         The shuffled tensor.
@@ -142,7 +142,7 @@ def shuffle_along_seq(
 
     Args:
         tensor: The tensor to split.
-        generator: Specifies an optional random number generator.
+        generator: An optional random number generator.
 
     Returns:
         The shuffled tensor.
