@@ -44,7 +44,7 @@ torch = [
 ]
 
 # Optional dependencies
-numpy = { version = ">=1.21,<2.0", optional = true }
+numpy = { version = ">=1.21,<3.0", optional = true }
 
 [tool.poetry.extras]
 all = ['numpy']
