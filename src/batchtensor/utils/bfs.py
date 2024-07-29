@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 T = TypeVar("T")
 
 
-def bfs_tensor(data: Any) -> Generator[torch.Tensor, None, None]:
+def bfs_tensor(data: Any) -> Generator[torch.Tensor]:
     r"""Implement a Breadth-First Search (BFS) iterator over the
     ``torch.Tensor``s.
 

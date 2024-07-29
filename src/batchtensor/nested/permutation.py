@@ -85,7 +85,10 @@ def permute_along_seq(data: Any, permutation: torch.Tensor) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import permute_along_seq
-    >>> data = {"a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = permute_along_seq(data, torch.tensor([2, 1, 3, 0, 4]))
     >>> out
     {'a': tensor([[2, 1, 3, 0, 4], [7, 6, 8, 5, 9]]), 'b': tensor([[2, 3, 1, 4, 0]])}
@@ -117,7 +120,10 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
 
     >>> import torch
     >>> from batchtensor.nested import shuffle_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> out = shuffle_along_batch(data)
     >>> out
     {'a': tensor([[...]]), 'b': tensor([...])}
@@ -153,7 +159,10 @@ def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> An
 
     >>> import torch
     >>> from batchtensor.nested import shuffle_along_seq
-    >>> data = {"a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), "b": torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = shuffle_along_seq(data)
     >>> out
     {'a': tensor([[...]]), 'b': tensor([[...]])}

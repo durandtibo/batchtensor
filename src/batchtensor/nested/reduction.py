@@ -90,7 +90,10 @@ def amax_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import amax_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = amax_along_seq(data)
     >>> out
     {'a': tensor([4, 9]), 'b': tensor([4])}
@@ -124,7 +127,10 @@ def amin_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import amin_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> out = amin_along_batch(data)
     >>> out
     {'a': tensor([0, 1]), 'b': tensor(0)}
@@ -158,7 +164,10 @@ def amin_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import amin_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = amin_along_seq(data)
     >>> out
     {'a': tensor([0, 5]), 'b': tensor([0])}
@@ -194,7 +203,10 @@ def argmax_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import argmax_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> out = argmax_along_batch(data)
     >>> out
     {'a': tensor([4, 4]), 'b': tensor(0)}
@@ -230,7 +242,10 @@ def argmax_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import argmax_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = argmax_along_seq(data)
     >>> out
     {'a': tensor([4, 4]), 'b': tensor([0])}
@@ -266,7 +281,10 @@ def argmin_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import argmin_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> out = argmin_along_batch(data)
     >>> out
     {'a': tensor([0, 0]), 'b': tensor(4)}
@@ -302,7 +320,10 @@ def argmin_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import argmin_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = argmin_along_seq(data)
     >>> out
     {'a': tensor([0, 0]), 'b': tensor([4])}
@@ -338,7 +359,10 @@ def max_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import max_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> out = max_along_batch(data)
     >>> out
     {'a': torch.return_types.max(
@@ -384,7 +408,10 @@ def max_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import max_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = max_along_seq(data)
     >>> out
     {'a': torch.return_types.max(
@@ -428,7 +455,10 @@ def mean_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import mean_along_batch
-    >>> data = {"a": torch.tensor([[0., 1.], [2., 3.], [4., 5.], [6., 7.], [8., 9.]]), "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float)}
+    >>> data = {
+    ...     "a": torch.tensor([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0], [6.0, 7.0], [8.0, 9.0]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0], dtype=torch.float),
+    ... }
     >>> out = mean_along_batch(data)
     >>> out
     {'a': tensor([4., 5.]), 'b': tensor(2.)}
@@ -463,7 +493,10 @@ def mean_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import mean_along_seq
-    >>> data = {'a': torch.tensor([[0., 1., 2., 3., 4.], [5., 6., 7., 8., 9.]]), 'b': torch.tensor([[4, 3, 2, 1, 0]], dtype=torch.float)}
+    >>> data = {
+    ...     "a": torch.tensor([[0.0, 1.0, 2.0, 3.0, 4.0], [5.0, 6.0, 7.0, 8.0, 9.0]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]], dtype=torch.float),
+    ... }
     >>> out = mean_along_seq(data)
     >>> out
     {'a': tensor([2., 7.]), 'b': tensor([2.])}
@@ -499,7 +532,10 @@ def median_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import median_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> out = median_along_batch(data)
     >>> out
     {'a': torch.return_types.median(
@@ -545,7 +581,10 @@ def median_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import median_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = median_along_seq(data)
     >>> out
     {'a': torch.return_types.median(
@@ -591,7 +630,10 @@ def min_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import min_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> out = min_along_batch(data)
     >>> out
     {'a': torch.return_types.min(
@@ -637,7 +679,10 @@ def min_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import min_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = min_along_seq(data)
     >>> out
     {'a': torch.return_types.min(
@@ -681,7 +726,10 @@ def prod_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import prod_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([5, 4, 3, 2, 1])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([5, 4, 3, 2, 1]),
+    ... }
     >>> out = prod_along_batch(data)
     >>> out
     {'a': tensor([  0, 945]), 'b': tensor(120)}
@@ -715,7 +763,10 @@ def prod_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import prod_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[5, 4, 3, 2, 1]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[5, 4, 3, 2, 1]]),
+    ... }
     >>> out = prod_along_seq(data)
     >>> out
     {'a': tensor([    0, 15120]), 'b': tensor([120])}
@@ -749,7 +800,10 @@ def sum_along_batch(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import sum_along_batch
-    >>> data = {"a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), "b": torch.tensor([4, 3, 2, 1, 0])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+    ... }
     >>> out = sum_along_batch(data)
     >>> out
     {'a': tensor([20, 25]), 'b': tensor(10)}
@@ -783,7 +837,10 @@ def sum_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import sum_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = sum_along_seq(data)
     >>> out
     {'a': tensor([10, 35]), 'b': tensor([10])}
