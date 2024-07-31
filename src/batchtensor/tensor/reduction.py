@@ -401,7 +401,7 @@ def mean_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
 
     >>> import torch
     >>> from batchtensor.tensor import mean_along_batch
-    >>> tensor = torch.tensor([[0., 1.], [2., 3.], [4., 5.], [6., 7.], [8., 9.]])
+    >>> tensor = torch.tensor([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0], [6.0, 7.0], [8.0, 9.0]])
     >>> out = mean_along_batch(tensor)
     >>> out
     tensor([4., 5.])
@@ -434,7 +434,7 @@ def mean_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
 
     >>> import torch
     >>> from batchtensor.tensor import mean_along_seq
-    >>> tensor = torch.tensor([[0., 1., 2., 3., 4.], [5., 6., 7., 8., 9.]])
+    >>> tensor = torch.tensor([[0.0, 1.0, 2.0, 3.0, 4.0], [5.0, 6.0, 7.0, 8.0, 9.0]])
     >>> out = mean_along_seq(tensor)
     >>> out
     tensor([2., 7.])

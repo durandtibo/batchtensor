@@ -79,7 +79,10 @@ def index_select_along_seq(data: Any, index: torch.Tensor) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import index_select_along_seq
-    >>> tensors = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> tensors = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = index_select_along_seq(tensors, torch.tensor([2, 4]))
     >>> out
     {'a': tensor([[2, 4], [7, 9]]), 'b': tensor([[2, 0]])}

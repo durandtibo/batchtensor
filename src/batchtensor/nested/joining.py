@@ -126,7 +126,10 @@ def repeat_along_seq(data: Any, repeats: int) -> Any:
 
     >>> import torch
     >>> from batchtensor.nested import repeat_along_seq
-    >>> data = {'a': torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]), 'b': torch.tensor([[4, 3, 2, 1, 0]])}
+    >>> data = {
+    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+    ... }
     >>> out = repeat_along_seq(data, 2)
     >>> out
     {'a': tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]]),

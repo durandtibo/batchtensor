@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 T = TypeVar("T")
 
 
-def dfs_tensor(data: Any) -> Generator[torch.Tensor, None, None]:
+def dfs_tensor(data: Any) -> Generator[torch.Tensor]:
     r"""Implement a Depth-First Search (DFS) iterator over the
     ``torch.Tensor``s.
 
@@ -67,7 +67,7 @@ class BaseTensorIterator(Generic[T]):
     r"""Define the base class to iterate over the data to find the
     tensors with a Depth-First Search (DFS) strategy."""
 
-    def iterate(self, data: T, state: IteratorState) -> Generator[torch.Tensor, None, None]:
+    def iterate(self, data: T, state: IteratorState) -> Generator[torch.Tensor]:
         r"""Iterate over the data and add the items to the queue.
 
         Args:
@@ -90,7 +90,7 @@ class DefaultTensorIterator(BaseTensorIterator[Any]):
         self,
         data: Any,
         state: IteratorState,  # noqa: ARG002
-    ) -> Generator[torch.Tensor, None, None]:
+    ) -> Generator[torch.Tensor]:
         if torch.is_tensor(data):
             yield data
 
@@ -101,7 +101,7 @@ class IterableTensorIterator(BaseTensorIterator[Iterable]):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}()"
 
-    def iterate(self, data: Iterable, state: IteratorState) -> Generator[torch.Tensor, None, None]:
+    def iterate(self, data: Iterable, state: IteratorState) -> Generator[torch.Tensor]:
         for item in data:
             yield from state.iterator.iterate(item, state)
 
@@ -112,7 +112,7 @@ class MappingTensorIterator(BaseTensorIterator[Mapping]):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}()"
 
-    def iterate(self, data: Mapping, state: IteratorState) -> Generator[torch.Tensor, None, None]:
+    def iterate(self, data: Mapping, state: IteratorState) -> Generator[torch.Tensor]:
         for item in data.values():
             yield from state.iterator.iterate(item, state)
 
@@ -159,7 +159,7 @@ class TensorIterator(BaseTensorIterator[Any]):
             raise RuntimeError(msg)
         cls.registry[data_type] = iterator
 
-    def iterate(self, data: Iterable, state: IteratorState) -> Generator[torch.Tensor, None, None]:
+    def iterate(self, data: Iterable, state: IteratorState) -> Generator[torch.Tensor]:
         yield from self.find_iterator(type(data)).iterate(data, state)
 
     @classmethod
