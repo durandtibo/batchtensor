@@ -3,8 +3,8 @@ r"""Contain features to easily work on nested objects."""
 from __future__ import annotations
 
 __all__ = [
-    "AutoApplier",
     "ApplyState",
+    "AutoApplier",
     "BaseApplier",
     "DefaultApplier",
     "MappingApplier",
