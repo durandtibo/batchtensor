@@ -3,15 +3,15 @@ r"""Contain some tensor point-wise functions for nested data."""
 from __future__ import annotations
 
 __all__ = [
-    "log",
-    "log2",
-    "log10",
-    "log1p",
+    "abs",
+    "clamp",
     "exp",
     "exp2",
     "expm1",
-    "abs",
-    "clamp",
+    "log",
+    "log1p",
+    "log2",
+    "log10",
 ]
 
 from functools import partial

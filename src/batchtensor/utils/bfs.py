@@ -10,8 +10,8 @@ __all__ = [
     "MappingTensorIterator",
     "TensorIterator",
     "bfs_tensor",
-    "register_iterators",
     "register_default_iterators",
+    "register_iterators",
 ]
 
 import logging
