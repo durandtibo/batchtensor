@@ -19,7 +19,7 @@ from batchtensor.utils.bfs import (
 )
 
 
-@pytest.fixture()
+@pytest.fixture
 def state() -> IteratorState:
     return IteratorState(iterator=TensorIterator(), queue=deque())
 

@@ -15,7 +15,7 @@ from batchtensor.recursive import (
 )
 
 
-@pytest.fixture()
+@pytest.fixture
 def state() -> ApplyState:
     return ApplyState(applier=AutoApplier())
 
