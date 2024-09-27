@@ -353,17 +353,21 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "feu"
-version = "0.0.7"
+version = "0.2.1"
 description = "A light library to help to manage packages"
 optional = false
 python-versions = "<3.13,>=3.9"
 files = [
-    {file = "feu-0.0.7-py3-none-any.whl", hash = "sha256:2f0832e6a75ed61479adaa30786da57ba8ed23a7bb6b5ed0bbfc46121dfb7c00"},
-    {file = "feu-0.0.7.tar.gz", hash = "sha256:e5e4e12d283fb9f27c7b93f65c56e6cd0a3303e28d259906179fdba6a7c0d233"},
+    {file = "feu-0.2.1-py3-none-any.whl", hash = "sha256:86e86bbd34b8ca8136e446927d107dd26744de628fc53d2550efa8cc0b12d7db"},
+    {file = "feu-0.2.1.tar.gz", hash = "sha256:9ef33f264468cedb7ed4c0d8aa4c5c7dd67accd790ec20810afa4a1492576adf"},
 ]
 
 [package.dependencies]
 packaging = ">=21.0,<25.0"
+
+[package.extras]
+all = ["click (>=8.1,<9.0)"]
+cli = ["click (>=8.1,<9.0)"]
 
 [[package]]
 name = "filelock"
@@ -1912,4 +1916,4 @@ all = ["numpy", "numpy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "9fe8ca32bfedad01d43b2d3b6dab7a05d75afc6516b67812071a891a09280329"
+content-hash = "301f0155bf9ccc79be076f2ee6ec0335b183cc7def80fd7d9e8e1b895e308328"
