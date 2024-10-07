@@ -27,7 +27,7 @@ repos:
         name: isort (pyi)
         types: [ pyi ]
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
@@ -50,9 +50,9 @@ repos:
     hooks:
       - id: blacken-docs
         additional_dependencies:
-          - black>=24.8
+          - black>=24.4.2
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.6.3
+    rev: v0.6.9
     hooks:
       - id: ruff
         types_or: [ python, pyi, jupyter ]
