@@ -2,7 +2,7 @@ r"""Contain some functions to permute data in tensors."""
 
 from __future__ import annotations
 
-__all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_seq", "shuffle_along_batch"]
+__all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_batch", "shuffle_along_seq"]
 
 
 from functools import partial
