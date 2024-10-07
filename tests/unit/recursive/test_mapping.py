@@ -9,7 +9,7 @@ from coola import objects_are_equal
 from batchtensor.recursive import ApplyState, AutoApplier, MappingApplier
 
 
-@pytest.fixture()
+@pytest.fixture
 def state() -> ApplyState:
     return ApplyState(applier=AutoApplier())
 
