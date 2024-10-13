@@ -99,11 +99,11 @@ def test_as_tensor_device_dtype(device: str, dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.tensor(
-                [[4.0, 9.0], [1.0, 7.0], [2.0, 5.0], [5.0, 6.0], [3.0, 8.0]],
+                [[4, 9], [1, 7], [2, 5], [5, 6], [3, 8]],
                 device=device,
                 dtype=dtype,
             ),
-            "b": torch.tensor([4.0, 3.0, 2.0, 1.0, 0.0], device=device, dtype=dtype),
+            "b": torch.tensor([4, 3, 2, 1, 0], device=device, dtype=dtype),
             "list": [
                 torch.tensor([5, 6, 7, 8, 9], device=device, dtype=dtype),
                 torch.tensor([6, 7, 8], device=device, dtype=dtype),
