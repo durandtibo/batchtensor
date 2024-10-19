@@ -224,7 +224,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install karbonn
+          pip install batchtensor
 
       - name: Install valid package version
         uses: durandtibo/pip-install-package-action@v0.3.0
