@@ -26,7 +26,6 @@ jobs:
           echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
       - name: Install packages
         run: |
-          make config-poetry
           make install-all
       - name: Setup doc deploy
         env:
