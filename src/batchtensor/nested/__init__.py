@@ -97,8 +97,8 @@ from batchtensor.nested.permutation import (
     shuffle_along_batch,
     shuffle_along_seq,
 )
+from batchtensor.nested.pointwise import abs  # noqa: A004
 from batchtensor.nested.pointwise import (
-    abs,
     clamp,
     exp,
     exp2,
