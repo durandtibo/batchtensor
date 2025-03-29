@@ -42,11 +42,7 @@ python = ">=3.9,<3.14"
 torch = ">=2.4,<3.0"
 
 # Optional dependencies
-numpy = [
-    # numpy 2.0 is supported starting torch 2.3.0 but there is no binaries for mac intel
-    { version = ">=1.22,<2.0", optional = true, markers="sys_platform == 'darwin' and platform_machine != 'arm64'" },
-    { version = ">=1.22,<3.0", optional = true }
-]
+numpy = { version = ">=1.22,<3.0", optional = true }
 
 [tool.poetry.extras]
 all = ['numpy']
