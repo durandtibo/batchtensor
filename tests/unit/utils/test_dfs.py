@@ -139,7 +139,6 @@ def test_default_tensor_iterator_str() -> None:
 
 
 def test_default_tensor_iterator_iterable(state: IteratorState) -> None:
-
     assert list(DefaultTensorIterator().iterate("abc", state)) == []
 
 
@@ -199,7 +198,6 @@ def test_mapping_tensor_iterator_str() -> None:
     ],
 )
 def test_mapping_tensor_iterator_iterate_empty(data: Mapping, state: IteratorState) -> None:
-
     assert list(MappingTensorIterator().iterate(data, state)) == []
 
 

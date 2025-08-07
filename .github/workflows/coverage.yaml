@@ -8,15 +8,8 @@ permissions:
 
 jobs:
   coverage:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest ]
-        python-version: [ '3.12' ]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.12'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -57,11 +50,3 @@ jobs:
           # in the github UI just because the coverage report failed to
           # be published.
           fail_ci_if_error: false
-
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-        with:
-          coverageLocations: ./coverage.xml:coverage.py
-          debug: true
