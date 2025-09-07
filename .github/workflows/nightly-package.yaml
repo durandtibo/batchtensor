@@ -205,7 +205,7 @@ jobs:
           pip install batchtensor
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.3
+        uses: durandtibo/pip-install-package-action@v0.3.4
         with:
           package-name: 'coola'
           package-version: ${{ matrix.coola-version }}
@@ -248,7 +248,7 @@ jobs:
           pip install batchtensor
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.3
+        uses: durandtibo/pip-install-package-action@v0.3.4
         with:
           package-name: 'torch'
           package-version: ${{ matrix.torch-version }}
@@ -297,7 +297,7 @@ jobs:
           pip install batchtensor
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.3
+        uses: durandtibo/pip-install-package-action@v0.3.4
         with:
           package-name: 'numpy'
           package-version: ${{ matrix.numpy-version }}
