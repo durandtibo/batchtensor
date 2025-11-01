@@ -264,7 +264,7 @@ def test_iterator_add_iterator_duplicate_exist_ok_false() -> None:
     iterator = TensorIterator()
     seq_iterator = IterableTensorIterator()
     iterator.add_iterator(list, DefaultTensorIterator())
-    with pytest.raises(RuntimeError, match="An iterator (.*) is already registered"):
+    with pytest.raises(RuntimeError, match=r"An iterator (.*) is already registered"):
         iterator.add_iterator(list, seq_iterator)
 
 
@@ -293,7 +293,7 @@ def test_iterator_find_iterator_indirect() -> None:
 
 
 def test_iterator_find_iterator_incorrect_type() -> None:
-    with pytest.raises(TypeError, match="Incorrect data type:"):
+    with pytest.raises(TypeError, match=r"Incorrect data type:"):
         TensorIterator().find_iterator(Mock(__mro__=[]))
 
 
