@@ -51,7 +51,7 @@ def test_auto_applier_add_applier_duplicate_exist_ok_false() -> None:
     applier = AutoApplier()
     seq_applier = SequenceApplier()
     applier.add_applier(list, MappingApplier())
-    with pytest.raises(RuntimeError, match="An applier (.*) is already registered"):
+    with pytest.raises(RuntimeError, match=r"An applier (.*) is already registered"):
         applier.add_applier(list, seq_applier)
 
 
@@ -85,7 +85,7 @@ def test_auto_applier_find_applier_indirect() -> None:
 
 
 def test_auto_applier_find_applier_incorrect_type() -> None:
-    with pytest.raises(TypeError, match="Incorrect data type:"):
+    with pytest.raises(TypeError, match=r"Incorrect data type:"):
         AutoApplier().find_applier(Mock(__mro__=[]))
 
 
