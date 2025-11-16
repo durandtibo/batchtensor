@@ -25,6 +25,11 @@ jobs:
         run: |
           uv build
 
+      - name: Show dependency tree
+        shell: bash
+        run: |
+          uv pip tree
+
       - name: Inspect build
         run: |
           uv pip install dist/*.whl
