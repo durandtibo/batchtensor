@@ -43,9 +43,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-numpy = [
-    "numpy >=1.24,<3.0",
-]
+numpy = [ "numpy >=1.24,<3.0" ]
 
 [dependency-groups]
 dev = [
