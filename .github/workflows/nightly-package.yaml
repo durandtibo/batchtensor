@@ -11,25 +11,35 @@ jobs:
   get-versions:
     uses: ./.github/workflows/get-versions.yaml
 
+  stable:
+    uses: ./.github/workflows/test-package.yaml
+    with:
+      install-cmd: 'uv pip install batchtensor'
+
   stable-all:
     uses: ./.github/workflows/test-package.yaml
     with:
       install-cmd: 'uv pip install "batchtensor[all]"'
 
-  stable-min:
+  stable-numpy:
     uses: ./.github/workflows/test-package.yaml
     with:
-      install-cmd: 'uv pip install batchtensor'
+      install-cmd: 'uv pip install "batchtensor[numpy]"'
+
+  latest:
+    uses: ./.github/workflows/test-package.yaml
+    with:
+      install-cmd: 'uv pip install --pre batchtensor'
 
   latest-all:
     uses: ./.github/workflows/test-package.yaml
     with:
       install-cmd: 'uv pip install --pre "batchtensor[all]"'
 
-  latest-min:
+  latest-numpy:
     uses: ./.github/workflows/test-package.yaml
     with:
-      install-cmd: 'uv pip install --pre batchtensor'
+      install-cmd: 'uv pip install --pre "batchtensor[numpy]"'
 
 
   ########################
