@@ -14,22 +14,22 @@ jobs:
   stable-all:
     uses: ./.github/workflows/test-package.yaml
     with:
-      package-name: 'pip install "batchtensor[all]"'
+      install-cmd: 'pip install "batchtensor[all]"'
 
   stable-min:
     uses: ./.github/workflows/test-package.yaml
     with:
-      package-name: 'pip install batchtensor'
+      install-cmd: 'pip install batchtensor'
 
   latest-all:
     uses: ./.github/workflows/test-package.yaml
     with:
-      package-name: 'pip install --pre "batchtensor[all]"'
+      install-cmd: 'pip install --pre "batchtensor[all]"'
 
   latest-min:
     uses: ./.github/workflows/test-package.yaml
     with:
-      package-name: 'pip install --pre batchtensor'
+      install-cmd: 'pip install --pre batchtensor'
 
 
   ########################
