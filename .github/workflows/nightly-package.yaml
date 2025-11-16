@@ -11,159 +11,35 @@ jobs:
   get-versions:
     uses: ./.github/workflows/get-versions.yaml
 
-  cyclic-imports:
-    uses: ./.github/workflows/cyclic-imports.yaml
+  stable:
+    uses: ./.github/workflows/test-package.yaml
+    with:
+      install-cmd: 'uv pip install batchtensor'
 
   stable-all:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os: [
-          ubuntu-latest,
-          ubuntu-24.04,
-          ubuntu-22.04,
-          ubuntu-24.04-arm,
-          ubuntu-22.04-arm,
-          macos-latest,
-          macos-26,
-          macos-15,
-          macos-14,
-        ]
-        python-version: [ '3.14', '3.13', '3.12', '3.11', '3.10' ]
+    uses: ./.github/workflows/test-package.yaml
+    with:
+      install-cmd: 'uv pip install "batchtensor[all]"'
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+  stable-numpy:
+    uses: ./.github/workflows/test-package.yaml
+    with:
+      install-cmd: 'uv pip install "batchtensor[numpy]"'
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install package
-        run: |
-          pip install "batchtensor[all]"
-
-      - name: Run some checks
-        run: |
-          python tests/package_checks.py
-
-
-  stable-min:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os: [
-          ubuntu-latest,
-          ubuntu-24.04,
-          ubuntu-22.04,
-          ubuntu-24.04-arm,
-          ubuntu-22.04-arm,
-          macos-latest,
-          macos-26,
-          macos-15,
-          macos-14,
-        ]
-        python-version: [ '3.14', '3.13', '3.12', '3.11', '3.10' ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install package
-        run: |
-          pip install batchtensor
-
-      - name: Run some checks
-        run: |
-          python tests/package_checks.py
-
+  latest:
+    uses: ./.github/workflows/test-package.yaml
+    with:
+      install-cmd: 'uv pip install --pre batchtensor'
 
   latest-all:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os: [
-          ubuntu-latest,
-          ubuntu-24.04,
-          ubuntu-22.04,
-          ubuntu-24.04-arm,
-          ubuntu-22.04-arm,
-          macos-latest,
-          macos-26,
-          macos-15,
-          macos-14,
-        ]
-        python-version: [ '3.14', '3.13', '3.12', '3.11', '3.10' ]
+    uses: ./.github/workflows/test-package.yaml
+    with:
+      install-cmd: 'uv pip install --pre "batchtensor[all]"'
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install package
-        run: |
-          pip install --pre "batchtensor[all]"
-
-      - name: Run some checks
-        run: |
-          python tests/package_checks.py
-
-
-  latest-min:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os: [
-          ubuntu-latest,
-          ubuntu-24.04,
-          ubuntu-22.04,
-          ubuntu-24.04-arm,
-          ubuntu-22.04-arm,
-          macos-latest,
-          macos-26,
-          macos-15,
-          macos-14,
-        ]
-        python-version: [ '3.14', '3.13', '3.12', '3.11', '3.10' ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install package
-        run: |
-          pip install --pre batchtensor
-
-      - name: Run some checks
-        run: |
-          python tests/package_checks.py
+  latest-numpy:
+    uses: ./.github/workflows/test-package.yaml
+    with:
+      install-cmd: 'uv pip install --pre "batchtensor[numpy]"'
 
 
   ########################
