@@ -79,7 +79,7 @@ packages = ["batchtensor"]
 only-include = ["batchtensor"]
 
 [tool.hatchling.metadata.hooks.autoextras]
-path = "dev/hatch_autoextras.py"
+path = "dev/hatchling/autoextras.py"
 
 [tool.uv.pip]
 torch-backend = "auto"
