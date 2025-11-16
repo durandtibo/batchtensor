@@ -44,7 +44,7 @@ jobs:
 
       - name: Install package
         run: |
-          ${{ matrix.install-cmd }}
+          ${{ inputs.install-cmd }}
 
       - name: Show dependency tree
         shell: bash
