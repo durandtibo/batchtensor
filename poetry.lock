@@ -2169,4 +2169,4 @@ all = ["numpy", "numpy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.15"
-content-hash = "19e576a17421c89a8229da95ae34c99a26d3daa22423c1e9f6027022d8b0ba14"
+content-hash = "300a993636d757e6b4cec76ec117c7c8317ecfa24f20dff56cc66d2940ed94d9"
