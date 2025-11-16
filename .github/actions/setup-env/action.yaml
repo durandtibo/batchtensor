@@ -81,4 +81,4 @@ runs:
     - name: Show dependency tree
       shell: bash
       run: |
-        uv pip tree
+        uv pip tree --show-version-specifiers

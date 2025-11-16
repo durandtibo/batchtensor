@@ -28,7 +28,7 @@ jobs:
       - name: Show dependency tree
         shell: bash
         run: |
-          uv pip tree
+          uv pip tree --package batchtensor --show-version-specifiers
 
       - name: Inspect build
         run: |
