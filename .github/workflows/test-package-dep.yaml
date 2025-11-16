@@ -36,7 +36,7 @@ jobs:
 
       - name: Install package
         run: |
-          uv pip install batcharray
+          uv pip install batchtensor
 
       - name: Install valid package version
         uses: durandtibo/uv-install-package-action@v0.1.1

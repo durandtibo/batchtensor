@@ -22,7 +22,7 @@ jobs:
           inv unit-test --cov
 
       - name: Upload coverage to Codecov
-        if: github.repository == 'durandtibo/batcharray' && (github.event_name == 'push' || github.event_name == 'pull_request')
+        if: github.repository == 'durandtibo/batchtensor' && (github.event_name == 'push' || github.event_name == 'pull_request')
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
