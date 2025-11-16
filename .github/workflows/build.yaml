@@ -18,7 +18,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          python-version: 3.13
+          python-version: '3.13'
           activate-environment: true
 
       - name: Build package
@@ -34,7 +34,7 @@ jobs:
         run: |
           python -c "import batchtensor; print('OK')"
 
-  extra:
+  extras:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -50,7 +50,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          python-version: 3.13
+          python-version: '3.13'
           activate-environment: true
 
       - name: Build package
