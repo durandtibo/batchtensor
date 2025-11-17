@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling >= 1.27"]
+requires = ["hatchling >= 1.27", "hatchling-autoextras-hook>=0.0.1"]
 build-backend = "hatchling.build"
 
 [project]
 name = "batchtensor"
-version = "0.1.2a0"
+version = "0.1.2a1"
 description = "Functions to manipulate batches of PyTorch tensors"
 readme = "README.md"
 authors = [
@@ -34,6 +34,8 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
+
+dynamic = ["maintainers"]
 
 requires-python = ">=3.10"
 
@@ -72,12 +74,7 @@ homepage = "https://github.com/durandtibo/batchtensor"
 repository = "https://github.com/durandtibo/batchtensor"
 documentation = "https://durandtibo.github.io/batchtensor/"
 
-[tool.hatchling.build.targets.wheel]
-packages = ["batchtensor"]
-only-include = ["batchtensor"]
-
-[tool.hatchling.metadata.hooks.autoextras]
-path = "dev/hatchling/autoextras.py"
+[tool.hatch.metadata.hooks.autoextras]
 
 [tool.uv.pip]
 torch-backend = "auto"
