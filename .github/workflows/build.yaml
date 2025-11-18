@@ -49,7 +49,7 @@ jobs:
       max-parallel: 8
       fail-fast: false
       matrix:
-        extra: [ "all", "numpy" ]
+        extra: [ 'all', 'numpy' ]
 
     steps:
       - name: Checkout
