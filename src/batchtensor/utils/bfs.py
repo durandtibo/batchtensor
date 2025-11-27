@@ -116,7 +116,7 @@ class MappingTensorIterator(BaseTensorIterator[Mapping]):
 
 
 class TensorIterator(BaseTensorIterator[Any]):
-    """Implement a tensor iterator."""
+    r"""Implement a tensor iterator."""
 
     registry: ClassVar[dict[type, BaseTensorIterator]] = {}
 

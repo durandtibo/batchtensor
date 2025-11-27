@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 class AutoApplier(BaseApplier[Any]):
-    """Implement an applier that can automatically call other appliers
+    r"""Implement an applier that can automatically call other appliers
     based on the data type."""
 
     registry: ClassVar[dict[type, BaseApplier]] = {}
