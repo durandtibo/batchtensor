@@ -33,7 +33,7 @@ class DefaultApplier(BaseApplier[Any]):
     "[1, 'abc']"
 
     ```
-    """
+    r"""
 
     def apply(self, data: Any, func: Callable, state: ApplyState) -> Any:  # noqa: ARG002
         return func(data)

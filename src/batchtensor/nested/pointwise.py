@@ -47,7 +47,7 @@ def abs(data: Any) -> Any:  # noqa: A001
     {'a': tensor([[4, 3], [2, 1], [0, 1], [2, 3], [4, 5]]), 'b': tensor([2, 1, 0, 1, 2])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.abs)
 
 
@@ -78,7 +78,7 @@ def clamp(data: Any, min: float | None = None, max: float | None = None) -> Any:
     {'a': tensor([[1, 2], [3, 4], [5, 5], [5, 5], [5, 5]]), 'b': tensor([5, 4, 3, 2, 1])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(torch.clamp, min=min, max=max))
 
 
@@ -107,7 +107,7 @@ def exp(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.exp)
 
 
@@ -136,7 +136,7 @@ def exp2(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.exp2)
 
 
@@ -165,7 +165,7 @@ def expm1(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.expm1)
 
 
@@ -194,7 +194,7 @@ def log(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.log)
 
 
@@ -224,7 +224,7 @@ def log2(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.log2)
 
 
@@ -254,7 +254,7 @@ def log10(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.log10)
 
 
@@ -283,5 +283,5 @@ def log1p(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.log1p)

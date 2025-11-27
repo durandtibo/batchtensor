@@ -53,7 +53,7 @@ def permute_along_batch(data: Any, permutation: torch.Tensor) -> Any:
     {'a': tensor([[4, 5], [2, 3], [6, 7], [0, 1], [8, 9]]), 'b': tensor([2, 3, 1, 4, 0])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(tensor.permute_along_batch, permutation=permutation))
 
 
@@ -94,7 +94,7 @@ def permute_along_seq(data: Any, permutation: torch.Tensor) -> Any:
     {'a': tensor([[2, 1, 3, 0, 4], [7, 6, 8, 5, 9]]), 'b': tensor([[2, 3, 1, 4, 0]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(tensor.permute_along_seq, permutation=permutation))
 
 
@@ -129,7 +129,7 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     value = next(dfs_tensor(data))
     return permute_along_batch(
         data=data,
@@ -168,7 +168,7 @@ def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> An
     {'a': tensor([[...]]), 'b': tensor([[...]])}
 
     ```
-    """
+    r"""
     value = next(dfs_tensor(data))
     return permute_along_seq(
         data=data,

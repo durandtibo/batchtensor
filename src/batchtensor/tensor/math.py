@@ -44,7 +44,7 @@ def cumprod_along_batch(tensor: torch.Tensor) -> torch.Tensor:
     tensor([[   1,    2], [   3,    8], [  15,   48], [ 105,  384], [ 945, 3840]])
 
     ```
-    """
+    r"""
     return tensor.cumprod(dim=BATCH_DIM)
 
 
@@ -76,7 +76,7 @@ def cumprod_along_seq(tensor: torch.Tensor) -> torch.Tensor:
             [    6,    42,   336,  3024, 30240]])
 
     ```
-    """
+    r"""
     return tensor.cumprod(dim=SEQ_DIM)
 
 
@@ -107,7 +107,7 @@ def cumsum_along_batch(tensor: torch.Tensor) -> torch.Tensor:
     tensor([[ 0,  1], [ 2,  4], [ 6,  9], [12, 16], [20, 25]])
 
     ```
-    """
+    r"""
     return tensor.cumsum(dim=BATCH_DIM)
 
 
@@ -139,5 +139,5 @@ def cumsum_along_seq(tensor: torch.Tensor) -> torch.Tensor:
             [ 5, 11, 18, 26, 35]])
 
     ```
-    """
+    r"""
     return tensor.cumsum(dim=SEQ_DIM)

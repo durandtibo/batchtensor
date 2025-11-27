@@ -33,4 +33,4 @@ class BaseApplier(ABC, Generic[T]):
 
         Returns:
             The transformed data.
-        """
+        r"""

@@ -45,7 +45,7 @@ def as_tensor(
      'c': tensor(42)}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(torch.as_tensor, dtype=dtype, device=device))
 
 
@@ -78,7 +78,7 @@ def from_numpy(data: Any) -> Any:
     {'a': tensor([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]]), 'b': tensor([0, 1, 2, 3, 4])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.from_numpy)
 
 
@@ -111,5 +111,5 @@ def to_numpy(data: Any) -> Any:
     {'a': array([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]], dtype=float32), 'b': array([0, 1, 2, 3, 4])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, lambda tensor: tensor.numpy())

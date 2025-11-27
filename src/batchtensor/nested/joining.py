@@ -53,7 +53,7 @@ def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
      'b': tensor([[10, 11, 12], [13, 14, 15], [17, 18, 19]])}
 
     ```
-    """
+    r"""
     if not data:
         return {}
     item = data[0]
@@ -97,7 +97,7 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
      'b': tensor([[10, 11, 12, 17], [13, 14, 15, 18]])}
 
     ```
-    """
+    r"""
     if not data:
         return {}
     item = data[0]
@@ -136,5 +136,5 @@ def repeat_along_seq(data: Any, repeats: int) -> Any:
      'b': tensor([[4, 3, 2, 1, 0, 4, 3, 2, 1, 0]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.repeat_along_seq, repeats=repeats))

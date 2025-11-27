@@ -65,7 +65,7 @@ def amax_along_batch(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[8, 9]]), 'b': tensor([4])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.amax_along_batch, keepdim=keepdim))
 
 
@@ -102,7 +102,7 @@ def amax_along_seq(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[4], [9]]), 'b': tensor([[4]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.amax_along_seq, keepdim=keepdim))
 
 
@@ -139,7 +139,7 @@ def amin_along_batch(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[0, 1]]), 'b': tensor([0])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.amin_along_batch, keepdim=keepdim))
 
 
@@ -176,7 +176,7 @@ def amin_along_seq(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[0], [5]]), 'b': tensor([[0]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.amin_along_seq, keepdim=keepdim))
 
 
@@ -215,7 +215,7 @@ def argmax_along_batch(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[4, 4]]), 'b': tensor([0])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.argmax_along_batch, keepdim=keepdim))
 
 
@@ -254,7 +254,7 @@ def argmax_along_seq(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[4], [4]]), 'b': tensor([[0]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.argmax_along_seq, keepdim=keepdim))
 
 
@@ -293,7 +293,7 @@ def argmin_along_batch(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[0, 0]]), 'b': tensor([4])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.argmin_along_batch, keepdim=keepdim))
 
 
@@ -332,7 +332,7 @@ def argmin_along_seq(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[0], [0]]), 'b': tensor([[4]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.argmin_along_seq, keepdim=keepdim))
 
 
@@ -381,7 +381,7 @@ def max_along_batch(data: Any, keepdim: bool = False) -> Any:
     indices=tensor([0]))}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.max_along_batch, keepdim=keepdim))
 
 
@@ -430,7 +430,7 @@ def max_along_seq(data: Any, keepdim: bool = False) -> Any:
     indices=tensor([[0]]))}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.max_along_seq, keepdim=keepdim))
 
 
@@ -467,7 +467,7 @@ def mean_along_batch(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[4., 5.]]), 'b': tensor([2.])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.mean_along_batch, keepdim=keepdim))
 
 
@@ -505,7 +505,7 @@ def mean_along_seq(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[2.], [7.]]), 'b': tensor([[2.]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.mean_along_seq, keepdim=keepdim))
 
 
@@ -554,7 +554,7 @@ def median_along_batch(data: Any, keepdim: bool = False) -> Any:
     indices=tensor([2]))}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.median_along_batch, keepdim=keepdim))
 
 
@@ -603,7 +603,7 @@ def median_along_seq(data: Any, keepdim: bool = False) -> Any:
     indices=tensor([[2]]))}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.median_along_seq, keepdim=keepdim))
 
 
@@ -652,7 +652,7 @@ def min_along_batch(data: Any, keepdim: bool = False) -> Any:
     indices=tensor([4]))}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.min_along_batch, keepdim=keepdim))
 
 
@@ -701,7 +701,7 @@ def min_along_seq(data: Any, keepdim: bool = False) -> Any:
     indices=tensor([[4]]))}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.min_along_seq, keepdim=keepdim))
 
 
@@ -738,7 +738,7 @@ def prod_along_batch(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[  0, 945]]), 'b': tensor([120])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.prod_along_batch, keepdim=keepdim))
 
 
@@ -775,7 +775,7 @@ def prod_along_seq(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[    0], [15120]]), 'b': tensor([[120]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.prod_along_seq, keepdim=keepdim))
 
 
@@ -812,7 +812,7 @@ def sum_along_batch(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[20, 25]]), 'b': tensor([10])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.sum_along_batch, keepdim=keepdim))
 
 
@@ -849,5 +849,5 @@ def sum_along_seq(data: Any, keepdim: bool = False) -> Any:
     {'a': tensor([[10], [35]]), 'b': tensor([[10]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.sum_along_seq, keepdim=keepdim))

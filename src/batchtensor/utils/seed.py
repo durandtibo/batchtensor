@@ -27,7 +27,7 @@ def get_random_seed(seed: int) -> int:
     6176747449835261347
 
     ```
-    """
+    r"""
     return torch.randint(-(2**63), 2**63 - 1, size=(1,), generator=get_torch_generator(seed)).item()
 
 
@@ -59,7 +59,7 @@ def get_torch_generator(
             [0.3904, 0.6009, 0.2566, 0.7936]])
 
     ```
-    """
+    r"""
     generator = torch.Generator(device)
     generator.manual_seed(random_seed)
     return generator
@@ -85,7 +85,7 @@ def setup_torch_generator(generator_or_seed: int | torch.Generator) -> torch.Gen
     <torch._C.Generator object at 0x...>
 
     ```
-    """
+    r"""
     if isinstance(generator_or_seed, torch.Generator):
         return generator_or_seed
     return get_torch_generator(generator_or_seed)

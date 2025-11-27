@@ -47,7 +47,7 @@ def cumprod_along_batch(data: Any) -> Any:
     {'a': tensor([[   1,    2], [   3,    8], [  15,   48], [ 105,  384], [ 945, 3840]]), 'b': tensor([ 4, 12, 24, 24,  0])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.cumprod_along_batch))
 
 
@@ -83,7 +83,7 @@ def cumprod_along_seq(data: Any) -> Any:
 
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.cumprod_along_seq))
 
 
@@ -118,7 +118,7 @@ def cumsum_along_batch(data: Any) -> Any:
     {'a': tensor([[ 0,  1], [ 2,  4], [ 6,  9], [12, 16], [20, 25]]), 'b': tensor([ 4,  7,  9, 10, 10])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.cumsum_along_batch))
 
 
@@ -153,5 +153,5 @@ def cumsum_along_seq(data: Any) -> Any:
     {'a': tensor([[ 0,  1,  3,  6, 10], [ 5, 11, 18, 26, 35]]), 'b': tensor([[ 4,  7,  9, 10, 10]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.cumsum_along_seq))

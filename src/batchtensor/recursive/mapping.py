@@ -35,7 +35,7 @@ class MappingApplier(BaseApplier[T]):
     {'a': '1', 'b': 'abc'}
 
     ```
-    """
+    r"""
 
     def apply(self, data: T, func: Callable, state: ApplyState) -> T:
         return type(data)(

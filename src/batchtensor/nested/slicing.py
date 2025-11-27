@@ -61,7 +61,7 @@ def chunk_along_batch(
      {'a': tensor([[8, 9]]), 'b': tensor([0])})
 
     ```
-    """
+    r"""
     keys = data.keys()
     return tuple(
         dict(zip(keys, values))
@@ -105,7 +105,7 @@ def chunk_along_seq(
      {'a': tensor([[4], [9]]), 'b': tensor([[0]])})
 
     ```
-    """
+    r"""
     keys = data.keys()
     return tuple(
         dict(zip(keys, values))
@@ -146,7 +146,7 @@ def select_along_batch(data: Any, index: int) -> Any:
     {'a': tensor([4, 5]), 'b': tensor(2)}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.select_along_batch, index=index))
 
 
@@ -184,7 +184,7 @@ def select_along_seq(data: Any, index: int) -> Any:
     {'a': tensor([2, 7]), 'b': tensor([2])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.select_along_seq, index=index))
 
 
@@ -227,7 +227,7 @@ def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: 
     {'a': tensor([[0, 1], [4, 5], [8, 9]]), 'b': tensor([4, 2, 0])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
 
 
@@ -270,7 +270,7 @@ def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: in
     {'a': tensor([[0, 2, 4], [5, 7, 9]]), 'b': tensor([[4, 2, 0]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(bt.slice_along_seq, start=start, stop=stop, step=step))
 
 
@@ -311,7 +311,7 @@ def split_along_batch(
      {'a': tensor([[8, 9]]), 'b': tensor([0])})
 
     ```
-    """
+    r"""
     keys = data.keys()
     return tuple(
         dict(zip(keys, values))
@@ -358,7 +358,7 @@ def split_along_seq(
      {'a': tensor([[4], [9]]), 'b': tensor([[0]])})
 
     ```
-    """
+    r"""
     keys = data.keys()
     return tuple(
         dict(zip(keys, values))

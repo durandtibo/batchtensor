@@ -51,7 +51,7 @@ def bfs_tensor(data: Any) -> Generator[torch.Tensor]:
     [tensor([[1., 1., 1.], [1., 1., 1.]]), tensor([0, 1, 2, 3, 4])]
 
     ```
-    """
+    r"""
     state = IteratorState(iterator=TensorIterator(), queue=deque([data]))
     while state.queue:
         item = state.queue.popleft()
@@ -80,7 +80,7 @@ class BaseTensorIterator(Generic[T]):
             data: The data to iterate on.
             state: The current state, which include the
                 queue.
-        """
+        r"""
 
 
 class DefaultTensorIterator(BaseTensorIterator[Any]):
@@ -147,7 +147,7 @@ class TensorIterator(BaseTensorIterator[Any]):
         >>> TensorIterator.add_iterator(list, IterableTensorIterator(), exist_ok=True)
 
         ```
-        """
+        r"""
         if data_type in cls.registry and not exist_ok:
             msg = (
                 f"An iterator ({cls.registry[data_type]}) is already registered for the data "
@@ -181,7 +181,7 @@ class TensorIterator(BaseTensorIterator[Any]):
         False
 
         ```
-        """
+        r"""
         return data_type in cls.registry
 
     @classmethod
@@ -202,7 +202,7 @@ class TensorIterator(BaseTensorIterator[Any]):
         IterableTensorIterator()
 
         ```
-        """
+        r"""
         for object_type in data_type.__mro__:
             iterator = cls.registry.get(object_type, None)
             if iterator is not None:
@@ -216,7 +216,7 @@ def register_iterators(mapping: Mapping[type, BaseTensorIterator]) -> None:
 
     Args:
         mapping: The iterators to register.
-    """
+    r"""
     for typ, op in mapping.items():
         if not TensorIterator.has_iterator(typ):  # pragma: no cover
             TensorIterator.add_iterator(typ, op)

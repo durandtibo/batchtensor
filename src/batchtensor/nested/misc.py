@@ -36,5 +36,5 @@ def to(data: Any, *args: Any, **kwargs: Any) -> Any:
      'b': tensor([4., 3., 2., 1., 0.])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, lambda tensor: tensor.to(*args, **kwargs))

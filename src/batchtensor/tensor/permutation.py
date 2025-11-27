@@ -46,7 +46,7 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
             [8, 9]])
 
     ```
-    """
+    r"""
     if permutation.shape[0] != tensor.shape[0]:
         msg = (
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
@@ -89,7 +89,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
             [7, 6, 8, 5, 9]])
 
     ```
-    """
+    r"""
     if permutation.shape[0] != tensor.shape[1]:
         msg = (
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
@@ -127,7 +127,7 @@ def shuffle_along_batch(
     tensor([[...]])
 
     ```
-    """
+    r"""
     return permute_along_batch(
         tensor=tensor,
         permutation=torch.randperm(tensor.shape[BATCH_DIM], generator=generator),
@@ -162,7 +162,7 @@ def shuffle_along_seq(
     tensor([[...]])
 
     ```
-    """
+    r"""
     return permute_along_seq(
         tensor=tensor,
         permutation=torch.randperm(tensor.shape[SEQ_DIM], generator=generator),

@@ -52,7 +52,7 @@ def index_select_along_batch(data: Any, index: torch.Tensor) -> Any:
     {'a': tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1]]), 'b': tensor([0, 1, 2, 3, 4])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(tensor.index_select_along_batch, index=index))
 
 
@@ -91,5 +91,5 @@ def index_select_along_seq(data: Any, index: torch.Tensor) -> Any:
     {'a': tensor([[4, 3, 2, 1, 0], [9, 8, 7, 6, 5]]), 'b': tensor([[0, 1, 2, 3, 4]])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, partial(tensor.index_select_along_seq, index=index))

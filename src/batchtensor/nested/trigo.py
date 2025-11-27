@@ -46,7 +46,7 @@ def acos(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.acos)
 
 
@@ -73,7 +73,7 @@ def acosh(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.acosh)
 
 
@@ -99,7 +99,7 @@ def asin(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.asin)
 
 
@@ -126,7 +126,7 @@ def asinh(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.asinh)
 
 
@@ -152,7 +152,7 @@ def atan(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.atan)
 
 
@@ -179,7 +179,7 @@ def atanh(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.atanh)
 
 
@@ -205,7 +205,7 @@ def cos(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.cos)
 
 
@@ -231,7 +231,7 @@ def cosh(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.cosh)
 
 
@@ -257,7 +257,7 @@ def sin(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.sin)
 
 
@@ -283,7 +283,7 @@ def sinh(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.sinh)
 
 
@@ -309,7 +309,7 @@ def tan(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.tan)
 
 
@@ -335,5 +335,5 @@ def tanh(data: Any) -> Any:
     {'a': tensor([[...]]), 'b': tensor([...])}
 
     ```
-    """
+    r"""
     return recursive_apply(data, torch.tanh)

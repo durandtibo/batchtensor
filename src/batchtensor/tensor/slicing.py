@@ -54,7 +54,7 @@ def chunk_along_batch(tensor: torch.Tensor, chunks: int) -> tuple[torch.Tensor, 
      tensor([[8, 9]]))
 
     ```
-    """
+    r"""
     return tensor.chunk(chunks=chunks, dim=BATCH_DIM)
 
 
@@ -88,7 +88,7 @@ def chunk_along_seq(tensor: torch.Tensor, chunks: int) -> tuple[torch.Tensor, ..
      tensor([[4], [9]]))
 
     ```
-    """
+    r"""
     return tensor.chunk(chunks=chunks, dim=SEQ_DIM)
 
 
@@ -121,7 +121,7 @@ def select_along_batch(tensor: torch.Tensor, index: int) -> torch.Tensor:
     tensor([4, 5])
 
     ```
-    """
+    r"""
     return tensor[index]
 
 
@@ -154,7 +154,7 @@ def select_along_seq(tensor: torch.Tensor, index: int) -> torch.Tensor:
     tensor([2, 7])
 
     ```
-    """
+    r"""
     return tensor[:, index]
 
 
@@ -201,7 +201,7 @@ def slice_along_batch(
             [8, 9]])
 
     ```
-    """
+    r"""
     return tensor[start:stop:step]
 
 
@@ -245,7 +245,7 @@ def slice_along_seq(
             [9, 7, 5]])
 
     ```
-    """
+    r"""
     return tensor[:, start:stop:step]
 
 
@@ -282,7 +282,7 @@ def split_along_batch(
      tensor([[8, 9]]))
 
     ```
-    """
+    r"""
     return tensor.split(split_size_or_sections, dim=BATCH_DIM)
 
 
@@ -319,5 +319,5 @@ def split_along_seq(
      tensor([[4], [9]]))
 
     ```
-    """
+    r"""
     return tensor.split(split_size_or_sections, dim=SEQ_DIM)

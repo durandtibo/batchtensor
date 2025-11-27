@@ -44,7 +44,7 @@ def cat_along_batch(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> t
             [13, 14, 15]])
 
     ```
-    """
+    r"""
     return torch.cat(tensors, dim=BATCH_DIM)
 
 
@@ -80,7 +80,7 @@ def cat_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> tor
             [ 4,  5,  6, 12, 13]])
 
     ```
-    """
+    r"""
     return torch.cat(tensors, dim=SEQ_DIM)
 
 
@@ -113,7 +113,7 @@ def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
             [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]])
 
     ```
-    """
+    r"""
     sizes = [1] * tensor.dim()
     sizes[1] = repeats
     return tensor.repeat(*sizes)
