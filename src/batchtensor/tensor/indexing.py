@@ -46,7 +46,7 @@ def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch
             [0, 1]])
 
     ```
-    r"""
+    """
     return tensor.index_select(dim=BATCH_DIM, index=index)
 
 
@@ -83,7 +83,7 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
             [9, 8, 7, 6, 5]])
 
     ```
-    r"""
+    """
     if index.ndim == 1:
         return tensor.index_select(dim=SEQ_DIM, index=index)
     batch_size, seq_len = index.shape[:2]

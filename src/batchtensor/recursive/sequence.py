@@ -35,7 +35,7 @@ class SequenceApplier(BaseApplier[T]):
     ['1', 'abc']
 
     ```
-    r"""
+    """
 
     def apply(self, data: T, func: Callable, state: ApplyState) -> T:
         return type(data)(

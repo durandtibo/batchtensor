@@ -60,7 +60,7 @@ def amax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     tensor([[8, 9]])
 
     ```
-    r"""
+    """
     return torch.amax(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -93,7 +93,7 @@ def amax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     tensor([[4], [9]])
 
     ```
-    r"""
+    """
     return torch.amax(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -126,7 +126,7 @@ def amin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     tensor([[0, 1]])
 
     ```
-    r"""
+    """
     return torch.amin(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -159,7 +159,7 @@ def amin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     tensor([[0], [5]])
 
     ```
-    r"""
+    """
     return torch.amin(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -194,7 +194,7 @@ def argmax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Ten
     tensor([[4, 4]])
 
     ```
-    r"""
+    """
     return torch.argmax(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -229,7 +229,7 @@ def argmax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     tensor([[4], [4]])
 
     ```
-    r"""
+    """
     return torch.argmax(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -264,7 +264,7 @@ def argmin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Ten
     tensor([[0, 0]])
 
     ```
-    r"""
+    """
     return torch.argmin(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -299,7 +299,7 @@ def argmin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     tensor([[0], [0]])
 
     ```
-    r"""
+    """
     return torch.argmin(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -338,7 +338,7 @@ def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
     indices=tensor([[4, 4]]))
 
     ```
-    r"""
+    """
     return torch.max(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -377,7 +377,7 @@ def max_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_t
     indices=tensor([[4], [4]]))
 
     ```
-    r"""
+    """
     return torch.max(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -410,7 +410,7 @@ def mean_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     tensor([[4., 5.]])
 
     ```
-    r"""
+    """
     return torch.mean(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -443,7 +443,7 @@ def mean_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     tensor([[2.], [7.]])
 
     ```
-    r"""
+    """
     return torch.mean(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -482,7 +482,7 @@ def median_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.ret
     indices=tensor([[2, 2]]))
 
     ```
-    r"""
+    """
     return torch.median(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -521,7 +521,7 @@ def median_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.retur
     indices=tensor([[2], [2]]))
 
     ```
-    r"""
+    """
     return torch.median(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -560,7 +560,7 @@ def min_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
     indices=tensor([[0, 0]]))
 
     ```
-    r"""
+    """
     return torch.min(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -599,7 +599,7 @@ def min_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_t
     indices=tensor([[0], [0]]))
 
     ```
-    r"""
+    """
     return torch.min(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -632,7 +632,7 @@ def prod_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     tensor([[  0, 945]])
 
     ```
-    r"""
+    """
     return torch.prod(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -665,7 +665,7 @@ def prod_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     tensor([[    0], [15120]])
 
     ```
-    r"""
+    """
     return torch.prod(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
@@ -698,7 +698,7 @@ def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor
     tensor([[20, 25]])
 
     ```
-    r"""
+    """
     return torch.sum(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
@@ -731,5 +731,5 @@ def sum_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     tensor([[10], [35]])
 
     ```
-    r"""
+    """
     return torch.sum(tensor, dim=SEQ_DIM, keepdim=keepdim)

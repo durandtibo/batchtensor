@@ -47,7 +47,7 @@ def argsort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> A
     {'a': tensor([[3, 2], [4, 4], [2, 0], [0, 1], [1, 3]]), 'b': tensor([0, 1, 2, 3, 4])}
 
     ```
-    r"""
+    """
     return recursive_apply(data, partial(bt.argsort_along_batch, descending=descending, **kwargs))
 
 
@@ -87,7 +87,7 @@ def argsort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any
     {'a': tensor([[3, 0, 4, 1, 2], [1, 2, 3, 4, 0]]), 'b': tensor([[0, 1, 2, 3, 4]])}
 
     ```
-    r"""
+    """
     return recursive_apply(data, partial(bt.argsort_along_seq, descending=descending, **kwargs))
 
 
@@ -140,7 +140,7 @@ def sort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> Any:
     indices=tensor([0, 1, 2, 3, 4]))}
 
     ```
-    r"""
+    """
     return recursive_apply(data, partial(bt.sort_along_batch, descending=descending, **kwargs))
 
 
@@ -193,5 +193,5 @@ def sort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any:
     indices=tensor([[0, 1, 2, 3, 4]]))}
 
     ```
-    r"""
+    """
     return recursive_apply(data, partial(bt.sort_along_seq, descending=descending, **kwargs))

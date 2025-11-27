@@ -45,7 +45,7 @@ def argsort_along_batch(
     tensor([[3, 2], [4, 4], [2, 0], [0, 1], [1, 3]])
 
     ```
-    r"""
+    """
     return torch.argsort(tensor, dim=BATCH_DIM, descending=descending, **kwargs)
 
 
@@ -85,7 +85,7 @@ def argsort_along_seq(
             [1, 2, 3, 4, 0]])
 
     ```
-    r"""
+    """
     return torch.argsort(tensor, dim=SEQ_DIM, descending=descending, **kwargs)
 
 
@@ -129,7 +129,7 @@ def sort_along_batch(
     indices=tensor([[3, 2], [4, 4], [2, 0], [0, 1], [1, 3]]))
 
     ```
-    r"""
+    """
     return torch.sort(tensor, dim=BATCH_DIM, descending=descending, **kwargs)
 
 
@@ -173,5 +173,5 @@ def sort_along_seq(
     indices=tensor([[3, 0, 4, 1, 2], [1, 2, 3, 4, 0]]))
 
     ```
-    r"""
+    """
     return torch.sort(tensor, dim=SEQ_DIM, descending=descending, **kwargs)

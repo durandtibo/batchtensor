@@ -38,5 +38,5 @@ def recursive_apply(data: Any, func: Callable) -> Any:
     {'a': '1', 'b': 'abc'}
 
     ```
-    r"""
+    """
     return _applier.apply(data=data, func=func, state=ApplyState(_applier))

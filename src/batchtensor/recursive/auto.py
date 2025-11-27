@@ -48,7 +48,7 @@ class AutoApplier(BaseApplier[Any]):
         >>> AutoApplier.add_applier(list, SequenceApplier(), exist_ok=True)
 
         ```
-        r"""
+        """
         if data_type in cls.registry and not exist_ok:
             msg = (
                 f"An applier ({cls.registry[data_type]}) is already registered for the data "
@@ -81,7 +81,7 @@ class AutoApplier(BaseApplier[Any]):
         False
 
         ```
-        r"""
+        """
         return data_type in cls.registry
 
     @classmethod
@@ -102,7 +102,7 @@ class AutoApplier(BaseApplier[Any]):
         SequenceApplier()
 
         ```
-        r"""
+        """
         for object_type in data_type.__mro__:
             applier = cls.registry.get(object_type, None)
             if applier is not None:
@@ -116,7 +116,7 @@ def register_appliers(mapping: Mapping[type, BaseApplier]) -> None:
 
     Args:
         mapping: The mapping of data types and appliers.
-    r"""
+    """
     for typ, op in mapping.items():
         if not AutoApplier.has_applier(typ):  # pragma: no cover
             AutoApplier.add_applier(typ, op)
