@@ -174,3 +174,7 @@ that was using the old version of `batchtensor`.
 
 `batchtensor` is licensed under BSD 3-Clause "New" or "Revised" license available
 in [LICENSE](LICENSE) file.
+
+## Acknowledgments
+
+`batchtensor` is built on top of [PyTorch](https://pytorch.org/) and uses [coola](https://github.com/durandtibo/coola) for object comparison utilities. We are grateful to the maintainers and contributors of these projects.
