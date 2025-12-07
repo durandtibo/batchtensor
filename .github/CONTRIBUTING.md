@@ -31,9 +31,9 @@ We actively welcome your pull requests.
 ## Issues
 
 We use GitHub issues to track public bugs or feature requests.
-For bugs, please ensure your description is clear and concise description, and has sufficient
+For bugs, please ensure your description is clear and concise, and has sufficient
 information to be easily reproducible.
-For feature request, please add a clear and concise description of the feature proposal.
+For feature requests, please add a clear and concise description of the feature proposal.
 Please outline the motivation for the proposal.
 
 ## License

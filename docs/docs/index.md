@@ -55,8 +55,8 @@
 
 ## Overview
 
-`batchtensor` is lightweight library built on top of [PyTorch](https://pytorch.org/) to manipulate
-nested data structure with PyTorch tensors.
+`batchtensor` is a lightweight library built on top of [PyTorch](https://pytorch.org/) to manipulate
+nested data structures with PyTorch tensors.
 This library provides functions for tensors where the first dimension is the batch dimension.
 It also provides functions for tensors representing a batch of sequences where the first dimension
 is the batch dimension and the second dimension is the sequence dimension.
@@ -65,7 +65,7 @@ is the batch dimension and the second dimension is the sequence dimension.
 
 Let's imagine you have a batch which is represented by a dictionary with three tensors, and you want
 to take the first 2 items.
-`batchtensor` provides the function `slice_along_batch` that allows to slide all the tensors:
+`batchtensor` provides the function `slice_along_batch` that allows slicing all the tensors:
 
 ```pycon
 >>> import torch
@@ -80,7 +80,7 @@ to take the first 2 items.
 
 ```
 
-Similarly, it is possible to split a batch in multiple batches by using the
+Similarly, it is possible to split a batch into multiple batches by using the
 function `split_along_batch`:
 
 ```pycon
