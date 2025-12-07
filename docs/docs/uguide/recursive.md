@@ -321,4 +321,4 @@ tensor(1)
 
 - [Nested Operations](nested.md) - High-level operations using recursive utilities
 - [Utils Module](utils.md) - Tensor traversal utilities
-- [API Reference](../refs/nested.md) - Complete function reference
+- [API Reference](../refs/recursive.md) - Complete function reference

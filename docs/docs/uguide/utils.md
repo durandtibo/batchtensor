@@ -413,4 +413,4 @@ targets: torch.Size([32])
 
 - [Nested Operations](nested.md) - Operations on nested structures
 - [Recursive Module](recursive.md) - Low-level recursive utilities
-- [API Reference](../refs/nested.md) - Complete function reference
+- [API Reference](../refs/utils.md) - Complete function reference
