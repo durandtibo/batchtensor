@@ -1,10 +1,14 @@
 # Nested Data Manipulation
 
-The `batchtensor.nested` module provides functions to manipulate nested data structures containing PyTorch tensors. These functions work with dictionaries, lists, and other nested structures where tensors share batch or sequence dimensions.
+The `batchtensor.nested` module provides functions to manipulate nested data structures containing
+PyTorch tensors. These functions work with dictionaries, lists, and other nested structures where
+tensors share batch or sequence dimensions.
 
 ## Overview
 
-When working with complex data pipelines, you often have batches represented as nested structures (e.g., dictionaries of tensors). The nested module makes it easy to apply operations across all tensors in these structures.
+When working with complex data pipelines, you often have batches represented as nested structures (
+e.g., dictionaries of tensors). The nested module makes it easy to apply operations across all
+tensors in these structures.
 
 ## Slicing Operations
 
@@ -307,19 +311,21 @@ Convert between PyTorch tensors and NumPy arrays:
 ...     "a": np.array([[1, 2], [3, 4]]),
 ...     "b": np.array([5, 6]),
 ... }
->>> batch = from_numpy(numpy_data)  # doctest: +SKIP
->>> batch  # doctest: +SKIP
+>>> batch = from_numpy(numpy_data)
+>>> batch
 {'a': tensor([[1, 2], [3, 4]]), 'b': tensor([5, 6])}
 >>> # To NumPy
->>> to_numpy(batch)  # doctest: +SKIP
+>>> to_numpy(batch)
 {'a': array([[1, 2], [3, 4]]), 'b': array([5, 6])}
 
 ```
 
 ## Best Practices
 
-1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible batch/sequence dimensions
-2. **Memory Efficiency**: Many operations like `chunk` and `slice` return views when possible, not copies
+1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible
+   batch/sequence dimensions
+2. **Memory Efficiency**: Many operations like `chunk` and `slice` return views when possible, not
+   copies
 3. **Type Safety**: Use the same data types across tensors in a batch for predictable behavior
 4. **Error Handling**: Functions will raise clear errors if tensors have incompatible shapes
 
@@ -333,5 +339,4 @@ Convert between PyTorch tensors and NumPy arrays:
 ## See Also
 
 - [Tensor Operations](tensor.md) - Operations for single tensors
-- [Recursive Module](recursive.md) - Low-level recursive utilities
 - [API Reference](../refs/nested.md) - Complete function reference
