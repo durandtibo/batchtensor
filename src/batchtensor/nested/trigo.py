@@ -20,8 +20,7 @@ __all__ = [
 from typing import Any
 
 import torch
-
-from batchtensor.recursive import recursive_apply
+from coola.recursive import recursive_apply
 
 
 def acos(data: Any) -> Any:

@@ -8,8 +8,7 @@ from functools import partial
 from typing import Any
 
 import torch
-
-from batchtensor.recursive import recursive_apply
+from coola.recursive import recursive_apply
 
 
 def as_tensor(
