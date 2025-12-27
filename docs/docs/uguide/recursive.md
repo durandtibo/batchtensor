@@ -17,6 +17,7 @@ The core function for recursive operations:
 >>> from batchtensor.recursive import recursive_apply
 >>> def double(x):
 ...     return x * 2
+...
 >>> data = {
 ...     "a": torch.tensor([1, 2, 3]),
 ...     "b": torch.tensor([4, 5, 6]),
@@ -56,7 +57,7 @@ Handles sequences naturally:
 ...     torch.tensor([1, 2]),
 ...     torch.tensor([3, 4]),
 ... ]
->>> recursive_apply(data, lambda x: x ** 2)
+>>> recursive_apply(data, lambda x: x**2)
 [tensor([1, 4]), tensor([9, 16])]
 
 ```
@@ -114,11 +115,13 @@ You can create custom appliers for your own types by inheriting from `BaseApplie
 >>> class MyClass:
 ...     def __init__(self, value):
 ...         self.value = value
+...
 >>> class MyClassApplier(BaseApplier):
 ...     def apply(self, data, func, state):
 ...         # Apply function to the value attribute
 ...         data.value = func(data.value)
 ...         return data
+...
 >>> # Register the custom applier
 >>> AutoApplier.add_applier(MyClass, MyClassApplier(), exist_ok=True)
 >>> # Now use it
@@ -163,6 +166,7 @@ Filter which tensors get modified:
 ...                 result[key] = value
 ...         return result
 ...     return data
+...
 >>> batch = {
 ...     "feature1": torch.tensor([10.0, 20.0]),
 ...     "feature2": torch.tensor([30.0, 40.0]),
@@ -184,6 +188,7 @@ Apply normalization recursively:
 ...     if isinstance(x, torch.Tensor) and x.dtype in [torch.float32, torch.float64]:
 ...         return (x - x.mean()) / (x.std() + 1e-8)
 ...     return x
+...
 >>> data = {
 ...     "input": torch.tensor([1.0, 2.0, 3.0, 4.0, 5.0]),
 ...     "metadata": {
@@ -208,6 +213,7 @@ Gather information from nested structures:
 ...     if isinstance(x, torch.Tensor):
 ...         shapes.append(x.shape)
 ...     return x
+...
 >>> data = {
 ...     "a": torch.tensor([[1, 2], [3, 4]]),
 ...     "b": torch.tensor([5, 6, 7]),
@@ -231,10 +237,8 @@ The recursive module is used internally by nested operations:
 >>> from functools import partial
 >>> # The nested module uses recursive_apply
 >>> def slice_all(data, start, stop):
-...     return recursive_apply(
-...         data,
-...         partial(lambda x, s, e: x[s:e], s=start, e=stop)
-...     )
+...     return recursive_apply(data, partial(lambda x, s, e: x[s:e], s=start, e=stop))
+...
 >>> batch = {
 ...     "a": torch.tensor([[1, 2], [3, 4], [5, 6]]),
 ...     "b": torch.tensor([7, 8, 9]),
@@ -255,6 +259,7 @@ Ensure operations only apply to tensors:
 ...     if isinstance(x, torch.Tensor):
 ...         return x.float()
 ...     return x
+...
 >>> data = {
 ...     "tensor": torch.tensor([1, 2, 3], dtype=torch.int32),
 ...     "string": "metadata",
@@ -292,6 +297,7 @@ Ensure operations only apply to tensors:
 ...     if isinstance(x, torch.Tensor) and x.dtype == torch.float32:
 ...         return x.half()
 ...     return x
+...
 >>> data = {
 ...     "floats": torch.tensor([1.0, 2.0], dtype=torch.float32),
 ...     "ints": torch.tensor([1, 2], dtype=torch.int32),
@@ -310,7 +316,9 @@ Ensure operations only apply to tensors:
 ...     "a": torch.tensor([1, 2, 3]),
 ...     "b": {"c": torch.tensor([4, 5])},
 ... }
->>> cloned = recursive_apply(data, lambda x: x.clone() if isinstance(x, torch.Tensor) else x)
+>>> cloned = recursive_apply(
+...     data, lambda x: x.clone() if isinstance(x, torch.Tensor) else x
+... )
 >>> cloned["a"][0] = 100
 >>> data["a"][0]  # Original unchanged
 tensor(1)

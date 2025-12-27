@@ -17,7 +17,7 @@ from batchtensor.nested import (
 # Create a batch of images with metadata
 batch = {
     "images": torch.randn(100, 3, 224, 224),  # 100 RGB images
-    "labels": torch.randint(0, 10, (100,)),    # Classification labels
+    "labels": torch.randint(0, 10, (100,)),  # Classification labels
     "filenames": ["img_{:03d}.jpg".format(i) for i in range(100)],
     "augmented": torch.randint(0, 2, (100,), dtype=torch.bool),
 }
@@ -50,11 +50,13 @@ from batchtensor.nested import (
 
 # Batch of sequences with padding
 batch = {
-    "tokens": torch.tensor([
-        [[1], [2], [3], [0]],  # sequence length 3, padded
-        [[4], [5], [0], [0]],  # sequence length 2, padded
-        [[6], [7], [8], [9]],  # sequence length 4, no padding
-    ]),
+    "tokens": torch.tensor(
+        [
+            [[1], [2], [3], [0]],  # sequence length 3, padded
+            [[4], [5], [0], [0]],  # sequence length 2, padded
+            [[6], [7], [8], [9]],  # sequence length 4, no padding
+        ]
+    ),
     "lengths": torch.tensor([3, 2, 4]),  # actual lengths
 }
 
@@ -114,6 +116,7 @@ import torch
 from batchtensor.nested import cat_along_batch
 from batchtensor.recursive import recursive_apply
 
+
 def augment_image(image):
     """Simple augmentation: random crop and flip."""
     # Random horizontal flip
@@ -121,6 +124,7 @@ def augment_image(image):
         image = torch.flip(image, dims=[-1])
     # Random crop (simplified)
     return image
+
 
 # Original batch
 original = {
@@ -132,7 +136,7 @@ original = {
 augmented = {
     "images": recursive_apply(
         original["images"],
-        lambda x: augment_image(x) if isinstance(x, torch.Tensor) else x
+        lambda x: augment_image(x) if isinstance(x, torch.Tensor) else x,
     ),
     "labels": original["labels"],  # Labels stay the same
 }
@@ -195,9 +199,11 @@ batch = {
 means = mean_along_batch(batch)
 stds = std_along_batch(batch)
 
+
 # Normalize
 def normalize_tensor(x, mean, std):
     return (x - mean) / (std + 1e-8)
+
 
 normalized = {}
 for key in batch:
@@ -236,15 +242,14 @@ print("Batch Structure (BFS):")
 print("=" * 60)
 for path, tensor in bfs_tensor(batch):
     path_str = ".".join(path)
-    memory_mb = tensor.element_size() * tensor.numel() / (1024 ** 2)
+    memory_mb = tensor.element_size() * tensor.numel() / (1024**2)
     print(f"{path_str:30s} {str(tensor.shape):20s} {memory_mb:8.2f} MB")
 
 print("\n" + "=" * 60)
 print("Total memory usage:")
 print("=" * 60)
 total_memory = sum(
-    tensor.element_size() * tensor.numel()
-    for _, tensor in bfs_tensor(batch)
+    tensor.element_size() * tensor.numel() for _, tensor in bfs_tensor(batch)
 )
 print(f"{total_memory / (1024 ** 2):.2f} MB")
 ```
@@ -257,14 +262,17 @@ Creating custom operations with the recursive module:
 import torch
 from batchtensor.recursive import recursive_apply
 
+
 def clip_gradients(data, max_norm=1.0):
     """Clip gradients in nested structures."""
+
     def clip_fn(x):
         if isinstance(x, torch.Tensor) and x.requires_grad and x.grad is not None:
             torch.nn.utils.clip_grad_norm_([x], max_norm)
         return x
-    
+
     return recursive_apply(data, clip_fn)
+
 
 # Model parameters as nested dict
 params = {
@@ -296,13 +304,14 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from batchtensor.nested import cat_along_batch
 
+
 class NestedDataset(Dataset):
     def __init__(self, size=1000):
         self.size = size
-    
+
     def __len__(self):
         return self.size
-    
+
     def __getitem__(self, idx):
         return {
             "input": torch.randn(10),
@@ -313,13 +322,14 @@ class NestedDataset(Dataset):
             },
         }
 
+
 # Custom collate function
 def nested_collate(batch):
     """Collate nested dictionaries."""
     # Convert list of dicts to dict of lists
     keys = batch[0].keys()
     collated = {}
-    
+
     for key in keys:
         values = [item[key] for item in batch]
         if isinstance(values[0], dict):
@@ -329,8 +339,9 @@ def nested_collate(batch):
             collated[key] = torch.stack(values)
         else:
             collated[key] = torch.tensor(values)
-    
+
     return collated
+
 
 # Create dataloader
 dataset = NestedDataset(size=100)
@@ -361,13 +372,14 @@ from batchtensor.nested import (
     argmax_along_batch,
 )
 
+
 def evaluate_model(model, data, batch_size=32):
     """Evaluate model on nested data in chunks."""
     # Split large dataset into batches
     batches = chunk_along_batch(data, chunks=len(data["features"]) // batch_size)
-    
+
     predictions = []
-    
+
     for batch in batches:
         # Forward pass (simplified)
         with torch.no_grad():
@@ -375,14 +387,15 @@ def evaluate_model(model, data, batch_size=32):
                 "class_logits": torch.randn(batch["features"].shape[0], 10),
             }
         predictions.append(logits)
-    
+
     # Combine all predictions
     all_predictions = cat_along_batch(predictions)
-    
+
     # Get predicted classes
     predicted_classes = argmax_along_batch(all_predictions)
-    
+
     return predicted_classes
+
 
 # Large test dataset
 test_data = {

@@ -25,6 +25,7 @@ The `bfs_tensor` function traverses a nested structure in breadth-first order, v
 ... }
 >>> for path, value in bfs_tensor(data):
 ...     print(f"{path}: {value.shape}")
+...
 ('a',): torch.Size([3])
 ('b',): torch.Size([3])
 
@@ -46,6 +47,7 @@ BFS processes siblings before children:
 ... }
 >>> for path, value in bfs_tensor(data):
 ...     print(f"Path: {path}, Shape: {value.shape}")
+...
 Path: ('level1_a',), Shape: torch.Size([2])
 Path: ('level1_b', 'level2_a'), Shape: torch.Size([2])
 Path: ('level1_b', 'level2_b'), Shape: torch.Size([2])
@@ -97,6 +99,7 @@ The `dfs_tensor` function traverses a nested structure in depth-first order, exp
 ... }
 >>> for path, value in dfs_tensor(data):
 ...     print(f"{path}: {value.shape}")
+...
 ('a',): torch.Size([3])
 ('b',): torch.Size([3])
 
@@ -118,6 +121,7 @@ DFS explores deeply before moving to siblings:
 ... }
 >>> for path, value in dfs_tensor(data):
 ...     print(f"Path: {path}, Shape: {value.shape}")
+...
 Path: ('level1_a',), Shape: torch.Size([2])
 Path: ('level1_b', 'level2_a'), Shape: torch.Size([2])
 Path: ('level1_b', 'level2_b'), Shape: torch.Size([2])
@@ -177,6 +181,7 @@ View all tensors in a batch:
 Batch structure:
 >>> for path, tensor in bfs_tensor(batch):
 ...     print(f"  {'.'.join(path)}: shape={tensor.shape}, dtype={tensor.dtype}")
+...
   inputs.tokens: shape=torch.Size([32, 128]), dtype=torch.float32
   inputs.attention_mask: shape=torch.Size([32, 128]), dtype=torch.float32
   targets: shape=torch.Size([32]), dtype=torch.int64
@@ -201,6 +206,7 @@ Gather information about all tensors:
 ...     num_elements = tensor.numel()
 ...     total_params += num_elements
 ...     print(f"{'.'.join(path)}: {num_elements} elements")
+...
 features: 1000 elements
 labels: 100 elements
 weights: 100 elements
@@ -227,6 +233,7 @@ Multi-dimensional tensors:
 >>> for path, tensor in bfs_tensor(batch):
 ...     if tensor.ndim >= 2:
 ...         print(f"  {'.'.join(path)}: {tensor.shape}")
+...
   image: torch.Size([3, 224, 224])
   mask: torch.Size([224, 224])
 
@@ -244,6 +251,7 @@ Check that all tensors have consistent batch size:
 ...         if tensor.shape[0] != expected_batch_size:
 ...             return False, f"{'.'.join(path)} has batch size {tensor.shape[0]}"
 ...     return True, "All tensors have correct batch size"
+...
 >>> good_batch = {
 ...     "a": torch.randn(32, 10),
 ...     "b": torch.randn(32, 5),
@@ -275,6 +283,7 @@ Calculate memory footprint:
 ...         total_bytes += tensor_bytes
 ...         print(f"{'.'.join(path)}: {tensor_bytes / 1024:.2f} KB")
 ...     return total_bytes / (1024 * 1024)
+...
 >>> batch = {
 ...     "features": torch.randn(1000, 512),  # float32
 ...     "labels": torch.randint(0, 10, (1000,)),  # int64
@@ -321,6 +330,7 @@ Total: 1.96 MB
 BFS order:
 >>> for path, _ in bfs_tensor(data):
 ...     print(f"  {'.'.join(path)}")
+...
   A
   B.C.D
   B.E
@@ -328,6 +338,7 @@ BFS order:
 DFS order:
 >>> for path, _ in dfs_tensor(data):
 ...     print(f"  {'.'.join(path)}")
+...
   A
   B.C.D
   B.E
@@ -350,6 +361,7 @@ Both functions handle list and tuple structures:
 ... ]
 >>> for path, tensor in bfs_tensor(data):
 ...     print(f"Index path {path}: {tensor.tolist()}")
+...
 Index path (0,): [1, 2]
 Index path (1, 0): [3, 4]
 Index path (1, 1): [5, 6]
@@ -384,6 +396,7 @@ Index path (1, 1): [5, 6]
 ...             indent = "  " * (len(path) - 1)
 ...             name = path[-1]
 ...             print(f"{indent}{name}: {tensor.shape}")
+...
 >>> batch = {
 ...     "inputs": {"x": torch.randn(32, 10)},
 ...     "targets": torch.randint(0, 10, (32,)),
