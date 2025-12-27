@@ -9,11 +9,11 @@ from functools import partial
 from typing import Any
 
 import torch
+from coola.iterator import dfs_iterate
 from coola.recursive import recursive_apply
 
 from batchtensor import tensor
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
-from batchtensor.utils import dfs_tensor
 
 
 def permute_along_batch(data: Any, permutation: torch.Tensor) -> Any:
@@ -130,7 +130,7 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
 
     ```
     """
-    value = next(dfs_tensor(data))
+    value = next(dfs_iterate(data))
     return permute_along_batch(
         data=data,
         permutation=torch.randperm(value.shape[BATCH_DIM], generator=generator),
@@ -169,7 +169,7 @@ def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> An
 
     ```
     """
-    value = next(dfs_tensor(data))
+    value = next(dfs_iterate(data))
     return permute_along_seq(
         data=data,
         permutation=torch.randperm(value.shape[SEQ_DIM], generator=generator),
