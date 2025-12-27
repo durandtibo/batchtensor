@@ -26,26 +26,24 @@ def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch
     Returns:
         The indexed tensor along the batch dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import index_select_along_batch
+        >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
+        >>> out = index_select_along_batch(tensor, torch.tensor([2, 4]))
+        >>> out
+        tensor([[4, 5],
+                [8, 9]])
+        >>> out = index_select_along_batch(tensor, torch.tensor([4, 3, 2, 1, 0]))
+        >>> out
+        tensor([[8, 9],
+                [6, 7],
+                [4, 5],
+                [2, 3],
+                [0, 1]])
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.tensor import index_select_along_batch
-    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
-    >>> out = index_select_along_batch(tensor, torch.tensor([2, 4]))
-    >>> out
-    tensor([[4, 5],
-            [8, 9]])
-    >>> out = index_select_along_batch(tensor, torch.tensor([4, 3, 2, 1, 0]))
-    >>> out
-    tensor([[8, 9],
-            [6, 7],
-            [4, 5],
-            [2, 3],
-            [0, 1]])
-
-    ```
+        ```
     """
     return tensor.index_select(dim=BATCH_DIM, index=index)
 
@@ -66,23 +64,21 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
     Returns:
         The indexed tensor along the sequence dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import index_select_along_seq
+        >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
+        >>> out = index_select_along_seq(tensor, torch.tensor([2, 4]))
+        >>> out
+        tensor([[2, 4],
+                [7, 9]])
+        >>> out = index_select_along_seq(tensor, torch.tensor([4, 3, 2, 1, 0]))
+        >>> out
+        tensor([[4, 3, 2, 1, 0],
+                [9, 8, 7, 6, 5]])
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.tensor import index_select_along_seq
-    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
-    >>> out = index_select_along_seq(tensor, torch.tensor([2, 4]))
-    >>> out
-    tensor([[2, 4],
-            [7, 9]])
-    >>> out = index_select_along_seq(tensor, torch.tensor([4, 3, 2, 1, 0]))
-    >>> out
-    tensor([[4, 3, 2, 1, 0],
-            [9, 8, 7, 6, 5]])
-
-    ```
+        ```
     """
     if index.ndim == 1:
         return tensor.index_select(dim=SEQ_DIM, index=index)

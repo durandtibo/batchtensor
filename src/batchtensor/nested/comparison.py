@@ -30,24 +30,22 @@ def argsort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> A
     Returns:
         The indices that sort each tensor along the batch dimension
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import argsort_along_batch
+        >>> data = {
+        ...     "a": torch.tensor([[2, 6], [0, 3], [4, 9], [8, 1], [5, 7]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> out = argsort_along_batch(data)
+        >>> out
+        {'a': tensor([[1, 3], [0, 1], [2, 0], [4, 4], [3, 2]]), 'b': tensor([4, 3, 2, 1, 0])}
+        >>> out = argsort_along_batch(data, descending=True)
+        >>> out
+        {'a': tensor([[3, 2], [4, 4], [2, 0], [0, 1], [1, 3]]), 'b': tensor([0, 1, 2, 3, 4])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import argsort_along_batch
-    >>> data = {
-    ...     "a": torch.tensor([[2, 6], [0, 3], [4, 9], [8, 1], [5, 7]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> out = argsort_along_batch(data)
-    >>> out
-    {'a': tensor([[1, 3], [0, 1], [2, 0], [4, 4], [3, 2]]), 'b': tensor([4, 3, 2, 1, 0])}
-    >>> out = argsort_along_batch(data, descending=True)
-    >>> out
-    {'a': tensor([[3, 2], [4, 4], [2, 0], [0, 1], [1, 3]]), 'b': tensor([0, 1, 2, 3, 4])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.argsort_along_batch, descending=descending, **kwargs))
 
@@ -70,24 +68,22 @@ def argsort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any
     Returns:
         The indices that sort each tensor along the sequence dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import argsort_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[7, 3, 0, 8, 5], [1, 9, 6, 4, 2]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> out = argsort_along_seq(data)
+        >>> out
+        {'a': tensor([[2, 1, 4, 0, 3], [0, 4, 3, 2, 1]]), 'b': tensor([[4, 3, 2, 1, 0]])}
+        >>> out = argsort_along_seq(data, descending=True)
+        >>> out
+        {'a': tensor([[3, 0, 4, 1, 2], [1, 2, 3, 4, 0]]), 'b': tensor([[0, 1, 2, 3, 4]])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import argsort_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[7, 3, 0, 8, 5], [1, 9, 6, 4, 2]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> out = argsort_along_seq(data)
-    >>> out
-    {'a': tensor([[2, 1, 4, 0, 3], [0, 4, 3, 2, 1]]), 'b': tensor([[4, 3, 2, 1, 0]])}
-    >>> out = argsort_along_seq(data, descending=True)
-    >>> out
-    {'a': tensor([[3, 0, 4, 1, 2], [1, 2, 3, 4, 0]]), 'b': tensor([[0, 1, 2, 3, 4]])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.argsort_along_seq, descending=descending, **kwargs))
 
@@ -113,34 +109,32 @@ def sort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> Any:
             values and indices are the indices of the elements in the
             original input tensor.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import sort_along_batch
+        >>> data = {
+        ...     "a": torch.tensor([[2, 6], [0, 3], [4, 9], [8, 1], [5, 7]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> out = sort_along_batch(data)
+        >>> out
+        {'a': torch.return_types.sort(
+        values=tensor([[0, 1], [2, 3], [4, 6], [5, 7], [8, 9]]),
+        indices=tensor([[1, 3], [0, 1], [2, 0], [4, 4], [3, 2]])),
+        'b': torch.return_types.sort(
+        values=tensor([0, 1, 2, 3, 4]),
+        indices=tensor([4, 3, 2, 1, 0]))}
+        >>> out = sort_along_batch(data, descending=True)
+        >>> out
+        {'a': torch.return_types.sort(
+        values=tensor([[8, 9], [5, 7], [4, 6], [2, 3], [0, 1]]),
+        indices=tensor([[3, 2], [4, 4], [2, 0], [0, 1], [1, 3]])),
+        'b': torch.return_types.sort(
+        values=tensor([4, 3, 2, 1, 0]),
+        indices=tensor([0, 1, 2, 3, 4]))}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import sort_along_batch
-    >>> data = {
-    ...     "a": torch.tensor([[2, 6], [0, 3], [4, 9], [8, 1], [5, 7]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> out = sort_along_batch(data)
-    >>> out
-    {'a': torch.return_types.sort(
-    values=tensor([[0, 1], [2, 3], [4, 6], [5, 7], [8, 9]]),
-    indices=tensor([[1, 3], [0, 1], [2, 0], [4, 4], [3, 2]])),
-    'b': torch.return_types.sort(
-    values=tensor([0, 1, 2, 3, 4]),
-    indices=tensor([4, 3, 2, 1, 0]))}
-    >>> out = sort_along_batch(data, descending=True)
-    >>> out
-    {'a': torch.return_types.sort(
-    values=tensor([[8, 9], [5, 7], [4, 6], [2, 3], [0, 1]]),
-    indices=tensor([[3, 2], [4, 4], [2, 0], [0, 1], [1, 3]])),
-    'b': torch.return_types.sort(
-    values=tensor([4, 3, 2, 1, 0]),
-    indices=tensor([0, 1, 2, 3, 4]))}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.sort_along_batch, descending=descending, **kwargs))
 
@@ -166,33 +160,32 @@ def sort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any:
             values and indices are the indices of the elements in the
             original input tensor.
 
-    Example usage:
+    Example:
+        ```pycon
 
-    ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import sort_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[7, 3, 0, 8, 5], [1, 9, 6, 4, 2]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> out = sort_along_seq(data)
+        >>> out
+        {'a': torch.return_types.sort(
+        values=tensor([[0, 3, 5, 7, 8], [1, 2, 4, 6, 9]]),
+        indices=tensor([[2, 1, 4, 0, 3], [0, 4, 3, 2, 1]])),
+        'b': torch.return_types.sort(
+        values=tensor([[0, 1, 2, 3, 4]]),
+        indices=tensor([[4, 3, 2, 1, 0]]))}
+        >>> out = sort_along_seq(data, descending=True)
+        >>> out
+        {'a': torch.return_types.sort(
+        values=tensor([[8, 7, 5, 3, 0], [9, 6, 4, 2, 1]]),
+        indices=tensor([[3, 0, 4, 1, 2], [1, 2, 3, 4, 0]])),
+        'b': torch.return_types.sort(
+        values=tensor([[4, 3, 2, 1, 0]]),
+        indices=tensor([[0, 1, 2, 3, 4]]))}
 
-    >>> import torch
-    >>> from batchtensor.nested import sort_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[7, 3, 0, 8, 5], [1, 9, 6, 4, 2]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> out = sort_along_seq(data)
-    >>> out
-    {'a': torch.return_types.sort(
-    values=tensor([[0, 3, 5, 7, 8], [1, 2, 4, 6, 9]]),
-    indices=tensor([[2, 1, 4, 0, 3], [0, 4, 3, 2, 1]])),
-    'b': torch.return_types.sort(
-    values=tensor([[0, 1, 2, 3, 4]]),
-    indices=tensor([[4, 3, 2, 1, 0]]))}
-    >>> out = sort_along_seq(data, descending=True)
-    >>> out
-    {'a': torch.return_types.sort(
-    values=tensor([[8, 7, 5, 3, 0], [9, 6, 4, 2, 1]]),
-    indices=tensor([[3, 0, 4, 1, 2], [1, 2, 3, 4, 0]])),
-    'b': torch.return_types.sort(
-    values=tensor([[4, 3, 2, 1, 0]]),
-    indices=tensor([[0, 1, 2, 3, 4]]))}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.sort_along_seq, descending=descending, **kwargs))

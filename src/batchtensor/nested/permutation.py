@@ -38,21 +38,19 @@ def permute_along_batch(data: Any, permutation: torch.Tensor) -> Any:
         RuntimeError: if the shape of the permutation does not match
             the batch dimension of the tensor.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import permute_along_batch
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> out = permute_along_batch(data, torch.tensor([2, 1, 3, 0, 4]))
+        >>> out
+        {'a': tensor([[4, 5], [2, 3], [6, 7], [0, 1], [8, 9]]), 'b': tensor([2, 3, 1, 4, 0])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import permute_along_batch
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> out = permute_along_batch(data, torch.tensor([2, 1, 3, 0, 4]))
-    >>> out
-    {'a': tensor([[4, 5], [2, 3], [6, 7], [0, 1], [8, 9]]), 'b': tensor([2, 3, 1, 4, 0])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(tensor.permute_along_batch, permutation=permutation))
 
@@ -79,21 +77,19 @@ def permute_along_seq(data: Any, permutation: torch.Tensor) -> Any:
         RuntimeError: if the shape of the permutation does not match
             the sequence dimension of the tensor.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import permute_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> out = permute_along_seq(data, torch.tensor([2, 1, 3, 0, 4]))
+        >>> out
+        {'a': tensor([[2, 1, 3, 0, 4], [7, 6, 8, 5, 9]]), 'b': tensor([[2, 3, 1, 4, 0]])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import permute_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> out = permute_along_seq(data, torch.tensor([2, 1, 3, 0, 4]))
-    >>> out
-    {'a': tensor([[2, 1, 3, 0, 4], [7, 6, 8, 5, 9]]), 'b': tensor([[2, 3, 1, 4, 0]])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(tensor.permute_along_seq, permutation=permutation))
 
@@ -114,21 +110,19 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
         The data with shuffled tensors along the sequence dimension.
             The output data has the same structure as the input data.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import shuffle_along_batch
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> out = shuffle_along_batch(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import shuffle_along_batch
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> out = shuffle_along_batch(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     value = next(dfs_iterate(data))
     return permute_along_batch(
@@ -153,21 +147,19 @@ def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> An
         The data with shuffled tensors along the sequence dimension.
             The output data has the same structure as the input data.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import shuffle_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> out = shuffle_along_seq(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([[...]])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import shuffle_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> out = shuffle_along_seq(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([[...]])}
-
-    ```
+        ```
     """
     value = next(dfs_iterate(data))
     return permute_along_seq(

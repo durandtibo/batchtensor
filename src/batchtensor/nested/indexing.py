@@ -6,7 +6,7 @@ __all__ = ["index_select_along_batch", "index_select_along_seq"]
 
 
 from functools import partial
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any
 
 from coola.recursive import recursive_apply
 
@@ -14,8 +14,6 @@ from batchtensor import tensor
 
 if TYPE_CHECKING:
     import torch
-
-T = TypeVar("T")
 
 
 def index_select_along_batch(data: Any, index: torch.Tensor) -> Any:
@@ -35,24 +33,22 @@ def index_select_along_batch(data: Any, index: torch.Tensor) -> Any:
     Returns:
         The indexed tensors along the batch dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import index_select_along_batch
+        >>> tensors = {
+        ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> out = index_select_along_batch(tensors, torch.tensor([2, 4]))
+        >>> out
+        {'a': tensor([[4, 5], [8, 9]]), 'b': tensor([2, 0])}
+        >>> out = index_select_along_batch(tensors, torch.tensor([4, 3, 2, 1, 0]))
+        >>> out
+        {'a': tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1]]), 'b': tensor([0, 1, 2, 3, 4])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import index_select_along_batch
-    >>> tensors = {
-    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> out = index_select_along_batch(tensors, torch.tensor([2, 4]))
-    >>> out
-    {'a': tensor([[4, 5], [8, 9]]), 'b': tensor([2, 0])}
-    >>> out = index_select_along_batch(tensors, torch.tensor([4, 3, 2, 1, 0]))
-    >>> out
-    {'a': tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1]]), 'b': tensor([0, 1, 2, 3, 4])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(tensor.index_select_along_batch, index=index))
 
@@ -74,23 +70,21 @@ def index_select_along_seq(data: Any, index: torch.Tensor) -> Any:
     Returns:
         The indexed tensors along the sequence dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import index_select_along_seq
+        >>> tensors = {
+        ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> out = index_select_along_seq(tensors, torch.tensor([2, 4]))
+        >>> out
+        {'a': tensor([[2, 4], [7, 9]]), 'b': tensor([[2, 0]])}
+        >>> out = index_select_along_seq(tensors, torch.tensor([4, 3, 2, 1, 0]))
+        >>> out
+        {'a': tensor([[4, 3, 2, 1, 0], [9, 8, 7, 6, 5]]), 'b': tensor([[0, 1, 2, 3, 4]])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import index_select_along_seq
-    >>> tensors = {
-    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> out = index_select_along_seq(tensors, torch.tensor([2, 4]))
-    >>> out
-    {'a': tensor([[2, 4], [7, 9]]), 'b': tensor([[2, 0]])}
-    >>> out = index_select_along_seq(tensors, torch.tensor([4, 3, 2, 1, 0]))
-    >>> out
-    {'a': tensor([[4, 3, 2, 1, 0], [9, 8, 7, 6, 5]]), 'b': tensor([[0, 1, 2, 3, 4]])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(tensor.index_select_along_seq, index=index))

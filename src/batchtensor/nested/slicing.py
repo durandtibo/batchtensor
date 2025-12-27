@@ -45,23 +45,21 @@ def chunk_along_batch(
     Returns:
         The data chuncks.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import chunk_along_batch
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> outputs = chunk_along_batch(data, chunks=3)
+        >>> outputs
+        ({'a': tensor([[0, 1], [2, 3]]), 'b': tensor([4, 3])},
+         {'a': tensor([[4, 5], [6, 7]]), 'b': tensor([2, 1])},
+         {'a': tensor([[8, 9]]), 'b': tensor([0])})
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import chunk_along_batch
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> outputs = chunk_along_batch(data, chunks=3)
-    >>> outputs
-    ({'a': tensor([[0, 1], [2, 3]]), 'b': tensor([4, 3])},
-     {'a': tensor([[4, 5], [6, 7]]), 'b': tensor([2, 1])},
-     {'a': tensor([[8, 9]]), 'b': tensor([0])})
-
-    ```
+        ```
     """
     keys = data.keys()
     return tuple(
@@ -89,23 +87,21 @@ def chunk_along_seq(
     Returns:
         The data chuncks.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import chunk_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> outputs = chunk_along_seq(data, chunks=3)
+        >>> outputs
+        ({'a': tensor([[0, 1], [5, 6]]), 'b': tensor([[4, 3]])},
+         {'a': tensor([[2, 3], [7, 8]]), 'b': tensor([[2, 1]])},
+         {'a': tensor([[4], [9]]), 'b': tensor([[0]])})
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import chunk_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> outputs = chunk_along_seq(data, chunks=3)
-    >>> outputs
-    ({'a': tensor([[0, 1], [5, 6]]), 'b': tensor([[4, 3]])},
-     {'a': tensor([[2, 3], [7, 8]]), 'b': tensor([[2, 1]])},
-     {'a': tensor([[4], [9]]), 'b': tensor([[0]])})
-
-    ```
+        ```
     """
     keys = data.keys()
     return tuple(
@@ -132,21 +128,19 @@ def select_along_batch(data: Any, index: int) -> Any:
     Returns:
         The sliced tensors along the batch dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import select_along_batch
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> out = select_along_batch(data, index=2)
+        >>> out
+        {'a': tensor([4, 5]), 'b': tensor(2)}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import select_along_batch
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> out = select_along_batch(data, index=2)
-    >>> out
-    {'a': tensor([4, 5]), 'b': tensor(2)}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.select_along_batch, index=index))
 
@@ -170,21 +164,19 @@ def select_along_seq(data: Any, index: int) -> Any:
     Returns:
         The sliced tensors along the sequence dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import select_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> out = select_along_seq(data, index=2)
+        >>> out
+        {'a': tensor([2, 7]), 'b': tensor([2])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import select_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> out = select_along_seq(data, index=2)
-    >>> out
-    {'a': tensor([2, 7]), 'b': tensor([2])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.select_along_seq, index=index))
 
@@ -207,27 +199,25 @@ def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: 
     Returns:
         The sliced tensor along the batch dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import slice_along_batch
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> out = slice_along_batch(data, start=2)
+        >>> out
+        {'a': tensor([[4, 5], [6, 7], [8, 9]]), 'b': tensor([2, 1, 0])}
+        >>> out = slice_along_batch(data, stop=3)
+        >>> out
+        {'a': tensor([[0, 1], [2, 3], [4, 5]]), 'b': tensor([4, 3, 2])}
+        >>> out = slice_along_batch(data, step=2)
+        >>> out
+        {'a': tensor([[0, 1], [4, 5], [8, 9]]), 'b': tensor([4, 2, 0])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import slice_along_batch
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> out = slice_along_batch(data, start=2)
-    >>> out
-    {'a': tensor([[4, 5], [6, 7], [8, 9]]), 'b': tensor([2, 1, 0])}
-    >>> out = slice_along_batch(data, stop=3)
-    >>> out
-    {'a': tensor([[0, 1], [2, 3], [4, 5]]), 'b': tensor([4, 3, 2])}
-    >>> out = slice_along_batch(data, step=2)
-    >>> out
-    {'a': tensor([[0, 1], [4, 5], [8, 9]]), 'b': tensor([4, 2, 0])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
 
@@ -250,27 +240,25 @@ def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: in
     Returns:
         The sliced tensor along the batch dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import slice_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> out = slice_along_seq(data, start=2)
+        >>> out
+        {'a': tensor([[2, 3, 4], [7, 8, 9]]), 'b': tensor([[2, 1, 0]])}
+        >>> out = slice_along_seq(data, stop=3)
+        >>> out
+        {'a': tensor([[0, 1, 2], [5, 6, 7]]), 'b': tensor([[4, 3, 2]])}
+        >>> out = slice_along_seq(data, step=2)
+        >>> out
+        {'a': tensor([[0, 2, 4], [5, 7, 9]]), 'b': tensor([[4, 2, 0]])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import slice_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> out = slice_along_seq(data, start=2)
-    >>> out
-    {'a': tensor([[2, 3, 4], [7, 8, 9]]), 'b': tensor([[2, 1, 0]])}
-    >>> out = slice_along_seq(data, stop=3)
-    >>> out
-    {'a': tensor([[0, 1, 2], [5, 6, 7]]), 'b': tensor([[4, 3, 2]])}
-    >>> out = slice_along_seq(data, step=2)
-    >>> out
-    {'a': tensor([[0, 2, 4], [5, 7, 9]]), 'b': tensor([[4, 2, 0]])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.slice_along_seq, start=start, stop=stop, step=step))
 
@@ -295,23 +283,21 @@ def split_along_batch(
     Returns:
         The data chuncks.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import split_along_batch
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
+        ...     "b": torch.tensor([4, 3, 2, 1, 0]),
+        ... }
+        >>> outputs = split_along_batch(data, split_size_or_sections=2)
+        >>> outputs
+        ({'a': tensor([[0, 1], [2, 3]]), 'b': tensor([4, 3])},
+         {'a': tensor([[4, 5], [6, 7]]), 'b': tensor([2, 1])},
+         {'a': tensor([[8, 9]]), 'b': tensor([0])})
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import split_along_batch
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
-    ...     "b": torch.tensor([4, 3, 2, 1, 0]),
-    ... }
-    >>> outputs = split_along_batch(data, split_size_or_sections=2)
-    >>> outputs
-    ({'a': tensor([[0, 1], [2, 3]]), 'b': tensor([4, 3])},
-     {'a': tensor([[4, 5], [6, 7]]), 'b': tensor([2, 1])},
-     {'a': tensor([[8, 9]]), 'b': tensor([0])})
-
-    ```
+        ```
     """
     keys = data.keys()
     return tuple(
@@ -342,23 +328,21 @@ def split_along_seq(
     Returns:
         The data chuncks.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import split_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> outputs = split_along_seq(data, split_size_or_sections=2)
+        >>> outputs
+        ({'a': tensor([[0, 1], [5, 6]]), 'b': tensor([[4, 3]])},
+         {'a': tensor([[2, 3], [7, 8]]), 'b': tensor([[2, 1]])},
+         {'a': tensor([[4], [9]]), 'b': tensor([[0]])})
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import split_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> outputs = split_along_seq(data, split_size_or_sections=2)
-    >>> outputs
-    ({'a': tensor([[0, 1], [5, 6]]), 'b': tensor([[4, 3]])},
-     {'a': tensor([[2, 3], [7, 8]]), 'b': tensor([[2, 1]])},
-     {'a': tensor([[4], [9]]), 'b': tensor([[0]])})
-
-    ```
+        ```
     """
     keys = data.keys()
     return tuple(

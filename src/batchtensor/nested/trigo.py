@@ -33,18 +33,16 @@ def acos(data: Any) -> Any:
         The inverse cosine of the elements. The output has the same
             structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import acos
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = acos(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import acos
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = acos(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.acos)
 
@@ -60,18 +58,16 @@ def acosh(data: Any) -> Any:
         The inverse hyperbolic cosine of the elements. The output has
             the same structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import acosh
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = acosh(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import acosh
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = acosh(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.acosh)
 
@@ -86,18 +82,16 @@ def asin(data: Any) -> Any:
         The arcsine of the elements. The output has the same
             structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import asin
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = asin(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import asin
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = asin(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.asin)
 
@@ -113,18 +107,16 @@ def asinh(data: Any) -> Any:
         The inverse hyperbolic sine of the elements. The output has
             the same structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import asinh
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = asinh(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import asinh
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = asinh(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.asinh)
 
@@ -139,18 +131,16 @@ def atan(data: Any) -> Any:
         The arctangent of the elements. The output has the same
             structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import atan
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = atan(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import atan
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = atan(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.atan)
 
@@ -166,18 +156,16 @@ def atanh(data: Any) -> Any:
         The inverse hyperbolic tangent of the elements. The output has
             the same structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import atanh
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = atanh(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import atanh
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = atanh(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.atanh)
 
@@ -192,18 +180,16 @@ def cos(data: Any) -> Any:
         The cosine of the elements. The output has the same
             structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import cos
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = cos(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import cos
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = cos(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.cos)
 
@@ -218,18 +204,16 @@ def cosh(data: Any) -> Any:
         The inverse cosine of the elements. The output has
             the same structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import cosh
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = cosh(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import cosh
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = cosh(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.cosh)
 
@@ -244,18 +228,16 @@ def sin(data: Any) -> Any:
         The sine of the elements. The output has the same
             structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import sin
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = sin(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import sin
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = sin(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.sin)
 
@@ -270,18 +252,16 @@ def sinh(data: Any) -> Any:
         The hyperbolic sine of the elements. The output has
             the same structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import sinh
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = sinh(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import sinh
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = sinh(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.sinh)
 
@@ -296,18 +276,16 @@ def tan(data: Any) -> Any:
         The tangent of the elements. The output has the same
             structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import tan
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = tan(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import tan
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = tan(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.tan)
 
@@ -322,17 +300,15 @@ def tanh(data: Any) -> Any:
         The hyperbolic tangent of the elements. The output has
             the same structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import tanh
+        >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
+        >>> out = tanh(data)
+        >>> out
+        {'a': tensor([[...]]), 'b': tensor([...])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import tanh
-    >>> data = {"a": torch.randn(5, 2), "b": torch.rand(5)}
-    >>> out = tanh(data)
-    >>> out
-    {'a': tensor([[...]]), 'b': tensor([...])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.tanh)
