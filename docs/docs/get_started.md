@@ -26,10 +26,18 @@ To install `batchtensor` from source, you can follow the steps below.
 
 ### Prerequisites
 
-This project uses [uv](https://docs.astral.sh/uv/) for dependency management. First, install `uv`:
+The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management. First, install `uv`
+if you haven't already:
 
 ```shell
-pip install uv
+# On macOS and Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+You can verify the installation by running:
+
+```shell
+uv --version
 ```
 
 ### Clone the repository
@@ -41,20 +49,12 @@ cd batchtensor
 
 ### Create a virtual environment
 
-It is recommended to create a Python 3.10+ virtual environment. You can use `conda`:
+It is recommended to create a Python 3.10+ virtual environment.
+You can create a virtual environment with `uv`:
 
 ```shell
-make conda
-conda activate batchtensor
-```
-
-Or create a virtual environment with `uv`:
-
-```shell
-uv venv
+make setup-venv
 source .venv/bin/activate  # On Unix/macOS
-# or
-.venv\Scripts\activate  # On Windows
 ```
 
 ### Install dependencies
@@ -62,19 +62,13 @@ source .venv/bin/activate  # On Unix/macOS
 Install all dependencies using `uv`:
 
 ```shell
-uv sync --frozen
-```
-
-Or use the Makefile:
-
-```shell
-make install
+inv install
 ```
 
 To install with documentation dependencies:
 
 ```shell
-make install-all
+inv install --docs-deps
 ```
 
 ### Verify the installation
@@ -82,11 +76,5 @@ make install-all
 Run the test suite to verify everything is working:
 
 ```shell
-make unit-test-cov
-```
-
-Or use `uv` directly:
-
-```shell
-uv run pytest tests/
+inv unit-test --cov
 ```
