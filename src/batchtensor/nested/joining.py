@@ -35,25 +35,24 @@ def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
     Returns:
         The concatenated tensors along the batch dimension.
 
-    Example usage:
+    Example:
+        ```pycon
 
-    ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import cat_along_batch
+        >>> data = [
+        ...     {
+        ...         "a": torch.tensor([[0, 1, 2], [4, 5, 6]]),
+        ...         "b": torch.tensor([[10, 11, 12], [13, 14, 15]]),
+        ...     },
+        ...     {"a": torch.tensor([[7, 8, 9]]), "b": torch.tensor([[17, 18, 19]])},
+        ... ]
+        >>> out = cat_along_batch(data)
+        >>> out
+        {'a': tensor([[0, 1, 2], [4, 5, 6], [7, 8, 9]]),
+         'b': tensor([[10, 11, 12], [13, 14, 15], [17, 18, 19]])}
 
-    >>> import torch
-    >>> from batchtensor.nested import cat_along_batch
-    >>> data = [
-    ...     {
-    ...         "a": torch.tensor([[0, 1, 2], [4, 5, 6]]),
-    ...         "b": torch.tensor([[10, 11, 12], [13, 14, 15]]),
-    ...     },
-    ...     {"a": torch.tensor([[7, 8, 9]]), "b": torch.tensor([[17, 18, 19]])},
-    ... ]
-    >>> out = cat_along_batch(data)
-    >>> out
-    {'a': tensor([[0, 1, 2], [4, 5, 6], [7, 8, 9]]),
-     'b': tensor([[10, 11, 12], [13, 14, 15], [17, 18, 19]])}
-
-    ```
+        ```
     """
     if not data:
         return {}
@@ -79,25 +78,24 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
     Returns:
         The concatenated tensors along the sequence dimension.
 
-    Example usage:
+    Example:
+        ```pycon
 
-    ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import cat_along_seq
+        >>> data = [
+        ...     {
+        ...         "a": torch.tensor([[0, 1, 2], [4, 5, 6]]),
+        ...         "b": torch.tensor([[10, 11, 12], [13, 14, 15]]),
+        ...     },
+        ...     {"a": torch.tensor([[7], [8]]), "b": torch.tensor([[17], [18]])},
+        ... ]
+        >>> out = cat_along_seq(data)
+        >>> out
+        {'a': tensor([[0, 1, 2, 7], [4, 5, 6, 8]]),
+         'b': tensor([[10, 11, 12, 17], [13, 14, 15, 18]])}
 
-    >>> import torch
-    >>> from batchtensor.nested import cat_along_seq
-    >>> data = [
-    ...     {
-    ...         "a": torch.tensor([[0, 1, 2], [4, 5, 6]]),
-    ...         "b": torch.tensor([[10, 11, 12], [13, 14, 15]]),
-    ...     },
-    ...     {"a": torch.tensor([[7], [8]]), "b": torch.tensor([[17], [18]])},
-    ... ]
-    >>> out = cat_along_seq(data)
-    >>> out
-    {'a': tensor([[0, 1, 2, 7], [4, 5, 6, 8]]),
-     'b': tensor([[10, 11, 12, 17], [13, 14, 15, 18]])}
-
-    ```
+        ```
     """
     if not data:
         return {}
@@ -121,21 +119,19 @@ def repeat_along_seq(data: Any, repeats: int) -> Any:
     Returns:
         The tensors repeated along the sequence dimension.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import repeat_along_seq
+        >>> data = {
+        ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
+        ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
+        ... }
+        >>> out = repeat_along_seq(data, 2)
+        >>> out
+        {'a': tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]]),
+         'b': tensor([[4, 3, 2, 1, 0, 4, 3, 2, 1, 0]])}
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.nested import repeat_along_seq
-    >>> data = {
-    ...     "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
-    ...     "b": torch.tensor([[4, 3, 2, 1, 0]]),
-    ... }
-    >>> out = repeat_along_seq(data, 2)
-    >>> out
-    {'a': tensor([[0, 1, 2, 3, 4, 0, 1, 2, 3, 4], [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]]),
-     'b': tensor([[4, 3, 2, 1, 0, 4, 3, 2, 1, 0]])}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(bt.repeat_along_seq, repeats=repeats))

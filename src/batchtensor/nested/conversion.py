@@ -30,20 +30,18 @@ def as_tensor(
         A nested data structure with ``torch.Tensor``s. The output data
             has the same structure as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import numpy as np
+        >>> from batchtensor.nested import as_tensor
+        >>> data = {"a": np.ones((2, 5), dtype=np.float32), "b": np.arange(5), "c": 42}
+        >>> out = as_tensor(data)
+        >>> out
+        {'a': tensor([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]]),
+         'b': tensor([0, 1, 2, 3, 4]),
+         'c': tensor(42)}
 
-    ```pycon
-
-    >>> import numpy as np
-    >>> from batchtensor.nested import as_tensor
-    >>> data = {"a": np.ones((2, 5), dtype=np.float32), "b": np.arange(5), "c": 42}
-    >>> out = as_tensor(data)
-    >>> out
-    {'a': tensor([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]]),
-     'b': tensor([0, 1, 2, 3, 4]),
-     'c': tensor(42)}
-
-    ```
+        ```
     """
     return recursive_apply(data, partial(torch.as_tensor, dtype=dtype, device=device))
 
@@ -65,18 +63,16 @@ def from_numpy(data: Any) -> Any:
             ``numpy.ndarray``s. The output data has the same structure
             as the input.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import numpy as np
+        >>> from batchtensor.nested import from_numpy
+        >>> data = {"a": np.ones((2, 5), dtype=np.float32), "b": np.arange(5)}
+        >>> out = from_numpy(data)
+        >>> out
+        {'a': tensor([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]]), 'b': tensor([0, 1, 2, 3, 4])}
 
-    ```pycon
-
-    >>> import numpy as np
-    >>> from batchtensor.nested import from_numpy
-    >>> data = {"a": np.ones((2, 5), dtype=np.float32), "b": np.arange(5)}
-    >>> out = from_numpy(data)
-    >>> out
-    {'a': tensor([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]]), 'b': tensor([0, 1, 2, 3, 4])}
-
-    ```
+        ```
     """
     return recursive_apply(data, torch.from_numpy)
 
@@ -98,17 +94,16 @@ def to_numpy(data: Any) -> Any:
             ``torch.Tensor``s. The output data has the same structure
             as the input.
 
-    Example usage:
+    Example:
+        ```pycon
 
-    ```pycon
+        >>> import numpy as np
+        >>> from batchtensor.nested import to_numpy
+        >>> data = {"a": torch.ones(2, 5), "b": torch.tensor([0, 1, 2, 3, 4])}
+        >>> out = to_numpy(data)
+        >>> out
+        {'a': array([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]], dtype=float32), 'b': array([0, 1, 2, 3, 4])}
 
-    >>> import numpy as np
-    >>> from batchtensor.nested import to_numpy
-    >>> data = {"a": torch.ones(2, 5), "b": torch.tensor([0, 1, 2, 3, 4])}
-    >>> out = to_numpy(data)
-    >>> out
-    {'a': array([[1., 1., 1., 1., 1.], [1., 1., 1., 1., 1.]], dtype=float32), 'b': array([0, 1, 2, 3, 4])}
-
-    ```
+        ```
     """
     return recursive_apply(data, lambda tensor: tensor.numpy())

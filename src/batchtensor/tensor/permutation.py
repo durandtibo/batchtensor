@@ -30,22 +30,20 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
         RuntimeError: if the shape of the permutation does not match
             the batch dimension of the tensor.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import permute_along_batch
+        >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
+        >>> out = permute_along_batch(tensor, torch.tensor([2, 1, 3, 0, 4]))
+        >>> out
+        tensor([[4, 5],
+                [2, 3],
+                [6, 7],
+                [0, 1],
+                [8, 9]])
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.tensor import permute_along_batch
-    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
-    >>> out = permute_along_batch(tensor, torch.tensor([2, 1, 3, 0, 4]))
-    >>> out
-    tensor([[4, 5],
-            [2, 3],
-            [6, 7],
-            [0, 1],
-            [8, 9]])
-
-    ```
+        ```
     """
     if permutation.shape[0] != tensor.shape[0]:
         msg = (
@@ -76,19 +74,17 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
         RuntimeError: if the shape of the permutation does not match
             the sequence dimension of the tensor.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import permute_along_seq
+        >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
+        >>> out = permute_along_seq(tensor, torch.tensor([2, 1, 3, 0, 4]))
+        >>> out
+        tensor([[2, 1, 3, 0, 4],
+                [7, 6, 8, 5, 9]])
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.tensor import permute_along_seq
-    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
-    >>> out = permute_along_seq(tensor, torch.tensor([2, 1, 3, 0, 4]))
-    >>> out
-    tensor([[2, 1, 3, 0, 4],
-            [7, 6, 8, 5, 9]])
-
-    ```
+        ```
     """
     if permutation.shape[0] != tensor.shape[1]:
         msg = (
@@ -115,18 +111,16 @@ def shuffle_along_batch(
     Returns:
         The shuffled tensor.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import shuffle_along_batch
+        >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
+        >>> out = shuffle_along_batch(tensor)
+        >>> out
+        tensor([[...]])
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.tensor import shuffle_along_batch
-    >>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
-    >>> out = shuffle_along_batch(tensor)
-    >>> out
-    tensor([[...]])
-
-    ```
+        ```
     """
     return permute_along_batch(
         tensor=tensor,
@@ -150,18 +144,16 @@ def shuffle_along_seq(
     Returns:
         The shuffled tensor.
 
-    Example usage:
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import shuffle_along_seq
+        >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
+        >>> out = shuffle_along_seq(tensor)
+        >>> out
+        tensor([[...]])
 
-    ```pycon
-
-    >>> import torch
-    >>> from batchtensor.tensor import shuffle_along_seq
-    >>> tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
-    >>> out = shuffle_along_seq(tensor)
-    >>> out
-    tensor([[...]])
-
-    ```
+        ```
     """
     return permute_along_seq(
         tensor=tensor,
