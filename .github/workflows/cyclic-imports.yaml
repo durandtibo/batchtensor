@@ -26,10 +26,6 @@ jobs:
         run: |
           python -c "from batchtensor import nested"
 
-      - name: check batchtensor.recursive
-        run: |
-          python -c "from batchtensor import recursive"
-
       - name: check batchtensor.tensor
         run: |
           python -c "from batchtensor import tensor"

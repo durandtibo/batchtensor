@@ -28,14 +28,6 @@ def check_nested() -> None:
     )
 
 
-def check_recursive() -> None:
-    logger.info("Checking batchtensor.recursive package...")
-
-    from batchtensor.recursive import recursive_apply
-
-    assert objects_are_equal(recursive_apply([1, "abc"], str), ["1", "abc"])
-
-
 def check_tensor() -> None:
     logger.info("Checking batchtensor.tensor package...")
 
@@ -51,7 +43,6 @@ def check_tensor() -> None:
 
 def main() -> None:
     check_nested()
-    check_recursive()
     check_tensor()
 
 
