@@ -7,8 +7,9 @@ __all__ = ["cat_along_batch", "cat_along_seq", "repeat_along_seq"]
 from functools import partial
 from typing import TYPE_CHECKING, Any
 
+from coola.recursive import recursive_apply
+
 from batchtensor import tensor as bt
-from batchtensor.recursive import recursive_apply
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Sequence

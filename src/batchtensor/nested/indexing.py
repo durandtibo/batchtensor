@@ -8,8 +8,9 @@ __all__ = ["index_select_along_batch", "index_select_along_seq"]
 from functools import partial
 from typing import TYPE_CHECKING, Any, TypeVar
 
+from coola.recursive import recursive_apply
+
 from batchtensor import tensor
-from batchtensor.recursive import recursive_apply
 
 if TYPE_CHECKING:
     import torch

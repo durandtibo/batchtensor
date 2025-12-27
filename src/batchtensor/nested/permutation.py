@@ -9,10 +9,10 @@ from functools import partial
 from typing import Any
 
 import torch
+from coola.recursive import recursive_apply
 
 from batchtensor import tensor
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
-from batchtensor.recursive import recursive_apply
 from batchtensor.utils import dfs_tensor
 
 

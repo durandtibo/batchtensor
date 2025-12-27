@@ -6,7 +6,7 @@ __all__ = ["to"]
 
 from typing import Any
 
-from batchtensor.recursive import recursive_apply
+from coola.recursive import recursive_apply
 
 
 def to(data: Any, *args: Any, **kwargs: Any) -> Any:
