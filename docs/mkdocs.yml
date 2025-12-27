@@ -25,10 +25,11 @@ nav:
   - Home: index.md
   - get_started.md
   - User Guide:
-      - uguide/tensor.md
-  - Reference:
-      - refs/nested.md
-      - refs/tensor.md
+      - Tensor Operations: uguide/tensor.md
+      - Nested Operations: uguide/nested.md
+  - API Reference:
+      - Nested Module: refs/nested.md
+      - Tensor Module: refs/tensor.md
   - GitHub: https://github.com/durandtibo/batchtensor
 
 repo_url: https://github.com/durandtibo/batchtensor

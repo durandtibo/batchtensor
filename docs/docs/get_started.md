@@ -22,49 +22,59 @@ pip install 'batchtensor[all]'
 
 ## Installing from source
 
-To install `batchtensor` from source, you can follow the steps below. First, you will need to
-install [`poetry`](https://python-poetry.org/docs/master/). `poetry` is used to manage and install
-the dependencies.
-If `poetry` is already installed on your machine, you can skip this step. There are several ways to
-install `poetry` so you can use the one that you prefer. You can check the `poetry` installation by
-running the following command:
+To install `batchtensor` from source, you can follow the steps below.
+
+### Prerequisites
+
+The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management. First, install `uv`
+if you haven't already:
 
 ```shell
-poetry --version
+# On macOS and Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Then, you can clone the git repository:
+You can verify the installation by running:
+
+```shell
+uv --version
+```
+
+### Clone the repository
 
 ```shell
 git clone git@github.com:durandtibo/batchtensor.git
+cd batchtensor
 ```
 
-It is recommended to create a Python 3.8+ virtual environment. This step is optional so you
-can skip it. To create a virtual environment, you can use the following command:
+### Create a virtual environment
+
+It is recommended to create a Python 3.10+ virtual environment.
+You can create a virtual environment with `uv`:
 
 ```shell
-make conda
+make setup-venv
+source .venv/bin/activate  # On Unix/macOS
 ```
 
-It automatically creates a conda virtual environment. When the virtual environment is created, you
-can activate it with the following command:
+### Install dependencies
+
+Install all dependencies using `uv`:
 
 ```shell
-conda activate batchtensor
+inv install
 ```
 
-This example uses `conda` to create a virtual environment, but you can use other tools or
-configurations. Then, you should install the required package to use `batchtensor` with the
-following command:
+To install with documentation dependencies:
 
 ```shell
-make install
+inv install --docs-deps
 ```
 
-This command will install all the required packages. You can also use this command to update the
-required packages. This command will check if there is a more recent package available and will
-install it. Finally, you can test the installation with the following command:
+### Verify the installation
+
+Run the test suite to verify everything is working:
 
 ```shell
-make unit-test-cov
+inv unit-test --cov
 ```

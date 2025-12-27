@@ -1,24 +1,24 @@
 # batchtensor
 
 <p align="center">
-    <a href="https://github.com/durandtibo/batchtensor/actions">
-        <img alt="CI" src="https://github.com/durandtibo/batchtensor/workflows/CI/badge.svg">
+    <a href="https://github.com/durandtibo/batchtensor/actions/workflows/ci.yaml">
+        <img alt="CI" src="https://github.com/durandtibo/batchtensor/actions/workflows/ci.yaml/badge.svg">
     </a>
-    <a href="https://github.com/durandtibo/batchtensor/actions">
-        <img alt="Nightly Tests" src="https://github.com/durandtibo/batchtensor/workflows/Nightly%20Tests/badge.svg">
+    <a href="https://github.com/durandtibo/batchtensor/actions/workflows/nightly-tests.yaml">
+        <img alt="Nightly Tests" src="https://github.com/durandtibo/batchtensor/actions/workflows/nightly-tests.yaml/badge.svg">
     </a>
-    <a href="https://github.com/durandtibo/batchtensor/actions">
-        <img alt="Nightly Package Tests" src="https://github.com/durandtibo/batchtensor/workflows/Nightly%20Package%20Tests/badge.svg">
+    <a href="https://github.com/durandtibo/batchtensor/actions/workflows/nightly-package.yaml">
+        <img alt="Nightly Package Tests" src="https://github.com/durandtibo/batchtensor/actions/workflows/nightly-package.yaml/badge.svg">
     </a>
     <a href="https://codecov.io/gh/durandtibo/batchtensor">
         <img alt="Codecov" src="https://codecov.io/gh/durandtibo/batchtensor/branch/main/graph/badge.svg">
     </a>
     <br/>
     <a href="https://durandtibo.github.io/batchtensor/">
-        <img alt="Documentation" src="https://github.com/durandtibo/batchtensor/workflows/Documentation%20(stable)/badge.svg">
+        <img alt="Documentation" src="https://github.com/durandtibo/batchtensor/actions/workflows/docs.yaml/badge.svg">
     </a>
-    <a href="https://durandtibo.github.io/batchtensor/">
-        <img alt="Documentation" src="https://github.com/durandtibo/batchtensor/workflows/Documentation%20(unstable)/badge.svg">
+    <a href="https://durandtibo.github.io/batchtensor/dev/">
+        <img alt="Documentation" src="https://github.com/durandtibo/batchtensor/actions/workflows/docs-dev.yaml/badge.svg">
     </a>
     <br/>
     <a href="https://github.com/psf/black">
@@ -51,13 +51,12 @@
         <img  alt="Monthly downloads" src="https://static.pepy.tech/badge/batchtensor/month">
     </a>
     <br/>
-
 </p>
 
 ## Overview
 
-`batchtensor` is lightweight library built on top of [PyTorch](https://pytorch.org/) to manipulate
-nested data structure with PyTorch tensors.
+`batchtensor` is a lightweight library built on top of [PyTorch](https://pytorch.org/) to manipulate
+nested data structures with PyTorch tensors.
 This library provides functions for tensors where the first dimension is the batch dimension.
 It also provides functions for tensors representing a batch of sequences where the first dimension
 is the batch dimension and the second dimension is the sequence dimension.
@@ -73,7 +72,7 @@ is the batch dimension and the second dimension is the sequence dimension.
 
 Let's imagine you have a batch which is represented by a dictionary with three tensors, and you want
 to take the first 2 items.
-`batchtensor` provides the function `slice_along_batch` that allows to slide all the tensors:
+`batchtensor` provides the function `slice_along_batch` that allows slicing all the tensors:
 
 ```pycon
 >>> import torch
@@ -88,7 +87,7 @@ to take the first 2 items.
 
 ```
 
-Similarly, it is possible to split a batch in multiple batches by using the
+Similarly, it is possible to split a batch into multiple batches by using the
 function `split_along_batch`:
 
 ```pycon
