@@ -24,17 +24,12 @@ theme:
 nav:
   - Home: index.md
   - get_started.md
-  - examples.md
   - User Guide:
       - Tensor Operations: uguide/tensor.md
       - Nested Operations: uguide/nested.md
-      - Recursive Module: uguide/recursive.md
-      - Utilities: uguide/utils.md
   - API Reference:
       - Nested Module: refs/nested.md
       - Tensor Module: refs/tensor.md
-      - Recursive Module: refs/recursive.md
-      - Utils Module: refs/utils.md
   - GitHub: https://github.com/durandtibo/batchtensor
 
 repo_url: https://github.com/durandtibo/batchtensor
