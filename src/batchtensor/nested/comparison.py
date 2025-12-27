@@ -7,8 +7,9 @@ __all__ = ["argsort_along_batch", "argsort_along_seq", "sort_along_batch", "sort
 from functools import partial
 from typing import Any
 
+from coola.recursive import recursive_apply
+
 from batchtensor import tensor as bt
-from batchtensor.recursive import recursive_apply
 
 
 def argsort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> Any:
