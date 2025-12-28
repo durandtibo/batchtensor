@@ -149,10 +149,10 @@ Compute statistics along dimensions:
 ... )
 >>> batch = {
 ...     "scores": torch.tensor([[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]]),
-...     "counts": torch.tensor([10, 20, 30]),
+...     "counts": torch.tensor([10.0, 20.0, 30.0]),
 ... }
 >>> sum_along_batch(batch)
-{'scores': tensor([9., 12.]), 'counts': tensor(60)}
+{'scores': tensor([ 9., 12.]), 'counts': tensor(60.)}
 >>> mean_along_batch(batch)
 {'scores': tensor([3., 4.]), 'counts': tensor(20.)}
 
@@ -180,14 +180,15 @@ Sort tensors:
 ```pycon
 >>> import torch
 >>> from batchtensor.nested import sort_along_batch
->>> batch = {
-...     "values": torch.tensor([[3, 1], [1, 4], [2, 2]]),
-... }
->>> values, indices = sort_along_batch(batch)
->>> values
-{'values': tensor([[1, 1], [2, 2], [3, 4]])}
->>> indices
-{'values': tensor([[1, 0], [2, 2], [0, 1]])}
+>>> batch = {"values": torch.tensor([[3, 1], [1, 4], [2, 2]])}
+>>> sort_along_batch(batch)
+{'values': torch.return_types.sort(
+values=tensor([[1, 1],
+        [2, 2],
+        [3, 4]]),
+indices=tensor([[1, 0],
+        [2, 2],
+        [0, 1]]))}
 
 ```
 
@@ -200,7 +201,9 @@ Sort tensors:
 >>> from batchtensor.nested import cumsum_along_batch, cumprod_along_batch
 >>> batch = {"values": torch.tensor([[1, 2], [3, 4], [5, 6]])}
 >>> cumsum_along_batch(batch)
-{'values': tensor([[1, 2], [4, 6], [9, 12]])}
+{'values': tensor([[ 1,  2],
+                   [ 4,  6],
+                   [ 9, 12]])}
 
 ```
 
@@ -210,10 +213,11 @@ Apply trigonometric functions element-wise:
 
 ```pycon
 >>> import torch
->>> from batchtensor.nested import sin, cos, tan
+>>> from batchtensor.nested import sin
 >>> batch = {"angles": torch.tensor([[0.0, 1.57], [3.14, 4.71]])}
 >>> sin(batch)
-{'angles': tensor([[0.0000, 1.0000], [0.0016, -1.0000]])}
+{'angles': tensor([[ 0.0000,  1.0000],
+                   [ 0.0016, -1.0000]])}
 
 ```
 
@@ -223,7 +227,7 @@ Apply element-wise operations:
 
 ```pycon
 >>> import torch
->>> from batchtensor.nested import abs, exp, log, sqrt
+>>> from batchtensor.nested import abs
 >>> batch = {"values": torch.tensor([[-1.0, 2.0], [-3.0, 4.0]])}
 >>> abs(batch)
 {'values': tensor([[1., 2.], [3., 4.]])}
@@ -274,13 +278,13 @@ Move all tensors to a specific device:
 
 ```pycon
 >>> import torch
->>> from batchtensor.nested import to_device
+>>> from batchtensor.nested import to
 >>> batch = {
 ...     "features": torch.tensor([[1, 2], [3, 4]]),
 ...     "labels": torch.tensor([0, 1]),
 ... }
 >>> # Move to CPU (already there in this example)
->>> to_device(batch, torch.device("cpu"))
+>>> to(batch, torch.device("cpu"))
 {'features': tensor([[1, 2], [3, 4]]), 'labels': tensor([0, 1])}
 
 ```
@@ -291,9 +295,9 @@ Convert tensor dtypes:
 
 ```pycon
 >>> import torch
->>> from batchtensor.nested import to_dtype
+>>> from batchtensor.nested import to
 >>> batch = {"values": torch.tensor([[1, 2], [3, 4]], dtype=torch.int32)}
->>> to_dtype(batch, dtype=torch.float32)
+>>> to(batch, dtype=torch.float32)
 {'values': tensor([[1., 2.], [3., 4.]])}
 
 ```
