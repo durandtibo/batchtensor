@@ -1,4 +1,5 @@
-r"""Implements mathematical functions for nested tensor data structures."""
+r"""Implements mathematical functions for nested tensor data
+structures."""
 
 from __future__ import annotations
 

@@ -1,4 +1,5 @@
-r"""Implements functions to manipulate nested data structures containing tensors."""
+r"""Implements functions to manipulate nested data structures containing
+tensors."""
 
 from __future__ import annotations
 

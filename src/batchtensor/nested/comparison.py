@@ -1,4 +1,5 @@
-r"""Implements tensor comparison functions for nested data structures."""
+r"""Implements tensor comparison functions for nested data
+structures."""
 
 from __future__ import annotations
 

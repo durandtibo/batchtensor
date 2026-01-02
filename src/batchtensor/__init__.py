@@ -1,4 +1,5 @@
-r"""Implements the batchtensor package for manipulating batches of PyTorch tensors."""
+r"""Implements the batchtensor package for manipulating batches of
+PyTorch tensors."""
 
 from __future__ import annotations
 
