@@ -1,4 +1,4 @@
-r"""Contain functions to manipulate tensors."""
+r"""Implements functions to manipulate individual tensors."""
 
 from __future__ import annotations
 

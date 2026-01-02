@@ -1,4 +1,4 @@
-r"""Contain the important constants."""
+r"""Defines important constants for batch and sequence dimensions."""
 
 from __future__ import annotations
 

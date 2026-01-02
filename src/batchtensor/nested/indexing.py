@@ -1,4 +1,4 @@
-r"""Contain some tensor indexing functions for nested data."""
+r"""Implements tensor indexing functions for nested data structures."""
 
 from __future__ import annotations
 

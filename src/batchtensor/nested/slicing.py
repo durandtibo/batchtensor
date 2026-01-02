@@ -1,4 +1,4 @@
-r"""Contain some tensor slicing functions for nested data."""
+r"""Implements tensor slicing functions for nested data structures."""
 
 from __future__ import annotations
 
@@ -43,7 +43,7 @@ def chunk_along_batch(
         chunks: Number of chunks to return.
 
     Returns:
-        The data chuncks.
+        The data chunks.
 
     Example:
         ```pycon
@@ -85,7 +85,7 @@ def chunk_along_seq(
         chunks: Number of chunks to return.
 
     Returns:
-        The data chuncks.
+        The data chunks.
 
     Example:
         ```pycon
@@ -223,7 +223,7 @@ def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: 
 
 
 def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: int = 1) -> Any:
-    r"""Slice all the tensors along the batch dimension.
+    r"""Slice all the tensors along the sequence dimension.
 
     Note:
         This function assumes the sequence dimension is the second
@@ -238,7 +238,7 @@ def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: in
         step: The increment between each index for slicing.
 
     Returns:
-        The sliced tensor along the batch dimension.
+        The sliced tensor along the sequence dimension.
 
     Example:
         ```pycon
@@ -281,7 +281,7 @@ def split_along_batch(
             sizes for each chunk
 
     Returns:
-        The data chuncks.
+        The data chunks.
 
     Example:
         ```pycon
@@ -326,7 +326,7 @@ def split_along_seq(
             sizes for each chunk
 
     Returns:
-        The data chuncks.
+        The data chunks.
 
     Example:
         ```pycon

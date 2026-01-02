@@ -1,4 +1,4 @@
-r"""Contain some miscellaneous tensor functions for nested data."""
+r"""Implements miscellaneous tensor functions for nested data structures."""
 
 from __future__ import annotations
 

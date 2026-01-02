@@ -1,4 +1,4 @@
-r"""Contain utility functions to manage random seeds."""
+r"""Implements utility functions to manage random seeds for reproducible tensor operations."""
 
 from __future__ import annotations
 

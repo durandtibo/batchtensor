@@ -1,4 +1,4 @@
-r"""Contain some functions to permute data in tensors."""
+r"""Implements functions to permute data in tensors."""
 
 from __future__ import annotations
 
