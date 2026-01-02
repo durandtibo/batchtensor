@@ -1,4 +1,4 @@
-r"""Contain some tensor trigonometric functions for nested data."""
+r"""Implements trigonometric functions for nested tensor structures."""
 
 from __future__ import annotations
 
@@ -201,7 +201,7 @@ def cosh(data: Any) -> Any:
         data: The input data. Each item must be a tensor.
 
     Returns:
-        The inverse cosine of the elements. The output has
+        The hyperbolic cosine of the elements. The output has
             the same structure as the input.
 
     Example:

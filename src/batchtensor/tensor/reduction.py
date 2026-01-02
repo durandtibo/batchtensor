@@ -1,4 +1,4 @@
-r"""Contain some reduction functions for tensors."""
+r"""Implements reduction functions for tensors."""
 
 from __future__ import annotations
 

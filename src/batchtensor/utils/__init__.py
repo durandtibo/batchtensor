@@ -1,1 +1,1 @@
-r"""Contain utility functions."""
+r"""Implements utility functions for the batchtensor package."""

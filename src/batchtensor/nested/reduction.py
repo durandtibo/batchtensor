@@ -1,4 +1,4 @@
-r"""Contain some reduction functions for tensors."""
+r"""Implements reduction functions for nested tensor structures."""
 
 from __future__ import annotations
 
@@ -455,16 +455,15 @@ def mean_along_seq(data: Any, keepdim: bool = False) -> Any:
 
     Note:
         This function assumes the sequence dimension is the second
-            dimension.
+            dimension of the tensors. All the tensors should have the
+            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
+    Returns:
+        The mean of all elements along the sequence dimension.
 
     Example:
         ```pycon

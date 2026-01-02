@@ -1,4 +1,4 @@
-r"""Contain some functions to permute data in tensors."""
+r"""Implements functions to permute data in nested tensor structures."""
 
 from __future__ import annotations
 
@@ -107,7 +107,7 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
         generator: An optional random number generator.
 
     Returns:
-        The data with shuffled tensors along the sequence dimension.
+        The data with shuffled tensors along the batch dimension.
             The output data has the same structure as the input data.
 
     Example:
@@ -132,7 +132,7 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
 
 
 def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> Any:
-    r"""Shuffle all the tensors along the batch dimension.
+    r"""Shuffle all the tensors along the sequence dimension.
 
     Note:
         This function assumes the sequence dimension is the second

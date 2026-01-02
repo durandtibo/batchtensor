@@ -1,4 +1,4 @@
-r"""Contain some tensor point-wise functions for nested data."""
+r"""Implements point-wise tensor functions for nested data structures."""
 
 from __future__ import annotations
 
@@ -221,7 +221,7 @@ def log10(data: Any) -> Any:
         data: The input data. Each item must be a tensor.
 
     Returns:
-        The with the logarithm to the base 10 of the elements. The
+        The logarithm to the base 10 of the elements. The
             output has the same structure as the input.
 
     Example:

@@ -1,4 +1,4 @@
-r"""Contain some comparison functions for tensors."""
+r"""Implements comparison functions for tensors."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-r"""Contain functions to convert nested data."""
+r"""Implements functions to convert between nested data representations."""
 
 from __future__ import annotations
 

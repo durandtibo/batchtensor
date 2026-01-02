@@ -1,4 +1,4 @@
-r"""Contain some tensor joining functions for nested data."""
+r"""Implements tensor joining functions for nested data structures."""
 
 from __future__ import annotations
 

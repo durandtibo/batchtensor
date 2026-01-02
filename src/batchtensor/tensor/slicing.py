@@ -1,4 +1,4 @@
-r"""Contain some indexing functions for tensors."""
+r"""Implements slicing functions for tensors."""
 
 from __future__ import annotations
 

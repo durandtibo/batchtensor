@@ -1,4 +1,4 @@
-r"""Contain some joining functions for tensors."""
+r"""Implements joining functions for tensors."""
 
 from __future__ import annotations
 

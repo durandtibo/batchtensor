@@ -1,4 +1,4 @@
-r"""Contain some functions to permute data in tensors."""
+r"""Implements functions to permute data in tensors."""
 
 from __future__ import annotations
 
@@ -131,7 +131,7 @@ def shuffle_along_batch(
 def shuffle_along_seq(
     tensor: torch.Tensor, generator: torch.Generator | None = None
 ) -> torch.Tensor:
-    r"""Shuffle the tensor along the batch dimension.
+    r"""Shuffle the tensor along the sequence dimension.
 
     Note:
         This function assumes the sequence dimension is the second

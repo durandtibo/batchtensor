@@ -1,4 +1,4 @@
-r"""Root package."""
+r"""Implements the batchtensor package for manipulating batches of PyTorch tensors."""
 
 from __future__ import annotations
 
