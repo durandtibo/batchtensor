@@ -26,7 +26,7 @@ To install `batchtensor` from source, you can follow the steps below.
 
 ### Prerequisites
 
-The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management. 
+The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management.
 Please refer to the [uv documentation](https://docs.astral.sh/uv/getting-started/installation/) for installation instructions.
 
 You can verify the installation by running:
