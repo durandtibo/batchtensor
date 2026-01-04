@@ -125,9 +125,19 @@ The utils module provides supporting functionality:
 ### Pattern 1: Tensor Operations Use Constants
 
 ```python
+import torch
 from batchtensor.constants import BATCH_DIM
 
-def sum_along_batch(tensor, keepdim=False):
+def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+    """Sum all elements along the batch dimension.
+    
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether to keep the reduced dimension.
+        
+    Returns:
+        The sum along the batch dimension.
+    """
     return tensor.sum(dim=BATCH_DIM, keepdim=keepdim)
 ```
 
@@ -136,10 +146,25 @@ This ensures consistency and makes the code self-documenting.
 ### Pattern 2: Nested Operations Delegate to Tensor Operations
 
 ```python
+from functools import partial
+from typing import Any
 from coola.recursive import recursive_apply
 from batchtensor import tensor as bt
 
-def slice_along_batch(data, start=None, stop=None, step=None):
+def slice_along_batch(
+    data: Any, start: int | None = None, stop: int | None = None, step: int | None = None
+) -> Any:
+    """Slice all tensors along the batch dimension.
+    
+    Args:
+        data: Nested structure containing tensors.
+        start: Start index.
+        stop: Stop index.
+        step: Step size.
+        
+    Returns:
+        Sliced nested structure.
+    """
     return recursive_apply(
         data,
         partial(bt.slice_along_batch, start=start, stop=stop, step=step)
@@ -151,7 +176,22 @@ This reduces code duplication and ensures nested operations behave consistently.
 ### Pattern 3: Dictionary Operations Preserve Structure
 
 ```python
-def chunk_along_batch(data, chunks):
+from collections.abc import Hashable
+import torch
+from batchtensor import tensor as bt
+
+def chunk_along_batch(
+    data: dict[Hashable, torch.Tensor], chunks: int
+) -> tuple[dict[Hashable, torch.Tensor], ...]:
+    """Split all tensors into chunks along the batch dimension.
+    
+    Args:
+        data: Dictionary of tensors.
+        chunks: Number of chunks.
+        
+    Returns:
+        Tuple of dictionaries with chunked tensors.
+    """
     keys = data.keys()
     return tuple(
         dict(zip(keys, values))

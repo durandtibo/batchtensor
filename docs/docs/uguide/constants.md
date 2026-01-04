@@ -149,16 +149,18 @@ Sequence length: 2
 
 ## Internal Usage
 
-These constants are used internally throughout batchtensor. For example:
+These constants are used internally throughout batchtensor. For example (simplified pseudocode):
 
 ```python
 # In batchtensor.tensor.reduction
-def sum_along_batch(tensor, keepdim=False):
+def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+    """Sum tensor along the batch dimension."""
     return tensor.sum(dim=BATCH_DIM, keepdim=keepdim)
 
-# In batchtensor.tensor.slicing
-def slice_along_seq(tensor, start=None, stop=None, step=None):
-    return tensor.narrow(SEQ_DIM, start or 0, (stop or tensor.size(SEQ_DIM)) - (start or 0))
+# In batchtensor.tensor.slicing (simplified for illustration)
+def select_along_seq(tensor: torch.Tensor, index: int) -> torch.Tensor:
+    """Select a specific index along the sequence dimension."""
+    return tensor.select(dim=SEQ_DIM, index=index)
 ```
 
 This ensures consistency across all functions in the library.

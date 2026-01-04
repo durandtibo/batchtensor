@@ -106,20 +106,31 @@ Split tensors by specific sizes:
 ```pycon
 >>> import torch
 >>> from batchtensor.tensor import split_along_batch
->>> tensor = torch.tensor([[2, 6], [0, 3], [4, 9], [8, 1], [5, 7]])
+>>> tensor = torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
 >>> # Split into chunks of size 2
 >>> splits = split_along_batch(tensor, split_size_or_sections=2)
 >>> len(splits)
 3
 >>> splits[0]
-tensor([[2, 6],
-        [0, 3]])
+tensor([[0, 1],
+        [2, 3]])
+>>> splits[1]
+tensor([[4, 5],
+        [6, 7]])
+>>> splits[2]
+tensor([[8, 9]])
 >>> # Split with specific sizes
 >>> splits = split_along_batch(tensor, split_size_or_sections=[2, 1, 2])
 >>> len(splits)
 3
+>>> splits[0]
+tensor([[0, 1],
+        [2, 3]])
 >>> splits[1]
-tensor([[4, 9]])
+tensor([[4, 5]])
+>>> splits[2]
+tensor([[6, 7],
+        [8, 9]])
 
 ```
 
