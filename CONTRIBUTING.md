@@ -12,6 +12,10 @@ We welcome contributions from anyone, even if you are new to open source.
 
 Once you implement and test your feature or bug-fix, please submit a Pull Request.
 
+## Development Setup
+
+For detailed instructions on setting up your development environment, including installing dependencies and running tests, please see the [Get Started guide](https://durandtibo.github.io/batchtensor/get_started#installing-from-source).
+
 ## Pull Requests
 
 We actively welcome your pull requests.
@@ -21,7 +25,7 @@ We actively welcome your pull requests.
 3. If you've changed APIs, update the documentation.
 4. Ensure the test suite passes. You can use the following command to run the tests:
    ```shell
-   make unit-test-cov
+   inv unit-test --cov
    ```
 5. Make sure your code lints. The following commands can help you to format the code:
    ```shell

@@ -122,7 +122,7 @@ a [virtual environment](https://packaging.python.org/guides/installing-using-pip
 `batchtensor` can be installed from pip using the following command:
 
 ```shell
-pip install batchtensor
+uv pip install batchtensor
 ```
 
 To make the package as slim as possible, only the minimal packages required to use `batchtensor` are
@@ -130,7 +130,7 @@ installed.
 To include all the dependencies, you can use the following command:
 
 ```shell
-pip install batchtensor[all]
+uv pip install batchtensor[all]
 ```
 
 Please check the [get started page](https://durandtibo.github.io/batchtensor/get_started) to see how

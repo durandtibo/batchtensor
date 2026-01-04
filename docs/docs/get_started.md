@@ -4,12 +4,12 @@ It is highly recommended to install in
 a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 to keep your system in order.
 
-## Installing with `pip` (recommended)
+## Installing with `uv pip` (recommended)
 
 The following command installs the latest version of the library:
 
 ```shell
-pip install batchtensor
+uv pip install batchtensor
 ```
 
 To make the package as slim as possible, only the packages required to use `batchtensor` are
@@ -17,7 +17,7 @@ installed.
 It is possible to install all the optional dependencies by running the following command:
 
 ```shell
-pip install 'batchtensor[all]'
+uv pip install 'batchtensor[all]'
 ```
 
 ## Installing from source
@@ -26,13 +26,8 @@ To install `batchtensor` from source, you can follow the steps below.
 
 ### Prerequisites
 
-The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management. First, install `uv`
-if you haven't already:
-
-```shell
-# On macOS and Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
+The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management.
+Please refer to the [uv documentation](https://docs.astral.sh/uv/getting-started/installation/) for installation instructions.
 
 You can verify the installation by running:
 
@@ -53,8 +48,14 @@ It is recommended to create a Python 3.10+ virtual environment.
 You can create a virtual environment with `uv`:
 
 ```shell
+inv create-venv
+```
+
+Alternatively, you can use the Makefile shortcut which also installs all dependencies:
+
+```shell
 make setup-venv
-source .venv/bin/activate  # On Unix/macOS
+source .venv/bin/activate
 ```
 
 ### Install dependencies
