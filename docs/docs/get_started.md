@@ -55,7 +55,7 @@ Alternatively, you can use the Makefile shortcut which also installs all depende
 
 ```shell
 make setup-venv
-source .venv/bin/activate  # On Unix/macOS
+source .venv/bin/activate
 ```
 
 ### Install dependencies
