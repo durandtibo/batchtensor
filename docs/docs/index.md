@@ -61,6 +61,24 @@ This library provides functions for tensors where the first dimension is the bat
 It also provides functions for tensors representing a batch of sequences where the first dimension
 is the batch dimension and the second dimension is the sequence dimension.
 
+## Key Features
+
+- **Nested Structure Support**: Work with dictionaries, lists, and tuples containing tensors
+- **Batch Operations**: Efficiently process batches of data along the batch dimension
+- **Sequence Operations**: Handle sequential/temporal data along the sequence dimension
+- **Consistent API**: Unified interface for both single tensors and nested structures
+- **Type Safety**: Fully typed with comprehensive type hints
+- **Well Documented**: Extensive documentation with examples for all functions
+- **Lightweight**: Minimal dependencies (PyTorch and coola)
+- **Performance**: Leverages PyTorch's optimized operations
+
+## Main Modules
+
+- **[batchtensor.nested](refs/nested.md)**: Operations for nested data structures
+- **[batchtensor.tensor](refs/tensor.md)**: Operations for individual tensors
+- **[batchtensor.utils](refs/utils.md)**: Utility functions for seed management
+- **[batchtensor.constants](refs/constants.md)**: Dimension constants
+
 ## Motivation
 
 Let's imagine you have a batch which is represented by a dictionary with three tensors, and you want
@@ -98,7 +116,15 @@ function `split_along_batch`:
 
 ```
 
-Please check the documentation to see all the implemented functions.
+Please check the [user guide](uguide/nested.md) and [API reference](refs/nested.md) to see all the
+implemented functions and detailed examples.
+
+## Quick Links
+
+- **[Get Started](get_started.md)**: Installation instructions
+- **[User Guide](uguide/tensor.md)**: Comprehensive tutorials and examples
+- **[API Reference](refs/nested.md)**: Complete function documentation
+- **[GitHub Repository](https://github.com/durandtibo/batchtensor)**: Source code and issue tracker
 
 ## API stability
 
