@@ -170,11 +170,6 @@ Create generators for different devices:
 4. **Generator Reuse**: Reuse generators when you want to maintain a sequence of random operations,
    create new ones when you want independence
 
-## Thread Safety
-
-Note that PyTorch generators are not thread-safe. If you're using multi-threading, each thread
-should have its own generator instance.
-
 ## See Also
 
 - [Tensor Operations](tensor.md) - Operations that use random number generators

@@ -8,7 +8,7 @@ This guide will help you install `batchtensor` and verify your installation.
 
 - Python 3.10 or later
 - PyTorch 2.4 or later
-- A compatible operating system (Linux, macOS, or Windows)
+- A compatible operating system (Linux or macOS)
 
 It is highly recommended to install in
 a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
@@ -132,12 +132,3 @@ If you encounter import errors, ensure that:
 
 If PyTorch is not installed, install it following the
 [official PyTorch installation guide](https://pytorch.org/get-started/locally/).
-
-## Getting Help
-
-If you encounter any issues:
-
-- Check the [GitHub Issues](https://github.com/durandtibo/batchtensor/issues) for known problems
-- Create a new issue if your problem is not already reported
-- Review the [documentation](https://durandtibo.github.io/batchtensor/) for detailed usage
-  information
