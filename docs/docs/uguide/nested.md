@@ -1,14 +1,34 @@
 # Nested Data Manipulation
 
 The `batchtensor.nested` module provides functions to manipulate nested data structures containing
-PyTorch tensors. These functions work with dictionaries, lists, and other nested structures where
-tensors share batch or sequence dimensions.
+PyTorch tensors. These functions work with dictionaries, lists, tuples, and other nested structures
+where tensors share batch or sequence dimensions.
 
 ## Overview
 
 When working with complex data pipelines, you often have batches represented as nested structures (
 e.g., dictionaries of tensors). The nested module makes it easy to apply operations across all
-tensors in these structures.
+tensors in these structures while preserving the nested structure.
+
+**Key Benefits:**
+
+- **Automatic recursion**: Operations are applied to all tensors in the structure
+- **Structure preservation**: The nested structure (dict, list, tuple) is maintained
+- **Consistency**: All tensors are processed with the same operation
+- **Convenience**: No need to manually iterate and apply operations
+
+**Supported Structures:**
+
+- Dictionaries: `{'key1': tensor1, 'key2': tensor2, ...}`
+- Lists: `[tensor1, tensor2, ...]`
+- Tuples: `(tensor1, tensor2, ...)`
+- Nested combinations: `{'key': [tensor1, tensor2], ...}`
+
+**Dimension Conventions:**
+
+- Batch dimension: Always dimension 0
+- Sequence dimension: Always dimension 1
+- See [Constants](constants.md) for more details
 
 ## Slicing Operations
 
@@ -324,6 +344,23 @@ Convert between PyTorch tensors and NumPy arrays:
 
 ```
 
+## Additional Operations
+
+### Type Conversion
+
+Convert tensor types in nested structures:
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import to
+>>> batch = {"values": torch.tensor([[1, 2], [3, 4]], dtype=torch.int32)}
+>>> to(batch, dtype=torch.float32)
+{'values': tensor([[1., 2.], [3., 4.]])}
+
+```
+
+See the [Type Conversion](#type-conversion) section for more examples.
+
 ## Best Practices
 
 1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible
@@ -339,8 +376,11 @@ Convert between PyTorch tensors and NumPy arrays:
 - Views are used when possible to avoid copying data
 - All functions leverage PyTorch's efficient tensor operations
 - For very deep nesting, consider flattening your data structure
+- Nested operations have minimal overhead compared to manual iteration
 
 ## See Also
 
 - [Tensor Operations](tensor.md) - Operations for single tensors
 - [API Reference](../refs/nested.md) - Complete function reference
+- [Utils Module](utils.md) - Utility functions for seed management
+- [Constants](constants.md) - Dimension constants used throughout the library

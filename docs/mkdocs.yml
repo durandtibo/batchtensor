@@ -24,12 +24,17 @@ theme:
 nav:
   - Home: index.md
   - get_started.md
+  - Architecture: architecture.md
   - User Guide:
       - Tensor Operations: uguide/tensor.md
       - Nested Operations: uguide/nested.md
+      - Utility Functions: uguide/utils.md
+      - Constants: uguide/constants.md
   - API Reference:
       - Nested Module: refs/nested.md
       - Tensor Module: refs/tensor.md
+      - Utils Module: refs/utils.md
+      - Constants Module: refs/constants.md
   - GitHub: https://github.com/durandtibo/batchtensor
 
 repo_url: https://github.com/durandtibo/batchtensor

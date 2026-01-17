@@ -1,5 +1,15 @@
 # Get Started
 
+This guide will help you install `batchtensor` and verify your installation.
+
+## Prerequisites
+
+`batchtensor` requires:
+
+- Python 3.10 or later
+- PyTorch 2.4 or later
+- A compatible operating system (Linux or macOS)
+
 It is highly recommended to install in
 a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 to keep your system in order.
@@ -79,3 +89,46 @@ Run the test suite to verify everything is working:
 ```shell
 inv unit-test --cov
 ```
+
+## Next Steps
+
+After installation, explore the documentation:
+
+- **[Tensor Operations Guide](uguide/tensor.md)**: Learn about single tensor operations
+- **[Nested Operations Guide](uguide/nested.md)**: Learn about nested structure operations
+- **[Utils Guide](uguide/utils.md)**: Learn about utility functions
+- **[API Reference](refs/nested.md)**: Browse the complete API
+
+## Quick Example
+
+Here's a simple example to verify your installation:
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import slice_along_batch
+>>> batch = {
+...     "features": torch.tensor([[1, 2], [3, 4], [5, 6]]),
+...     "labels": torch.tensor([0, 1, 2]),
+... }
+>>> # Take the first 2 samples
+>>> slice_along_batch(batch, stop=2)
+{'features': tensor([[1, 2], [3, 4]]), 'labels': tensor([0, 1])}
+
+```
+
+If this runs without errors, your installation is successful!
+
+## Troubleshooting
+
+### Import Errors
+
+If you encounter import errors, ensure that:
+
+1. You're using Python 3.10 or later
+2. PyTorch is properly installed
+3. Your virtual environment is activated (if using one)
+
+### PyTorch Installation
+
+If PyTorch is not installed, install it following the
+[official PyTorch installation guide](https://pytorch.org/get-started/locally/).
