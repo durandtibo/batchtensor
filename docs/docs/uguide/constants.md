@@ -115,10 +115,10 @@ Use constants to verify that your tensors have the expected shape:
 ...     actual_batch_size = tensor.size(BATCH_DIM)
 ...     if actual_batch_size != expected_batch_size:
 ...         raise ValueError(
-...             f"Expected batch size {expected_batch_size}, "
-...             f"got {actual_batch_size}"
+...             f"Expected batch size {expected_batch_size}, " f"got {actual_batch_size}"
 ...         )
 ...     return True
+...
 >>> tensor = torch.randn(32, 10)  # batch_size=32, features=10
 >>> validate_batch_tensor(tensor, expected_batch_size=32)
 True
@@ -156,6 +156,7 @@ These constants are used internally throughout batchtensor. For example (simplif
 def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     """Sum tensor along the batch dimension."""
     return tensor.sum(dim=BATCH_DIM, keepdim=keepdim)
+
 
 # In batchtensor.tensor.slicing (simplified for illustration)
 def select_along_seq(tensor: torch.Tensor, index: int) -> torch.Tensor:

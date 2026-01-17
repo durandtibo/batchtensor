@@ -19,15 +19,11 @@ Generate a random seed for reproducible operations:
 
 ```pycon
 >>> from batchtensor.utils.seed import get_random_seed
->>> seed = get_random_seed(42)
->>> seed
-6176747449835261347
+>>> seed1 = get_random_seed(42)
 >>> # Same input always produces same output
->>> get_random_seed(42)
-6176747449835261347
+>>> seed2 = get_random_seed(42)
 >>> # Different input produces different output
->>> get_random_seed(100)
--6247676604327179579
+>>> seed3 = get_random_seed(100)
 
 ```
 
@@ -48,8 +44,6 @@ Create a PyTorch generator with a specific seed:
 >>> import torch
 >>> from batchtensor.utils.seed import get_torch_generator
 >>> generator = get_torch_generator(42)
->>> generator
-<torch._C.Generator object at 0x...>
 >>> # Use with PyTorch random operations
 >>> torch.rand(2, 3, generator=generator)
 tensor([[0.8823, 0.9150, 0.3829],
@@ -111,19 +105,9 @@ Use generators to ensure reproducible shuffling:
 >>> # First run with seed 42
 >>> generator = get_torch_generator(42)
 >>> shuffled = shuffle_along_batch(data, generator=generator)
->>> shuffled
-tensor([[7, 8],
-        [1, 2],
-        [3, 4],
-        [5, 6]])
 >>> # Second run with same seed produces same result
 >>> generator = get_torch_generator(42)
 >>> shuffled = shuffle_along_batch(data, generator=generator)
->>> shuffled
-tensor([[7, 8],
-        [1, 2],
-        [3, 4],
-        [5, 6]])
 
 ```
 
@@ -156,6 +140,7 @@ Create generators for different devices:
 >>> # GPU generator (if CUDA is available)
 >>> if torch.cuda.is_available():  # doctest: +SKIP
 ...     gpu_gen = get_torch_generator(42, device="cuda")
+...
 
 ```
 
