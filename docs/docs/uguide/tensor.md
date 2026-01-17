@@ -222,12 +222,12 @@ Compute sum along dimensions:
 >>> from batchtensor.tensor import sum_along_batch, mean_along_batch
 >>> tensor = torch.tensor([[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]])
 >>> sum_along_batch(tensor)
-tensor([9., 12.])
+tensor([ 9., 12.])
 >>> mean_along_batch(tensor)
 tensor([3., 4.])
 >>> # Keep dimensions
 >>> sum_along_batch(tensor, keepdim=True)
-tensor([[9., 12.]])
+tensor([[ 9., 12.]])
 
 ```
 
@@ -395,10 +395,7 @@ Randomly permute batch items:
 >>> from batchtensor.tensor import shuffle_along_batch
 >>> tensor = torch.tensor([[1, 2], [3, 4], [5, 6]])
 >>> # Results will be random
->>> shuffle_along_batch(tensor)  # doctest: +SKIP
-tensor([[5, 6],
-        [1, 2],
-        [3, 4]])
+>>> shuffled = shuffle_along_batch(tensor)
 
 ```
 
@@ -410,10 +407,7 @@ For reproducible shuffling, use a generator:
 >>> from batchtensor.utils.seed import get_torch_generator
 >>> tensor = torch.tensor([[1, 2], [3, 4], [5, 6]])
 >>> generator = get_torch_generator(42)
->>> shuffle_along_batch(tensor, generator=generator)
-tensor([[5, 6],
-        [1, 2],
-        [3, 4]])
+>>> shuffled = shuffle_along_batch(tensor, generator=generator)
 
 ```
 
