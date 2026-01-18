@@ -1,13 +1,16 @@
 from __future__ import annotations
 
-from collections.abc import Callable
 from functools import partial
+from typing import TYPE_CHECKING
 
 import pytest
 import torch
 from coola import objects_are_equal
 
 from batchtensor import nested
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 DTYPES = [torch.float, torch.double, torch.long]
 POINTWISE_FUNCTIONS = [
