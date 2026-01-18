@@ -23,9 +23,9 @@ def to(data: Any, *args: Any, **kwargs: Any) -> Any:
         converting all tensors within it.
 
     Args:
-        data: The input data. Each item must be a tensor. Can be a nested
-            structure of dictionaries, lists, tuples, or any combination
-            containing tensors.
+        data: The input nested data structure. Can be a dictionary, list,
+            tuple, or any combination of these containing tensors. All
+            leaf values in the structure must be tensors.
         args: Positional arguments passed to ``torch.Tensor.to``. Common
             usage includes passing a device (e.g., ``torch.device('cuda')``),
             dtype (e.g., ``torch.float32``), or another tensor to match
