@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Callable
 from functools import partial
 
@@ -35,7 +37,7 @@ def test_pointwise_function_tensor(
 
 @pytest.mark.parametrize("dtype", DTYPES)
 @pytest.mark.parametrize("functions", POINTWISE_FUNCTIONS)
-def test_cumprod_along_batch_dict(dtype: torch.dtype, functions: tuple[Callable, Callable]) -> None:
+def test_pointwise_function_dict(dtype: torch.dtype, functions: tuple[Callable, Callable]) -> None:
     torch_fn, nested_fn = functions
     assert objects_are_equal(
         nested_fn(

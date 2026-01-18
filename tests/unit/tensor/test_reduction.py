@@ -27,8 +27,8 @@ from batchtensor.tensor import (
     sum_along_seq,
 )
 
-DTYPES = (torch.float, torch.double, torch.long)
-FLOATING_DTYPES = (torch.float, torch.double)
+DTYPES = [torch.float, torch.double, torch.long]
+FLOATING_DTYPES = [torch.float, torch.double]
 
 
 ######################################
