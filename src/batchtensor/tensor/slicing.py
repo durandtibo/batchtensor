@@ -27,18 +27,24 @@ if TYPE_CHECKING:
 def chunk_along_batch(tensor: torch.Tensor, chunks: int) -> tuple[torch.Tensor, ...]:
     r"""Split the tensor into chunks along the batch dimension.
 
-    Each chunk is a view of the input tensor.
+    Each chunk is a view of the input tensor. This operation attempts to
+    split the tensor into the specified number of chunks of approximately
+    equal size. If the tensor size is not evenly divisible by the number
+    of chunks, the last chunk will be smaller.
 
     Note:
         This function assumes the batch dimension is the first
-            dimension.
+            dimension (index 0).
 
     Args:
-        tensor: The tensor to split.
-        chunks: Number of chunks to return.
+        tensor: The tensor to split. Must have at least one dimension.
+        chunks: Number of chunks to return. Must be a positive integer.
+            If ``chunks`` is greater than the batch size, some chunks may
+            be empty.
 
     Returns:
-        The tensor chunks.
+        A tuple of tensor chunks along the batch dimension. Each chunk is
+            a view of the original tensor (shares memory).
 
     Example:
         ```pycon
@@ -52,6 +58,11 @@ def chunk_along_batch(tensor: torch.Tensor, chunks: int) -> tuple[torch.Tensor, 
          tensor([[8, 9]]))
 
         ```
+
+    See Also:
+        ``split_along_batch``: Split with specified sizes for each chunk.
+        ``slice_along_batch``: Extract a slice from the batch dimension.
+        ``chunk_along_seq``: Split along the sequence dimension instead.
     """
     return tensor.chunk(chunks=chunks, dim=BATCH_DIM)
 
@@ -92,18 +103,23 @@ def select_along_batch(tensor: torch.Tensor, index: int) -> torch.Tensor:
     r"""Slice the input tensor along the batch dimension at the given
     index.
 
-    This function returns a view of the original tensor with the batch dimension removed.
+    This function returns a view of the original tensor with the batch dimension
+    removed. It selects a single element from the batch dimension, reducing the
+    tensor's dimensionality by one.
 
     Note:
         This function assumes the batch dimension is the first
-            dimension.
+            dimension (index 0).
 
     Args:
-        tensor: The input tensor.
-        index: The index to select with.
+        tensor: The input tensor. Must have at least one dimension.
+        index: The index to select. Can be negative for indexing from the
+            end (e.g., -1 for the last batch item). Must be in the range
+            ``[-batch_size, batch_size-1]``.
 
     Returns:
-        The sliced tensor along the batch dimension.
+        The sliced tensor with the batch dimension removed. The shape is
+            ``tensor.shape[1:]``.
 
     Example:
         ```pycon
@@ -113,8 +129,17 @@ def select_along_batch(tensor: torch.Tensor, index: int) -> torch.Tensor:
         >>> out = select_along_batch(tensor, index=2)
         >>> out
         tensor([4, 5])
+        >>> # Negative indexing from the end
+        >>> out = select_along_batch(tensor, index=-1)
+        >>> out
+        tensor([8, 9])
 
         ```
+
+    See Also:
+        ``slice_along_batch``: Extract a range of batch items (keeps batch dimension).
+        ``index_select_along_batch``: Select multiple indices (keeps batch dimension).
+        ``select_along_seq``: Select from the sequence dimension instead.
     """
     return tensor[index]
 
