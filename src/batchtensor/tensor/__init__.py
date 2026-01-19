@@ -1,4 +1,5 @@
-r"""Functions for manipulating individual PyTorch tensors with batch and sequence dimensions.
+r"""Functions for manipulating individual PyTorch tensors with batch and
+sequence dimensions.
 
 This module provides a collection of functions for working with PyTorch tensors
 where the first dimension (index 0) is the batch dimension, and optionally the
@@ -42,15 +43,15 @@ Example:
     >>> import torch
     >>> from batchtensor import tensor as bt
     >>> # Create a batch of 5 samples, each with 2 features
-    >>> data = torch.tensor([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+    >>> data = torch.tensor([[1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0], [9.0, 10.0]])
     >>> # Compute mean along batch dimension (result has shape matching feature dim)
     >>> bt.mean_along_batch(data)
     tensor([5., 6.])
     >>> # Slice first 3 samples from the batch
     >>> bt.slice_along_batch(data, stop=3)
-    tensor([[1, 2],
-            [3, 4],
-            [5, 6]])
+    tensor([[1., 2.],
+            [3., 4.],
+            [5., 6.]])
 
     ```
 

@@ -1,4 +1,5 @@
-r"""Functions for manipulating nested data structures containing PyTorch tensors.
+r"""Functions for manipulating nested data structures containing PyTorch
+tensors.
 
 This module provides functions for working with nested data structures (dictionaries,
 lists, tuples) that contain PyTorch tensors. All functions recursively apply
