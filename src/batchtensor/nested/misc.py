@@ -11,7 +11,8 @@ from coola.recursive import recursive_apply
 
 
 def to(data: Any, *args: Any, **kwargs: Any) -> Any:
-    r"""Perform Tensor dtype and/or device conversion on all tensors in nested data.
+    r"""Perform Tensor dtype and/or device conversion on all tensors in
+    nested data.
 
     This function recursively applies ``torch.Tensor.to()`` to all tensors
     in the nested data structure, allowing you to convert dtypes, move to

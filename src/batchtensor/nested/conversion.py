@@ -58,7 +58,7 @@ def as_tensor(
          'b': tensor([0, 1, 2, 3, 4]),
          'c': tensor(42)}
         >>> # Specify dtype for all tensors
-        >>> out = as_tensor({"values": [1, 2, 3]}, dtype=torch.float32)
+        >>> out = as_tensor({"values": np.array([1, 2, 3])}, dtype=torch.float32)
         >>> out
         {'values': tensor([1., 2., 3.])}
 
@@ -169,7 +169,7 @@ def to_numpy(data: Any) -> Any:
         >>> # Demonstrate memory sharing for CPU tensors
         >>> data["a"][0, 0] = 999
         >>> out["a"][0, 0]  # Reflects the change
-        999.0
+        np.float32(999.0)
 
         ```
 
