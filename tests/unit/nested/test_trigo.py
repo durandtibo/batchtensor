@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 import torch
-from coola import objects_are_allclose
+from coola.equality import objects_are_allclose
 
 from batchtensor import nested
 
