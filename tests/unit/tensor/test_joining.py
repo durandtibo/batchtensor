@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 import torch
-from coola import objects_are_equal
+from coola.equality import objects_are_equal
 
 from batchtensor.tensor import cat_along_batch, cat_along_seq, repeat_along_seq
 

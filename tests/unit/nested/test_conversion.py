@@ -4,9 +4,9 @@ from unittest.mock import Mock
 
 import pytest
 import torch
-from coola import objects_are_equal
-from coola.testing import numpy_available
-from coola.utils import is_numpy_available
+from coola.equality import objects_are_equal
+from coola.testing.fixtures import numpy_available
+from coola.utils.imports import is_numpy_available
 from coola.utils.tensor import get_available_devices
 
 from batchtensor.nested import as_tensor, from_numpy, to_numpy
