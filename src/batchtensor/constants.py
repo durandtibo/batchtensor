@@ -35,15 +35,17 @@ from __future__ import annotations
 __all__ = ["BATCH_DIM", "SEQ_DIM"]
 
 BATCH_DIM = 0
-"""int: The index of the batch dimension in tensors.
+"""Int: The index of the batch dimension in tensors.
 
-This constant is used throughout batchtensor to identify the batch dimension,
-which is always assumed to be the first dimension (index 0) of tensors.
+This constant is used throughout batchtensor to identify the batch
+dimension, which is always assumed to be the first dimension (index 0)
+of tensors.
 """
 
 SEQ_DIM = 1
-"""int: The index of the sequence dimension in tensors.
+"""Int: The index of the sequence dimension in tensors.
 
-This constant is used throughout batchtensor to identify the sequence dimension,
-which is always assumed to be the second dimension (index 1) of tensors.
+This constant is used throughout batchtensor to identify the sequence
+dimension, which is always assumed to be the second dimension (index 1)
+of tensors.
 """
