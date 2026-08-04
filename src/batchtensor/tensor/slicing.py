@@ -264,7 +264,7 @@ def slice_along_seq(
 
 def split_along_batch(
     tensor: torch.Tensor, split_size_or_sections: int | Sequence[int]
-) -> torch.Tensor:
+) -> tuple[torch.Tensor, ...]:
     r"""Split the tensor into chunks along the batch dimension.
 
     Each chunk is a view of the original tensor.
@@ -299,7 +299,7 @@ def split_along_batch(
 
 def split_along_seq(
     tensor: torch.Tensor, split_size_or_sections: int | Sequence[int]
-) -> torch.Tensor:
+) -> tuple[torch.Tensor, ...]:
     r"""Split the tensor into chunks along the sequence dimension.
 
     Each chunk is a view of the original tensor.
