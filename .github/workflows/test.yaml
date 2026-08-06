@@ -41,7 +41,9 @@ jobs:
         uses: durandtibo/setup-venv-uv-action@v0.1.0
         with:
           python-version: ${{ matrix.python-version }}
-          # torch dropped cp313t wheels as of 2.13; pin to the last version that has them
+          # torch dropped cp313t wheels as of 2.13: skip it during the frozen
+          # sync, then install the last version that still has cp313t wheels
+          install-args: ${{ matrix.python-version == '3.13t' && '--exclude-packages torch' || '' }}
           package-name: ${{ matrix.python-version == '3.13t' && 'torch' || '' }}
           package-version: ${{ matrix.python-version == '3.13t' && '2.12.*' || '' }}
 
@@ -85,8 +87,9 @@ jobs:
         uses: durandtibo/setup-venv-uv-action@v0.1.0
         with:
           python-version: ${{ matrix.python-version }}
-          install-args: '--no-optional-deps'
-          # torch dropped cp313t wheels as of 2.13; pin to the last version that has them
+          # torch dropped cp313t wheels as of 2.13: skip it during the frozen
+          # sync, then install the last version that still has cp313t wheels
+          install-args: ${{ matrix.python-version == '3.13t' && '--no-optional-deps --exclude-packages torch' || '--no-optional-deps' }}
           package-name: ${{ matrix.python-version == '3.13t' && 'torch' || '' }}
           package-version: ${{ matrix.python-version == '3.13t' && '2.12.*' || '' }}
 

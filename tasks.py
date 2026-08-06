@@ -156,7 +156,11 @@ def format_shell(c: Context) -> None:
 
 @task
 def install(
-    c: Context, optional_deps: bool = True, dev_deps: bool = True, docs_deps: bool = False
+    c: Context,
+    optional_deps: bool = True,
+    dev_deps: bool = True,
+    docs_deps: bool = False,
+    exclude_packages: str = "",
 ) -> None:
     r"""Install project dependencies and the package in editable mode.
 
@@ -171,6 +175,9 @@ def install(
             formatting tools). Default is True.
         docs_deps: If True, install documentation generation dependencies
             (mkdocs, themes, plugins). Default is False.
+        exclude_packages: Comma-separated package names to skip during the
+            frozen sync (e.g. a package with no wheel for the current
+            interpreter). Install a compatible version separately afterward.
 
     Example:
         # Install with all dependencies except docs
@@ -181,6 +188,9 @@ def install(
 
         # Install everything including docs dependencies
         invoke install --docs-deps
+
+        # Skip torch during sync, e.g. to install a different version after
+        invoke install --exclude-packages torch
     """
     logger.info("📦 Installing project dependencies...")
     cmd = ["uv sync --frozen"]
@@ -190,9 +200,15 @@ def install(
         cmd.append("--group dev")
     if docs_deps:
         cmd.append("--group docs")
+    cmd.extend(
+        f"--no-install-package {package}"
+        for package in filter(None, (p.strip() for p in exclude_packages.split(",")))
+    )
     c.run(" ".join(cmd), pty=True)
     logger.info("🔧 Installing package in editable mode...")
-    c.run("uv pip install -e .", pty=True)
+    # --no-deps: dependencies are already installed by the sync above: re-resolving
+    # here would ignore --no-install-package exclusions and pull fresh versions.
+    c.run("uv pip install -e . --no-deps", pty=True)
     logger.info("✅ Installation complete")
 
 
