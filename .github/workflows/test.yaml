@@ -41,11 +41,9 @@ jobs:
         uses: durandtibo/setup-venv-uv-action@v0.1.0
         with:
           python-version: ${{ matrix.python-version }}
-          # torch dropped cp313t wheels as of 2.13: skip it during the frozen
-          # sync, then install the last version that still has cp313t wheels
-          install-args: ${{ matrix.python-version == '3.13t' && '--exclude-packages torch' || '' }}
-          package-name: ${{ matrix.python-version == '3.13t' && 'torch' || '' }}
-          package-version: ${{ matrix.python-version == '3.13t' && '2.12.*' || '' }}
+          # torch 2.13's cuda dependency tree has no cp313t wheels; re-resolve
+          # under a constraint so the resolver picks a compatible version
+          install-args: ${{ matrix.python-version == '3.13t' && '--constraints dev/constraints-freethreaded.txt' || '' }}
 
       - name: Run unit tests
         run: |
@@ -87,11 +85,9 @@ jobs:
         uses: durandtibo/setup-venv-uv-action@v0.1.0
         with:
           python-version: ${{ matrix.python-version }}
-          # torch dropped cp313t wheels as of 2.13: skip it during the frozen
-          # sync, then install the last version that still has cp313t wheels
-          install-args: ${{ matrix.python-version == '3.13t' && '--no-optional-deps --exclude-packages torch' || '--no-optional-deps' }}
-          package-name: ${{ matrix.python-version == '3.13t' && 'torch' || '' }}
-          package-version: ${{ matrix.python-version == '3.13t' && '2.12.*' || '' }}
+          # torch 2.13's cuda dependency tree has no cp313t wheels; re-resolve
+          # under a constraint so the resolver picks a compatible version
+          install-args: ${{ matrix.python-version == '3.13t' && '--no-optional-deps --constraints dev/constraints-freethreaded.txt' || '--no-optional-deps' }}
 
       - name: Run unit tests
         run: |
