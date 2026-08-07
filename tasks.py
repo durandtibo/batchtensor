@@ -156,12 +156,21 @@ def format_shell(c: Context) -> None:
 
 @task
 def install(
-    c: Context, optional_deps: bool = True, dev_deps: bool = True, docs_deps: bool = False
+    c: Context,
+    optional_deps: bool = True,
+    dev_deps: bool = True,
+    docs_deps: bool = False,
+    constraints: str = "",
 ) -> None:
     r"""Install project dependencies and the package in editable mode.
 
-    This task synchronizes dependencies from the lock file and installs the
-    package in editable mode, allowing you to test changes without reinstalling.
+    By default this synchronizes dependencies from the lock file (fast,
+    reproducible). When `constraints` is set, it instead resolves fresh via
+    `uv pip install` against that constraints file: useful when the locked
+    version of a package has no wheel for the current interpreter, since the
+    resolver then picks a compatible version and its own matching transitive
+    dependencies, rather than requiring every affected package to be pinned
+    or excluded by hand.
 
     Args:
         c: The invoke context.
@@ -171,6 +180,10 @@ def install(
             formatting tools). Default is True.
         docs_deps: If True, install documentation generation dependencies
             (mkdocs, themes, plugins). Default is False.
+        constraints: Path to a constraints file. When set, dependencies are
+            installed via `uv pip install` (fresh resolution) instead of
+            `uv sync --frozen` (locked), so the resolver can satisfy the
+            constraint without needing the lock file to already do so.
 
     Example:
         # Install with all dependencies except docs
@@ -181,18 +194,32 @@ def install(
 
         # Install everything including docs dependencies
         invoke install --docs-deps
+
+        # Re-resolve under a constraint, e.g. for an interpreter whose wheels
+        # the locked versions don't cover
+        invoke install --constraints dev/constraints-freethreaded.txt
     """
     logger.info("📦 Installing project dependencies...")
-    cmd = ["uv sync --frozen"]
-    if optional_deps:
-        cmd.append("--all-extras")
-    if dev_deps:
-        cmd.append("--group dev")
-    if docs_deps:
-        cmd.append("--group docs")
-    c.run(" ".join(cmd), pty=True)
-    logger.info("🔧 Installing package in editable mode...")
-    c.run("uv pip install -e .", pty=True)
+    if constraints:
+        cmd = ["uv pip install -e .", f"--constraints {constraints}"]
+        if optional_deps:
+            cmd.append("--all-extras")
+        if dev_deps:
+            cmd.append("--group dev")
+        if docs_deps:
+            cmd.append("--group docs")
+        c.run(" ".join(cmd), pty=True)
+    else:
+        cmd = ["uv sync --frozen"]
+        if optional_deps:
+            cmd.append("--all-extras")
+        if dev_deps:
+            cmd.append("--group dev")
+        if docs_deps:
+            cmd.append("--group docs")
+        c.run(" ".join(cmd), pty=True)
+        logger.info("🔧 Installing package in editable mode...")
+        c.run("uv pip install -e .", pty=True)
     logger.info("✅ Installation complete")
 
 

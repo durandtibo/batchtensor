@@ -1,0 +1,4 @@
+# torch 2.13 introduced a cuda-bindings/cuda-toolkit dependency tree with no
+# cp313t wheels. Cap torch below that so free-threaded Python (3.13t) resolves
+# torch's own (older, cp313t-compatible) transitive dependencies instead.
+torch<2.13

@@ -41,6 +41,9 @@ jobs:
         uses: durandtibo/setup-venv-uv-action@v0.1.0
         with:
           python-version: ${{ matrix.python-version }}
+          # torch 2.13's cuda dependency tree has no cp313t wheels; re-resolve
+          # under a constraint so the resolver picks a compatible version
+          install-args: ${{ matrix.python-version == '3.13t' && '--constraints dev/constraints-freethreaded.txt' || '' }}
 
       - name: Run unit tests
         run: |
@@ -82,7 +85,9 @@ jobs:
         uses: durandtibo/setup-venv-uv-action@v0.1.0
         with:
           python-version: ${{ matrix.python-version }}
-          install-args: '--no-optional-deps'
+          # torch 2.13's cuda dependency tree has no cp313t wheels; re-resolve
+          # under a constraint so the resolver picks a compatible version
+          install-args: ${{ matrix.python-version == '3.13t' && '--no-optional-deps --constraints dev/constraints-freethreaded.txt' || '--no-optional-deps' }}
 
       - name: Run unit tests
         run: |
