@@ -84,7 +84,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
             dimension.
 
     Args:
-        tensor: The tensor to split.
+        tensor: The tensor to permute.
         permutation: The 1-D tensor containing the indices of the
             permutation. The shape should match the sequence dimension
             of the tensor.
@@ -178,7 +178,7 @@ def shuffle_along_seq(
             dimension.
 
     Args:
-        tensor: The tensor to split.
+        tensor: The tensor to shuffle.
         generator: An optional random number generator.
 
     Returns:
