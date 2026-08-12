@@ -27,6 +27,10 @@ Function Categories:
 
     **Joining operations**: Combine multiple nested structures
         - ``cat_along_batch``, ``cat_along_seq``, ``repeat_along_seq``
+        - ``stack_along_batch``, ``stack_along_seq``
+
+    **Padding operations**: Pad ragged batches
+        - ``pad_along_batch``, ``pad_along_seq``
 
     **Permutation operations**: Reorder elements
         - ``permute_along_batch``, ``shuffle_along_batch``
@@ -136,6 +140,8 @@ __all__ = [
     "median_along_seq",
     "min_along_batch",
     "min_along_seq",
+    "pad_along_batch",
+    "pad_along_seq",
     "permute_along_batch",
     "permute_along_seq",
     "prod_along_batch",
@@ -153,6 +159,8 @@ __all__ = [
     "sort_along_seq",
     "split_along_batch",
     "split_along_seq",
+    "stack_along_batch",
+    "stack_along_seq",
     "sum_along_batch",
     "sum_along_seq",
     "tan",
@@ -169,7 +177,13 @@ from batchtensor.nested.comparison import (
 )
 from batchtensor.nested.conversion import as_tensor, from_numpy, to_numpy
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
-from batchtensor.nested.joining import cat_along_batch, cat_along_seq, repeat_along_seq
+from batchtensor.nested.joining import (
+    cat_along_batch,
+    cat_along_seq,
+    repeat_along_seq,
+    stack_along_batch,
+    stack_along_seq,
+)
 from batchtensor.nested.math import (
     cumprod_along_batch,
     cumprod_along_seq,
@@ -177,6 +191,7 @@ from batchtensor.nested.math import (
     cumsum_along_seq,
 )
 from batchtensor.nested.misc import to
+from batchtensor.nested.padding import pad_along_batch, pad_along_seq
 from batchtensor.nested.permutation import (
     permute_along_batch,
     permute_along_seq,

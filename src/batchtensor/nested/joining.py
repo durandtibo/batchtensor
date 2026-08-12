@@ -2,7 +2,13 @@ r"""Implements tensor joining functions for nested data structures."""
 
 from __future__ import annotations
 
-__all__ = ["cat_along_batch", "cat_along_seq", "repeat_along_seq"]
+__all__ = [
+    "cat_along_batch",
+    "cat_along_seq",
+    "repeat_along_seq",
+    "stack_along_batch",
+    "stack_along_seq",
+]
 
 from functools import partial
 from typing import TYPE_CHECKING, Any
@@ -135,3 +141,83 @@ def repeat_along_seq(data: Any, repeats: int) -> Any:
         ```
     """
     return recursive_apply(data, partial(bt.repeat_along_seq, repeats=repeats))
+
+
+def stack_along_batch(
+    data: Sequence[dict[Hashable, torch.Tensor]],
+) -> dict[Hashable, torch.Tensor]:
+    r"""Stack the given samples along a new batch dimension.
+
+    This is the nested equivalent of a collate function: given a
+    sequence of samples (dictionaries of tensors without a batch
+    dimension), it combines them into a single batched dictionary. Each
+    tensor must have the same shape across all the samples.
+
+    Args:
+        data: The input samples to stack. The dictionaries must have
+            the same keys.
+
+    Returns:
+        The stacked tensors along a new batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import stack_along_batch
+        >>> data = [
+        ...     {"a": torch.tensor([0, 1, 2]), "b": torch.tensor(1)},
+        ...     {"a": torch.tensor([3, 4, 5]), "b": torch.tensor(2)},
+        ... ]
+        >>> out = stack_along_batch(data)
+        >>> out
+        {'a': tensor([[0, 1, 2], [3, 4, 5]]), 'b': tensor([1, 2])}
+
+        ```
+
+    See Also:
+        ``cat_along_batch``: Concatenate along an existing batch dimension.
+        ``stack_along_seq``: Stack along a new sequence dimension instead.
+    """
+    if not data:
+        return {}
+    item = data[0]
+    return type(item)({key: bt.stack_along_batch([d[key] for d in data]) for key in item})
+
+
+def stack_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable, torch.Tensor]:
+    r"""Stack the given samples along a new sequence dimension.
+
+    Combines a sequence of per-step samples (dictionaries of tensors
+    without a sequence dimension) into a single dictionary with a
+    sequence dimension. Each tensor must have the same shape across all
+    the samples.
+
+    Args:
+        data: The input samples to stack. The dictionaries must have
+            the same keys.
+
+    Returns:
+        The stacked tensors along a new sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import stack_along_seq
+        >>> data = [
+        ...     {"a": torch.tensor([0, 1]), "b": torch.tensor([10, 11])},
+        ...     {"a": torch.tensor([2, 3]), "b": torch.tensor([12, 13])},
+        ... ]
+        >>> out = stack_along_seq(data)
+        >>> out
+        {'a': tensor([[0, 2], [1, 3]]), 'b': tensor([[10, 12], [11, 13]])}
+
+        ```
+
+    See Also:
+        ``cat_along_seq``: Concatenate along an existing sequence dimension.
+        ``stack_along_batch``: Stack along a new batch dimension instead.
+    """
+    if not data:
+        return {}
+    item = data[0]
+    return type(item)({key: bt.stack_along_seq([d[key] for d in data]) for key in item})

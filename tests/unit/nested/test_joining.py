@@ -6,7 +6,13 @@ import pytest
 import torch
 from coola.equality import objects_are_equal
 
-from batchtensor.nested import cat_along_batch, cat_along_seq, repeat_along_seq
+from batchtensor.nested import (
+    cat_along_batch,
+    cat_along_seq,
+    repeat_along_seq,
+    stack_along_batch,
+    stack_along_seq,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Sequence
@@ -270,3 +276,45 @@ def test_repeat_along_seq_dict_nested() -> None:
             "list": [torch.tensor([[5, 6, 7, 8, 9, 5, 6, 7, 8, 9]])],
         },
     )
+
+
+#######################################
+#     Tests for stack_along_batch     #
+#######################################
+
+
+def test_stack_along_batch() -> None:
+    assert objects_are_equal(
+        stack_along_batch(
+            [
+                {"a": torch.tensor([0, 1, 2]), "b": torch.tensor(1)},
+                {"a": torch.tensor([3, 4, 5]), "b": torch.tensor(2)},
+            ]
+        ),
+        {"a": torch.tensor([[0, 1, 2], [3, 4, 5]]), "b": torch.tensor([1, 2])},
+    )
+
+
+def test_stack_along_batch_empty() -> None:
+    assert objects_are_equal(stack_along_batch([]), {})
+
+
+#####################################
+#     Tests for stack_along_seq     #
+#####################################
+
+
+def test_stack_along_seq() -> None:
+    assert objects_are_equal(
+        stack_along_seq(
+            [
+                {"a": torch.tensor([0, 1]), "b": torch.tensor([10, 11])},
+                {"a": torch.tensor([2, 3]), "b": torch.tensor([12, 13])},
+            ]
+        ),
+        {"a": torch.tensor([[0, 2], [1, 3]]), "b": torch.tensor([[10, 12], [11, 13]])},
+    )
+
+
+def test_stack_along_seq_empty() -> None:
+    assert objects_are_equal(stack_along_seq([]), {})

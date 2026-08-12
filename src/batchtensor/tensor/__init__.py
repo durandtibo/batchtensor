@@ -22,6 +22,10 @@ Function Categories:
 
     **Joining operations**: Combine multiple tensors
         - ``cat_along_batch``, ``cat_along_seq``, ``repeat_along_seq``
+        - ``stack_along_batch``, ``stack_along_seq``
+
+    **Padding and masking operations**: Pad ragged batches and build masks
+        - ``pad_along_batch``, ``pad_along_seq``, ``lengths_to_mask``
 
     **Permutation operations**: Reorder elements
         - ``permute_along_batch``, ``shuffle_along_batch``
@@ -82,6 +86,7 @@ __all__ = [
     "cumsum_along_seq",
     "index_select_along_batch",
     "index_select_along_seq",
+    "lengths_to_mask",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -90,6 +95,8 @@ __all__ = [
     "median_along_seq",
     "min_along_batch",
     "min_along_seq",
+    "pad_along_batch",
+    "pad_along_seq",
     "permute_along_batch",
     "permute_along_seq",
     "prod_along_batch",
@@ -105,6 +112,8 @@ __all__ = [
     "sort_along_seq",
     "split_along_batch",
     "split_along_seq",
+    "stack_along_batch",
+    "stack_along_seq",
     "sum_along_batch",
     "sum_along_seq",
 ]
@@ -116,13 +125,21 @@ from batchtensor.tensor.comparison import (
     sort_along_seq,
 )
 from batchtensor.tensor.indexing import index_select_along_batch, index_select_along_seq
-from batchtensor.tensor.joining import cat_along_batch, cat_along_seq, repeat_along_seq
+from batchtensor.tensor.joining import (
+    cat_along_batch,
+    cat_along_seq,
+    repeat_along_seq,
+    stack_along_batch,
+    stack_along_seq,
+)
+from batchtensor.tensor.masking import lengths_to_mask
 from batchtensor.tensor.math import (
     cumprod_along_batch,
     cumprod_along_seq,
     cumsum_along_batch,
     cumsum_along_seq,
 )
+from batchtensor.tensor.padding import pad_along_batch, pad_along_seq
 from batchtensor.tensor.permutation import (
     permute_along_batch,
     permute_along_seq,

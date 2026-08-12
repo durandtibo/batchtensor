@@ -2,7 +2,13 @@ r"""Implements joining functions for tensors."""
 
 from __future__ import annotations
 
-__all__ = ["cat_along_batch", "cat_along_seq", "repeat_along_seq"]
+__all__ = [
+    "cat_along_batch",
+    "cat_along_seq",
+    "repeat_along_seq",
+    "stack_along_batch",
+    "stack_along_seq",
+]
 
 
 import torch
@@ -152,3 +158,81 @@ def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
     sizes = [1] * tensor.dim()
     sizes[1] = repeats
     return tensor.repeat(*sizes)
+
+
+def stack_along_batch(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> torch.Tensor:
+    r"""Stack the given tensors along a new batch dimension.
+
+    Unlike ``cat_along_batch``, this function inserts a new dimension
+    (index 0) rather than concatenating along an existing one. This is
+    useful to combine per-sample tensors (i.e. without a batch dimension)
+    into a single batched tensor, e.g. in a collate function.
+
+    All tensors must have the same shape.
+
+    Args:
+        tensors: A sequence (list or tuple) of tensors to stack. All
+            tensors must have the same shape. At least one tensor must
+            be provided.
+
+    Returns:
+        The stacked tensor. If the input tensors have shape ``(*, )``
+            and there are ``n`` of them, the output has shape
+            ``(n, *)``.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import stack_along_batch
+        >>> tensors = [torch.tensor([0, 1, 2]), torch.tensor([3, 4, 5])]
+        >>> out = stack_along_batch(tensors)
+        >>> out
+        tensor([[0, 1, 2],
+                [3, 4, 5]])
+
+        ```
+
+    See Also:
+        ``cat_along_batch``: Concatenate along an existing batch dimension.
+        ``stack_along_seq``: Stack along a new sequence dimension instead.
+    """
+    return torch.stack(tensors, dim=BATCH_DIM)
+
+
+def stack_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> torch.Tensor:
+    r"""Stack the given tensors along a new sequence dimension.
+
+    Unlike ``cat_along_seq``, this function inserts a new dimension
+    (index 1) rather than concatenating along an existing one. This is
+    useful to combine per-step tensors (i.e. without a sequence
+    dimension) into a single tensor with a sequence dimension.
+
+    All tensors must have the same shape.
+
+    Args:
+        tensors: A sequence (list or tuple) of tensors to stack. All
+            tensors must have the same shape. At least one tensor must
+            be provided.
+
+    Returns:
+        The stacked tensor. If the input tensors have shape
+            ``(batch_size, *)`` and there are ``n`` of them, the output
+            has shape ``(batch_size, n, *)``.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import stack_along_seq
+        >>> tensors = [torch.tensor([0, 1]), torch.tensor([2, 3])]
+        >>> out = stack_along_seq(tensors)
+        >>> out
+        tensor([[0, 2],
+                [1, 3]])
+
+        ```
+
+    See Also:
+        ``cat_along_seq``: Concatenate along an existing sequence dimension.
+        ``stack_along_batch``: Stack along a new batch dimension instead.
+    """
+    return torch.stack(tensors, dim=SEQ_DIM)
