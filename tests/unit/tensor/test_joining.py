@@ -4,7 +4,13 @@ import pytest
 import torch
 from coola.equality import objects_are_equal
 
-from batchtensor.tensor import cat_along_batch, cat_along_seq, repeat_along_seq
+from batchtensor.tensor import (
+    cat_along_batch,
+    cat_along_seq,
+    repeat_along_seq,
+    stack_along_batch,
+    stack_along_seq,
+)
 
 #####################################
 #     Tests for cat_along_batch     #
@@ -131,4 +137,42 @@ def test_repeat_along_seq_repeats_3d() -> None:
                 ],
             ]
         ),
+    )
+
+
+#######################################
+#     Tests for stack_along_batch     #
+#######################################
+
+
+def test_stack_along_batch() -> None:
+    assert objects_are_equal(
+        stack_along_batch([torch.tensor([0, 1, 2]), torch.tensor([3, 4, 5])]),
+        torch.tensor([[0, 1, 2], [3, 4, 5]]),
+    )
+
+
+def test_stack_along_batch_tuple() -> None:
+    assert objects_are_equal(
+        stack_along_batch((torch.tensor([0, 1]), torch.tensor([2, 3]), torch.tensor([4, 5]))),
+        torch.tensor([[0, 1], [2, 3], [4, 5]]),
+    )
+
+
+#####################################
+#     Tests for stack_along_seq     #
+#####################################
+
+
+def test_stack_along_seq() -> None:
+    assert objects_are_equal(
+        stack_along_seq([torch.tensor([0, 1]), torch.tensor([2, 3])]),
+        torch.tensor([[0, 2], [1, 3]]),
+    )
+
+
+def test_stack_along_seq_tuple() -> None:
+    assert objects_are_equal(
+        stack_along_seq((torch.tensor([0, 1]), torch.tensor([2, 3]), torch.tensor([4, 5]))),
+        torch.tensor([[0, 2, 4], [1, 3, 5]]),
     )
