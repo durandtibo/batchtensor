@@ -25,6 +25,23 @@ if TYPE_CHECKING:
     from batchtensor.nested.types import NestedTensor
 
 
+def _check_same_keys(data: Sequence[dict[Hashable, torch.Tensor]]) -> None:
+    r"""Validate that all the dictionaries in ``data`` have the same
+    keys.
+
+    Raises:
+        KeyError: if the dictionaries do not all have the same keys.
+    """
+    keys = set(data[0])
+    for i, item in enumerate(data[1:], start=1):
+        if set(item) != keys:
+            msg = (
+                f"the dictionaries must have the same keys but item 0 has keys {list(keys)} "
+                f"and item {i} has keys {list(item)}"
+            )
+            raise KeyError(msg)
+
+
 def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable, torch.Tensor]:
     r"""Concatenate the given tensors in the batch dimension.
 
@@ -39,6 +56,9 @@ def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
     Args:
         data: The input data to concatenate. The dictionaries must have
             the same keys.
+
+    Raises:
+        KeyError: if the dictionaries do not all have the same keys.
 
     Returns:
         The concatenated tensors along the batch dimension.
@@ -64,6 +84,7 @@ def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
     """
     if not data:
         return {}
+    _check_same_keys(data)
     item = data[0]
     return type(item)({key: bt.cat_along_batch([d[key] for d in data]) for key in item})
 
@@ -82,6 +103,9 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
     Args:
         data: The input data to concatenate. The dictionaries must have
             the same keys.
+
+    Raises:
+        KeyError: if the dictionaries do not all have the same keys.
 
     Returns:
         The concatenated tensors along the sequence dimension.
@@ -107,6 +131,7 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
     """
     if not data:
         return {}
+    _check_same_keys(data)
     item = data[0]
     return type(item)({key: bt.cat_along_seq([d[key] for d in data]) for key in item})
 
@@ -159,6 +184,9 @@ def stack_along_batch(
         data: The input samples to stack. The dictionaries must have
             the same keys.
 
+    Raises:
+        KeyError: if the dictionaries do not all have the same keys.
+
     Returns:
         The stacked tensors along a new batch dimension.
 
@@ -182,6 +210,7 @@ def stack_along_batch(
     """
     if not data:
         return {}
+    _check_same_keys(data)
     item = data[0]
     return type(item)({key: bt.stack_along_batch([d[key] for d in data]) for key in item})
 
@@ -197,6 +226,9 @@ def stack_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
     Args:
         data: The input samples to stack. The dictionaries must have
             the same keys.
+
+    Raises:
+        KeyError: if the dictionaries do not all have the same keys.
 
     Returns:
         The stacked tensors along a new sequence dimension.
@@ -221,5 +253,6 @@ def stack_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
     """
     if not data:
         return {}
+    _check_same_keys(data)
     item = data[0]
     return type(item)({key: bt.stack_along_seq([d[key] for d in data]) for key in item})

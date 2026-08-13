@@ -119,12 +119,15 @@ __all__ = [
     "chunk_along_batch",
     "chunk_along_seq",
     "clamp",
+    "clone",
+    "contiguous",
     "cos",
     "cosh",
     "cumprod_along_batch",
     "cumprod_along_seq",
     "cumsum_along_batch",
     "cumsum_along_seq",
+    "detach",
     "exp",
     "exp2",
     "expm1",
@@ -147,6 +150,7 @@ __all__ = [
     "pad_along_seq",
     "permute_along_batch",
     "permute_along_seq",
+    "pin_memory",
     "prod_along_batch",
     "prod_along_seq",
     "repeat_along_seq",
@@ -193,7 +197,7 @@ from batchtensor.nested.math import (
     cumsum_along_batch,
     cumsum_along_seq,
 )
-from batchtensor.nested.misc import to
+from batchtensor.nested.misc import clone, contiguous, detach, pin_memory, to
 from batchtensor.nested.padding import pad_along_batch, pad_along_seq
 from batchtensor.nested.permutation import (
     permute_along_batch,

@@ -54,6 +54,16 @@ def test_cat_along_batch_empty() -> None:
     assert objects_are_equal(cat_along_batch([]), {})
 
 
+def test_cat_along_batch_key_mismatch() -> None:
+    with pytest.raises(KeyError, match="the dictionaries must have the same keys"):
+        cat_along_batch(
+            [
+                {"a": torch.tensor([[0, 1], [2, 3]])},
+                {"b": torch.tensor([[4, 5]])},
+            ]
+        )
+
+
 ###################################
 #     Tests for cat_along_seq     #
 ###################################
@@ -95,6 +105,16 @@ def test_cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> None:
 
 def test_cat_along_seq_empty() -> None:
     assert objects_are_equal(cat_along_seq([]), {})
+
+
+def test_cat_along_seq_key_mismatch() -> None:
+    with pytest.raises(KeyError, match="the dictionaries must have the same keys"):
+        cat_along_seq(
+            [
+                {"a": torch.tensor([[0, 1], [2, 3]])},
+                {"b": torch.tensor([[4, 5]])},
+            ]
+        )
 
 
 ######################################
@@ -299,6 +319,16 @@ def test_stack_along_batch_empty() -> None:
     assert objects_are_equal(stack_along_batch([]), {})
 
 
+def test_stack_along_batch_key_mismatch() -> None:
+    with pytest.raises(KeyError, match="the dictionaries must have the same keys"):
+        stack_along_batch(
+            [
+                {"a": torch.tensor([0, 1])},
+                {"b": torch.tensor([2, 3])},
+            ]
+        )
+
+
 #####################################
 #     Tests for stack_along_seq     #
 #####################################
@@ -318,3 +348,13 @@ def test_stack_along_seq() -> None:
 
 def test_stack_along_seq_empty() -> None:
     assert objects_are_equal(stack_along_seq([]), {})
+
+
+def test_stack_along_seq_key_mismatch() -> None:
+    with pytest.raises(KeyError, match="the dictionaries must have the same keys"):
+        stack_along_seq(
+            [
+                {"a": torch.tensor([0, 1])},
+                {"b": torch.tensor([2, 3])},
+            ]
+        )
