@@ -5,14 +5,17 @@ from __future__ import annotations
 __all__ = ["pad_along_batch", "pad_along_seq"]
 
 from functools import partial
-from typing import Any
+from typing import TYPE_CHECKING
 
 from coola.recursive import recursive_apply
 
 from batchtensor import tensor as bt
 
+if TYPE_CHECKING:
+    from batchtensor.nested.types import NestedTensor
 
-def pad_along_batch(data: Any, pad_size: int, value: float = 0.0) -> Any:
+
+def pad_along_batch(data: NestedTensor, pad_size: int, value: float = 0.0) -> NestedTensor:
     r"""Pad all the tensors along the batch dimension.
 
     The padding is added at the end of the batch dimension.
@@ -47,7 +50,7 @@ def pad_along_batch(data: Any, pad_size: int, value: float = 0.0) -> Any:
     return recursive_apply(data, partial(bt.pad_along_batch, pad_size=pad_size, value=value))
 
 
-def pad_along_seq(data: Any, pad_size: int, value: float = 0.0) -> Any:
+def pad_along_seq(data: NestedTensor, pad_size: int, value: float = 0.0) -> NestedTensor:
     r"""Pad all the tensors along the sequence dimension.
 
     The padding is added at the end of the sequence dimension.

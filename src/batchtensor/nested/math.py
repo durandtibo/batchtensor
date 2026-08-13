@@ -11,14 +11,17 @@ __all__ = [
 ]
 
 from functools import partial
-from typing import Any
+from typing import TYPE_CHECKING
 
 from coola.recursive import recursive_apply
 
 from batchtensor import tensor as bt
 
+if TYPE_CHECKING:
+    from batchtensor.nested.types import NestedTensor
 
-def cumprod_along_batch(data: Any) -> Any:
+
+def cumprod_along_batch(data: NestedTensor) -> NestedTensor:
     r"""Return the cumulative product of elements of input in the batch
     dimension.
 
@@ -51,7 +54,7 @@ def cumprod_along_batch(data: Any) -> Any:
     return recursive_apply(data, partial(bt.cumprod_along_batch))
 
 
-def cumprod_along_seq(data: Any) -> Any:
+def cumprod_along_seq(data: NestedTensor) -> NestedTensor:
     r"""Return the cumulative product of elements of input in the
     sequence dimension.
 
@@ -85,7 +88,7 @@ def cumprod_along_seq(data: Any) -> Any:
     return recursive_apply(data, partial(bt.cumprod_along_seq))
 
 
-def cumsum_along_batch(data: Any) -> Any:
+def cumsum_along_batch(data: NestedTensor) -> NestedTensor:
     r"""Return the cumulative sum of elements of input in the batch
     dimension.
 
@@ -118,7 +121,7 @@ def cumsum_along_batch(data: Any) -> Any:
     return recursive_apply(data, partial(bt.cumsum_along_batch))
 
 
-def cumsum_along_seq(data: Any) -> Any:
+def cumsum_along_seq(data: NestedTensor) -> NestedTensor:
     r"""Return the cumulative sum of elements of input in the sequence
     dimension.
 

@@ -26,14 +26,17 @@ __all__ = [
 ]
 
 from functools import partial
-from typing import Any
+from typing import TYPE_CHECKING
 
 from coola.recursive import recursive_apply
 
 from batchtensor import tensor as bt
 
+if TYPE_CHECKING:
+    from batchtensor.nested.types import NestedTensor
 
-def amax_along_batch(data: Any, keepdim: bool = False) -> Any:
+
+def amax_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
@@ -68,7 +71,7 @@ def amax_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.amax_along_batch, keepdim=keepdim))
 
 
-def amax_along_seq(data: Any, keepdim: bool = False) -> Any:
+def amax_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the sequence dimension.
 
     Note:
@@ -103,7 +106,7 @@ def amax_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.amax_along_seq, keepdim=keepdim))
 
 
-def amin_along_batch(data: Any, keepdim: bool = False) -> Any:
+def amin_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the batch dimension.
 
     Note:
@@ -138,7 +141,7 @@ def amin_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.amin_along_batch, keepdim=keepdim))
 
 
-def amin_along_seq(data: Any, keepdim: bool = False) -> Any:
+def amin_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the sequence dimension.
 
     Note:
@@ -173,7 +176,7 @@ def amin_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.amin_along_seq, keepdim=keepdim))
 
 
-def argmax_along_batch(data: Any, keepdim: bool = False) -> Any:
+def argmax_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the indices of the maximum value of all elements along the
     batch dimension.
 
@@ -210,7 +213,7 @@ def argmax_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.argmax_along_batch, keepdim=keepdim))
 
 
-def argmax_along_seq(data: Any, keepdim: bool = False) -> Any:
+def argmax_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the indices of the maximum value of all elements along the
     sequence dimension.
 
@@ -247,7 +250,7 @@ def argmax_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.argmax_along_seq, keepdim=keepdim))
 
 
-def argmin_along_batch(data: Any, keepdim: bool = False) -> Any:
+def argmin_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the indices of the minimum value of all elements along the
     batch dimension.
 
@@ -284,7 +287,7 @@ def argmin_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.argmin_along_batch, keepdim=keepdim))
 
 
-def argmin_along_seq(data: Any, keepdim: bool = False) -> Any:
+def argmin_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the indices of the minimum value of all elements along the
     sequence dimension.
 
@@ -321,7 +324,7 @@ def argmin_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.argmin_along_seq, keepdim=keepdim))
 
 
-def max_along_batch(data: Any, keepdim: bool = False) -> Any:
+def max_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
@@ -368,7 +371,7 @@ def max_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.max_along_batch, keepdim=keepdim))
 
 
-def max_along_seq(data: Any, keepdim: bool = False) -> Any:
+def max_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the sequence dimension.
 
     Note:
@@ -415,7 +418,7 @@ def max_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.max_along_seq, keepdim=keepdim))
 
 
-def mean_along_batch(data: Any, keepdim: bool = False) -> Any:
+def mean_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the mean of all elements along the batch dimension.
 
     Note:
@@ -450,7 +453,7 @@ def mean_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.mean_along_batch, keepdim=keepdim))
 
 
-def mean_along_seq(data: Any, keepdim: bool = False) -> Any:
+def mean_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the mean of all elements along the sequence dimension.
 
     Note:
@@ -485,7 +488,7 @@ def mean_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.mean_along_seq, keepdim=keepdim))
 
 
-def median_along_batch(data: Any, keepdim: bool = False) -> Any:
+def median_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the median of all elements along the batch dimension.
 
     Note:
@@ -532,7 +535,7 @@ def median_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.median_along_batch, keepdim=keepdim))
 
 
-def median_along_seq(data: Any, keepdim: bool = False) -> Any:
+def median_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the median of all elements along the sequence dimension.
 
     Note:
@@ -579,7 +582,7 @@ def median_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.median_along_seq, keepdim=keepdim))
 
 
-def min_along_batch(data: Any, keepdim: bool = False) -> Any:
+def min_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the batch dimension.
 
     Note:
@@ -626,7 +629,7 @@ def min_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.min_along_batch, keepdim=keepdim))
 
 
-def min_along_seq(data: Any, keepdim: bool = False) -> Any:
+def min_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the sequence dimension.
 
     Note:
@@ -673,7 +676,7 @@ def min_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.min_along_seq, keepdim=keepdim))
 
 
-def prod_along_batch(data: Any, keepdim: bool = False) -> Any:
+def prod_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the product of all elements along the batch dimension.
 
     Note:
@@ -708,7 +711,7 @@ def prod_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.prod_along_batch, keepdim=keepdim))
 
 
-def prod_along_seq(data: Any, keepdim: bool = False) -> Any:
+def prod_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the product of all elements along the sequence dimension.
 
     Note:
@@ -743,7 +746,7 @@ def prod_along_seq(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.prod_along_seq, keepdim=keepdim))
 
 
-def sum_along_batch(data: Any, keepdim: bool = False) -> Any:
+def sum_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the sum of all elements along the batch dimension.
 
     Note:
@@ -778,7 +781,7 @@ def sum_along_batch(data: Any, keepdim: bool = False) -> Any:
     return recursive_apply(data, partial(bt.sum_along_batch, keepdim=keepdim))
 
 
-def sum_along_seq(data: Any, keepdim: bool = False) -> Any:
+def sum_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     r"""Return the sum of all elements along the sequence dimension.
 
     Note:

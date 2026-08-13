@@ -11,7 +11,7 @@ __all__ = [
 ]
 
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from coola.recursive import recursive_apply
 
@@ -21,6 +21,8 @@ if TYPE_CHECKING:
     from collections.abc import Hashable, Sequence
 
     import torch
+
+    from batchtensor.nested.types import NestedTensor
 
 
 def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable, torch.Tensor]:
@@ -109,7 +111,7 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
     return type(item)({key: bt.cat_along_seq([d[key] for d in data]) for key in item})
 
 
-def repeat_along_seq(data: Any, repeats: int) -> Any:
+def repeat_along_seq(data: NestedTensor, repeats: int) -> NestedTensor:
     r"""Repeat all the tensors along the sequence dimension.
 
     Note:
