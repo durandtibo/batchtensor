@@ -14,7 +14,7 @@ __all__ = [
 ]
 
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from coola.recursive import recursive_apply
 
@@ -24,6 +24,8 @@ if TYPE_CHECKING:
     from collections.abc import Hashable, Sequence
 
     import torch
+
+    from batchtensor.nested.types import NestedTensor
 
 
 def chunk_along_batch(
@@ -110,7 +112,7 @@ def chunk_along_seq(
     )
 
 
-def select_along_batch(data: Any, index: int) -> Any:
+def select_along_batch(data: NestedTensor, index: int) -> NestedTensor:
     r"""Slice the tensors along the batch dimension at the given index.
 
     This function returns a view of the original tensor with the batch
@@ -145,7 +147,7 @@ def select_along_batch(data: Any, index: int) -> Any:
     return recursive_apply(data, partial(bt.select_along_batch, index=index))
 
 
-def select_along_seq(data: Any, index: int) -> Any:
+def select_along_seq(data: NestedTensor, index: int) -> NestedTensor:
     r"""Slice the tensors along the sequence dimension at the given
     index.
 
@@ -181,7 +183,9 @@ def select_along_seq(data: Any, index: int) -> Any:
     return recursive_apply(data, partial(bt.select_along_seq, index=index))
 
 
-def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: int = 1) -> Any:
+def slice_along_batch(
+    data: NestedTensor, start: int = 0, stop: int | None = None, step: int = 1
+) -> NestedTensor:
     r"""Slice all the tensors along the batch dimension.
 
     Note:
@@ -222,7 +226,9 @@ def slice_along_batch(data: Any, start: int = 0, stop: int | None = None, step: 
     return recursive_apply(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
 
 
-def slice_along_seq(data: Any, start: int = 0, stop: int | None = None, step: int = 1) -> Any:
+def slice_along_seq(
+    data: NestedTensor, start: int = 0, stop: int | None = None, step: int = 1
+) -> NestedTensor:
     r"""Slice all the tensors along the sequence dimension.
 
     Note:

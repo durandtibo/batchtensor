@@ -6,7 +6,7 @@ __all__ = ["index_select_along_batch", "index_select_along_seq"]
 
 
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from coola.recursive import recursive_apply
 
@@ -15,8 +15,10 @@ from batchtensor import tensor
 if TYPE_CHECKING:
     import torch
 
+    from batchtensor.nested.types import NestedTensor
 
-def index_select_along_batch(data: Any, index: torch.Tensor) -> Any:
+
+def index_select_along_batch(data: NestedTensor, index: torch.Tensor) -> NestedTensor:
     r"""Return the tensors which indexes the ``input`` tensor along the
     batch dimension using the entries in ``index`` which is a
     ``LongTensor``.
@@ -53,7 +55,7 @@ def index_select_along_batch(data: Any, index: torch.Tensor) -> Any:
     return recursive_apply(data, partial(tensor.index_select_along_batch, index=index))
 
 
-def index_select_along_seq(data: Any, index: torch.Tensor) -> Any:
+def index_select_along_seq(data: NestedTensor, index: torch.Tensor) -> NestedTensor:
     r"""Return the tensors which indexes the ``input`` tensor along the
     sequence dimension using the entries in ``index`` which is a
     ``LongTensor``.

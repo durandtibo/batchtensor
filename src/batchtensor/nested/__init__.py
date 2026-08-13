@@ -16,6 +16,9 @@ All functions in this module follow these conventions:
     - All tensors in the nested structure must have compatible shapes for the
       operation being performed
     - The output structure mirrors the input structure
+    - The ``data`` parameters and return values are annotated with
+      ``batchtensor.nested.types.NestedTensor``, a recursive type alias for
+      "a tensor, or a mapping/sequence of ``NestedTensor``"
 
 Function Categories:
     **Reduction operations**: Aggregate values along a dimension

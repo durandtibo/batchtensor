@@ -6,14 +6,19 @@ from __future__ import annotations
 __all__ = ["argsort_along_batch", "argsort_along_seq", "sort_along_batch", "sort_along_seq"]
 
 from functools import partial
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from coola.recursive import recursive_apply
 
 from batchtensor import tensor as bt
 
+if TYPE_CHECKING:
+    from batchtensor.nested.types import NestedTensor
 
-def argsort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> Any:
+
+def argsort_along_batch(
+    data: NestedTensor, descending: bool = False, **kwargs: Any
+) -> NestedTensor:
     r"""Return the indices that sort a tensor along the batch dimension
     in ascending order by value.
 
@@ -51,7 +56,7 @@ def argsort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> A
     return recursive_apply(data, partial(bt.argsort_along_batch, descending=descending, **kwargs))
 
 
-def argsort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any:
+def argsort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
     r"""Return the indices that sort each tensor along the sequence
     dimension in ascending order by value.
 
@@ -89,7 +94,7 @@ def argsort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any
     return recursive_apply(data, partial(bt.argsort_along_seq, descending=descending, **kwargs))
 
 
-def sort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> Any:
+def sort_along_batch(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
     r"""Sort the elements of the input tensor along the batch dimension
     in ascending order by value.
 
@@ -140,7 +145,7 @@ def sort_along_batch(data: Any, descending: bool = False, **kwargs: Any) -> Any:
     return recursive_apply(data, partial(bt.sort_along_batch, descending=descending, **kwargs))
 
 
-def sort_along_seq(data: Any, descending: bool = False, **kwargs: Any) -> Any:
+def sort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
     r"""Sort the elements of the input tensor along the sequence
     dimension in ascending order by value.
 

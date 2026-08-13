@@ -5,12 +5,15 @@ from __future__ import annotations
 
 __all__ = ["to"]
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from coola.recursive import recursive_apply
 
+if TYPE_CHECKING:
+    from batchtensor.nested.types import NestedTensor
 
-def to(data: Any, *args: Any, **kwargs: Any) -> Any:
+
+def to(data: NestedTensor, *args: Any, **kwargs: Any) -> NestedTensor:
     r"""Perform Tensor dtype and/or device conversion on all tensors in
     nested data.
 

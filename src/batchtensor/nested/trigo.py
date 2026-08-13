@@ -17,13 +17,16 @@ __all__ = [
     "tanh",
 ]
 
-from typing import Any
+from typing import TYPE_CHECKING
 
 import torch
 from coola.recursive import recursive_apply
 
+if TYPE_CHECKING:
+    from batchtensor.nested.types import NestedTensor
 
-def acos(data: Any) -> Any:
+
+def acos(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the inverse cosine of each element.
 
     Args:
@@ -47,7 +50,7 @@ def acos(data: Any) -> Any:
     return recursive_apply(data, torch.acos)
 
 
-def acosh(data: Any) -> Any:
+def acosh(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the inverse hyperbolic cosine of each
     element.
 
@@ -72,7 +75,7 @@ def acosh(data: Any) -> Any:
     return recursive_apply(data, torch.acosh)
 
 
-def asin(data: Any) -> Any:
+def asin(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the arcsine of each element.
 
     Args:
@@ -96,7 +99,7 @@ def asin(data: Any) -> Any:
     return recursive_apply(data, torch.asin)
 
 
-def asinh(data: Any) -> Any:
+def asinh(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the inverse hyperbolic sine of each
     element.
 
@@ -121,7 +124,7 @@ def asinh(data: Any) -> Any:
     return recursive_apply(data, torch.asinh)
 
 
-def atan(data: Any) -> Any:
+def atan(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the arctangent of each element.
 
     Args:
@@ -145,7 +148,7 @@ def atan(data: Any) -> Any:
     return recursive_apply(data, torch.atan)
 
 
-def atanh(data: Any) -> Any:
+def atanh(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the inverse hyperbolic tangent of each
     element.
 
@@ -170,7 +173,7 @@ def atanh(data: Any) -> Any:
     return recursive_apply(data, torch.atanh)
 
 
-def cos(data: Any) -> Any:
+def cos(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the cosine of each element.
 
     Args:
@@ -194,7 +197,7 @@ def cos(data: Any) -> Any:
     return recursive_apply(data, torch.cos)
 
 
-def cosh(data: Any) -> Any:
+def cosh(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the hyperbolic cosine of each element.
 
     Args:
@@ -218,7 +221,7 @@ def cosh(data: Any) -> Any:
     return recursive_apply(data, torch.cosh)
 
 
-def sin(data: Any) -> Any:
+def sin(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the sine of each element.
 
     Args:
@@ -242,7 +245,7 @@ def sin(data: Any) -> Any:
     return recursive_apply(data, torch.sin)
 
 
-def sinh(data: Any) -> Any:
+def sinh(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the hyperbolic sine of each element.
 
     Args:
@@ -266,7 +269,7 @@ def sinh(data: Any) -> Any:
     return recursive_apply(data, torch.sinh)
 
 
-def tan(data: Any) -> Any:
+def tan(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the tangent of each element.
 
     Args:
@@ -290,7 +293,7 @@ def tan(data: Any) -> Any:
     return recursive_apply(data, torch.tan)
 
 
-def tanh(data: Any) -> Any:
+def tanh(data: NestedTensor) -> NestedTensor:
     r"""Return new tensors with the hyperbolic tangent of each element.
 
     Args:

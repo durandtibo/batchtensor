@@ -6,7 +6,7 @@ __all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_batch", "s
 
 
 from functools import partial
-from typing import Any
+from typing import TYPE_CHECKING
 
 import torch
 from coola.iterator import dfs_iterate
@@ -15,8 +15,11 @@ from coola.recursive import recursive_apply
 from batchtensor import tensor
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 
+if TYPE_CHECKING:
+    from batchtensor.nested.types import NestedTensor
 
-def permute_along_batch(data: Any, permutation: torch.Tensor) -> Any:
+
+def permute_along_batch(data: NestedTensor, permutation: torch.Tensor) -> NestedTensor:
     r"""Permute all the tensors along the batch dimension.
 
     Note:
@@ -55,7 +58,7 @@ def permute_along_batch(data: Any, permutation: torch.Tensor) -> Any:
     return recursive_apply(data, partial(tensor.permute_along_batch, permutation=permutation))
 
 
-def permute_along_seq(data: Any, permutation: torch.Tensor) -> Any:
+def permute_along_seq(data: NestedTensor, permutation: torch.Tensor) -> NestedTensor:
     r"""Permute all the tensors along the sequence dimension.
 
     Note:
@@ -94,7 +97,9 @@ def permute_along_seq(data: Any, permutation: torch.Tensor) -> Any:
     return recursive_apply(data, partial(tensor.permute_along_seq, permutation=permutation))
 
 
-def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> Any:
+def shuffle_along_batch(
+    data: NestedTensor, generator: torch.Generator | None = None
+) -> NestedTensor:
     r"""Shuffle all the tensors along the batch dimension.
 
     Note:
@@ -131,7 +136,7 @@ def shuffle_along_batch(data: Any, generator: torch.Generator | None = None) -> 
     )
 
 
-def shuffle_along_seq(data: Any, generator: torch.Generator | None = None) -> Any:
+def shuffle_along_seq(data: NestedTensor, generator: torch.Generator | None = None) -> NestedTensor:
     r"""Shuffle all the tensors along the sequence dimension.
 
     Note:
