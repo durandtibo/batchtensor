@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import pytest
 import torch
 from coola.equality import objects_are_equal
@@ -81,6 +83,15 @@ def test_pin_memory_tensor() -> None:
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="pin_memory requires CUDA")
 def test_pin_memory_dict() -> None:
+    data = {"a": torch.tensor([[0, 1], [2, 3]]), "b": torch.tensor([4, 5])}
+    out = pin_memory(data)
+    assert objects_are_equal(out, data)
+
+
+@patch("torch.Tensor.pin_memory", lambda self: self)
+def test_pin_memory_dict_mocked() -> None:
+    # Mocks ``torch.Tensor.pin_memory`` so the recursion logic is exercised
+    # even on machines without CUDA (pinning is otherwise a CUDA-only op).
     data = {"a": torch.tensor([[0, 1], [2, 3]]), "b": torch.tensor([4, 5])}
     out = pin_memory(data)
     assert objects_are_equal(out, data)
