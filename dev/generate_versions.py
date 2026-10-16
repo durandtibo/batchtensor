@@ -33,7 +33,7 @@ def fetch_package_versions(base_dir: Path) -> dict[str, list[str]]:
     deps = read_pyproject_dependencies(pyproject_path) + read_pyproject_optional_dependencies(
         pyproject_path
     )
-    major_deps, minor_deps = partition_package_bounds(deps, ["packaging", "pyarrow"])
+    major_deps, minor_deps = partition_package_bounds(deps, [])
 
     return sort_by_keys(
         fetch_latest_major_versions_map(major_deps, include_lower_bound=True)
@@ -45,9 +45,9 @@ def main() -> None:
     r"""Generate the package versions and save them in a JSON file."""
     base_dir = Path(__file__).parent.parent
     versions = fetch_package_versions(base_dir)
-    logger.info(f"{versions=}")
+    logger.info("versions=%s", versions)
     path = base_dir.joinpath("dev/config").joinpath("package_versions.json")
-    logger.info(f"Saving package versions to {path}")
+    logger.info("Saving package versions to %s", path)
     save_json(versions, path, exist_ok=True)
 
 
