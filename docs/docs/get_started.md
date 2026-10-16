@@ -6,7 +6,7 @@ This guide will help you install `batchtensor` and verify your installation.
 
 `batchtensor` requires:
 
-- Python 3.10 or later
+- Python 3.11 or later
 - PyTorch 2.4 or later
 - A compatible operating system (Linux or macOS)
 
@@ -54,7 +54,7 @@ cd batchtensor
 
 ### Create a virtual environment
 
-It is recommended to create a Python 3.10+ virtual environment.
+It is recommended to create a Python 3.11+ virtual environment.
 You can create a virtual environment with `uv`:
 
 ```shell
@@ -124,7 +124,7 @@ If this runs without errors, your installation is successful!
 
 If you encounter import errors, ensure that:
 
-1. You're using Python 3.10 or later
+1. You're using Python 3.11 or later
 2. PyTorch is properly installed
 3. Your virtual environment is activated (if using one)
 
