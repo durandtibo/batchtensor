@@ -264,9 +264,6 @@ src = ["src"]
   "PL",   # Pylint
   "S101", # flake8-bandit
 ]
-"dev/**" = [
-  "G004", # logging f-string
-]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 10
