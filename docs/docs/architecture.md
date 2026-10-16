@@ -170,9 +170,7 @@ def slice_along_batch(
     Returns:
         Sliced nested structure.
     """
-    return recursive_apply(
-        data, partial(bt.slice_along_batch, start=start, stop=stop, step=step)
-    )
+    return recursive_apply(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
 ```
 
 This reduces code duplication and ensures nested operations behave consistently.
@@ -200,9 +198,7 @@ def chunk_along_batch(
     keys = data.keys()
     return tuple(
         dict(zip(keys, values))
-        for values in zip(
-            *[bt.chunk_along_batch(tensor, chunks) for tensor in data.values()]
-        )
+        for values in zip(*[bt.chunk_along_batch(tensor, chunks) for tensor in data.values()])
     )
 ```
 
