@@ -35,7 +35,7 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
             permutation.
 
     Raises:
-        RuntimeError: if the shape of the permutation does not match
+        ValueError: if the shape of the permutation does not match
             the batch dimension of the tensor.
 
     Example:
@@ -72,7 +72,7 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
             f"({tensor.shape})"
         )
-        raise RuntimeError(msg)
+        raise ValueError(msg)
     return tensor.index_select(dim=BATCH_DIM, index=permutation.to(tensor.device))
 
 
@@ -93,7 +93,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
         The tensor with permuted data along the sequence dimension.
 
     Raises:
-        RuntimeError: if the shape of the permutation does not match
+        ValueError: if the shape of the permutation does not match
             the sequence dimension of the tensor.
 
     Example:
@@ -113,7 +113,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
             f"({tensor.shape})"
         )
-        raise RuntimeError(msg)
+        raise ValueError(msg)
     return tensor.index_select(dim=SEQ_DIM, index=permutation.to(tensor.device))
 
 
@@ -164,7 +164,11 @@ def shuffle_along_batch(
     """
     return permute_along_batch(
         tensor=tensor,
-        permutation=torch.randperm(tensor.shape[BATCH_DIM], generator=generator),
+        permutation=torch.randperm(
+            tensor.shape[BATCH_DIM],
+            generator=generator,
+            device=generator.device if generator is not None else None,
+        ),
     )
 
 
@@ -197,5 +201,9 @@ def shuffle_along_seq(
     """
     return permute_along_seq(
         tensor=tensor,
-        permutation=torch.randperm(tensor.shape[SEQ_DIM], generator=generator),
+        permutation=torch.randperm(
+            tensor.shape[SEQ_DIM],
+            generator=generator,
+            device=generator.device if generator is not None else None,
+        ),
     )

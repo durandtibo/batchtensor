@@ -38,7 +38,7 @@ def permute_along_batch(data: NestedTensor, permutation: torch.Tensor) -> Nested
             The output data has the same structure as the input data.
 
     Raises:
-        RuntimeError: if the shape of the permutation does not match
+        ValueError: if the shape of the permutation does not match
             the batch dimension of the tensor.
 
     Example:
@@ -77,7 +77,7 @@ def permute_along_seq(data: NestedTensor, permutation: torch.Tensor) -> NestedTe
             The output data has the same structure as the input data.
 
     Raises:
-        RuntimeError: if the shape of the permutation does not match
+        ValueError: if the shape of the permutation does not match
             the sequence dimension of the tensor.
 
     Example:
