@@ -5,7 +5,7 @@
 name: Tests
 on:
   workflow_call:
-  workflow_dispatch:  # to trigger manually
+  workflow_dispatch: # to trigger manually
 
 permissions:
   contents: read
@@ -19,19 +19,21 @@ jobs:
       max-parallel: 8
       fail-fast: false
       matrix:
-        os: [
-          ubuntu-latest,
-          ubuntu-24.04,
-          ubuntu-22.04,
-          ubuntu-24.04-arm,
-          ubuntu-22.04-arm,
-          macos-latest,
-          macos-26,
-          macos-15,
-          macos-14,
-        ]
+        os:
+          [
+            ubuntu-latest,
+            ubuntu-24.04,
+            ubuntu-22.04,
+            ubuntu-24.04-arm,
+            ubuntu-22.04-arm,
+            macos-latest,
+            macos-26,
+            macos-15,
+            macos-14,
+          ]
         # Test all supported Python versions including free-threaded builds (t suffix)
-        python-version: [ '3.14', '3.14t', '3.13', '3.13t', '3.12', '3.11', '3.10' ]
+        python-version:
+          ["3.14", "3.14t", "3.13", "3.13t", "3.12", "3.11", "3.10"]
 
     steps:
       - name: Checkout
@@ -58,20 +60,22 @@ jobs:
       max-parallel: 8
       fail-fast: false
       matrix:
-        os: [
-          ubuntu-latest,
-          ubuntu-26.04,
-          ubuntu-24.04,
-          ubuntu-22.04,
-          ubuntu-26.04-arm,
-          ubuntu-24.04-arm,
-          ubuntu-22.04-arm,
-          macos-latest,
-          macos-26,
-          macos-15,
-          macos-14,
-        ]
-        python-version: [ '3.14', '3.14t', '3.13', '3.13t', '3.12', '3.11', '3.10' ]
+        os:
+          [
+            ubuntu-latest,
+            ubuntu-26.04,
+            ubuntu-24.04,
+            ubuntu-22.04,
+            ubuntu-26.04-arm,
+            ubuntu-24.04-arm,
+            ubuntu-22.04-arm,
+            macos-latest,
+            macos-26,
+            macos-15,
+            macos-14,
+          ]
+        python-version:
+          ["3.14", "3.14t", "3.13", "3.13t", "3.12", "3.11", "3.10"]
 
     steps:
       - name: Checkout
@@ -82,7 +86,7 @@ jobs:
         uses: durandtibo/setup-venv-uv-action@v0.2.0
         with:
           python-version: ${{ matrix.python-version }}
-          install-args: '--no-optional-deps'
+          install-args: "--no-optional-deps"
 
       - name: Run unit tests
         run: |

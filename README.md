@@ -138,7 +138,7 @@ to install only some specific dependencies or other alternatives to install the 
 The following is the corresponding `batchtensor` versions and tested dependencies.
 
 | `batchtensor` | `coola`        | `numpy`<sup>*</sup> | `torch`       | `python`       |
-|---------------|----------------|---------------------|---------------|----------------|
+| ------------- | -------------- | ------------------- | ------------- | -------------- |
 | `main`        | `>=1.0,<2.0`   | `>=1.24,<2.0`       | `>=2.4,<3.0`  | `>=3.10`       |
 | `0.1.1`       | `>=0.9.1,<1.0` | `>=1.24,<2.0`       | `>=2.4,<3.0`  | `>=3.10,<3.15` |
 | `0.1.0`       | `>=0.8.6,<1.0` | `>=1.21,<2.0`       | `>=2.4,<3.0`  | `>=3.9,<3.14`  |
