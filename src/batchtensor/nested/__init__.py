@@ -29,7 +29,7 @@ Function Categories:
         - ``slice_along_seq``, ``select_along_seq``, ``chunk_along_seq``
 
     **Joining operations**: Combine multiple nested structures
-        - ``cat_along_batch``, ``cat_along_seq``, ``repeat_along_seq``
+        - ``cat_along_batch``, ``cat_along_seq``, ``combine``, ``repeat_along_seq``
         - ``stack_along_batch``, ``stack_along_seq``
 
     **Padding operations**: Pad ragged batches
@@ -120,6 +120,7 @@ __all__ = [
     "chunk_along_seq",
     "clamp",
     "clone",
+    "combine",
     "contiguous",
     "cos",
     "cosh",
@@ -187,6 +188,7 @@ from batchtensor.nested.indexing import index_select_along_batch, index_select_a
 from batchtensor.nested.joining import (
     cat_along_batch,
     cat_along_seq,
+    combine,
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,

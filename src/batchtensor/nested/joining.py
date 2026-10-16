@@ -5,6 +5,7 @@ from __future__ import annotations
 __all__ = [
     "cat_along_batch",
     "cat_along_seq",
+    "combine",
     "repeat_along_seq",
     "stack_along_batch",
     "stack_along_seq",
@@ -66,7 +67,7 @@ def cat_along_batch(data: Sequence[NestedTensor]) -> NestedTensor:
 
         ```
     """
-    return _combine(data, bt.cat_along_batch)
+    return combine(data, bt.cat_along_batch)
 
 
 def cat_along_seq(data: Sequence[NestedTensor]) -> NestedTensor:
@@ -109,7 +110,7 @@ def cat_along_seq(data: Sequence[NestedTensor]) -> NestedTensor:
 
         ```
     """
-    return _combine(data, bt.cat_along_seq)
+    return combine(data, bt.cat_along_seq)
 
 
 def repeat_along_seq(data: NestedTensor, repeats: int) -> NestedTensor:
@@ -182,7 +183,7 @@ def stack_along_batch(data: Sequence[NestedTensor]) -> NestedTensor:
         ``cat_along_batch``: Concatenate along an existing batch dimension.
         ``stack_along_seq``: Stack along a new sequence dimension instead.
     """
-    return _combine(data, bt.stack_along_batch)
+    return combine(data, bt.stack_along_batch)
 
 
 def stack_along_seq(data: Sequence[NestedTensor]) -> NestedTensor:
@@ -221,10 +222,10 @@ def stack_along_seq(data: Sequence[NestedTensor]) -> NestedTensor:
         ``cat_along_seq``: Concatenate along an existing sequence dimension.
         ``stack_along_batch``: Stack along a new batch dimension instead.
     """
-    return _combine(data, bt.stack_along_seq)
+    return combine(data, bt.stack_along_seq)
 
 
-def _combine(
+def combine(
     data: Sequence[NestedTensor], fn: Callable[[list[torch.Tensor]], torch.Tensor]
 ) -> NestedTensor:
     r"""Combine a sequence of nested structures with the same structure.
@@ -232,6 +233,26 @@ def _combine(
     Dictionaries, lists and tuples are traversed recursively and ``fn`` is
     applied to the list of tensors found at each leaf position. An empty
     sequence returns an empty dictionary.
+
+    Args:
+        data: The sequence of nested structures to combine. All the
+            structures must have the same keys/lengths.
+        fn: The function that combines a list of tensors into a single
+            tensor, e.g. ``torch.cat`` or ``torch.stack``.
+
+    Returns:
+        A nested structure with the same structure as the items of ``data``.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import combine
+        >>> data = [{"a": torch.ones(2, 3)}, {"a": torch.zeros(1, 3)}]
+        >>> out = combine(data, lambda tensors: torch.cat(tensors, dim=0))
+        >>> out["a"].shape
+        torch.Size([3, 3])
+
+        ```
 
     Raises:
         KeyError: if the dictionaries do not have the same keys.
@@ -252,12 +273,12 @@ def _combine(
                 )
                 raise KeyError(msg)
         maps = cast("Sequence[Mapping[Hashable, NestedTensor]]", data)
-        return {key: _combine([d[key] for d in maps], fn) for key in first}
+        return {key: combine([d[key] for d in maps], fn) for key in first}
     if isinstance(first, (list, tuple)):
         for i, item in enumerate(data[1:], start=1):
             if not isinstance(item, (list, tuple)) or len(item) != len(first):
                 msg = f"the sequences must have the same length but item {i} does not match item 0"
                 raise ValueError(msg)
-        out = [_combine([d[j] for d in data], fn) for j in range(len(first))]
+        out = [combine([d[j] for d in data], fn) for j in range(len(first))]
         return out if isinstance(first, list) else tuple(out)
     return fn(cast("list[torch.Tensor]", list(data)))

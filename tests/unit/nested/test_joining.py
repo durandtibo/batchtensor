@@ -9,6 +9,7 @@ from coola.equality import objects_are_equal
 from batchtensor.nested import (
     cat_along_batch,
     cat_along_seq,
+    combine,
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,
@@ -388,3 +389,8 @@ def test_cat_along_batch_defaultdict() -> None:
 
     d = defaultdict(list, {"a": torch.ones(1)})
     assert cat_along_batch([d, d])["a"].shape == (2,)
+
+
+def test_combine_custom_fn() -> None:
+    out = combine([{"a": torch.ones(2)}, {"a": torch.ones(2)}], lambda t: sum(t))
+    assert out["a"].tolist() == [2.0, 2.0]
