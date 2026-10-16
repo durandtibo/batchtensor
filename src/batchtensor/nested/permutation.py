@@ -129,11 +129,10 @@ def shuffle_along_batch(
 
         ```
     """
-    value = next(dfs_iterate(data))
-    return permute_along_batch(
-        data=data,
-        permutation=torch.randperm(value.shape[BATCH_DIM], generator=generator),
-    )
+    size = _get_size(data, BATCH_DIM)
+    if size is None:
+        return data
+    return permute_along_batch(data=data, permutation=torch.randperm(size, generator=generator))
 
 
 def shuffle_along_seq(data: NestedTensor, generator: torch.Generator | None = None) -> NestedTensor:
@@ -166,8 +165,26 @@ def shuffle_along_seq(data: NestedTensor, generator: torch.Generator | None = No
 
         ```
     """
-    value = next(dfs_iterate(data))
-    return permute_along_seq(
-        data=data,
-        permutation=torch.randperm(value.shape[SEQ_DIM], generator=generator),
-    )
+    size = _get_size(data, SEQ_DIM)
+    if size is None:
+        return data
+    return permute_along_seq(data=data, permutation=torch.randperm(size, generator=generator))
+
+
+def _get_size(data: NestedTensor, dim: int) -> int | None:
+    r"""Get the size of the dimension ``dim`` shared by all the tensors.
+
+    Returns ``None`` if ``data`` does not contain any tensor.
+
+    Raises:
+        ValueError: if the tensors have different sizes along ``dim``.
+    """
+    sizes = {tensor.shape[dim] for tensor in dfs_iterate(data)}
+    if not sizes:
+        return None
+    if len(sizes) > 1:
+        msg = (
+            f"All the tensors must have the same size along dimension {dim} but got {sorted(sizes)}"
+        )
+        raise ValueError(msg)
+    return sizes.pop()

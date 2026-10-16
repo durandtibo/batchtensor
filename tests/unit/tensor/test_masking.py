@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pytest
 import torch
 from coola.equality import objects_are_equal
 
@@ -44,3 +45,8 @@ def test_lengths_to_mask_empty() -> None:
         lengths_to_mask(torch.tensor([], dtype=torch.long)),
         torch.zeros(0, 0, dtype=torch.bool),
     )
+
+
+def test_lengths_to_mask_not_1d() -> None:
+    with pytest.raises(ValueError, match="1-D"):
+        lengths_to_mask(torch.tensor([[1, 2]]))

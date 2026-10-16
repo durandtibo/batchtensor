@@ -180,4 +180,4 @@ def to_numpy(data: NestedTensor) -> NestedTensor:
         ``batchtensor.nested.from_numpy``: Convert numpy arrays to tensors (shares memory).
         ``batchtensor.nested.as_tensor``: Convert various data types to tensors.
     """
-    return recursive_apply(data, lambda tensor: tensor.numpy())
+    return recursive_apply(data, lambda tensor: tensor.detach().cpu().numpy())

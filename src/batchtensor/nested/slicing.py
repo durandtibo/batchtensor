@@ -13,24 +13,23 @@ __all__ = [
     "split_along_seq",
 ]
 
+from collections.abc import Mapping
 from functools import partial
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from coola.recursive import recursive_apply
 
 from batchtensor import tensor as bt
 
 if TYPE_CHECKING:
-    from collections.abc import Hashable, Sequence
+    from collections.abc import Callable, Sequence
 
     import torch
 
     from batchtensor.nested.types import NestedTensor
 
 
-def chunk_along_batch(
-    data: dict[Hashable, torch.Tensor], chunks: int
-) -> tuple[dict[Hashable, torch.Tensor], ...]:
+def chunk_along_batch(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ...]:
     r"""Split all the tensors into chunks along the batch dimension.
 
     Each chunk is a view of the input tensor.
@@ -63,18 +62,10 @@ def chunk_along_batch(
 
         ```
     """
-    keys = data.keys()
-    return tuple(
-        dict(zip(keys, values, strict=True))
-        for values in zip(
-            *[bt.chunk_along_batch(tensor, chunks) for tensor in data.values()], strict=True
-        )
-    )
+    return _split(data, partial(bt.chunk_along_batch, chunks=chunks))
 
 
-def chunk_along_seq(
-    data: dict[Hashable, torch.Tensor], chunks: int
-) -> tuple[dict[Hashable, torch.Tensor], ...]:
+def chunk_along_seq(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ...]:
     r"""Split all the tensors into chunks along the sequence dimension.
 
     Each chunk is a view of the input tensor.
@@ -107,13 +98,7 @@ def chunk_along_seq(
 
         ```
     """
-    keys = data.keys()
-    return tuple(
-        dict(zip(keys, values, strict=True))
-        for values in zip(
-            *[bt.chunk_along_seq(tensor, chunks) for tensor in data.values()], strict=True
-        )
-    )
+    return _split(data, partial(bt.chunk_along_seq, chunks=chunks))
 
 
 def select_along_batch(data: NestedTensor, index: int) -> NestedTensor:
@@ -274,8 +259,8 @@ def slice_along_seq(
 
 
 def split_along_batch(
-    data: dict[Hashable, torch.Tensor], split_size_or_sections: int | Sequence[int]
-) -> tuple[dict[Hashable, torch.Tensor], ...]:
+    data: NestedTensor, split_size_or_sections: int | Sequence[int]
+) -> tuple[NestedTensor, ...]:
     r"""Split all the tensors into chunks along the batch dimension.
 
     Each chunk is a view of the original tensor.
@@ -309,19 +294,14 @@ def split_along_batch(
 
         ```
     """
-    keys = data.keys()
-    return tuple(
-        dict(zip(keys, values, strict=True))
-        for values in zip(
-            *[bt.split_along_batch(tensor, split_size_or_sections) for tensor in data.values()],
-            strict=True,
-        )
+    return _split(
+        data, partial(bt.split_along_batch, split_size_or_sections=split_size_or_sections)
     )
 
 
 def split_along_seq(
-    data: dict[Hashable, torch.Tensor], split_size_or_sections: int | Sequence[int]
-) -> tuple[dict[Hashable, torch.Tensor], ...]:
+    data: NestedTensor, split_size_or_sections: int | Sequence[int]
+) -> tuple[NestedTensor, ...]:
     r"""Split all the tensors into chunks along the sequence dimension.
 
     Each chunk is a view of the original tensor.
@@ -355,11 +335,28 @@ def split_along_seq(
 
         ```
     """
-    keys = data.keys()
-    return tuple(
-        dict(zip(keys, values, strict=True))
-        for values in zip(
-            *[bt.split_along_seq(tensor, split_size_or_sections) for tensor in data.values()],
-            strict=True,
+    return _split(data, partial(bt.split_along_seq, split_size_or_sections=split_size_or_sections))
+
+
+def _split(
+    data: NestedTensor, fn: Callable[[torch.Tensor], tuple[torch.Tensor, ...]]
+) -> tuple[NestedTensor, ...]:
+    r"""Split every tensor of a nested structure and regroup the pieces.
+
+    Dictionaries, lists and tuples are traversed recursively. The i-th
+    output has the same structure as ``data`` and contains the i-th piece
+    of every tensor. An empty container returns an empty tuple.
+
+    Raises:
+        ValueError: if the tensors are not split into the same number of pieces.
+    """
+    if isinstance(data, Mapping):
+        parts = {key: _split(value, fn) for key, value in data.items()}
+        return tuple(
+            dict(zip(parts, values, strict=True)) for values in zip(*parts.values(), strict=True)
         )
-    )
+    if isinstance(data, (list, tuple)):
+        parts_seq = [_split(value, fn) for value in data]
+        outs = zip(*parts_seq, strict=True)
+        return tuple(list(v) if isinstance(data, list) else tuple(v) for v in outs)
+    return tuple(fn(cast("torch.Tensor", data)))

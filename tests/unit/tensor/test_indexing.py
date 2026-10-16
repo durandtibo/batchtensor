@@ -106,3 +106,8 @@ def test_index_select_along_seq_extra_dims() -> None:
         ),
         torch.tensor([[[4, 5], [0, 1]], [[18, 19], [16, 17]]]),
     )
+
+
+def test_index_select_along_seq_batch_size_mismatch() -> None:
+    with pytest.raises(RuntimeError, match="not compatible"):
+        index_select_along_seq(torch.rand(3, 4), torch.tensor([[0, 1], [1, 2]]))

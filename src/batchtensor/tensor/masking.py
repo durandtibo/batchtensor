@@ -48,6 +48,9 @@ def lengths_to_mask(lengths: torch.Tensor, max_len: int | None = None) -> torch.
     See Also:
         ``pad_along_seq``: Pad tensors along the sequence dimension.
     """
+    if lengths.ndim != 1:
+        msg = f"lengths must be a 1-D tensor but received a tensor with {lengths.ndim} dimensions"
+        raise ValueError(msg)
     if max_len is None:
         max_len = int(lengths.max().item()) if lengths.numel() > 0 else 0
     positions = torch.arange(max_len, device=lengths.device)

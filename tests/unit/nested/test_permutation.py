@@ -322,3 +322,16 @@ def test_shuffle_along_seq_multiple_shuffle() -> None:
     assert not objects_are_equal(
         shuffle_along_seq(data, generator), shuffle_along_seq(data, generator)
     )
+
+
+def test_shuffle_along_batch_empty() -> None:
+    assert shuffle_along_batch({}) == {}
+
+
+def test_shuffle_along_seq_empty() -> None:
+    assert shuffle_along_seq([]) == []
+
+
+def test_shuffle_along_batch_size_mismatch() -> None:
+    with pytest.raises(ValueError, match="same size"):
+        shuffle_along_batch({"a": torch.ones(3, 2), "b": torch.ones(4)})
