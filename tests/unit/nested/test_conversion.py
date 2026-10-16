@@ -227,3 +227,8 @@ def test_to_numpy_nested() -> None:
             "list": [np.array([5, 6, 7, 8, 9], dtype=int)],
         },
     )
+
+
+def test_to_numpy_requires_grad() -> None:
+    out = to_numpy({"a": torch.ones(2, requires_grad=True)})
+    assert out["a"].tolist() == [1.0, 1.0]

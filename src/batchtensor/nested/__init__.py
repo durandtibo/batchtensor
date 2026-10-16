@@ -25,11 +25,11 @@ Function Categories:
         - ``sum_along_batch``, ``mean_along_batch``, ``max_along_batch``, etc.
 
     **Slicing operations**: Extract subsets of data
-        - ``slice_along_batch``, ``select_along_batch``, ``chunk_along_batch``
+        - ``slice_along_batch``, ``select_along_batch``, ``chunk_along_batch``, ``split``
         - ``slice_along_seq``, ``select_along_seq``, ``chunk_along_seq``
 
     **Joining operations**: Combine multiple nested structures
-        - ``cat_along_batch``, ``cat_along_seq``, ``repeat_along_seq``
+        - ``cat_along_batch``, ``cat_along_seq``, ``combine``, ``repeat_along_seq``
         - ``stack_along_batch``, ``stack_along_seq``
 
     **Padding operations**: Pad ragged batches
@@ -120,6 +120,7 @@ __all__ = [
     "chunk_along_seq",
     "clamp",
     "clone",
+    "combine",
     "contiguous",
     "cos",
     "cosh",
@@ -164,6 +165,7 @@ __all__ = [
     "slice_along_seq",
     "sort_along_batch",
     "sort_along_seq",
+    "split",
     "split_along_batch",
     "split_along_seq",
     "stack_along_batch",
@@ -187,6 +189,7 @@ from batchtensor.nested.indexing import index_select_along_batch, index_select_a
 from batchtensor.nested.joining import (
     cat_along_batch,
     cat_along_seq,
+    combine,
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,
@@ -245,6 +248,7 @@ from batchtensor.nested.slicing import (
     select_along_seq,
     slice_along_batch,
     slice_along_seq,
+    split,
     split_along_batch,
     split_along_seq,
 )

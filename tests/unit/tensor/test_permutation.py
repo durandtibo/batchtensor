@@ -147,3 +147,9 @@ def test_shuffle_along_seq_multiple_shuffle() -> None:
     assert not objects_are_equal(
         shuffle_along_seq(tensor, generator), shuffle_along_seq(tensor, generator)
     )
+
+
+def test_permute_along_batch_other_device_permutation() -> None:
+    # The permutation is moved to the tensor device (here the "meta" device).
+    out = permute_along_batch(torch.ones(3, 2, device="meta"), torch.tensor([2, 0, 1]))
+    assert out.shape == (3, 2)

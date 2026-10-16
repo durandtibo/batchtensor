@@ -155,8 +155,14 @@ def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
         ``cat_along_seq``: Concatenate different tensors (not repeating the same).
         ``torch.repeat``: PyTorch's general repeat function for all dimensions.
     """
+    if tensor.dim() <= SEQ_DIM:
+        msg = (
+            f"repeat_along_seq requires a tensor with at least {SEQ_DIM + 1} dimensions "
+            f"but received a tensor with {tensor.dim()} dimension(s)"
+        )
+        raise ValueError(msg)
     sizes = [1] * tensor.dim()
-    sizes[1] = repeats
+    sizes[SEQ_DIM] = repeats
     return tensor.repeat(*sizes)
 
 

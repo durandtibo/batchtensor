@@ -9,6 +9,7 @@ from coola.equality import objects_are_equal
 from batchtensor.nested import (
     cat_along_batch,
     cat_along_seq,
+    combine,
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,
@@ -358,3 +359,38 @@ def test_stack_along_seq_key_mismatch() -> None:
                 {"b": torch.tensor([2, 3])},
             ]
         )
+
+
+def test_cat_along_batch_nested() -> None:
+    data = [
+        {"a": torch.ones(1, 2), "b": [torch.zeros(1), (torch.ones(1, 3),)]},
+        {"a": torch.ones(2, 2), "b": [torch.zeros(2), (torch.ones(2, 3),)]},
+    ]
+    out = cat_along_batch(data)
+    assert out["a"].shape == (3, 2)
+    assert out["b"][0].shape == (3,)
+    assert isinstance(out["b"], list)
+    assert isinstance(out["b"][1], tuple)
+    assert out["b"][1][0].shape == (3, 3)
+
+
+def test_stack_along_seq_list() -> None:
+    out = stack_along_seq([[torch.ones(2, 3)], [torch.ones(2, 3)]])
+    assert out[0].shape == (2, 2, 3)
+
+
+def test_cat_along_batch_length_mismatch() -> None:
+    with pytest.raises(ValueError, match="same length"):
+        cat_along_batch([[torch.ones(1)], [torch.ones(1), torch.ones(1)]])
+
+
+def test_cat_along_batch_defaultdict() -> None:
+    from collections import defaultdict
+
+    d = defaultdict(list, {"a": torch.ones(1)})
+    assert cat_along_batch([d, d])["a"].shape == (2,)
+
+
+def test_combine_custom_fn() -> None:
+    out = combine([{"a": torch.ones(2)}, {"a": torch.ones(2)}], lambda t: sum(t))
+    assert out["a"].tolist() == [2.0, 2.0]

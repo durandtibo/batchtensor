@@ -176,3 +176,8 @@ def test_stack_along_seq_tuple() -> None:
         stack_along_seq((torch.tensor([0, 1]), torch.tensor([2, 3]), torch.tensor([4, 5]))),
         torch.tensor([[0, 2, 4], [1, 3, 5]]),
     )
+
+
+def test_repeat_along_seq_1d_raises() -> None:
+    with pytest.raises(ValueError, match="at least 2 dimensions"):
+        repeat_along_seq(torch.ones(3), repeats=2)

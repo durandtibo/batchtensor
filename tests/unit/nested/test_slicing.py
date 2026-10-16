@@ -10,6 +10,7 @@ from batchtensor.nested import (
     select_along_seq,
     slice_along_batch,
     slice_along_seq,
+    split,
     split_along_batch,
     split_along_seq,
 )
@@ -574,3 +575,27 @@ def test_split_along_seq_split_size_list() -> None:
             {"a": torch.tensor([[4], [9]]), "b": torch.tensor([[0]])},
         ),
     )
+
+
+def test_chunk_along_batch_nested() -> None:
+    data = {"a": torch.arange(4), "b": [torch.arange(4), (torch.arange(4),)]}
+    out = chunk_along_batch(data, chunks=2)
+    assert len(out) == 2
+    assert out[1]["a"].tolist() == [2, 3]
+    assert isinstance(out[0]["b"], list)
+    assert out[1]["b"][1][0].tolist() == [2, 3]
+
+
+def test_split_along_seq_list() -> None:
+    out = split_along_seq([torch.ones(2, 4), torch.ones(2, 4)], 2)
+    assert len(out) == 2
+    assert out[0][1].shape == (2, 2)
+
+
+def test_split_along_batch_empty() -> None:
+    assert split_along_batch({}, 2) == ()
+
+
+def test_split_custom_fn() -> None:
+    out = split({"a": torch.arange(4)}, lambda t: t.chunk(2))
+    assert objects_are_equal(out, ({"a": torch.tensor([0, 1])}, {"a": torch.tensor([2, 3])}))

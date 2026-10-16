@@ -5,44 +5,29 @@ from __future__ import annotations
 __all__ = [
     "cat_along_batch",
     "cat_along_seq",
+    "combine",
     "repeat_along_seq",
     "stack_along_batch",
     "stack_along_seq",
 ]
 
+from collections.abc import Mapping
 from functools import partial
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from coola.recursive import recursive_apply
 
 from batchtensor import tensor as bt
 
 if TYPE_CHECKING:
-    from collections.abc import Hashable, Sequence
+    from collections.abc import Callable, Hashable, Sequence
 
     import torch
 
     from batchtensor.nested.types import NestedTensor
 
 
-def _check_same_keys(data: Sequence[dict[Hashable, torch.Tensor]]) -> None:
-    r"""Validate that all the dictionaries in ``data`` have the same
-    keys.
-
-    Raises:
-        KeyError: if the dictionaries do not all have the same keys.
-    """
-    keys = set(data[0])
-    for i, item in enumerate(data[1:], start=1):
-        if set(item) != keys:
-            msg = (
-                f"the dictionaries must have the same keys but item 0 has keys {list(keys)} "
-                f"and item {i} has keys {list(item)}"
-            )
-            raise KeyError(msg)
-
-
-def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable, torch.Tensor]:
+def cat_along_batch(data: Sequence[NestedTensor]) -> NestedTensor:
     r"""Concatenate the given tensors in the batch dimension.
 
     All tensors must either have the same data type and shape (except
@@ -82,14 +67,10 @@ def cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
 
         ```
     """
-    if not data:
-        return {}
-    _check_same_keys(data)
-    item = data[0]
-    return type(item)({key: bt.cat_along_batch([d[key] for d in data]) for key in item})
+    return combine(data, bt.cat_along_batch)
 
 
-def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable, torch.Tensor]:
+def cat_along_seq(data: Sequence[NestedTensor]) -> NestedTensor:
     r"""Concatenate the given tensors in the sequence dimension.
 
     All tensors must either have the same data type and shape (except
@@ -129,11 +110,7 @@ def cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable
 
         ```
     """
-    if not data:
-        return {}
-    _check_same_keys(data)
-    item = data[0]
-    return type(item)({key: bt.cat_along_seq([d[key] for d in data]) for key in item})
+    return combine(data, bt.cat_along_seq)
 
 
 def repeat_along_seq(data: NestedTensor, repeats: int) -> NestedTensor:
@@ -170,9 +147,7 @@ def repeat_along_seq(data: NestedTensor, repeats: int) -> NestedTensor:
     return recursive_apply(data, partial(bt.repeat_along_seq, repeats=repeats))
 
 
-def stack_along_batch(
-    data: Sequence[dict[Hashable, torch.Tensor]],
-) -> dict[Hashable, torch.Tensor]:
+def stack_along_batch(data: Sequence[NestedTensor]) -> NestedTensor:
     r"""Stack the given samples along a new batch dimension.
 
     This is the nested equivalent of a collate function: given a
@@ -208,14 +183,10 @@ def stack_along_batch(
         ``cat_along_batch``: Concatenate along an existing batch dimension.
         ``stack_along_seq``: Stack along a new sequence dimension instead.
     """
-    if not data:
-        return {}
-    _check_same_keys(data)
-    item = data[0]
-    return type(item)({key: bt.stack_along_batch([d[key] for d in data]) for key in item})
+    return combine(data, bt.stack_along_batch)
 
 
-def stack_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashable, torch.Tensor]:
+def stack_along_seq(data: Sequence[NestedTensor]) -> NestedTensor:
     r"""Stack the given samples along a new sequence dimension.
 
     Combines a sequence of per-step samples (dictionaries of tensors
@@ -251,8 +222,63 @@ def stack_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> dict[Hashab
         ``cat_along_seq``: Concatenate along an existing sequence dimension.
         ``stack_along_batch``: Stack along a new batch dimension instead.
     """
+    return combine(data, bt.stack_along_seq)
+
+
+def combine(
+    data: Sequence[NestedTensor], fn: Callable[[list[torch.Tensor]], torch.Tensor]
+) -> NestedTensor:
+    r"""Combine a sequence of nested structures with the same structure.
+
+    Dictionaries, lists and tuples are traversed recursively and ``fn`` is
+    applied to the list of tensors found at each leaf position. An empty
+    sequence returns an empty dictionary.
+
+    Args:
+        data: The sequence of nested structures to combine. All the
+            structures must have the same keys/lengths.
+        fn: The function that combines a list of tensors into a single
+            tensor, e.g. ``torch.cat`` or ``torch.stack``.
+
+    Returns:
+        A nested structure with the same structure as the items of ``data``.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import combine
+        >>> data = [{"a": torch.ones(2, 3)}, {"a": torch.zeros(1, 3)}]
+        >>> out = combine(data, lambda tensors: torch.cat(tensors, dim=0))
+        >>> out["a"].shape
+        torch.Size([3, 3])
+
+        ```
+
+    Raises:
+        KeyError: if the dictionaries do not have the same keys.
+        ValueError: if the lists/tuples do not have the same length, or if
+            the structures do not match.
+    """
     if not data:
         return {}
-    _check_same_keys(data)
-    item = data[0]
-    return type(item)({key: bt.stack_along_seq([d[key] for d in data]) for key in item})
+    first = data[0]
+    if isinstance(first, Mapping):
+        keys = set(first)
+        for i, item in enumerate(data[1:], start=1):
+            if not isinstance(item, Mapping) or set(item) != keys:
+                other = list(item) if isinstance(item, Mapping) else type(item).__name__
+                msg = (
+                    "the dictionaries must have the same keys but item 0 has keys "
+                    f"{list(keys)} and item {i} has keys {other}"
+                )
+                raise KeyError(msg)
+        maps = cast("Sequence[Mapping[Hashable, NestedTensor]]", data)
+        return {key: combine([d[key] for d in maps], fn) for key in first}
+    if isinstance(first, (list, tuple)):
+        for i, item in enumerate(data[1:], start=1):
+            if not isinstance(item, (list, tuple)) or len(item) != len(first):
+                msg = f"the sequences must have the same length but item {i} does not match item 0"
+                raise ValueError(msg)
+        out = [combine([d[j] for d in data], fn) for j in range(len(first))]
+        return out if isinstance(first, list) else tuple(out)
+    return fn(cast("list[torch.Tensor]", list(data)))

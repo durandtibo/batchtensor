@@ -67,13 +67,13 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
         ``permute_along_seq``: Permute the sequence dimension instead.
         ``index_select_along_batch``: Select specific indices (can duplicate or omit items).
     """
-    if permutation.shape[0] != tensor.shape[0]:
+    if permutation.shape[0] != tensor.shape[BATCH_DIM]:
         msg = (
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
             f"({tensor.shape})"
         )
         raise RuntimeError(msg)
-    return tensor.index_select(dim=BATCH_DIM, index=permutation)
+    return tensor.index_select(dim=BATCH_DIM, index=permutation.to(tensor.device))
 
 
 def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.Tensor:
@@ -108,13 +108,13 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
 
         ```
     """
-    if permutation.shape[0] != tensor.shape[1]:
+    if permutation.shape[0] != tensor.shape[SEQ_DIM]:
         msg = (
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
             f"({tensor.shape})"
         )
         raise RuntimeError(msg)
-    return tensor.index_select(dim=SEQ_DIM, index=permutation)
+    return tensor.index_select(dim=SEQ_DIM, index=permutation.to(tensor.device))
 
 
 def shuffle_along_batch(
