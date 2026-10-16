@@ -65,8 +65,10 @@ def chunk_along_batch(
     """
     keys = data.keys()
     return tuple(
-        dict(zip(keys, values))
-        for values in zip(*[bt.chunk_along_batch(tensor, chunks) for tensor in data.values()])
+        dict(zip(keys, values, strict=True))
+        for values in zip(
+            *[bt.chunk_along_batch(tensor, chunks) for tensor in data.values()], strict=True
+        )
     )
 
 
@@ -107,8 +109,10 @@ def chunk_along_seq(
     """
     keys = data.keys()
     return tuple(
-        dict(zip(keys, values))
-        for values in zip(*[bt.chunk_along_seq(tensor, chunks) for tensor in data.values()])
+        dict(zip(keys, values, strict=True))
+        for values in zip(
+            *[bt.chunk_along_seq(tensor, chunks) for tensor in data.values()], strict=True
+        )
     )
 
 
@@ -307,9 +311,10 @@ def split_along_batch(
     """
     keys = data.keys()
     return tuple(
-        dict(zip(keys, values))
+        dict(zip(keys, values, strict=True))
         for values in zip(
-            *[bt.split_along_batch(tensor, split_size_or_sections) for tensor in data.values()]
+            *[bt.split_along_batch(tensor, split_size_or_sections) for tensor in data.values()],
+            strict=True,
         )
     )
 
@@ -352,8 +357,9 @@ def split_along_seq(
     """
     keys = data.keys()
     return tuple(
-        dict(zip(keys, values))
+        dict(zip(keys, values, strict=True))
         for values in zip(
-            *[bt.split_along_seq(tensor, split_size_or_sections) for tensor in data.values()]
+            *[bt.split_along_seq(tensor, split_size_or_sections) for tensor in data.values()],
+            strict=True,
         )
     )

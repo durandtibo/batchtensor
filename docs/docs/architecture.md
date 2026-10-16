@@ -197,8 +197,10 @@ def chunk_along_batch(
     """
     keys = data.keys()
     return tuple(
-        dict(zip(keys, values))
-        for values in zip(*[bt.chunk_along_batch(tensor, chunks) for tensor in data.values()])
+        dict(zip(keys, values, strict=True))
+        for values in zip(
+            *[bt.chunk_along_batch(tensor, chunks) for tensor in data.values()], strict=True
+        )
     )
 ```
 
