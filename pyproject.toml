@@ -282,8 +282,5 @@ known-first-party = ["src"]
 [tool.ruff.lint.flake8-import-conventions.aliases]
 numpy = "np"
 
-[tool.ty.environment]
-python-version = "3.11"
-
 [tool.ty.src]
 include = ["src"]
