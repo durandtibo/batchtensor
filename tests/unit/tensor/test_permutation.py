@@ -34,7 +34,7 @@ def test_permute_along_batch(dtype: torch.dtype) -> None:
 
 def test_permute_along_batch_incorrect_shape() -> None:
     with pytest.raises(
-        RuntimeError,
+        ValueError,
         match=r"permutation shape \(.*\) is not compatible with tensor shape \(.*\)",
     ):
         permute_along_batch(
@@ -61,7 +61,7 @@ def test_permute_along_seq(dtype: torch.dtype) -> None:
 
 def test_permute_along_seq_incorrect_shape() -> None:
     with pytest.raises(
-        RuntimeError,
+        ValueError,
         match=r"permutation shape \(.*\) is not compatible with tensor shape \(.*\)",
     ):
         permute_along_seq(
