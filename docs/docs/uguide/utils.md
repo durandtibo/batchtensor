@@ -140,7 +140,6 @@ Create generators for different devices:
 >>> # GPU generator (if CUDA is available)
 >>> if torch.cuda.is_available():  # doctest: +SKIP
 ...     gpu_gen = get_torch_generator(42, device="cuda")
-...
 
 ```
 

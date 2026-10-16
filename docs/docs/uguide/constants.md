@@ -114,11 +114,8 @@ Use constants to verify that your tensors have the expected shape:
 ...     """Validate that a tensor has the expected batch size."""
 ...     actual_batch_size = tensor.size(BATCH_DIM)
 ...     if actual_batch_size != expected_batch_size:
-...         raise ValueError(
-...             f"Expected batch size {expected_batch_size}, " f"got {actual_batch_size}"
-...         )
+...         raise ValueError(f"Expected batch size {expected_batch_size}, got {actual_batch_size}")
 ...     return True
-...
 >>> tensor = torch.randn(32, 10)  # batch_size=32, features=10
 >>> validate_batch_tensor(tensor, expected_batch_size=32)
 True
