@@ -25,6 +25,7 @@ nav:
   - Home: index.md
   - get_started.md
   - Architecture: architecture.md
+  - Design principles: design_principles.md
   - User Guide:
       - Tensor Operations: uguide/tensor.md
       - Nested Operations: uguide/nested.md

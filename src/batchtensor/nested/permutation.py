@@ -132,7 +132,14 @@ def shuffle_along_batch(
     size = _get_size(data, BATCH_DIM)
     if size is None:
         return data
-    return permute_along_batch(data=data, permutation=torch.randperm(size, generator=generator))
+    return permute_along_batch(
+        data=data,
+        permutation=torch.randperm(
+            size,
+            generator=generator,
+            device=generator.device if generator is not None else None,
+        ),
+    )
 
 
 def shuffle_along_seq(data: NestedTensor, generator: torch.Generator | None = None) -> NestedTensor:
@@ -168,7 +175,14 @@ def shuffle_along_seq(data: NestedTensor, generator: torch.Generator | None = No
     size = _get_size(data, SEQ_DIM)
     if size is None:
         return data
-    return permute_along_seq(data=data, permutation=torch.randperm(size, generator=generator))
+    return permute_along_seq(
+        data=data,
+        permutation=torch.randperm(
+            size,
+            generator=generator,
+            device=generator.device if generator is not None else None,
+        ),
+    )
 
 
 def _get_size(data: NestedTensor, dim: int) -> int | None:
