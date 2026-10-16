@@ -1374,3 +1374,15 @@ def test_sum_along_seq_nested() -> None:
             "c": [torch.tensor([35])],
         },
     )
+
+
+def test_max_along_batch_keeps_namedtuple() -> None:
+    out = max_along_batch({"a": torch.rand(3, 2)})
+    assert isinstance(out["a"], torch.return_types.max)
+
+
+def test_sort_along_seq_keeps_namedtuple() -> None:
+    from batchtensor.nested import sort_along_seq
+
+    out = sort_along_seq({"a": torch.rand(3, 4)})
+    assert isinstance(out["a"], torch.return_types.sort)
