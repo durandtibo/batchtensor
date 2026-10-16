@@ -25,7 +25,7 @@ Function Categories:
         - ``sum_along_batch``, ``mean_along_batch``, ``max_along_batch``, etc.
 
     **Slicing operations**: Extract subsets of data
-        - ``slice_along_batch``, ``select_along_batch``, ``chunk_along_batch``
+        - ``slice_along_batch``, ``select_along_batch``, ``chunk_along_batch``, ``split``
         - ``slice_along_seq``, ``select_along_seq``, ``chunk_along_seq``
 
     **Joining operations**: Combine multiple nested structures
@@ -165,6 +165,7 @@ __all__ = [
     "slice_along_seq",
     "sort_along_batch",
     "sort_along_seq",
+    "split",
     "split_along_batch",
     "split_along_seq",
     "stack_along_batch",
@@ -247,6 +248,7 @@ from batchtensor.nested.slicing import (
     select_along_seq,
     slice_along_batch,
     slice_along_seq,
+    split,
     split_along_batch,
     split_along_seq,
 )

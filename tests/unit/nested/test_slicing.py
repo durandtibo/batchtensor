@@ -10,6 +10,7 @@ from batchtensor.nested import (
     select_along_seq,
     slice_along_batch,
     slice_along_seq,
+    split,
     split_along_batch,
     split_along_seq,
 )
@@ -593,3 +594,8 @@ def test_split_along_seq_list() -> None:
 
 def test_split_along_batch_empty() -> None:
     assert split_along_batch({}, 2) == ()
+
+
+def test_split_custom_fn() -> None:
+    out = split({"a": torch.arange(4)}, lambda t: t.chunk(2))
+    assert objects_are_equal(out, ({"a": torch.tensor([0, 1])}, {"a": torch.tensor([2, 3])}))
