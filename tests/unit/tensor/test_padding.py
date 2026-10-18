@@ -75,3 +75,33 @@ def test_pad_along_seq_3d() -> None:
 def test_pad_along_seq_negative_pad_size() -> None:
     with pytest.raises(ValueError, match="pad_size must be a non-negative integer"):
         pad_along_seq(torch.tensor([[0, 1], [2, 3]]), pad_size=-1)
+
+
+def test_pad_along_batch_3d() -> None:
+    out = pad_along_batch(torch.ones(2, 3, 4), pad_size=2, value=5.0)
+    assert out.shape == (4, 3, 4)
+    assert out[:2].eq(1).all()
+    assert out[2:].eq(5).all()
+
+
+def test_pad_along_seq_3d_values() -> None:
+    out = pad_along_seq(torch.ones(2, 3, 4), pad_size=2, value=5.0)
+    assert out[:, :3].eq(1).all()
+    assert out[:, 3:].eq(5).all()
+
+
+@pytest.mark.parametrize("dtype", [torch.float32, torch.int64, torch.bool])
+def test_pad_along_seq_dtype_preserved(dtype: torch.dtype) -> None:
+    out = pad_along_seq(torch.ones(2, 3, dtype=dtype), pad_size=1)
+    assert out.dtype == dtype
+
+
+def test_pad_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1], [2, 3]])
+    pad_along_seq(tensor, pad_size=2)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1], [2, 3]]))
+
+
+def test_pad_along_batch_empty_batch() -> None:
+    out = pad_along_batch(torch.zeros(0, 3), pad_size=2, value=1.0)
+    assert objects_are_equal(out, torch.ones(2, 3))
