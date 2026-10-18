@@ -10,7 +10,6 @@ __all__ = [
     "cumsum_along_seq",
 ]
 
-from functools import partial
 from typing import TYPE_CHECKING
 
 from coola.recursive import recursive_apply
@@ -51,7 +50,7 @@ def cumprod_along_batch(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, partial(bt.cumprod_along_batch))
+    return recursive_apply(data, bt.cumprod_along_batch)
 
 
 def cumprod_along_seq(data: NestedTensor) -> NestedTensor:
@@ -85,7 +84,7 @@ def cumprod_along_seq(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, partial(bt.cumprod_along_seq))
+    return recursive_apply(data, bt.cumprod_along_seq)
 
 
 def cumsum_along_batch(data: NestedTensor) -> NestedTensor:
@@ -118,7 +117,7 @@ def cumsum_along_batch(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, partial(bt.cumsum_along_batch))
+    return recursive_apply(data, bt.cumsum_along_batch)
 
 
 def cumsum_along_seq(data: NestedTensor) -> NestedTensor:
@@ -151,4 +150,4 @@ def cumsum_along_seq(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, partial(bt.cumsum_along_seq))
+    return recursive_apply(data, bt.cumsum_along_seq)
