@@ -3,14 +3,20 @@ r"""Implements reduction functions for tensors."""
 from __future__ import annotations
 
 __all__ = [
+    "all_along_batch",
+    "all_along_seq",
     "amax_along_batch",
     "amax_along_seq",
     "amin_along_batch",
     "amin_along_seq",
+    "any_along_batch",
+    "any_along_seq",
     "argmax_along_batch",
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "logsumexp_along_batch",
+    "logsumexp_along_seq",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -21,8 +27,12 @@ __all__ = [
     "min_along_seq",
     "prod_along_batch",
     "prod_along_seq",
+    "std_along_batch",
+    "std_along_seq",
     "sum_along_batch",
     "sum_along_seq",
+    "var_along_batch",
+    "var_along_seq",
 ]
 
 
@@ -31,7 +41,7 @@ import torch
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 
 
-def amax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def amax_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
@@ -62,7 +72,7 @@ def amax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     return torch.amax(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def amax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def amax_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the maximum of all elements along the sequence dimension.
 
     Note:
@@ -93,7 +103,7 @@ def amax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     return torch.amax(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def amin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def amin_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the minimum of all elements along the batch dimension.
 
     Note:
@@ -124,7 +134,7 @@ def amin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     return torch.amin(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def amin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def amin_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the minimum of all elements along the sequence dimension.
 
     Note:
@@ -155,7 +165,7 @@ def amin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     return torch.amin(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def argmax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def argmax_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the indices of the maximum value of all elements along the
     batch dimension.
 
@@ -188,7 +198,7 @@ def argmax_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Ten
     return torch.argmax(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def argmax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def argmax_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the indices of the maximum value of all elements along the
     sequence dimension.
 
@@ -221,7 +231,7 @@ def argmax_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     return torch.argmax(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def argmin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def argmin_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the indices of the minimum value of all elements along the
     batch dimension.
 
@@ -254,7 +264,7 @@ def argmin_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Ten
     return torch.argmin(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def argmin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def argmin_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the indices of the minimum value of all elements along the
     sequence dimension.
 
@@ -287,7 +297,7 @@ def argmin_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     return torch.argmin(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.max:
+def max_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.return_types.max:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
@@ -324,7 +334,7 @@ def max_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
     return torch.max(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def max_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.max:
+def max_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.return_types.max:
     r"""Return the maximum of all elements along the sequence dimension.
 
     Note:
@@ -361,7 +371,7 @@ def max_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_t
     return torch.max(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def mean_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def mean_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the mean of all elements along the batch dimension.
 
     Note:
@@ -392,7 +402,7 @@ def mean_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     return torch.mean(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def mean_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def mean_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the mean of all elements along the sequence dimension.
 
     Note:
@@ -423,7 +433,7 @@ def mean_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     return torch.mean(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def median_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.median:
+def median_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.return_types.median:
     r"""Return the median of all elements along the batch dimension.
 
     Note:
@@ -460,7 +470,7 @@ def median_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.ret
     return torch.median(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def median_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.median:
+def median_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.return_types.median:
     r"""Return the median of all elements along the sequence dimension.
 
     Note:
@@ -497,7 +507,7 @@ def median_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.retur
     return torch.median(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def min_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.min:
+def min_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.return_types.min:
     r"""Return the minimum of all elements along the batch dimension.
 
     Note:
@@ -534,7 +544,7 @@ def min_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.return
     return torch.min(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def min_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_types.min:
+def min_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.return_types.min:
     r"""Return the minimum of all elements along the sequence dimension.
 
     Note:
@@ -571,7 +581,7 @@ def min_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.return_t
     return torch.min(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def prod_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def prod_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the product of all elements along the batch dimension.
 
     Note:
@@ -602,7 +612,7 @@ def prod_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tenso
     return torch.prod(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def prod_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def prod_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the product of all elements along the sequence dimension.
 
     Note:
@@ -633,7 +643,7 @@ def prod_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     return torch.prod(tensor, dim=SEQ_DIM, keepdim=keepdim)
 
 
-def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def sum_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the sum of all elements along the batch dimension.
 
     Note:
@@ -664,7 +674,7 @@ def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor
     return torch.sum(tensor, dim=BATCH_DIM, keepdim=keepdim)
 
 
-def sum_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
+def sum_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     r"""Return the sum of all elements along the sequence dimension.
 
     Note:
@@ -693,3 +703,335 @@ def sum_along_seq(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
         ```
     """
     return torch.sum(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def std_along_batch(
+    tensor: torch.Tensor, *, correction: int = 1, keepdim: bool = False
+) -> torch.Tensor:
+    r"""Return the standard deviation along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the standard deviation along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import std_along_batch
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = std_along_batch(tensor)
+        >>> out
+        tensor([4.0000, 4.1633, 1.5275, 2.6458])
+        >>> out = std_along_batch(tensor, keepdim=True)
+        >>> out
+        tensor([[4.0000, 4.1633, 1.5275, 2.6458]])
+
+        ```
+    """
+    return torch.std(tensor, dim=BATCH_DIM, correction=correction, keepdim=keepdim)
+
+
+def std_along_seq(
+    tensor: torch.Tensor, *, correction: int = 1, keepdim: bool = False
+) -> torch.Tensor:
+    r"""Return the standard deviation along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the standard deviation along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import std_along_seq
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = std_along_seq(tensor)
+        >>> out
+        tensor([1.2910, 2.1602, 3.5119])
+        >>> out = std_along_seq(tensor, keepdim=True)
+        >>> out
+        tensor([[1.2910],
+                [2.1602],
+                [3.5119]])
+
+        ```
+    """
+    return torch.std(tensor, dim=SEQ_DIM, correction=correction, keepdim=keepdim)
+
+
+def var_along_batch(
+    tensor: torch.Tensor, *, correction: int = 1, keepdim: bool = False
+) -> torch.Tensor:
+    r"""Return the variance along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the variance along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import var_along_batch
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = var_along_batch(tensor)
+        >>> out
+        tensor([16.0000, 17.3333,  2.3333,  7.0000])
+        >>> out = var_along_batch(tensor, keepdim=True)
+        >>> out
+        tensor([[16.0000, 17.3333,  2.3333,  7.0000]])
+
+        ```
+    """
+    return torch.var(tensor, dim=BATCH_DIM, correction=correction, keepdim=keepdim)
+
+
+def var_along_seq(
+    tensor: torch.Tensor, *, correction: int = 1, keepdim: bool = False
+) -> torch.Tensor:
+    r"""Return the variance along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the variance along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import var_along_seq
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = var_along_seq(tensor)
+        >>> out
+        tensor([ 1.6667,  4.6667, 12.3333])
+        >>> out = var_along_seq(tensor, keepdim=True)
+        >>> out
+        tensor([[ 1.6667],
+                [ 4.6667],
+                [12.3333]])
+
+        ```
+    """
+    return torch.var(tensor, dim=SEQ_DIM, correction=correction, keepdim=keepdim)
+
+
+def any_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return whether any element is true along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with whether any element is true along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import any_along_batch
+        >>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+        >>> out = any_along_batch(tensor)
+        >>> out
+        tensor([True, True, True, True])
+        >>> out = any_along_batch(tensor, keepdim=True)
+        >>> out
+        tensor([[True, True, True, True]])
+
+        ```
+    """
+    return torch.any(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def any_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return whether any element is true along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with whether any element is true along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import any_along_seq
+        >>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+        >>> out = any_along_seq(tensor)
+        >>> out
+        tensor([True, True, True])
+        >>> out = any_along_seq(tensor, keepdim=True)
+        >>> out
+        tensor([[True],
+                [True],
+                [True]])
+
+        ```
+    """
+    return torch.any(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def all_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return whether all the elements are true along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with whether all the elements are true along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import all_along_batch
+        >>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+        >>> out = all_along_batch(tensor)
+        >>> out
+        tensor([False, False,  True, False])
+        >>> out = all_along_batch(tensor, keepdim=True)
+        >>> out
+        tensor([[False, False,  True, False]])
+
+        ```
+    """
+    return torch.all(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def all_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return whether all the elements are true along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with whether all the elements are true along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import all_along_seq
+        >>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+        >>> out = all_along_seq(tensor)
+        >>> out
+        tensor([False,  True, False])
+        >>> out = all_along_seq(tensor, keepdim=True)
+        >>> out
+        tensor([[False],
+                [ True],
+                [False]])
+
+        ```
+    """
+    return torch.all(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def logsumexp_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return the log of the sum of exponentials along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the log of the sum of exponentials along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import logsumexp_along_batch
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = logsumexp_along_batch(tensor)
+        >>> out
+        tensor([8.0185, 9.1272, 5.1698, 6.0247])
+        >>> out = logsumexp_along_batch(tensor, keepdim=True)
+        >>> out
+        tensor([[8.0185, 9.1272, 5.1698, 6.0247]])
+
+        ```
+    """
+    return torch.logsumexp(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def logsumexp_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return the log of the sum of exponentials along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the log of the sum of exponentials along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import logsumexp_along_seq
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = logsumexp_along_seq(tensor)
+        >>> out
+        tensor([3.4402, 9.0722, 8.3157])
+        >>> out = logsumexp_along_seq(tensor, keepdim=True)
+        >>> out
+        tensor([[3.4402],
+                [9.0722],
+                [8.3157]])
+
+        ```
+    """
+    return torch.logsumexp(tensor, dim=SEQ_DIM, keepdim=keepdim)

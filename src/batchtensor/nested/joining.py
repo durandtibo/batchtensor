@@ -5,6 +5,7 @@ from __future__ import annotations
 __all__ = [
     "cat_along_batch",
     "cat_along_seq",
+    "repeat_along_batch",
     "repeat_along_seq",
     "stack_along_batch",
     "stack_along_seq",
@@ -106,6 +107,39 @@ def cat_along_seq(data: Sequence[T]) -> T:
         ```
     """
     return combine_tensors(data, bt.cat_along_seq)
+
+
+def repeat_along_batch(data: T, repeats: int) -> T:
+    r"""Repeat all the tensors along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        repeats: The number of times to repeat the data along the batch
+            dimension.
+
+    Returns:
+        The data with repeated tensors along the batch dimension. The
+            output data has the same structure as the input data.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import repeat_along_batch
+        >>> data = {"a": torch.tensor([[0, 1], [2, 3]]), "b": torch.tensor([4, 5])}
+        >>> out = repeat_along_batch(data, 2)
+        >>> out
+        {'a': tensor([[0, 1], [2, 3], [0, 1], [2, 3]]), 'b': tensor([4, 5, 4, 5])}
+
+        ```
+
+    See Also:
+        ``repeat_along_seq``: Repeat along the sequence dimension.
+    """
+    return apply_to_tensors(data, partial(bt.repeat_along_batch, repeats=repeats))
 
 
 def repeat_along_seq(data: T, repeats: int) -> T:

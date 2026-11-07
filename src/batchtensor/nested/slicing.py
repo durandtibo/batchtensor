@@ -168,7 +168,7 @@ def select_along_seq(data: T, index: int) -> T:
     return apply_to_tensors(data, partial(bt.select_along_seq, index=index))
 
 
-def slice_along_batch(data: T, start: int = 0, stop: int | None = None, step: int = 1) -> T:
+def slice_along_batch(data: T, start: int = 0, stop: int | None = None, *, step: int = 1) -> T:
     r"""Slice all the tensors along the batch dimension.
 
     Note:
@@ -209,7 +209,7 @@ def slice_along_batch(data: T, start: int = 0, stop: int | None = None, step: in
     return apply_to_tensors(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
 
 
-def slice_along_seq(data: T, start: int = 0, stop: int | None = None, step: int = 1) -> T:
+def slice_along_seq(data: T, start: int = 0, stop: int | None = None, *, step: int = 1) -> T:
     r"""Slice all the tensors along the sequence dimension.
 
     Note:

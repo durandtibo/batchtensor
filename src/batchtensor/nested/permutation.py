@@ -8,13 +8,14 @@ __all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_batch", "s
 from functools import partial
 from typing import TYPE_CHECKING
 
-import torch
-
 from batchtensor import tensor
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
+from batchtensor.utils.seed import random_permutation
 from batchtensor.utils.structure import apply_to_tensors, get_size
 
 if TYPE_CHECKING:
+    import torch
+
     from batchtensor.nested.types import T
 
 
@@ -37,8 +38,8 @@ def permute_along_batch(data: T, permutation: torch.Tensor) -> T:
             The output data has the same structure as the input data.
 
     Raises:
-        ValueError: if the shape of the permutation does not match
-            the batch dimension of the tensor.
+        ValueError: if the permutation is not a 1-D tensor, or if its
+            shape does not match the batch dimension of the tensor.
 
     Example:
         ```pycon
@@ -76,8 +77,8 @@ def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
             The output data has the same structure as the input data.
 
     Raises:
-        ValueError: if the shape of the permutation does not match
-            the sequence dimension of the tensor.
+        ValueError: if the permutation is not a 1-D tensor, or if its
+            shape does not match the sequence dimension of the tensor.
 
     Example:
         ```pycon
@@ -96,7 +97,7 @@ def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
     return apply_to_tensors(data, partial(tensor.permute_along_seq, permutation=permutation))
 
 
-def shuffle_along_batch(data: T, generator: torch.Generator | None = None) -> T:
+def shuffle_along_batch(data: T, *, generator: torch.Generator | int | None = None) -> T:
     r"""Shuffle all the tensors along the batch dimension.
 
     Note:
@@ -106,7 +107,8 @@ def shuffle_along_batch(data: T, generator: torch.Generator | None = None) -> T:
 
     Args:
         data: The input data. Each item must be a tensor.
-        generator: An optional random number generator.
+        generator: An optional random number generator or random seed.
+            All the tensors use the same permutation.
 
     Returns:
         The data with shuffled tensors along the batch dimension.
@@ -129,15 +131,11 @@ def shuffle_along_batch(data: T, generator: torch.Generator | None = None) -> T:
     size = get_size(data, BATCH_DIM)
     return permute_along_batch(
         data=data,
-        permutation=torch.randperm(
-            size,
-            generator=generator,
-            device=generator.device if generator is not None else None,
-        ),
+        permutation=random_permutation(size, generator=generator),
     )
 
 
-def shuffle_along_seq(data: T, generator: torch.Generator | None = None) -> T:
+def shuffle_along_seq(data: T, *, generator: torch.Generator | int | None = None) -> T:
     r"""Shuffle all the tensors along the sequence dimension.
 
     Note:
@@ -147,7 +145,8 @@ def shuffle_along_seq(data: T, generator: torch.Generator | None = None) -> T:
 
     Args:
         data: The input data. Each item must be a tensor.
-        generator: An optional random number generator.
+        generator: An optional random number generator or random seed.
+            All the tensors use the same permutation.
 
     Returns:
         The data with shuffled tensors along the sequence dimension.
@@ -170,9 +169,145 @@ def shuffle_along_seq(data: T, generator: torch.Generator | None = None) -> T:
     size = get_size(data, SEQ_DIM)
     return permute_along_seq(
         data=data,
-        permutation=torch.randperm(
-            size,
-            generator=generator,
-            device=generator.device if generator is not None else None,
-        ),
+        permutation=random_permutation(size, generator=generator),
     )
+
+
+def flip_along_batch(data: T) -> T:
+    r"""Return the tensor with the order of the elements reversed along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+
+    Returns:
+        The data where each tensor is replaced by the tensor with the order of the elements reversed along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import flip_along_batch
+        >>> data = {"a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), "b": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])}
+        >>> out = flip_along_batch(data)
+        >>> out
+        {'a': tensor([[8, 7, 2, 1],
+                [4, 9, 5, 6],
+                [0, 1, 3, 2]]), 'b': tensor([[8, 7, 2, 1],
+                [4, 9, 5, 6],
+                [0, 1, 3, 2]])}
+
+        ```
+    """
+    return apply_to_tensors(data, tensor.flip_along_batch)
+
+
+def flip_along_seq(data: T) -> T:
+    r"""Return the tensor with the order of the elements reversed along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+
+    Returns:
+        The data where each tensor is replaced by the tensor with the order of the elements reversed along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import flip_along_seq
+        >>> data = {"a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), "b": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])}
+        >>> out = flip_along_seq(data)
+        >>> out
+        {'a': tensor([[2, 3, 1, 0],
+                [6, 5, 9, 4],
+                [1, 2, 7, 8]]), 'b': tensor([[2, 3, 1, 0],
+                [6, 5, 9, 4],
+                [1, 2, 7, 8]])}
+
+        ```
+    """
+    return apply_to_tensors(data, tensor.flip_along_seq)
+
+
+def roll_along_batch(data: T, shifts: int) -> T:
+    r"""Return the tensor with the elements rolled along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        shifts: The number of places by which the elements are shifted. The elements shifted beyond the last position are re-introduced at the first position.
+
+    Returns:
+        The data where each tensor is replaced by the tensor with the elements rolled along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import roll_along_batch
+        >>> data = {"a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), "b": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])}
+        >>> out = roll_along_batch(data, 1)
+        >>> out
+        {'a': tensor([[8, 7, 2, 1],
+                [0, 1, 3, 2],
+                [4, 9, 5, 6]]), 'b': tensor([[8, 7, 2, 1],
+                [0, 1, 3, 2],
+                [4, 9, 5, 6]])}
+        >>> out = roll_along_batch(data, -1)
+        >>> out
+        {'a': tensor([[4, 9, 5, 6],
+                [8, 7, 2, 1],
+                [0, 1, 3, 2]]), 'b': tensor([[4, 9, 5, 6],
+                [8, 7, 2, 1],
+                [0, 1, 3, 2]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(tensor.roll_along_batch, shifts=shifts))
+
+
+def roll_along_seq(data: T, shifts: int) -> T:
+    r"""Return the tensor with the elements rolled along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        shifts: The number of places by which the elements are shifted. The elements shifted beyond the last position are re-introduced at the first position.
+
+    Returns:
+        The data where each tensor is replaced by the tensor with the elements rolled along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import roll_along_seq
+        >>> data = {"a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), "b": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])}
+        >>> out = roll_along_seq(data, 1)
+        >>> out
+        {'a': tensor([[2, 0, 1, 3],
+                [6, 4, 9, 5],
+                [1, 8, 7, 2]]), 'b': tensor([[2, 0, 1, 3],
+                [6, 4, 9, 5],
+                [1, 8, 7, 2]])}
+        >>> out = roll_along_seq(data, -1)
+        >>> out
+        {'a': tensor([[1, 3, 2, 0],
+                [9, 5, 6, 4],
+                [7, 2, 1, 8]]), 'b': tensor([[1, 3, 2, 0],
+                [9, 5, 6, 4],
+                [7, 2, 1, 8]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(tensor.roll_along_seq, shifts=shifts))

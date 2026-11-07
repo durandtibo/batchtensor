@@ -3,14 +3,20 @@ r"""Implements reduction functions for nested tensor structures."""
 from __future__ import annotations
 
 __all__ = [
+    "all_along_batch",
+    "all_along_seq",
     "amax_along_batch",
     "amax_along_seq",
     "amin_along_batch",
     "amin_along_seq",
+    "any_along_batch",
+    "any_along_seq",
     "argmax_along_batch",
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "logsumexp_along_batch",
+    "logsumexp_along_seq",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -21,8 +27,12 @@ __all__ = [
     "min_along_seq",
     "prod_along_batch",
     "prod_along_seq",
+    "std_along_batch",
+    "std_along_seq",
     "sum_along_batch",
     "sum_along_seq",
+    "var_along_batch",
+    "var_along_seq",
 ]
 
 from functools import partial
@@ -35,7 +45,7 @@ if TYPE_CHECKING:
     from batchtensor.nested.types import NestedTensor, T
 
 
-def amax_along_batch(data: T, keepdim: bool = False) -> T:
+def amax_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
@@ -70,7 +80,7 @@ def amax_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.amax_along_batch, keepdim=keepdim))
 
 
-def amax_along_seq(data: T, keepdim: bool = False) -> T:
+def amax_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the maximum of all elements along the sequence dimension.
 
     Note:
@@ -105,7 +115,7 @@ def amax_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.amax_along_seq, keepdim=keepdim))
 
 
-def amin_along_batch(data: T, keepdim: bool = False) -> T:
+def amin_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the minimum of all elements along the batch dimension.
 
     Note:
@@ -140,7 +150,7 @@ def amin_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.amin_along_batch, keepdim=keepdim))
 
 
-def amin_along_seq(data: T, keepdim: bool = False) -> T:
+def amin_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the minimum of all elements along the sequence dimension.
 
     Note:
@@ -175,7 +185,7 @@ def amin_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.amin_along_seq, keepdim=keepdim))
 
 
-def argmax_along_batch(data: T, keepdim: bool = False) -> T:
+def argmax_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the maximum value of all elements along the
     batch dimension.
 
@@ -212,7 +222,7 @@ def argmax_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.argmax_along_batch, keepdim=keepdim))
 
 
-def argmax_along_seq(data: T, keepdim: bool = False) -> T:
+def argmax_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the maximum value of all elements along the
     sequence dimension.
 
@@ -249,7 +259,7 @@ def argmax_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.argmax_along_seq, keepdim=keepdim))
 
 
-def argmin_along_batch(data: T, keepdim: bool = False) -> T:
+def argmin_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the minimum value of all elements along the
     batch dimension.
 
@@ -286,7 +296,7 @@ def argmin_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.argmin_along_batch, keepdim=keepdim))
 
 
-def argmin_along_seq(data: T, keepdim: bool = False) -> T:
+def argmin_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the minimum value of all elements along the
     sequence dimension.
 
@@ -323,7 +333,7 @@ def argmin_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.argmin_along_seq, keepdim=keepdim))
 
 
-def max_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def max_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
@@ -370,7 +380,7 @@ def max_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.max_along_batch, keepdim=keepdim))
 
 
-def max_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def max_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the sequence dimension.
 
     Note:
@@ -417,7 +427,7 @@ def max_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.max_along_seq, keepdim=keepdim))
 
 
-def mean_along_batch(data: T, keepdim: bool = False) -> T:
+def mean_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the mean of all elements along the batch dimension.
 
     Note:
@@ -452,7 +462,7 @@ def mean_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.mean_along_batch, keepdim=keepdim))
 
 
-def mean_along_seq(data: T, keepdim: bool = False) -> T:
+def mean_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the mean of all elements along the sequence dimension.
 
     Note:
@@ -487,7 +497,7 @@ def mean_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.mean_along_seq, keepdim=keepdim))
 
 
-def median_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def median_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the median of all elements along the batch dimension.
 
     Note:
@@ -534,7 +544,7 @@ def median_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTenso
     return apply_to_tensors(data, partial(bt.median_along_batch, keepdim=keepdim))
 
 
-def median_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def median_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the median of all elements along the sequence dimension.
 
     Note:
@@ -581,7 +591,7 @@ def median_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.median_along_seq, keepdim=keepdim))
 
 
-def min_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def min_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the batch dimension.
 
     Note:
@@ -628,7 +638,7 @@ def min_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.min_along_batch, keepdim=keepdim))
 
 
-def min_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def min_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the sequence dimension.
 
     Note:
@@ -675,7 +685,7 @@ def min_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.min_along_seq, keepdim=keepdim))
 
 
-def prod_along_batch(data: T, keepdim: bool = False) -> T:
+def prod_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the product of all elements along the batch dimension.
 
     Note:
@@ -710,7 +720,7 @@ def prod_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.prod_along_batch, keepdim=keepdim))
 
 
-def prod_along_seq(data: T, keepdim: bool = False) -> T:
+def prod_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the product of all elements along the sequence dimension.
 
     Note:
@@ -745,7 +755,7 @@ def prod_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.prod_along_seq, keepdim=keepdim))
 
 
-def sum_along_batch(data: T, keepdim: bool = False) -> T:
+def sum_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the sum of all elements along the batch dimension.
 
     Note:
@@ -780,7 +790,7 @@ def sum_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.sum_along_batch, keepdim=keepdim))
 
 
-def sum_along_seq(data: T, keepdim: bool = False) -> T:
+def sum_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the sum of all elements along the sequence dimension.
 
     Note:
@@ -813,3 +823,341 @@ def sum_along_seq(data: T, keepdim: bool = False) -> T:
         ```
     """
     return apply_to_tensors(data, partial(bt.sum_along_seq, keepdim=keepdim))
+
+
+def std_along_batch(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
+    r"""Return the standard deviation along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the standard deviation along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import std_along_batch
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = std_along_batch(data)
+        >>> out
+        {'a': tensor([4.0000, 4.1633, 1.5275, 2.6458]), 'b': tensor([4.0000, 4.1633, 1.5275, 2.6458])}
+        >>> out = std_along_batch(data, keepdim=True)
+        >>> out
+        {'a': tensor([[4.0000, 4.1633, 1.5275, 2.6458]]), 'b': tensor([[4.0000, 4.1633, 1.5275, 2.6458]])}
+
+        ```
+    """
+    return apply_to_tensors(
+        data, partial(bt.std_along_batch, correction=correction, keepdim=keepdim)
+    )
+
+
+def std_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
+    r"""Return the standard deviation along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the standard deviation along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import std_along_seq
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = std_along_seq(data)
+        >>> out
+        {'a': tensor([1.2910, 2.1602, 3.5119]), 'b': tensor([1.2910, 2.1602, 3.5119])}
+        >>> out = std_along_seq(data, keepdim=True)
+        >>> out
+        {'a': tensor([[1.2910],
+                [2.1602],
+                [3.5119]]), 'b': tensor([[1.2910],
+                [2.1602],
+                [3.5119]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.std_along_seq, correction=correction, keepdim=keepdim))
+
+
+def var_along_batch(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
+    r"""Return the variance along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the variance along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import var_along_batch
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = var_along_batch(data)
+        >>> out
+        {'a': tensor([16.0000, 17.3333,  2.3333,  7.0000]), 'b': tensor([16.0000, 17.3333,  2.3333,  7.0000])}
+        >>> out = var_along_batch(data, keepdim=True)
+        >>> out
+        {'a': tensor([[16.0000, 17.3333,  2.3333,  7.0000]]), 'b': tensor([[16.0000, 17.3333,  2.3333,  7.0000]])}
+
+        ```
+    """
+    return apply_to_tensors(
+        data, partial(bt.var_along_batch, correction=correction, keepdim=keepdim)
+    )
+
+
+def var_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
+    r"""Return the variance along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the variance along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import var_along_seq
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = var_along_seq(data)
+        >>> out
+        {'a': tensor([ 1.6667,  4.6667, 12.3333]), 'b': tensor([ 1.6667,  4.6667, 12.3333])}
+        >>> out = var_along_seq(data, keepdim=True)
+        >>> out
+        {'a': tensor([[ 1.6667],
+                [ 4.6667],
+                [12.3333]]), 'b': tensor([[ 1.6667],
+                [ 4.6667],
+                [12.3333]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.var_along_seq, correction=correction, keepdim=keepdim))
+
+
+def any_along_batch(data: T, *, keepdim: bool = False) -> T:
+    r"""Return whether any element is true along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by whether any element is true along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import any_along_batch
+        >>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]]), "b": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+        >>> out = any_along_batch(data)
+        >>> out
+        {'a': tensor([True, True, True, True]), 'b': tensor([True, True, True, True])}
+        >>> out = any_along_batch(data, keepdim=True)
+        >>> out
+        {'a': tensor([[True, True, True, True]]), 'b': tensor([[True, True, True, True]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.any_along_batch, keepdim=keepdim))
+
+
+def any_along_seq(data: T, *, keepdim: bool = False) -> T:
+    r"""Return whether any element is true along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by whether any element is true along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import any_along_seq
+        >>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]]), "b": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+        >>> out = any_along_seq(data)
+        >>> out
+        {'a': tensor([True, True, True]), 'b': tensor([True, True, True])}
+        >>> out = any_along_seq(data, keepdim=True)
+        >>> out
+        {'a': tensor([[True],
+                [True],
+                [True]]), 'b': tensor([[True],
+                [True],
+                [True]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.any_along_seq, keepdim=keepdim))
+
+
+def all_along_batch(data: T, *, keepdim: bool = False) -> T:
+    r"""Return whether all the elements are true along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by whether all the elements are true along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import all_along_batch
+        >>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]]), "b": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+        >>> out = all_along_batch(data)
+        >>> out
+        {'a': tensor([False, False,  True, False]), 'b': tensor([False, False,  True, False])}
+        >>> out = all_along_batch(data, keepdim=True)
+        >>> out
+        {'a': tensor([[False, False,  True, False]]), 'b': tensor([[False, False,  True, False]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.all_along_batch, keepdim=keepdim))
+
+
+def all_along_seq(data: T, *, keepdim: bool = False) -> T:
+    r"""Return whether all the elements are true along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by whether all the elements are true along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import all_along_seq
+        >>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]]), "b": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+        >>> out = all_along_seq(data)
+        >>> out
+        {'a': tensor([False,  True, False]), 'b': tensor([False,  True, False])}
+        >>> out = all_along_seq(data, keepdim=True)
+        >>> out
+        {'a': tensor([[False],
+                [ True],
+                [False]]), 'b': tensor([[False],
+                [ True],
+                [False]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.all_along_seq, keepdim=keepdim))
+
+
+def logsumexp_along_batch(data: T, *, keepdim: bool = False) -> T:
+    r"""Return the log of the sum of exponentials along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the log of the sum of exponentials along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import logsumexp_along_batch
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = logsumexp_along_batch(data)
+        >>> out
+        {'a': tensor([8.0185, 9.1272, 5.1698, 6.0247]), 'b': tensor([8.0185, 9.1272, 5.1698, 6.0247])}
+        >>> out = logsumexp_along_batch(data, keepdim=True)
+        >>> out
+        {'a': tensor([[8.0185, 9.1272, 5.1698, 6.0247]]), 'b': tensor([[8.0185, 9.1272, 5.1698, 6.0247]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.logsumexp_along_batch, keepdim=keepdim))
+
+
+def logsumexp_along_seq(data: T, *, keepdim: bool = False) -> T:
+    r"""Return the log of the sum of exponentials along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the log of the sum of exponentials along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import logsumexp_along_seq
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = logsumexp_along_seq(data)
+        >>> out
+        {'a': tensor([3.4402, 9.0722, 8.3157]), 'b': tensor([3.4402, 9.0722, 8.3157])}
+        >>> out = logsumexp_along_seq(data, keepdim=True)
+        >>> out
+        {'a': tensor([[3.4402],
+                [9.0722],
+                [8.3157]]), 'b': tensor([[3.4402],
+                [9.0722],
+                [8.3157]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.logsumexp_along_seq, keepdim=keepdim))

@@ -110,3 +110,28 @@ Create generators for different devices:
 - [Nested Operations](nested.md) - Nested operations with randomness
 - [PyTorch Random Sampling](https://pytorch.org/docs/stable/random.html) - PyTorch's random number
   generation documentation
+
+## Structure Helpers
+
+`batchtensor.utils.structure` contains the three helpers that all the nested functions use:
+
+- `apply_to_tensors(data, fn)`: apply `fn` to every tensor leaf and keep the structure.
+- `split_tensors(data, fn)`: split every tensor with `fn` and regroup the pieces in N structures.
+- `combine_tensors(items, fn)`: combine N structures with the same layout, leaf by leaf.
+- `get_size(data, dim)`: the size shared by all the tensors along a dimension.
+
+A leaf that is not a tensor raises a `TypeError`.
+
+```pycon
+>>> import torch
+>>> from batchtensor.utils.structure import apply_to_tensors, get_size
+>>> batch = {"x": torch.ones(4, 3), "y": [torch.zeros(4)]}
+>>> get_size(batch, dim=0)
+4
+>>> apply_to_tensors(batch, torch.neg)
+{'x': tensor([[-1., -1., -1.],
+              [-1., -1., -1.],
+              [-1., -1., -1.],
+              [-1., -1., -1.]]), 'y': [tensor([-0., -0., -0., -0.])]}
+
+```

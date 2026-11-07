@@ -8,8 +8,12 @@ from coola.equality import objects_are_equal
 from coola.random import make_torch_generator
 
 from batchtensor.tensor import (
+    flip_along_batch,
+    flip_along_seq,
     permute_along_batch,
     permute_along_seq,
+    roll_along_batch,
+    roll_along_seq,
     shuffle_along_batch,
     shuffle_along_seq,
 )
@@ -75,7 +79,7 @@ def test_permute_along_seq_incorrect_shape() -> None:
 
 
 @patch(
-    "batchtensor.tensor.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch() -> None:
@@ -88,16 +92,16 @@ def test_shuffle_along_batch() -> None:
 def test_shuffle_along_batch_same_random_seed() -> None:
     tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
     assert objects_are_equal(
-        shuffle_along_batch(tensor, make_torch_generator(1)),
-        shuffle_along_batch(tensor, make_torch_generator(1)),
+        shuffle_along_batch(tensor, generator=make_torch_generator(1)),
+        shuffle_along_batch(tensor, generator=make_torch_generator(1)),
     )
 
 
 def test_shuffle_along_batch_different_random_seeds() -> None:
     tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
     assert not objects_are_equal(
-        shuffle_along_batch(tensor, make_torch_generator(1)),
-        shuffle_along_batch(tensor, make_torch_generator(2)),
+        shuffle_along_batch(tensor, generator=make_torch_generator(1)),
+        shuffle_along_batch(tensor, generator=make_torch_generator(2)),
     )
 
 
@@ -105,7 +109,8 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
     tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
     generator = make_torch_generator(1)
     assert not objects_are_equal(
-        shuffle_along_batch(tensor, generator), shuffle_along_batch(tensor, generator)
+        shuffle_along_batch(tensor, generator=generator),
+        shuffle_along_batch(tensor, generator=generator),
     )
 
 
@@ -115,7 +120,7 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
 
 
 @patch(
-    "batchtensor.tensor.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq() -> None:
@@ -128,16 +133,16 @@ def test_shuffle_along_seq() -> None:
 def test_shuffle_along_seq_same_random_seed() -> None:
     tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     assert objects_are_equal(
-        shuffle_along_seq(tensor, make_torch_generator(1)),
-        shuffle_along_seq(tensor, make_torch_generator(1)),
+        shuffle_along_seq(tensor, generator=make_torch_generator(1)),
+        shuffle_along_seq(tensor, generator=make_torch_generator(1)),
     )
 
 
 def test_shuffle_along_seq_different_random_seeds() -> None:
     tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     assert not objects_are_equal(
-        shuffle_along_seq(tensor, make_torch_generator(1)),
-        shuffle_along_seq(tensor, make_torch_generator(2)),
+        shuffle_along_seq(tensor, generator=make_torch_generator(1)),
+        shuffle_along_seq(tensor, generator=make_torch_generator(2)),
     )
 
 
@@ -145,7 +150,8 @@ def test_shuffle_along_seq_multiple_shuffle() -> None:
     tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     generator = make_torch_generator(1)
     assert not objects_are_equal(
-        shuffle_along_seq(tensor, generator), shuffle_along_seq(tensor, generator)
+        shuffle_along_seq(tensor, generator=generator),
+        shuffle_along_seq(tensor, generator=generator),
     )
 
 
@@ -153,3 +159,143 @@ def test_permute_along_batch_other_device_permutation() -> None:
     # The permutation is moved to the tensor device (here the "meta" device).
     out = permute_along_batch(torch.ones(3, 2, device="meta"), torch.tensor([2, 0, 1]))
     assert out.shape == (3, 2)
+
+
+def test_shuffle_along_batch_int_seed_same_as_generator() -> None:
+    tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
+    assert objects_are_equal(
+        shuffle_along_batch(tensor, generator=7),
+        shuffle_along_batch(tensor, generator=make_torch_generator(7)),
+    )
+
+
+def test_shuffle_along_batch_int_seed_repeat_call() -> None:
+    tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
+    assert objects_are_equal(
+        shuffle_along_batch(tensor, generator=7), shuffle_along_batch(tensor, generator=7)
+    )
+
+
+def test_shuffle_along_seq_int_seed_same_as_generator() -> None:
+    tensor = torch.arange(12).reshape(2, 6)
+    assert objects_are_equal(
+        shuffle_along_seq(tensor, generator=7),
+        shuffle_along_seq(tensor, generator=make_torch_generator(7)),
+    )
+
+
+def test_shuffle_along_seq_int_seed_repeat_call() -> None:
+    tensor = torch.arange(12).reshape(2, 6)
+    assert objects_are_equal(
+        shuffle_along_seq(tensor, generator=7), shuffle_along_seq(tensor, generator=7)
+    )
+
+
+def test_permute_along_batch_permutation_2d() -> None:
+    with pytest.raises(ValueError, match="permutation"):
+        permute_along_batch(torch.ones(3, 2), torch.tensor([[0, 1, 2]]))
+
+
+def test_permute_along_seq_permutation_2d() -> None:
+    with pytest.raises(ValueError, match="permutation"):
+        permute_along_seq(torch.ones(2, 3), torch.tensor([[0, 1, 2]]))
+
+
+#########################################################
+#     Tests for flip_along_batch and flip_along_seq     #
+#########################################################
+
+
+def test_flip_along_batch_default() -> None:
+    assert objects_are_equal(
+        flip_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])),
+        torch.tensor([[8, 7, 2, 1], [4, 9, 5, 6], [0, 1, 3, 2]]),
+    )
+
+
+def test_flip_along_batch_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    flip_along_batch(tensor)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_flip_along_seq_default() -> None:
+    assert objects_are_equal(
+        flip_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])),
+        torch.tensor([[2, 3, 1, 0], [6, 5, 9, 4], [1, 2, 7, 8]]),
+    )
+
+
+def test_flip_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    flip_along_seq(tensor)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_flip_along_seq_1d_tensor() -> None:
+    with pytest.raises(IndexError, match="Dimension out of range"):
+        flip_along_seq(torch.tensor([0, 4, 8]))
+
+
+#########################################################
+#     Tests for roll_along_batch and roll_along_seq     #
+#########################################################
+
+
+def test_roll_along_batch_shifts_1() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 1),
+        torch.tensor([[8, 7, 2, 1], [0, 1, 3, 2], [4, 9, 5, 6]]),
+    )
+
+
+def test_roll_along_batch_shifts_neg1() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), -1),
+        torch.tensor([[4, 9, 5, 6], [8, 7, 2, 1], [0, 1, 3, 2]]),
+    )
+
+
+def test_roll_along_batch_shifts_5() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 5),
+        torch.tensor([[4, 9, 5, 6], [8, 7, 2, 1], [0, 1, 3, 2]]),
+    )
+
+
+def test_roll_along_batch_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    roll_along_batch(tensor, 1)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_roll_along_seq_shifts_1() -> None:
+    assert objects_are_equal(
+        roll_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 1),
+        torch.tensor([[2, 0, 1, 3], [6, 4, 9, 5], [1, 8, 7, 2]]),
+    )
+
+
+def test_roll_along_seq_shifts_neg1() -> None:
+    assert objects_are_equal(
+        roll_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), -1),
+        torch.tensor([[1, 3, 2, 0], [9, 5, 6, 4], [7, 2, 1, 8]]),
+    )
+
+
+def test_roll_along_seq_shifts_5() -> None:
+    assert objects_are_equal(
+        roll_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 5),
+        torch.tensor([[2, 0, 1, 3], [6, 4, 9, 5], [1, 8, 7, 2]]),
+    )
+
+
+def test_roll_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    roll_along_seq(tensor, 1)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_roll_along_seq_1d_tensor() -> None:
+    with pytest.raises(IndexError, match="Dimension out of range"):
+        roll_along_seq(torch.tensor([0, 4, 8]), 1)

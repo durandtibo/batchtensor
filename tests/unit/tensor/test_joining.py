@@ -7,6 +7,7 @@ from coola.equality import objects_are_equal
 from batchtensor.tensor import (
     cat_along_batch,
     cat_along_seq,
+    repeat_along_batch,
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,
@@ -181,3 +182,56 @@ def test_stack_along_seq_tuple() -> None:
 def test_repeat_along_seq_1d_raises() -> None:
     with pytest.raises(ValueError, match="at least 2 dimensions"):
         repeat_along_seq(torch.ones(3), repeats=2)
+
+
+########################################
+#     Tests for repeat_along_batch     #
+########################################
+
+
+def test_repeat_along_batch_repeats_2() -> None:
+    assert objects_are_equal(
+        repeat_along_batch(torch.tensor([[0, 1], [2, 3]]), 2),
+        torch.tensor([[0, 1], [2, 3], [0, 1], [2, 3]]),
+    )
+
+
+def test_repeat_along_batch_repeats_1() -> None:
+    assert objects_are_equal(
+        repeat_along_batch(torch.tensor([[0, 1], [2, 3]]), 1), torch.tensor([[0, 1], [2, 3]])
+    )
+
+
+def test_repeat_along_batch_repeats_0() -> None:
+    assert objects_are_equal(
+        repeat_along_batch(torch.tensor([[0, 1], [2, 3]]), 0), torch.zeros(0, 2, dtype=torch.long)
+    )
+
+
+def test_repeat_along_batch_1d() -> None:
+    assert objects_are_equal(
+        repeat_along_batch(torch.tensor([1, 2]), 2), torch.tensor([1, 2, 1, 2])
+    )
+
+
+def test_repeat_along_batch_3d_shape() -> None:
+    assert repeat_along_batch(torch.zeros(2, 3, 4), 3).shape == (6, 3, 4)
+
+
+def test_repeat_along_batch_dtype_preserved() -> None:
+    assert repeat_along_batch(torch.ones(2, 2, dtype=torch.float64), 2).dtype == torch.float64
+
+
+def test_repeat_along_batch_returns_copy() -> None:
+    tensor = torch.ones(2, 2)
+    assert repeat_along_batch(tensor, 1) is not tensor
+
+
+def test_repeat_along_batch_scalar() -> None:
+    with pytest.raises(ValueError, match=r"requires a tensor with at least 1 dimensions"):
+        repeat_along_batch(torch.tensor(1.0), 2)
+
+
+def test_repeat_along_batch_negative_repeats() -> None:
+    with pytest.raises(RuntimeError, match="negative"):
+        repeat_along_batch(torch.ones(2, 2), -1)
