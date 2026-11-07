@@ -75,7 +75,7 @@ def test_permute_along_seq_incorrect_shape() -> None:
 
 
 @patch(
-    "batchtensor.tensor.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch() -> None:
@@ -116,7 +116,7 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
 
 
 @patch(
-    "batchtensor.tensor.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq() -> None:
@@ -155,3 +155,33 @@ def test_permute_along_batch_other_device_permutation() -> None:
     # The permutation is moved to the tensor device (here the "meta" device).
     out = permute_along_batch(torch.ones(3, 2, device="meta"), torch.tensor([2, 0, 1]))
     assert out.shape == (3, 2)
+
+
+def test_shuffle_along_batch_int_seed_same_as_generator() -> None:
+    tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
+    assert objects_are_equal(
+        shuffle_along_batch(tensor, generator=7),
+        shuffle_along_batch(tensor, generator=make_torch_generator(7)),
+    )
+
+
+def test_shuffle_along_batch_int_seed_repeat_call() -> None:
+    tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
+    assert objects_are_equal(
+        shuffle_along_batch(tensor, generator=7), shuffle_along_batch(tensor, generator=7)
+    )
+
+
+def test_shuffle_along_seq_int_seed_same_as_generator() -> None:
+    tensor = torch.arange(12).reshape(2, 6)
+    assert objects_are_equal(
+        shuffle_along_seq(tensor, generator=7),
+        shuffle_along_seq(tensor, generator=make_torch_generator(7)),
+    )
+
+
+def test_shuffle_along_seq_int_seed_repeat_call() -> None:
+    tensor = torch.arange(12).reshape(2, 6)
+    assert objects_are_equal(
+        shuffle_along_seq(tensor, generator=7), shuffle_along_seq(tensor, generator=7)
+    )

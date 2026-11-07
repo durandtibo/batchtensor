@@ -8,13 +8,14 @@ __all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_batch", "s
 from functools import partial
 from typing import TYPE_CHECKING
 
-import torch
-
 from batchtensor import tensor
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
+from batchtensor.utils.seed import random_permutation
 from batchtensor.utils.structure import apply_to_tensors, get_size
 
 if TYPE_CHECKING:
+    import torch
+
     from batchtensor.nested.types import T
 
 
@@ -96,7 +97,7 @@ def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
     return apply_to_tensors(data, partial(tensor.permute_along_seq, permutation=permutation))
 
 
-def shuffle_along_batch(data: T, *, generator: torch.Generator | None = None) -> T:
+def shuffle_along_batch(data: T, *, generator: torch.Generator | int | None = None) -> T:
     r"""Shuffle all the tensors along the batch dimension.
 
     Note:
@@ -106,7 +107,8 @@ def shuffle_along_batch(data: T, *, generator: torch.Generator | None = None) ->
 
     Args:
         data: The input data. Each item must be a tensor.
-        generator: An optional random number generator.
+        generator: An optional random number generator or random seed.
+            All the tensors use the same permutation.
 
     Returns:
         The data with shuffled tensors along the batch dimension.
@@ -129,15 +131,11 @@ def shuffle_along_batch(data: T, *, generator: torch.Generator | None = None) ->
     size = get_size(data, BATCH_DIM)
     return permute_along_batch(
         data=data,
-        permutation=torch.randperm(
-            size,
-            generator=generator,
-            device=generator.device if generator is not None else None,
-        ),
+        permutation=random_permutation(size, generator=generator),
     )
 
 
-def shuffle_along_seq(data: T, *, generator: torch.Generator | None = None) -> T:
+def shuffle_along_seq(data: T, *, generator: torch.Generator | int | None = None) -> T:
     r"""Shuffle all the tensors along the sequence dimension.
 
     Note:
@@ -147,7 +145,8 @@ def shuffle_along_seq(data: T, *, generator: torch.Generator | None = None) -> T
 
     Args:
         data: The input data. Each item must be a tensor.
-        generator: An optional random number generator.
+        generator: An optional random number generator or random seed.
+            All the tensors use the same permutation.
 
     Returns:
         The data with shuffled tensors along the sequence dimension.
@@ -170,9 +169,5 @@ def shuffle_along_seq(data: T, *, generator: torch.Generator | None = None) -> T
     size = get_size(data, SEQ_DIM)
     return permute_along_seq(
         data=data,
-        permutation=torch.randperm(
-            size,
-            generator=generator,
-            device=generator.device if generator is not None else None,
-        ),
+        permutation=random_permutation(size, generator=generator),
     )
