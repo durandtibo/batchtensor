@@ -41,7 +41,6 @@ CASES = (
     ]
     + [(f"shuffle_along_{dim}", {"generator": 0}) for dim in ("batch", "seq")]
     + [
-<<<<<<< HEAD
         (f"std_along_{dim}", variant)
         for dim in ("batch", "seq")
         for variant in [{}, {"keepdim": True}, {"correction": 0}]
@@ -52,8 +51,6 @@ CASES = (
         for variant in [{}, {"keepdim": True}, {"correction": 0}]
     ]
     + [
-=======
->>>>>>> origin/main
         (f"pad_along_{dim}", {"pad_size": 2, "value": 1.0, "side": side})
         for dim in ("batch", "seq")
         for side in ("left", "right")
