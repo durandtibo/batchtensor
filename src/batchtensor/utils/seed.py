@@ -24,7 +24,7 @@ def get_random_seed(seed: int) -> int:
         ```pycon
         >>> from batchtensor.utils.seed import get_random_seed
         >>> get_random_seed(44)
-        6176747449835261347
+        6176747449835261348
 
         ```
     """
