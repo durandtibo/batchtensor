@@ -103,8 +103,6 @@ mirror the tensor module:
 - **permutation.py**: Nested shuffling and permuting
 - **padding.py**: Nested padding
 - **conversion.py**: NumPy conversion
-- **pointwise.py**: Element-wise operations
-- **trigo.py**: Trigonometric functions
 - **misc.py**: Miscellaneous utilities
 
 Each nested function:
