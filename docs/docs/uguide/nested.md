@@ -390,6 +390,19 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ```
 
+### any
+
+`any_along_batch` and `any_along_seq` return whether any element is true along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import any_along_batch
+>>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+>>> any_along_batch(data)
+{'a': tensor([True, True, True, True])}
+
+```
+
 ## Best Practices
 
 1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible
