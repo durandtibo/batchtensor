@@ -23,6 +23,15 @@ tensors in these structures while preserving the nested structure.
 - Lists: `[tensor1, tensor2, ...]`
 - Tuples: `(tensor1, tensor2, ...)`
 - Nested combinations: `{'key': [tensor1, tensor2], ...}`
+- Other containers handled by `coola.recursive` (for example `OrderedDict`,
+  `defaultdict`, named tuples and dataclasses) are supported by the functions
+  that map a tensor function over the leaves. `cat_*`, `stack_*`, `chunk_*` and
+  `split_*` only support dictionaries, lists and tuples.
+
+**Leaves:**
+
+Every leaf must be a `torch.Tensor`. Non-tensor leaves (`str`, `None`, `int`, ...)
+are not skipped: the call fails with the error of the underlying operation.
 
 **Dimension Conventions:**
 
