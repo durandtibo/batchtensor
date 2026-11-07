@@ -208,7 +208,7 @@ torch, so the messages stay the ones users already know.
 `nested` twin, its parity entry and its tests: `std`, `var`, `any`, `all`, `logsumexp`, `flip`,
 `roll`, `topk`. Options are keyword-only (`std`/`var`: `correction=1, keepdim=False`; `any`/`all`/
 `logsumexp`: `keepdim=False`; `flip`: none; `roll`: `shifts`; `topk`: `k`, `largest=True`,
-`sorted=True`). `topk` returns `torch.return_types.topk` like `max` (D7). Masked reductions
+`sort_output=True`, passed to torch as `sorted=`, because `sorted` shadows the builtin). `topk` returns `torch.return_types.topk` like `max` (D7). Masked reductions
 (`mean_along_seq(x, mask=...)`) are not part of this set and need their own design.
 
 ### 4.2 `nested`
@@ -345,7 +345,7 @@ entry or the tracking table with the PR number.
 | 8    | `feat/pad-side-and-sequences`   | Add `side` to `pad_along_*`, `repeat_along_batch`, `pad_sequences`.                                                                                                                                                                                 | No | #708 |
 | 9    | `docs/target-state`             | Rewrite `design_principles.md` from the property table. Update `architecture.md`, the user guides and `package_checks.py`. Add a migration page that lists each break and its replacement.                                                          | No | #710 |
 | 10   | `test/api-parity`               | Add `test_api_parity`, the differential tests, the autograd test and the device smoke test (Section 9). Can land early: it needs only the allow-list.                                                                                               | No | #709 |
-| 11   | `feat/add-<operation>` (x8)     | One PR per operation of D10: `std`, `var`, `any`, `all`, `logsumexp`, `flip`, `roll`, `topk`. Each adds the `tensor` pair, the `nested` pair, tests, docstring examples and the user guide entry. | No | |
+| 11   | `feat/add-<operation>` (x8)     | One PR per operation of D10: `std`, `var`, `any`, `all`, `logsumexp`, `flip`, `roll`, `topk`. Each adds the `tensor` pair, the `nested` pair, tests, docstring examples and the user guide entry. | No | #711, #712, #713, #714, #715, #716, #717, #718 |
 
 Steps 4 to 8 and 11 depend on 3 and are independent of each other after it. Step 10 can be the first PR
 (it only fails if parity is already broken, which it is not).
