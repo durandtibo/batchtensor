@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import Any, cast
 from unittest.mock import patch
 
 import pytest
@@ -16,7 +17,7 @@ from batchtensor.nested import clone, contiguous, detach, pin_memory, to
 
 def test_clone_tensor() -> None:
     tensor = torch.tensor([[0, 1], [2, 3]])
-    out = clone(tensor)
+    out = cast("torch.Tensor", clone(tensor))
     assert objects_are_equal(out, tensor)
     assert out is not tensor
     out[0, 0] = 999
@@ -25,7 +26,7 @@ def test_clone_tensor() -> None:
 
 def test_clone_dict() -> None:
     data = {"a": torch.tensor([[0, 1], [2, 3]]), "b": torch.tensor([4, 5])}
-    out = clone(data)
+    out = cast("Any", clone(data))
     assert objects_are_equal(out, data)
     assert out["a"] is not data["a"]
 
@@ -37,7 +38,7 @@ def test_clone_dict() -> None:
 
 def test_contiguous_tensor() -> None:
     tensor = torch.tensor([[0, 1], [2, 3]]).t()
-    out = contiguous(tensor)
+    out = cast("torch.Tensor", contiguous(tensor))
     assert objects_are_equal(out, tensor)
     assert out.is_contiguous()
 
@@ -55,7 +56,7 @@ def test_contiguous_dict() -> None:
 
 def test_detach_tensor() -> None:
     tensor = torch.tensor([[0.0, 1.0], [2.0, 3.0]], requires_grad=True)
-    out = detach(tensor)
+    out = cast("torch.Tensor", detach(tensor))
     assert out.requires_grad is False
     assert objects_are_equal(out, tensor.detach())
 
@@ -65,7 +66,7 @@ def test_detach_dict() -> None:
         "a": torch.tensor([[0.0, 1.0], [2.0, 3.0]], requires_grad=True),
         "b": torch.tensor([4.0, 5.0]),
     }
-    out = detach(data)
+    out = cast("Any", detach(data))
     assert out["a"].requires_grad is False
 
 
@@ -127,17 +128,17 @@ def test_to_dtype_dict() -> None:
 
 @pytest.mark.parametrize("device", get_available_devices())
 def test_to_device(device: str) -> None:
-    device = torch.device(device)
+    torch_device = torch.device(device)
     assert objects_are_equal(
         to(
             {
                 "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
                 "b": torch.tensor([4, 3, 2, 1, 0]),
             },
-            device=device,
+            device=torch_device,
         ),
         {
-            "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], device=device),
-            "b": torch.tensor([4, 3, 2, 1, 0], device=device),
+            "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], device=torch_device),
+            "b": torch.tensor([4, 3, 2, 1, 0], device=torch_device),
         },
     )

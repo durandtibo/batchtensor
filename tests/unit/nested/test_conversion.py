@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import Any, cast
 from unittest.mock import Mock
 
 import pytest
@@ -83,7 +84,7 @@ def test_as_tensor_nested() -> None:
 @pytest.mark.parametrize("device", get_available_devices())
 @pytest.mark.parametrize("dtype", [torch.float, torch.long])
 def test_as_tensor_device_dtype(device: str, dtype: torch.dtype) -> None:
-    device = torch.device(device)
+    torch_device = torch.device(device)
     assert objects_are_equal(
         as_tensor(
             {
@@ -94,21 +95,21 @@ def test_as_tensor_device_dtype(device: str, dtype: torch.dtype) -> None:
                 "list": [np.array([5, 6, 7, 8, 9], dtype=int), torch.tensor([6, 7, 8])],
                 "int": 42,
             },
-            device=device,
+            device=torch_device,
             dtype=dtype,
         ),
         {
             "a": torch.tensor(
                 [[4, 9], [1, 7], [2, 5], [5, 6], [3, 8]],
-                device=device,
+                device=torch_device,
                 dtype=dtype,
             ),
-            "b": torch.tensor([4, 3, 2, 1, 0], device=device, dtype=dtype),
+            "b": torch.tensor([4, 3, 2, 1, 0], device=torch_device, dtype=dtype),
             "list": [
-                torch.tensor([5, 6, 7, 8, 9], device=device, dtype=dtype),
-                torch.tensor([6, 7, 8], device=device, dtype=dtype),
+                torch.tensor([5, 6, 7, 8, 9], device=torch_device, dtype=dtype),
+                torch.tensor([6, 7, 8], device=torch_device, dtype=dtype),
             ],
-            "int": torch.tensor(42, device=device, dtype=dtype),
+            "int": torch.tensor(42, device=torch_device, dtype=dtype),
         },
     )
 
@@ -231,5 +232,5 @@ def test_to_numpy_nested() -> None:
 
 @numpy_available
 def test_to_numpy_requires_grad() -> None:
-    out = to_numpy({"a": torch.ones(2, requires_grad=True)})
+    out = cast("Any", to_numpy({"a": torch.ones(2, requires_grad=True)}))
     assert out["a"].tolist() == [1.0, 1.0]

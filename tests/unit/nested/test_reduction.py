@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any, cast
+
 import pytest
 import torch
 from coola.equality import objects_are_equal
@@ -537,7 +539,7 @@ def test_argmin_along_seq_nested() -> None:
 def test_max_along_batch_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         max_along_batch(torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], dtype=dtype)),
-        torch.return_types.max([torch.tensor([8, 9], dtype=dtype), torch.tensor([4, 4])]),
+        torch.return_types.max((torch.tensor([8, 9], dtype=dtype), torch.tensor([4, 4]))),
     )
 
 
@@ -547,7 +549,7 @@ def test_max_along_batch_tensor_keepdim_true(dtype: torch.dtype) -> None:
         max_along_batch(
             torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], dtype=dtype), keepdim=True
         ),
-        torch.return_types.max([torch.tensor([[8, 9]], dtype=dtype), torch.tensor([[4, 4]])]),
+        torch.return_types.max((torch.tensor([[8, 9]], dtype=dtype), torch.tensor([[4, 4]]))),
     )
 
 
@@ -561,8 +563,8 @@ def test_max_along_batch_dict(dtype: torch.dtype) -> None:
             }
         ),
         {
-            "a": torch.return_types.max([torch.tensor([8, 9], dtype=dtype), torch.tensor([4, 4])]),
-            "b": torch.return_types.max([torch.tensor(4), torch.tensor(0)]),
+            "a": torch.return_types.max((torch.tensor([8, 9], dtype=dtype), torch.tensor([4, 4]))),
+            "b": torch.return_types.max((torch.tensor(4), torch.tensor(0))),
         },
     )
 
@@ -579,9 +581,9 @@ def test_max_along_batch_dict_keepdim_true(dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.return_types.max(
-                [torch.tensor([[8, 9]], dtype=dtype), torch.tensor([[4, 4]])]
+                (torch.tensor([[8, 9]], dtype=dtype), torch.tensor([[4, 4]]))
             ),
-            "b": torch.return_types.max([torch.tensor([4]), torch.tensor([0])]),
+            "b": torch.return_types.max((torch.tensor([4]), torch.tensor([0]))),
         },
     )
 
@@ -597,10 +599,10 @@ def test_max_along_batch_nested() -> None:
         ),
         {
             "a": torch.return_types.max(
-                [torch.tensor([8, 9], dtype=torch.float), torch.tensor([4, 4])]
+                (torch.tensor([8, 9], dtype=torch.float), torch.tensor([4, 4]))
             ),
-            "b": torch.return_types.max([torch.tensor(4), torch.tensor(0)]),
-            "c": [torch.return_types.max([torch.tensor(9), torch.tensor(4)])],
+            "b": torch.return_types.max((torch.tensor(4), torch.tensor(0))),
+            "c": [torch.return_types.max((torch.tensor(9), torch.tensor(4)))],
         },
     )
 
@@ -614,7 +616,7 @@ def test_max_along_batch_nested() -> None:
 def test_max_along_seq_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         max_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], dtype=dtype)),
-        torch.return_types.max([torch.tensor([4, 9], dtype=dtype), torch.tensor([4, 4])]),
+        torch.return_types.max((torch.tensor([4, 9], dtype=dtype), torch.tensor([4, 4]))),
     )
 
 
@@ -622,7 +624,7 @@ def test_max_along_seq_tensor(dtype: torch.dtype) -> None:
 def test_max_along_seq_tensor_keepdim_true(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         max_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], dtype=dtype), keepdim=True),
-        torch.return_types.max([torch.tensor([[4], [9]], dtype=dtype), torch.tensor([[4], [4]])]),
+        torch.return_types.max((torch.tensor([[4], [9]], dtype=dtype), torch.tensor([[4], [4]]))),
     )
 
 
@@ -636,8 +638,8 @@ def test_max_along_seq_dict(dtype: torch.dtype) -> None:
             }
         ),
         {
-            "a": torch.return_types.max([torch.tensor([4, 9], dtype=dtype), torch.tensor([4, 4])]),
-            "b": torch.return_types.max([torch.tensor([5]), torch.tensor([0])]),
+            "a": torch.return_types.max((torch.tensor([4, 9], dtype=dtype), torch.tensor([4, 4]))),
+            "b": torch.return_types.max((torch.tensor([5]), torch.tensor([0]))),
         },
     )
 
@@ -654,9 +656,9 @@ def test_max_along_seq_dict_keepdim_true(dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.return_types.max(
-                [torch.tensor([[4], [9]], dtype=dtype), torch.tensor([[4], [4]])]
+                (torch.tensor([[4], [9]], dtype=dtype), torch.tensor([[4], [4]]))
             ),
-            "b": torch.return_types.max([torch.tensor([[5]]), torch.tensor([[0]])]),
+            "b": torch.return_types.max((torch.tensor([[5]]), torch.tensor([[0]]))),
         },
     )
 
@@ -672,10 +674,10 @@ def test_max_along_seq_nested() -> None:
         ),
         {
             "a": torch.return_types.max(
-                [torch.tensor([4, 9], dtype=torch.float), torch.tensor([4, 4])]
+                (torch.tensor([4, 9], dtype=torch.float), torch.tensor([4, 4]))
             ),
-            "b": torch.return_types.max([torch.tensor([5]), torch.tensor([0])]),
-            "c": [torch.return_types.max([torch.tensor([9]), torch.tensor([4])])],
+            "b": torch.return_types.max((torch.tensor([5]), torch.tensor([0]))),
+            "c": [torch.return_types.max((torch.tensor([9]), torch.tensor([4])))],
         },
     )
 
@@ -813,7 +815,7 @@ def test_mean_along_seq_nested() -> None:
 def test_median_along_batch_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         median_along_batch(torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], dtype=dtype)),
-        torch.return_types.median([torch.tensor([4, 5], dtype=dtype), torch.tensor([2, 2])]),
+        torch.return_types.median((torch.tensor([4, 5], dtype=dtype), torch.tensor([2, 2]))),
     )
 
 
@@ -823,7 +825,7 @@ def test_median_along_batch_tensor_keepdim_true(dtype: torch.dtype) -> None:
         median_along_batch(
             torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], dtype=dtype), keepdim=True
         ),
-        torch.return_types.median([torch.tensor([[4, 5]], dtype=dtype), torch.tensor([[2, 2]])]),
+        torch.return_types.median((torch.tensor([[4, 5]], dtype=dtype), torch.tensor([[2, 2]]))),
     )
 
 
@@ -838,9 +840,9 @@ def test_median_along_batch_dict(dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.return_types.median(
-                [torch.tensor([4, 5], dtype=dtype), torch.tensor([2, 2])]
+                (torch.tensor([4, 5], dtype=dtype), torch.tensor([2, 2]))
             ),
-            "b": torch.return_types.median([torch.tensor(2.0), torch.tensor(2)]),
+            "b": torch.return_types.median((torch.tensor(2.0), torch.tensor(2))),
         },
     )
 
@@ -857,9 +859,9 @@ def test_median_along_batch_dict_keepdim_true(dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.return_types.median(
-                [torch.tensor([[4, 5]], dtype=dtype), torch.tensor([[2, 2]])]
+                (torch.tensor([[4, 5]], dtype=dtype), torch.tensor([[2, 2]]))
             ),
-            "b": torch.return_types.median([torch.tensor([2.0]), torch.tensor([2])]),
+            "b": torch.return_types.median((torch.tensor([2.0]), torch.tensor([2]))),
         },
     )
 
@@ -874,9 +876,9 @@ def test_median_along_batch_nested() -> None:
             }
         ),
         {
-            "a": torch.return_types.median([torch.tensor([4.0, 5.0]), torch.tensor([2, 2])]),
-            "b": torch.return_types.median([torch.tensor(2.0), torch.tensor(2)]),
-            "c": [torch.return_types.median([torch.tensor(7), torch.tensor(2)])],
+            "a": torch.return_types.median((torch.tensor([4.0, 5.0]), torch.tensor([2, 2]))),
+            "b": torch.return_types.median((torch.tensor(2.0), torch.tensor(2))),
+            "c": [torch.return_types.median((torch.tensor(7), torch.tensor(2)))],
         },
     )
 
@@ -890,7 +892,7 @@ def test_median_along_batch_nested() -> None:
 def test_median_along_seq_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         median_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], dtype=dtype)),
-        torch.return_types.median([torch.tensor([2, 7], dtype=dtype), torch.tensor([2, 2])]),
+        torch.return_types.median((torch.tensor([2, 7], dtype=dtype), torch.tensor([2, 2]))),
     )
 
 
@@ -901,7 +903,7 @@ def test_median_along_seq_tensor_keepdim_true(dtype: torch.dtype) -> None:
             torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], dtype=dtype), keepdim=True
         ),
         torch.return_types.median(
-            [torch.tensor([[2], [7]], dtype=dtype), torch.tensor([[2], [2]])]
+            (torch.tensor([[2], [7]], dtype=dtype), torch.tensor([[2], [2]]))
         ),
     )
 
@@ -917,9 +919,9 @@ def test_median_along_seq_dict(dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.return_types.median(
-                [torch.tensor([2, 7], dtype=dtype), torch.tensor([2, 2])]
+                (torch.tensor([2, 7], dtype=dtype), torch.tensor([2, 2]))
             ),
-            "b": torch.return_types.median([torch.tensor([2]), torch.tensor([2])]),
+            "b": torch.return_types.median((torch.tensor([2]), torch.tensor([2]))),
         },
     )
 
@@ -936,9 +938,9 @@ def test_median_along_seq_dict_keepdim_true(dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.return_types.median(
-                [torch.tensor([[2], [7]], dtype=dtype), torch.tensor([[2], [2]])]
+                (torch.tensor([[2], [7]], dtype=dtype), torch.tensor([[2], [2]]))
             ),
-            "b": torch.return_types.median([torch.tensor([[2]]), torch.tensor([[2]])]),
+            "b": torch.return_types.median((torch.tensor([[2]]), torch.tensor([[2]]))),
         },
     )
 
@@ -953,9 +955,9 @@ def test_median_along_seq_nested() -> None:
             }
         ),
         {
-            "a": torch.return_types.median([torch.tensor([2, 7]), torch.tensor([2, 2])]),
-            "b": torch.return_types.median([torch.tensor([2]), torch.tensor([2])]),
-            "c": [torch.return_types.median([torch.tensor([7]), torch.tensor([2])])],
+            "a": torch.return_types.median((torch.tensor([2, 7]), torch.tensor([2, 2]))),
+            "b": torch.return_types.median((torch.tensor([2]), torch.tensor([2]))),
+            "c": [torch.return_types.median((torch.tensor([7]), torch.tensor([2])))],
         },
     )
 
@@ -969,7 +971,7 @@ def test_median_along_seq_nested() -> None:
 def test_min_along_batch_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         min_along_batch(torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], dtype=dtype)),
-        torch.return_types.min([torch.tensor([0, 1], dtype=dtype), torch.tensor([0, 0])]),
+        torch.return_types.min((torch.tensor([0, 1], dtype=dtype), torch.tensor([0, 0]))),
     )
 
 
@@ -979,7 +981,7 @@ def test_min_along_batch_tensor_keepdim_true(dtype: torch.dtype) -> None:
         min_along_batch(
             torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]], dtype=dtype), keepdim=True
         ),
-        torch.return_types.min([torch.tensor([[0, 1]], dtype=dtype), torch.tensor([[0, 0]])]),
+        torch.return_types.min((torch.tensor([[0, 1]], dtype=dtype), torch.tensor([[0, 0]]))),
     )
 
 
@@ -993,8 +995,8 @@ def test_min_along_batch_dict(dtype: torch.dtype) -> None:
             }
         ),
         {
-            "a": torch.return_types.min([torch.tensor([0, 1], dtype=dtype), torch.tensor([0, 0])]),
-            "b": torch.return_types.min([torch.tensor(0), torch.tensor(4)]),
+            "a": torch.return_types.min((torch.tensor([0, 1], dtype=dtype), torch.tensor([0, 0]))),
+            "b": torch.return_types.min((torch.tensor(0), torch.tensor(4))),
         },
     )
 
@@ -1011,9 +1013,9 @@ def test_min_along_batch_dict_keepdim_true(dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.return_types.min(
-                [torch.tensor([[0, 1]], dtype=dtype), torch.tensor([[0, 0]])]
+                (torch.tensor([[0, 1]], dtype=dtype), torch.tensor([[0, 0]]))
             ),
-            "b": torch.return_types.min([torch.tensor([0]), torch.tensor([4])]),
+            "b": torch.return_types.min((torch.tensor([0]), torch.tensor([4]))),
         },
     )
 
@@ -1029,10 +1031,10 @@ def test_min_along_batch_nested() -> None:
         ),
         {
             "a": torch.return_types.min(
-                [torch.tensor([0, 1], dtype=torch.float), torch.tensor([0, 0])]
+                (torch.tensor([0, 1], dtype=torch.float), torch.tensor([0, 0]))
             ),
-            "b": torch.return_types.min([torch.tensor(0), torch.tensor(4)]),
-            "c": [torch.return_types.min([torch.tensor(5), torch.tensor(0)])],
+            "b": torch.return_types.min((torch.tensor(0), torch.tensor(4))),
+            "c": [torch.return_types.min((torch.tensor(5), torch.tensor(0)))],
         },
     )
 
@@ -1046,7 +1048,7 @@ def test_min_along_batch_nested() -> None:
 def test_min_along_seq_tensor(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         min_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], dtype=dtype)),
-        torch.return_types.min([torch.tensor([0, 5], dtype=dtype), torch.tensor([0, 0])]),
+        torch.return_types.min((torch.tensor([0, 5], dtype=dtype), torch.tensor([0, 0]))),
     )
 
 
@@ -1054,7 +1056,7 @@ def test_min_along_seq_tensor(dtype: torch.dtype) -> None:
 def test_min_along_seq_tensor_keepdim_true(dtype: torch.dtype) -> None:
     assert objects_are_equal(
         min_along_seq(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], dtype=dtype), keepdim=True),
-        torch.return_types.min([torch.tensor([[0], [5]], dtype=dtype), torch.tensor([[0], [0]])]),
+        torch.return_types.min((torch.tensor([[0], [5]], dtype=dtype), torch.tensor([[0], [0]]))),
     )
 
 
@@ -1068,8 +1070,8 @@ def test_min_along_seq_dict(dtype: torch.dtype) -> None:
             }
         ),
         {
-            "a": torch.return_types.min([torch.tensor([0, 5], dtype=dtype), torch.tensor([0, 0])]),
-            "b": torch.return_types.min([torch.tensor([1]), torch.tensor([4])]),
+            "a": torch.return_types.min((torch.tensor([0, 5], dtype=dtype), torch.tensor([0, 0]))),
+            "b": torch.return_types.min((torch.tensor([1]), torch.tensor([4]))),
         },
     )
 
@@ -1086,9 +1088,9 @@ def test_min_along_seq_dict_keepdim_true(dtype: torch.dtype) -> None:
         ),
         {
             "a": torch.return_types.min(
-                [torch.tensor([[0], [5]], dtype=dtype), torch.tensor([[0], [0]])]
+                (torch.tensor([[0], [5]], dtype=dtype), torch.tensor([[0], [0]]))
             ),
-            "b": torch.return_types.min([torch.tensor([[1]]), torch.tensor([[4]])]),
+            "b": torch.return_types.min((torch.tensor([[1]]), torch.tensor([[4]]))),
         },
     )
 
@@ -1104,10 +1106,10 @@ def test_min_along_seq_nested() -> None:
         ),
         {
             "a": torch.return_types.min(
-                [torch.tensor([0, 5], dtype=torch.float), torch.tensor([0, 0])]
+                (torch.tensor([0, 5], dtype=torch.float), torch.tensor([0, 0]))
             ),
-            "b": torch.return_types.min([torch.tensor([1]), torch.tensor([4])]),
-            "c": [torch.return_types.min([torch.tensor([5]), torch.tensor([0])])],
+            "b": torch.return_types.min((torch.tensor([1]), torch.tensor([4]))),
+            "c": [torch.return_types.min((torch.tensor([5]), torch.tensor([0])))],
         },
     )
 
@@ -1377,12 +1379,12 @@ def test_sum_along_seq_nested() -> None:
 
 
 def test_max_along_batch_keeps_namedtuple() -> None:
-    out = max_along_batch({"a": torch.rand(3, 2)})
+    out = cast("Any", max_along_batch({"a": torch.rand(3, 2)}))
     assert isinstance(out["a"], torch.return_types.max)
 
 
 def test_sort_along_seq_keeps_namedtuple() -> None:
     from batchtensor.nested import sort_along_seq
 
-    out = sort_along_seq({"a": torch.rand(3, 4)})
+    out = cast("Any", sort_along_seq({"a": torch.rand(3, 4)}))
     assert isinstance(out["a"], torch.return_types.sort)
