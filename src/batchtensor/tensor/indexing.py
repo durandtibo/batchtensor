@@ -36,6 +36,9 @@ def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch
             ``(index.size(0), *tensor.shape[1:])`` where the batch dimension
             size matches the length of the index tensor.
 
+    Raises:
+        ValueError: if ``index`` is not a 1-D tensor.
+
     Example:
         ```pycon
         >>> import torch
@@ -69,6 +72,9 @@ def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch
         ``slice_along_batch``: Select a contiguous range of batch items.
         ``index_select_along_seq``: Index select along sequence dimension.
     """
+    if index.ndim != 1:
+        msg = f"index must be a 1-D tensor but received a tensor with {index.ndim} dimensions"
+        raise ValueError(msg)
     return tensor.index_select(dim=BATCH_DIM, index=index)
 
 
@@ -83,10 +89,17 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
 
     Args:
         tensor: The input tensor.
-        index: The 1-D tensor containing the indices to index.
+        index: The tensor containing the indices to index. A 1-D tensor
+            of shape ``(n,)`` selects the same positions for every batch
+            item. A 2-D tensor of shape ``(batch_size, n)`` selects
+            different positions for each batch item.
 
     Returns:
         The indexed tensor along the sequence dimension.
+
+    Raises:
+        ValueError: if ``index`` is not a 1-D or 2-D tensor, or if its
+            first dimension is not the batch size of ``tensor`` (2-D).
 
     Example:
         ```pycon
@@ -106,13 +119,18 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
     """
     if index.ndim == 1:
         return tensor.index_select(dim=SEQ_DIM, index=index)
-    batch_size, seq_len = index.shape[:2]
+    if index.ndim != 2:
+        msg = (
+            f"index must be a 1-D or 2-D tensor but received a tensor with {index.ndim} dimensions"
+        )
+        raise ValueError(msg)
+    batch_size, seq_len = index.shape
     if batch_size != tensor.shape[BATCH_DIM]:
         msg = (
             f"index batch size ({batch_size}) is not compatible with "
             f"tensor batch size ({tensor.shape[BATCH_DIM]})"
         )
-        raise RuntimeError(msg)
+        raise ValueError(msg)
     batch_index = torch.arange(batch_size, device=index.device).repeat_interleave(seq_len)
     index = index.flatten().long()
     return tensor[batch_index, index].reshape(batch_size, seq_len, *tensor.shape[2:])
