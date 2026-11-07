@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, cast
 
 import pytest
 import torch
@@ -366,7 +366,7 @@ def test_cat_along_batch_nested() -> None:
         {"a": torch.ones(1, 2), "b": [torch.zeros(1), (torch.ones(1, 3),)]},
         {"a": torch.ones(2, 2), "b": [torch.zeros(2), (torch.ones(2, 3),)]},
     ]
-    out = cat_along_batch(data)
+    out = cast("Any", cat_along_batch(data))
     assert out["a"].shape == (3, 2)
     assert out["b"][0].shape == (3,)
     assert isinstance(out["b"], list)
@@ -375,7 +375,7 @@ def test_cat_along_batch_nested() -> None:
 
 
 def test_stack_along_seq_list() -> None:
-    out = stack_along_seq([[torch.ones(2, 3)], [torch.ones(2, 3)]])
+    out = cast("Any", stack_along_seq([[torch.ones(2, 3)], [torch.ones(2, 3)]]))
     assert out[0].shape == (2, 2, 3)
 
 
@@ -387,10 +387,13 @@ def test_cat_along_batch_length_mismatch() -> None:
 def test_cat_along_batch_defaultdict() -> None:
     from collections import defaultdict
 
-    d = defaultdict(list, {"a": torch.ones(1)})
-    assert cat_along_batch([d, d])["a"].shape == (2,)
+    d = defaultdict(torch.Tensor, {"a": torch.ones(1)})
+    assert cast("Any", cat_along_batch([d, d]))["a"].shape == (2,)
 
 
 def test_combine_custom_fn() -> None:
-    out = combine([{"a": torch.ones(2)}, {"a": torch.ones(2)}], lambda t: sum(t))
+    out = cast(
+        "Any",
+        combine([{"a": torch.ones(2)}, {"a": torch.ones(2)}], lambda t: torch.stack(t).sum(dim=0)),
+    )
     assert out["a"].tolist() == [2.0, 2.0]

@@ -6,7 +6,7 @@ from __future__ import annotations
 __all__ = ["as_tensor", "from_numpy", "to_numpy"]
 
 from functools import partial
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import torch
 from coola.recursive import recursive_apply
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 
 def as_tensor(
-    data: NestedTensor, dtype: torch.dtype | None = None, device: torch.device | None = None
+    data: Any, dtype: torch.dtype | None = None, device: torch.device | None = None
 ) -> NestedTensor:
     r"""Create a new nested data structure with ``torch.Tensor``s.
 
@@ -74,7 +74,7 @@ def as_tensor(
     return recursive_apply(data, partial(torch.as_tensor, dtype=dtype, device=device))
 
 
-def from_numpy(data: NestedTensor) -> NestedTensor:
+def from_numpy(data: Any) -> NestedTensor:
     r"""Create a new nested data structure where the ``numpy.ndarray``s
     are converted to ``torch.Tensor``s.
 

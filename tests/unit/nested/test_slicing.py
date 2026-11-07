@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any, cast
+
 import torch
 from coola.equality import objects_are_equal
 
@@ -579,7 +581,7 @@ def test_split_along_seq_split_size_list() -> None:
 
 def test_chunk_along_batch_nested() -> None:
     data = {"a": torch.arange(4), "b": [torch.arange(4), (torch.arange(4),)]}
-    out = chunk_along_batch(data, chunks=2)
+    out = cast("Any", chunk_along_batch(data, chunks=2))
     assert len(out) == 2
     assert out[1]["a"].tolist() == [2, 3]
     assert isinstance(out[0]["b"], list)
@@ -587,7 +589,7 @@ def test_chunk_along_batch_nested() -> None:
 
 
 def test_split_along_seq_list() -> None:
-    out = split_along_seq([torch.ones(2, 4), torch.ones(2, 4)], 2)
+    out = cast("Any", split_along_seq([torch.ones(2, 4), torch.ones(2, 4)], 2))
     assert len(out) == 2
     assert out[0][1].shape == (2, 2)
 

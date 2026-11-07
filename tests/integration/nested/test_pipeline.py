@@ -61,5 +61,7 @@ def test_pad_seq_and_mask_consistent() -> None:
     mask = lengths_to_mask(lengths)
     padded = pad_along_seq({"x": torch.ones(3, 3)}, pad_size=2)
     assert isinstance(padded, dict)
-    assert padded["x"].shape[1] == mask.shape[1] + 2
+    x = padded["x"]
+    assert isinstance(x, torch.Tensor)
+    assert x.shape[1] == mask.shape[1] + 2
     assert mask.sum(dim=1).tolist() == lengths.tolist()
