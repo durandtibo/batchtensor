@@ -144,6 +144,8 @@ __all__ = [
     "prod_along_seq",
     "repeat_along_batch",
     "repeat_along_seq",
+    "roll_along_batch",
+    "roll_along_seq",
     "select_along_batch",
     "select_along_seq",
     "shuffle_along_batch",
@@ -195,6 +197,8 @@ from batchtensor.nested.permutation import (
     flip_along_seq,
     permute_along_batch,
     permute_along_seq,
+    roll_along_batch,
+    roll_along_seq,
     shuffle_along_batch,
     shuffle_along_seq,
 )

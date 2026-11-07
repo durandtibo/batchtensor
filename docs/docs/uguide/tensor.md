@@ -545,6 +545,21 @@ tensor([[8, 7, 2, 1],
 
 ```
 
+### roll
+
+`roll_along_batch` and `roll_along_seq` return the tensor with the elements rolled along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import roll_along_batch
+>>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+>>> roll_along_batch(tensor, 1)
+tensor([[8, 7, 2, 1],
+        [0, 1, 3, 2],
+        [4, 9, 5, 6]])
+
+```
+
 ## Best Practices
 
 1. **Dimension Awareness**: Always ensure your tensors follow the expected shape conventions

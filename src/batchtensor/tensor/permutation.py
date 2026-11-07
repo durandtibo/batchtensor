@@ -264,3 +264,73 @@ def flip_along_seq(tensor: torch.Tensor) -> torch.Tensor:
         ```
     """
     return torch.flip(tensor, dims=(SEQ_DIM,))
+
+
+def roll_along_batch(tensor: torch.Tensor, shifts: int) -> torch.Tensor:
+    r"""Return the tensor with the elements rolled along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        shifts: The number of places by which the elements are shifted. The elements shifted beyond the last position are re-introduced at the first position.
+
+    Returns:
+        A new tensor with the same shape and the tensor with the elements rolled along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import roll_along_batch
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = roll_along_batch(tensor, 1)
+        >>> out
+        tensor([[8, 7, 2, 1],
+                [0, 1, 3, 2],
+                [4, 9, 5, 6]])
+        >>> out = roll_along_batch(tensor, -1)
+        >>> out
+        tensor([[4, 9, 5, 6],
+                [8, 7, 2, 1],
+                [0, 1, 3, 2]])
+
+        ```
+    """
+    return torch.roll(tensor, shifts=shifts, dims=BATCH_DIM)
+
+
+def roll_along_seq(tensor: torch.Tensor, shifts: int) -> torch.Tensor:
+    r"""Return the tensor with the elements rolled along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        shifts: The number of places by which the elements are shifted. The elements shifted beyond the last position are re-introduced at the first position.
+
+    Returns:
+        A new tensor with the same shape and the tensor with the elements rolled along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import roll_along_seq
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = roll_along_seq(tensor, 1)
+        >>> out
+        tensor([[2, 0, 1, 3],
+                [6, 4, 9, 5],
+                [1, 8, 7, 2]])
+        >>> out = roll_along_seq(tensor, -1)
+        >>> out
+        tensor([[1, 3, 2, 0],
+                [9, 5, 6, 4],
+                [7, 2, 1, 8]])
+
+        ```
+    """
+    return torch.roll(tensor, shifts=shifts, dims=SEQ_DIM)

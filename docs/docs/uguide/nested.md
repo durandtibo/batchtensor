@@ -444,6 +444,21 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ```
 
+### roll
+
+`roll_along_batch` and `roll_along_seq` return the tensor with the elements rolled along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import roll_along_batch
+>>> data = {"a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])}
+>>> roll_along_batch(data, 1)
+{'a': tensor([[8, 7, 2, 1],
+        [0, 1, 3, 2],
+        [4, 9, 5, 6]])}
+
+```
+
 ## Best Practices
 
 1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible
