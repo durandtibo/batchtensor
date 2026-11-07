@@ -21,6 +21,8 @@ __all__ = [
     "min_along_seq",
     "prod_along_batch",
     "prod_along_seq",
+    "std_along_batch",
+    "std_along_seq",
     "sum_along_batch",
     "sum_along_seq",
 ]
@@ -693,3 +695,73 @@ def sum_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tenso
         ```
     """
     return torch.sum(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def std_along_batch(
+    tensor: torch.Tensor, *, correction: int = 1, keepdim: bool = False
+) -> torch.Tensor:
+    r"""Return the standard deviation along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the standard deviation along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import std_along_batch
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = std_along_batch(tensor)
+        >>> out
+        tensor([4.0000, 4.1633, 1.5275, 2.6458])
+        >>> out = std_along_batch(tensor, keepdim=True)
+        >>> out
+        tensor([[4.0000, 4.1633, 1.5275, 2.6458]])
+
+        ```
+    """
+    return torch.std(tensor, dim=BATCH_DIM, correction=correction, keepdim=keepdim)
+
+
+def std_along_seq(
+    tensor: torch.Tensor, *, correction: int = 1, keepdim: bool = False
+) -> torch.Tensor:
+    r"""Return the standard deviation along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the standard deviation along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import std_along_seq
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = std_along_seq(tensor)
+        >>> out
+        tensor([1.2910, 2.1602, 3.5119])
+        >>> out = std_along_seq(tensor, keepdim=True)
+        >>> out
+        tensor([[1.2910],
+                [2.1602],
+                [3.5119]])
+
+        ```
+    """
+    return torch.std(tensor, dim=SEQ_DIM, correction=correction, keepdim=keepdim)

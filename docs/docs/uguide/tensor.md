@@ -463,6 +463,21 @@ tensor([[5, 6],
 
 ```
 
+## Additional Reductions and Reordering
+
+### std
+
+`std_along_batch` and `std_along_seq` return the standard deviation along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import std_along_batch
+>>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+>>> std_along_batch(tensor)
+tensor([4.0000, 4.1633, 1.5275, 2.6458])
+
+```
+
 ## Best Practices
 
 1. **Dimension Awareness**: Always ensure your tensors follow the expected shape conventions

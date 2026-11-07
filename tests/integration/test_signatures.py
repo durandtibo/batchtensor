@@ -12,6 +12,9 @@ if TYPE_CHECKING:
 
 OPTIONS = (
     "side",
+    "correction",
+    "largest",
+    "sorted",
     "keepdim",
     "descending",
     "stable",
