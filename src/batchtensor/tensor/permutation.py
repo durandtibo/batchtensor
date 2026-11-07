@@ -39,8 +39,8 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
             permutation.
 
     Raises:
-        ValueError: if the shape of the permutation does not match
-            the batch dimension of the tensor.
+        ValueError: if the permutation is not a 1-D tensor, or if its
+            shape does not match the batch dimension of the tensor.
 
     Example:
         ```pycon
@@ -71,7 +71,7 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
         ``permute_along_seq``: Permute the sequence dimension instead.
         ``index_select_along_batch``: Select specific indices (can duplicate or omit items).
     """
-    if permutation.shape[0] != tensor.shape[BATCH_DIM]:
+    if permutation.ndim != 1 or permutation.shape[0] != tensor.shape[BATCH_DIM]:
         msg = (
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
             f"({tensor.shape})"
@@ -97,8 +97,8 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
         The tensor with permuted data along the sequence dimension.
 
     Raises:
-        ValueError: if the shape of the permutation does not match
-            the sequence dimension of the tensor.
+        ValueError: if the permutation is not a 1-D tensor, or if its
+            shape does not match the sequence dimension of the tensor.
 
     Example:
         ```pycon
@@ -112,7 +112,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
 
         ```
     """
-    if permutation.shape[0] != tensor.shape[SEQ_DIM]:
+    if permutation.ndim != 1 or permutation.shape[0] != tensor.shape[SEQ_DIM]:
         msg = (
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
             f"({tensor.shape})"

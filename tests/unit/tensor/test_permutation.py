@@ -185,3 +185,13 @@ def test_shuffle_along_seq_int_seed_repeat_call() -> None:
     assert objects_are_equal(
         shuffle_along_seq(tensor, generator=7), shuffle_along_seq(tensor, generator=7)
     )
+
+
+def test_permute_along_batch_permutation_2d() -> None:
+    with pytest.raises(ValueError, match="permutation"):
+        permute_along_batch(torch.ones(3, 2), torch.tensor([[0, 1, 2]]))
+
+
+def test_permute_along_seq_permutation_2d() -> None:
+    with pytest.raises(ValueError, match="permutation"):
+        permute_along_seq(torch.ones(2, 3), torch.tensor([[0, 1, 2]]))

@@ -73,7 +73,7 @@ def test_lengths_to_mask_all_zero_with_max_len() -> None:
     )
 
 
-@pytest.mark.parametrize("dtype", [torch.int32, torch.int64, torch.float32])
+@pytest.mark.parametrize("dtype", [torch.uint8, torch.int8, torch.int32, torch.int64])
 def test_lengths_to_mask_dtype(dtype: torch.dtype) -> None:
     out = lengths_to_mask(torch.tensor([2, 1], dtype=dtype))
     assert out.dtype == torch.bool
@@ -84,3 +84,29 @@ def test_lengths_to_mask_matches_pad_along_seq_layout() -> None:
     lengths = torch.tensor([2, 3])
     mask = lengths_to_mask(lengths, max_len=5)
     assert mask.sum(dim=1).tolist() == lengths.tolist()
+
+
+@pytest.mark.parametrize("dtype", [torch.float32, torch.float64, torch.bool])
+def test_lengths_to_mask_non_integer_dtype(dtype: torch.dtype) -> None:
+    with pytest.raises(ValueError, match="must be an integer tensor but received dtype"):
+        lengths_to_mask(torch.tensor([1, 0], dtype=dtype))
+
+
+def test_lengths_to_mask_negative_length() -> None:
+    assert objects_are_equal(
+        lengths_to_mask(torch.tensor([-1, 2])),
+        torch.tensor([[False, False], [True, True]]),
+    )
+
+
+def test_lengths_to_mask_all_negative_lengths() -> None:
+    assert objects_are_equal(
+        lengths_to_mask(torch.tensor([-3, -1])), torch.zeros(2, 0, dtype=torch.bool)
+    )
+
+
+def test_lengths_to_mask_max_len_smaller_than_length_truncates() -> None:
+    assert objects_are_equal(
+        lengths_to_mask(torch.tensor([5, 2]), max_len=3),
+        torch.tensor([[True, True, True], [True, True, False]]),
+    )

@@ -109,5 +109,25 @@ def test_index_select_along_seq_extra_dims() -> None:
 
 
 def test_index_select_along_seq_batch_size_mismatch() -> None:
-    with pytest.raises(RuntimeError, match="not compatible"):
+    with pytest.raises(ValueError, match="not compatible"):
         index_select_along_seq(torch.rand(3, 4), torch.tensor([[0, 1], [1, 2]]))
+
+
+def test_index_select_along_seq_index_3d() -> None:
+    with pytest.raises(ValueError, match=r"1-D or 2-D tensor but received a tensor with 3 dim"):
+        index_select_along_seq(torch.rand(2, 3, 4), torch.zeros(2, 3, 1, dtype=torch.long))
+
+
+def test_index_select_along_seq_index_0d() -> None:
+    with pytest.raises(ValueError, match=r"1-D or 2-D tensor but received a tensor with 0 dim"):
+        index_select_along_seq(torch.rand(2, 3), torch.tensor(1))
+
+
+def test_index_select_along_batch_index_2d() -> None:
+    with pytest.raises(ValueError, match=r"1-D tensor but received a tensor with 2 dim"):
+        index_select_along_batch(torch.rand(3, 4), torch.tensor([[0, 1]]))
+
+
+def test_index_select_along_batch_index_0d() -> None:
+    with pytest.raises(ValueError, match=r"1-D tensor but received a tensor with 0 dim"):
+        index_select_along_batch(torch.rand(3, 4), torch.tensor(1))
