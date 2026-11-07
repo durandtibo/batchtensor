@@ -362,6 +362,21 @@ Convert tensor types in nested structures:
 
 See the [Type Conversion](#type-conversion) section for more examples.
 
+## Additional Reductions and Reordering
+
+### std
+
+`std_along_batch` and `std_along_seq` return the standard deviation along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import std_along_batch
+>>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+>>> std_along_batch(data)
+{'a': tensor([4.0000, 4.1633, 1.5275, 2.6458])}
+
+```
+
 ## Best Practices
 
 1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible
