@@ -7,6 +7,8 @@ import torch
 from coola.equality import objects_are_equal
 
 from batchtensor.nested import (
+    all_along_batch,
+    all_along_seq,
     amax_along_batch,
     amax_along_seq,
     amin_along_batch,
@@ -1684,3 +1686,119 @@ def test_any_along_seq_non_tensor_leaf() -> None:
     data: Any = {"a": "x"}
     with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
         any_along_seq(data)
+
+
+#######################################################
+#     Tests for all_along_batch and all_along_seq     #
+#######################################################
+
+
+def test_all_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        all_along_batch(
+            torch.tensor(
+                [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+            )
+        ),
+        torch.tensor([False, False, True, False]),
+    )
+
+
+def test_all_along_batch_dict_and_list() -> None:
+    assert objects_are_equal(
+        all_along_batch(
+            {
+                "a": torch.tensor(
+                    [
+                        [True, False, True, True],
+                        [True, True, True, True],
+                        [False, False, True, False],
+                    ]
+                ),
+                "b": [
+                    torch.tensor(
+                        [
+                            [True, False, True, True],
+                            [True, True, True, True],
+                            [False, False, True, False],
+                        ]
+                    )
+                ],
+            }
+        ),
+        {
+            "a": torch.tensor([False, False, True, False]),
+            "b": [torch.tensor([False, False, True, False])],
+        },
+    )
+
+
+def test_all_along_batch_tuple() -> None:
+    out = all_along_batch(
+        (
+            torch.tensor(
+                [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+            ),
+        )
+    )
+    assert isinstance(out, tuple)
+
+
+def test_all_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        all_along_batch(data)
+
+
+def test_all_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        all_along_seq(
+            torch.tensor(
+                [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+            )
+        ),
+        torch.tensor([False, True, False]),
+    )
+
+
+def test_all_along_seq_dict_and_list() -> None:
+    assert objects_are_equal(
+        all_along_seq(
+            {
+                "a": torch.tensor(
+                    [
+                        [True, False, True, True],
+                        [True, True, True, True],
+                        [False, False, True, False],
+                    ]
+                ),
+                "b": [
+                    torch.tensor(
+                        [
+                            [True, False, True, True],
+                            [True, True, True, True],
+                            [False, False, True, False],
+                        ]
+                    )
+                ],
+            }
+        ),
+        {"a": torch.tensor([False, True, False]), "b": [torch.tensor([False, True, False])]},
+    )
+
+
+def test_all_along_seq_tuple() -> None:
+    out = all_along_seq(
+        (
+            torch.tensor(
+                [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+            ),
+        )
+    )
+    assert isinstance(out, tuple)
+
+
+def test_all_along_seq_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        all_along_seq(data)
