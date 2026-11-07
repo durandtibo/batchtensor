@@ -199,6 +199,8 @@ tensor([[1, 3],
 
 ### Repetition
 
+Use `repeat_along_batch` or `repeat_along_seq` to repeat the data along a dimension.
+
 Repeat sequences:
 
 ```pycon
@@ -208,6 +210,40 @@ Repeat sequences:
 >>> repeat_along_seq(tensor, repeats=3)
 tensor([[1, 2, 1, 2, 1, 2],
         [3, 4, 3, 4, 3, 4]])
+
+```
+
+## Padding Operations
+
+### Padding a Batch
+
+Pad along the batch or sequence dimension, at the end (`side="right"`, default) or at the start
+(`side="left"`):
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import pad_along_seq
+>>> pad_along_seq(torch.tensor([[1, 2], [3, 4]]), 1, side="left")
+tensor([[0, 1, 2],
+        [0, 3, 4]])
+
+```
+
+### Building a Batch from Sequences
+
+`pad_sequences` pads tensors of different lengths into one `(batch, seq, ...)` tensor, and
+`lengths_to_mask` builds the mask of the padded batch:
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import lengths_to_mask, pad_sequences
+>>> sequences = [torch.tensor([1, 2, 3]), torch.tensor([4])]
+>>> pad_sequences(sequences)
+tensor([[1, 2, 3],
+        [4, 0, 0]])
+>>> lengths_to_mask(torch.tensor([len(s) for s in sequences]))
+tensor([[ True,  True,  True],
+        [ True, False, False]])
 
 ```
 

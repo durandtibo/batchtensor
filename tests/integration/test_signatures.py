@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 OPTIONS = (
+    "side",
     "keepdim",
     "descending",
     "stable",
