@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from batchtensor.nested.types import T
 
 
-def pad_along_batch(data: T, pad_size: int, value: float = 0.0) -> T:
+def pad_along_batch(data: T, pad_size: int, *, value: float = 0.0) -> T:
     r"""Pad all the tensors along the batch dimension.
 
     The padding is added at the end of the batch dimension.
@@ -49,7 +49,7 @@ def pad_along_batch(data: T, pad_size: int, value: float = 0.0) -> T:
     return apply_to_tensors(data, partial(bt.pad_along_batch, pad_size=pad_size, value=value))
 
 
-def pad_along_seq(data: T, pad_size: int, value: float = 0.0) -> T:
+def pad_along_seq(data: T, pad_size: int, *, value: float = 0.0) -> T:
     r"""Pad all the tensors along the sequence dimension.
 
     The padding is added at the end of the sequence dimension.

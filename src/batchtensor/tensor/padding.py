@@ -9,7 +9,7 @@ import torch.nn.functional
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 
 
-def pad_along_batch(tensor: torch.Tensor, pad_size: int, value: float = 0.0) -> torch.Tensor:
+def pad_along_batch(tensor: torch.Tensor, pad_size: int, *, value: float = 0.0) -> torch.Tensor:
     r"""Pad the tensor along the batch dimension.
 
     The padding is added at the end of the batch dimension.
@@ -50,7 +50,7 @@ def pad_along_batch(tensor: torch.Tensor, pad_size: int, value: float = 0.0) -> 
     return _pad(tensor, dim=BATCH_DIM, pad_size=pad_size, value=value)
 
 
-def pad_along_seq(tensor: torch.Tensor, pad_size: int, value: float = 0.0) -> torch.Tensor:
+def pad_along_seq(tensor: torch.Tensor, pad_size: int, *, value: float = 0.0) -> torch.Tensor:
     r"""Pad the tensor along the sequence dimension.
 
     The padding is added at the end of the sequence dimension.

@@ -88,16 +88,16 @@ def test_shuffle_along_batch() -> None:
 def test_shuffle_along_batch_same_random_seed() -> None:
     tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
     assert objects_are_equal(
-        shuffle_along_batch(tensor, make_torch_generator(1)),
-        shuffle_along_batch(tensor, make_torch_generator(1)),
+        shuffle_along_batch(tensor, generator=make_torch_generator(1)),
+        shuffle_along_batch(tensor, generator=make_torch_generator(1)),
     )
 
 
 def test_shuffle_along_batch_different_random_seeds() -> None:
     tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
     assert not objects_are_equal(
-        shuffle_along_batch(tensor, make_torch_generator(1)),
-        shuffle_along_batch(tensor, make_torch_generator(2)),
+        shuffle_along_batch(tensor, generator=make_torch_generator(1)),
+        shuffle_along_batch(tensor, generator=make_torch_generator(2)),
     )
 
 
@@ -105,7 +105,8 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
     tensor = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
     generator = make_torch_generator(1)
     assert not objects_are_equal(
-        shuffle_along_batch(tensor, generator), shuffle_along_batch(tensor, generator)
+        shuffle_along_batch(tensor, generator=generator),
+        shuffle_along_batch(tensor, generator=generator),
     )
 
 
@@ -128,16 +129,16 @@ def test_shuffle_along_seq() -> None:
 def test_shuffle_along_seq_same_random_seed() -> None:
     tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     assert objects_are_equal(
-        shuffle_along_seq(tensor, make_torch_generator(1)),
-        shuffle_along_seq(tensor, make_torch_generator(1)),
+        shuffle_along_seq(tensor, generator=make_torch_generator(1)),
+        shuffle_along_seq(tensor, generator=make_torch_generator(1)),
     )
 
 
 def test_shuffle_along_seq_different_random_seeds() -> None:
     tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     assert not objects_are_equal(
-        shuffle_along_seq(tensor, make_torch_generator(1)),
-        shuffle_along_seq(tensor, make_torch_generator(2)),
+        shuffle_along_seq(tensor, generator=make_torch_generator(1)),
+        shuffle_along_seq(tensor, generator=make_torch_generator(2)),
     )
 
 
@@ -145,7 +146,8 @@ def test_shuffle_along_seq_multiple_shuffle() -> None:
     tensor = torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
     generator = make_torch_generator(1)
     assert not objects_are_equal(
-        shuffle_along_seq(tensor, generator), shuffle_along_seq(tensor, generator)
+        shuffle_along_seq(tensor, generator=generator),
+        shuffle_along_seq(tensor, generator=generator),
     )
 
 

@@ -8,7 +8,7 @@ __all__ = ["lengths_to_mask"]
 import torch
 
 
-def lengths_to_mask(lengths: torch.Tensor, max_len: int | None = None) -> torch.Tensor:
+def lengths_to_mask(lengths: torch.Tensor, *, max_len: int | None = None) -> torch.Tensor:
     r"""Convert a tensor of sequence lengths to a boolean mask.
 
     This is typically used together with ``pad_along_seq`` to know which
