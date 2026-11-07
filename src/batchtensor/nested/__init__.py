@@ -164,6 +164,8 @@ __all__ = [
     "sum_along_seq",
     "to",
     "to_numpy",
+    "topk_along_batch",
+    "topk_along_seq",
     "var_along_batch",
     "var_along_seq",
 ]
@@ -173,6 +175,8 @@ from batchtensor.nested.comparison import (
     argsort_along_seq,
     sort_along_batch,
     sort_along_seq,
+    topk_along_batch,
+    topk_along_seq,
 )
 from batchtensor.nested.conversion import from_numpy, to_numpy
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
