@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from typing import Any
+
+import pytest
 import torch
 from coola.equality import objects_are_equal
 
@@ -53,3 +56,30 @@ def test_pad_along_seq_value() -> None:
         pad_along_seq({"a": torch.tensor([[0, 1], [2, 3]])}, pad_size=1, value=-1),
         {"a": torch.tensor([[0, 1, -1], [2, 3, -1]])},
     )
+
+
+#####################################
+#     Tests for the side option     #
+#####################################
+
+
+def test_pad_along_batch_side_left() -> None:
+    assert objects_are_equal(
+        pad_along_batch(
+            {"a": torch.tensor([[0, 1], [2, 3]]), "b": torch.tensor([4, 5])}, 1, side="left"
+        ),
+        {"a": torch.tensor([[0, 0], [0, 1], [2, 3]]), "b": torch.tensor([0, 4, 5])},
+    )
+
+
+def test_pad_along_seq_side_left() -> None:
+    assert objects_are_equal(
+        pad_along_seq([torch.tensor([[1, 2], [3, 4]])], 1, side="left"),
+        [torch.tensor([[0, 1, 2], [0, 3, 4]])],
+    )
+
+
+def test_pad_along_batch_invalid_side() -> None:
+    side: Any = "top"
+    with pytest.raises(ValueError, match="side must be 'left' or 'right' but received 'top'"):
+        pad_along_batch(torch.ones(2), 1, side=side)

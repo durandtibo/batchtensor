@@ -9,6 +9,7 @@ from coola.equality import objects_are_equal
 from batchtensor.nested import (
     cat_along_batch,
     cat_along_seq,
+    repeat_along_batch,
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,
@@ -396,3 +397,37 @@ def test_cat_along_batch_defaultdict() -> None:
 
     d = defaultdict(torch.Tensor, {"a": torch.ones(1)})
     assert cast("Any", cat_along_batch([d, d]))["a"].shape == (2,)
+
+
+########################################
+#     Tests for repeat_along_batch     #
+########################################
+
+
+def test_repeat_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        repeat_along_batch(torch.tensor([1, 2]), 2), torch.tensor([1, 2, 1, 2])
+    )
+
+
+def test_repeat_along_batch_dict() -> None:
+    assert objects_are_equal(
+        repeat_along_batch({"a": torch.tensor([[0, 1], [2, 3]]), "b": torch.tensor([4, 5])}, 2),
+        {
+            "a": torch.tensor([[0, 1], [2, 3], [0, 1], [2, 3]]),
+            "b": torch.tensor([4, 5, 4, 5]),
+        },
+    )
+
+
+def test_repeat_along_batch_list() -> None:
+    assert objects_are_equal(
+        repeat_along_batch([torch.tensor([1]), torch.tensor([2])], 2),
+        [torch.tensor([1, 1]), torch.tensor([2, 2])],
+    )
+
+
+def test_repeat_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        repeat_along_batch(data, 2)
