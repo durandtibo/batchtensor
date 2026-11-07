@@ -11,7 +11,7 @@ The `batchtensor` library is organized into four main modules:
 batchtensor/
 ├── nested/         # Operations for nested data structures
 ├── tensor/         # Operations for individual tensors
-├── utils/          # Utility functions (seed management)
+├── utils/          # Seed management and the structure helpers
 └── constants.py    # Dimension constants
 ```
 
@@ -108,8 +108,8 @@ mirror the tensor module:
 Each nested function:
 
 - Recursively applies the corresponding tensor operation
-- Preserves the nested structure (dict, list, tuple)
-- Uses `coola.recursive_apply` for recursive traversal
+- Preserves the nested structure (dict, list, tuple, named tuple, ...)
+- Goes through `apply_to_tensors`, `split_tensors` and `combine_tensors` (see Utils Module)
 - Handles arbitrary nesting depth
 
 ### Utils Module
@@ -118,6 +118,14 @@ The utils module provides supporting functionality:
 
 - **seed.py**: Random seed management for reproducibility
   - `setup_torch_generator()`: Flexible generator setup
+  - `random_permutation()`: Random permutation from a generator, a seed or the global RNG
+- **structure.py**: The only code that traverses nested structures
+  - `apply_to_tensors()`: Map a tensor function over the leaves (`TypeError` for a non-tensor leaf)
+  - `split_tensors()` / `combine_tensors()`: One structure to N, and N to one
+  - `get_size()`: Common size of the leaves along a dimension
+
+The layering is `constants` <- `utils` <- `tensor` <- `nested`, enforced by `import-linter`.
+See [Design principles](design_principles.md) and the [Migration guide](migration.md).
 
 ## Implementation Patterns
 

@@ -28,6 +28,17 @@ def check_nested() -> None:
     )
 
 
+def check_utils() -> None:
+    logger.info("Checking batchtensor.utils package...")
+
+    from batchtensor.utils.structure import apply_to_tensors
+
+    assert objects_are_equal(
+        apply_to_tensors({"a": torch.ones(2), "b": [torch.zeros(1)]}, torch.neg),
+        {"a": -torch.ones(2), "b": [-torch.zeros(1)]},
+    )
+
+
 def check_tensor() -> None:
     logger.info("Checking batchtensor.tensor package...")
 
@@ -44,6 +55,7 @@ def check_tensor() -> None:
 def main() -> None:
     check_nested()
     check_tensor()
+    check_utils()
 
 
 if __name__ == "__main__":
