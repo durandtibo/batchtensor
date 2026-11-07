@@ -9,7 +9,7 @@ from coola.equality import objects_are_equal
 from batchtensor.nested import (
     cat_along_batch,
     cat_along_seq,
-    combine,
+    repeat_along_batch,
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,
@@ -17,6 +17,8 @@ from batchtensor.nested import (
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Sequence
+
+    from batchtensor.nested import NestedTensor
 
 #####################################
 #     Tests for cat_along_batch     #
@@ -52,11 +54,12 @@ def test_cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> None:
 
 
 def test_cat_along_batch_empty() -> None:
-    assert objects_are_equal(cat_along_batch([]), {})
+    with pytest.raises(ValueError, match="empty sequence"):
+        cat_along_batch([])
 
 
 def test_cat_along_batch_key_mismatch() -> None:
-    with pytest.raises(KeyError, match="the dictionaries must have the same keys"):
+    with pytest.raises(ValueError, match="same keys"):
         cat_along_batch(
             [
                 {"a": torch.tensor([[0, 1], [2, 3]])},
@@ -105,11 +108,12 @@ def test_cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> None:
 
 
 def test_cat_along_seq_empty() -> None:
-    assert objects_are_equal(cat_along_seq([]), {})
+    with pytest.raises(ValueError, match="empty sequence"):
+        cat_along_seq([])
 
 
 def test_cat_along_seq_key_mismatch() -> None:
-    with pytest.raises(KeyError, match="the dictionaries must have the same keys"):
+    with pytest.raises(ValueError, match="same keys"):
         cat_along_seq(
             [
                 {"a": torch.tensor([[0, 1], [2, 3]])},
@@ -317,11 +321,12 @@ def test_stack_along_batch() -> None:
 
 
 def test_stack_along_batch_empty() -> None:
-    assert objects_are_equal(stack_along_batch([]), {})
+    with pytest.raises(ValueError, match="empty sequence"):
+        stack_along_batch([])
 
 
 def test_stack_along_batch_key_mismatch() -> None:
-    with pytest.raises(KeyError, match="the dictionaries must have the same keys"):
+    with pytest.raises(ValueError, match="same keys"):
         stack_along_batch(
             [
                 {"a": torch.tensor([0, 1])},
@@ -348,11 +353,12 @@ def test_stack_along_seq() -> None:
 
 
 def test_stack_along_seq_empty() -> None:
-    assert objects_are_equal(stack_along_seq([]), {})
+    with pytest.raises(ValueError, match="empty sequence"):
+        stack_along_seq([])
 
 
 def test_stack_along_seq_key_mismatch() -> None:
-    with pytest.raises(KeyError, match="the dictionaries must have the same keys"):
+    with pytest.raises(ValueError, match="same keys"):
         stack_along_seq(
             [
                 {"a": torch.tensor([0, 1])},
@@ -362,7 +368,7 @@ def test_stack_along_seq_key_mismatch() -> None:
 
 
 def test_cat_along_batch_nested() -> None:
-    data = [
+    data: list[NestedTensor] = [
         {"a": torch.ones(1, 2), "b": [torch.zeros(1), (torch.ones(1, 3),)]},
         {"a": torch.ones(2, 2), "b": [torch.zeros(2), (torch.ones(2, 3),)]},
     ]
@@ -375,13 +381,15 @@ def test_cat_along_batch_nested() -> None:
 
 
 def test_stack_along_seq_list() -> None:
-    out = cast("Any", stack_along_seq([[torch.ones(2, 3)], [torch.ones(2, 3)]]))
+    data: list[NestedTensor] = [[torch.ones(2, 3)], [torch.ones(2, 3)]]
+    out = cast("Any", stack_along_seq(data))
     assert out[0].shape == (2, 2, 3)
 
 
 def test_cat_along_batch_length_mismatch() -> None:
+    data: list[NestedTensor] = [[torch.ones(1)], [torch.ones(1), torch.ones(1)]]
     with pytest.raises(ValueError, match="same length"):
-        cat_along_batch([[torch.ones(1)], [torch.ones(1), torch.ones(1)]])
+        cat_along_batch(data)
 
 
 def test_cat_along_batch_defaultdict() -> None:
@@ -391,9 +399,35 @@ def test_cat_along_batch_defaultdict() -> None:
     assert cast("Any", cat_along_batch([d, d]))["a"].shape == (2,)
 
 
-def test_combine_custom_fn() -> None:
-    out = cast(
-        "Any",
-        combine([{"a": torch.ones(2)}, {"a": torch.ones(2)}], lambda t: torch.stack(t).sum(dim=0)),
+########################################
+#     Tests for repeat_along_batch     #
+########################################
+
+
+def test_repeat_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        repeat_along_batch(torch.tensor([1, 2]), 2), torch.tensor([1, 2, 1, 2])
     )
-    assert out["a"].tolist() == [2.0, 2.0]
+
+
+def test_repeat_along_batch_dict() -> None:
+    assert objects_are_equal(
+        repeat_along_batch({"a": torch.tensor([[0, 1], [2, 3]]), "b": torch.tensor([4, 5])}, 2),
+        {
+            "a": torch.tensor([[0, 1], [2, 3], [0, 1], [2, 3]]),
+            "b": torch.tensor([4, 5, 4, 5]),
+        },
+    )
+
+
+def test_repeat_along_batch_list() -> None:
+    assert objects_are_equal(
+        repeat_along_batch([torch.tensor([1]), torch.tensor([2])], 2),
+        [torch.tensor([1, 1]), torch.tensor([2, 2])],
+    )
+
+
+def test_repeat_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        repeat_along_batch(data, 2)

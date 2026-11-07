@@ -21,11 +21,11 @@ Function Categories:
         - ``slice_along_seq``, ``select_along_seq``, ``chunk_along_seq``
 
     **Joining operations**: Combine multiple tensors
-        - ``cat_along_batch``, ``cat_along_seq``, ``repeat_along_seq``
+        - ``cat_along_batch``, ``cat_along_seq``, ``repeat_along_batch``, ``repeat_along_seq``
         - ``stack_along_batch``, ``stack_along_seq``
 
     **Padding and masking operations**: Pad ragged batches and build masks
-        - ``pad_along_batch``, ``pad_along_seq``, ``lengths_to_mask``
+        - ``pad_along_batch``, ``pad_along_seq``, ``pad_sequences``, ``lengths_to_mask``
 
     **Permutation operations**: Reorder elements
         - ``permute_along_batch``, ``shuffle_along_batch``
@@ -66,10 +66,14 @@ See Also:
 from __future__ import annotations
 
 __all__ = [
+    "all_along_batch",
+    "all_along_seq",
     "amax_along_batch",
     "amax_along_seq",
     "amin_along_batch",
     "amin_along_seq",
+    "any_along_batch",
+    "any_along_seq",
     "argmax_along_batch",
     "argmax_along_seq",
     "argmin_along_batch",
@@ -84,9 +88,13 @@ __all__ = [
     "cumprod_along_seq",
     "cumsum_along_batch",
     "cumsum_along_seq",
+    "flip_along_batch",
+    "flip_along_seq",
     "index_select_along_batch",
     "index_select_along_seq",
     "lengths_to_mask",
+    "logsumexp_along_batch",
+    "logsumexp_along_seq",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -97,11 +105,15 @@ __all__ = [
     "min_along_seq",
     "pad_along_batch",
     "pad_along_seq",
+    "pad_sequences",
     "permute_along_batch",
     "permute_along_seq",
     "prod_along_batch",
     "prod_along_seq",
+    "repeat_along_batch",
     "repeat_along_seq",
+    "roll_along_batch",
+    "roll_along_seq",
     "select_along_batch",
     "select_along_seq",
     "shuffle_along_batch",
@@ -114,8 +126,14 @@ __all__ = [
     "split_along_seq",
     "stack_along_batch",
     "stack_along_seq",
+    "std_along_batch",
+    "std_along_seq",
     "sum_along_batch",
     "sum_along_seq",
+    "topk_along_batch",
+    "topk_along_seq",
+    "var_along_batch",
+    "var_along_seq",
 ]
 
 from batchtensor.tensor.comparison import (
@@ -123,11 +141,14 @@ from batchtensor.tensor.comparison import (
     argsort_along_seq,
     sort_along_batch,
     sort_along_seq,
+    topk_along_batch,
+    topk_along_seq,
 )
 from batchtensor.tensor.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.tensor.joining import (
     cat_along_batch,
     cat_along_seq,
+    repeat_along_batch,
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,
@@ -139,22 +160,32 @@ from batchtensor.tensor.math import (
     cumsum_along_batch,
     cumsum_along_seq,
 )
-from batchtensor.tensor.padding import pad_along_batch, pad_along_seq
+from batchtensor.tensor.padding import pad_along_batch, pad_along_seq, pad_sequences
 from batchtensor.tensor.permutation import (
+    flip_along_batch,
+    flip_along_seq,
     permute_along_batch,
     permute_along_seq,
+    roll_along_batch,
+    roll_along_seq,
     shuffle_along_batch,
     shuffle_along_seq,
 )
 from batchtensor.tensor.reduction import (
+    all_along_batch,
+    all_along_seq,
     amax_along_batch,
     amax_along_seq,
     amin_along_batch,
     amin_along_seq,
+    any_along_batch,
+    any_along_seq,
     argmax_along_batch,
     argmax_along_seq,
     argmin_along_batch,
     argmin_along_seq,
+    logsumexp_along_batch,
+    logsumexp_along_seq,
     max_along_batch,
     max_along_seq,
     mean_along_batch,
@@ -165,8 +196,12 @@ from batchtensor.tensor.reduction import (
     min_along_seq,
     prod_along_batch,
     prod_along_seq,
+    std_along_batch,
+    std_along_seq,
     sum_along_batch,
     sum_along_seq,
+    var_along_batch,
+    var_along_seq,
 )
 from batchtensor.tensor.slicing import (
     chunk_along_batch,

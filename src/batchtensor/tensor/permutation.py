@@ -8,6 +8,7 @@ __all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_batch", "s
 import torch
 
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
+from batchtensor.utils.seed import random_permutation
 
 
 def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.Tensor:
@@ -35,8 +36,8 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
             permutation.
 
     Raises:
-        ValueError: if the shape of the permutation does not match
-            the batch dimension of the tensor.
+        ValueError: if the permutation is not a 1-D tensor, or if its
+            shape does not match the batch dimension of the tensor.
 
     Example:
         ```pycon
@@ -67,7 +68,7 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
         ``permute_along_seq``: Permute the sequence dimension instead.
         ``index_select_along_batch``: Select specific indices (can duplicate or omit items).
     """
-    if permutation.shape[0] != tensor.shape[BATCH_DIM]:
+    if permutation.ndim != 1 or permutation.shape[0] != tensor.shape[BATCH_DIM]:
         msg = (
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
             f"({tensor.shape})"
@@ -93,8 +94,8 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
         The tensor with permuted data along the sequence dimension.
 
     Raises:
-        ValueError: if the shape of the permutation does not match
-            the sequence dimension of the tensor.
+        ValueError: if the permutation is not a 1-D tensor, or if its
+            shape does not match the sequence dimension of the tensor.
 
     Example:
         ```pycon
@@ -108,7 +109,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
 
         ```
     """
-    if permutation.shape[0] != tensor.shape[SEQ_DIM]:
+    if permutation.ndim != 1 or permutation.shape[0] != tensor.shape[SEQ_DIM]:
         msg = (
             f"permutation shape ({permutation.shape}) is not compatible with tensor shape "
             f"({tensor.shape})"
@@ -118,7 +119,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
 
 
 def shuffle_along_batch(
-    tensor: torch.Tensor, generator: torch.Generator | None = None
+    tensor: torch.Tensor, *, generator: torch.Generator | int | None = None
 ) -> torch.Tensor:
     r"""Shuffle the tensor along the batch dimension.
 
@@ -132,10 +133,11 @@ def shuffle_along_batch(
 
     Args:
         tensor: The tensor to shuffle. Must have at least one dimension.
-        generator: An optional random number generator for reproducible
-            shuffling. If provided, the shuffling will be deterministic
-            based on the generator's state. If ``None``, uses PyTorch's
-            default random state.
+        generator: An optional random number generator or random seed
+            for reproducible shuffling. If a generator is provided, the
+            shuffling is deterministic based on the generator's state.
+            An integer is used as the seed of a new generator. If
+            ``None``, uses PyTorch's default random state.
 
     Returns:
         The shuffled tensor. The shape is unchanged, but elements along
@@ -154,6 +156,10 @@ def shuffle_along_batch(
         >>> out = shuffle_along_batch(tensor, generator=generator)
         >>> out  # Order is random
         tensor([[...]])
+        >>> # An integer is a seed
+        >>> out = shuffle_along_batch(tensor, generator=42)
+        >>> out  # Order is random
+        tensor([[...]])
 
         ```
 
@@ -164,16 +170,12 @@ def shuffle_along_batch(
     """
     return permute_along_batch(
         tensor=tensor,
-        permutation=torch.randperm(
-            tensor.shape[BATCH_DIM],
-            generator=generator,
-            device=generator.device if generator is not None else None,
-        ),
+        permutation=random_permutation(tensor.shape[BATCH_DIM], generator=generator),
     )
 
 
 def shuffle_along_seq(
-    tensor: torch.Tensor, generator: torch.Generator | None = None
+    tensor: torch.Tensor, *, generator: torch.Generator | int | None = None
 ) -> torch.Tensor:
     r"""Shuffle the tensor along the sequence dimension.
 
@@ -183,7 +185,8 @@ def shuffle_along_seq(
 
     Args:
         tensor: The tensor to shuffle.
-        generator: An optional random number generator.
+        generator: An optional random number generator or random seed
+            (see ``shuffle_along_batch``).
 
     Returns:
         The shuffled tensor.
@@ -201,9 +204,133 @@ def shuffle_along_seq(
     """
     return permute_along_seq(
         tensor=tensor,
-        permutation=torch.randperm(
-            tensor.shape[SEQ_DIM],
-            generator=generator,
-            device=generator.device if generator is not None else None,
-        ),
+        permutation=random_permutation(tensor.shape[SEQ_DIM], generator=generator),
     )
+
+
+def flip_along_batch(tensor: torch.Tensor) -> torch.Tensor:
+    r"""Return the tensor with the order of the elements reversed along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+
+    Returns:
+        A new tensor with the same shape and the tensor with the order of the elements reversed along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import flip_along_batch
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = flip_along_batch(tensor)
+        >>> out
+        tensor([[8, 7, 2, 1],
+                [4, 9, 5, 6],
+                [0, 1, 3, 2]])
+
+        ```
+    """
+    return torch.flip(tensor, dims=(BATCH_DIM,))
+
+
+def flip_along_seq(tensor: torch.Tensor) -> torch.Tensor:
+    r"""Return the tensor with the order of the elements reversed along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+
+    Returns:
+        A new tensor with the same shape and the tensor with the order of the elements reversed along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import flip_along_seq
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = flip_along_seq(tensor)
+        >>> out
+        tensor([[2, 3, 1, 0],
+                [6, 5, 9, 4],
+                [1, 2, 7, 8]])
+
+        ```
+    """
+    return torch.flip(tensor, dims=(SEQ_DIM,))
+
+
+def roll_along_batch(tensor: torch.Tensor, shifts: int) -> torch.Tensor:
+    r"""Return the tensor with the elements rolled along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        shifts: The number of places by which the elements are shifted. The elements shifted beyond the last position are re-introduced at the first position.
+
+    Returns:
+        A new tensor with the same shape and the tensor with the elements rolled along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import roll_along_batch
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = roll_along_batch(tensor, 1)
+        >>> out
+        tensor([[8, 7, 2, 1],
+                [0, 1, 3, 2],
+                [4, 9, 5, 6]])
+        >>> out = roll_along_batch(tensor, -1)
+        >>> out
+        tensor([[4, 9, 5, 6],
+                [8, 7, 2, 1],
+                [0, 1, 3, 2]])
+
+        ```
+    """
+    return torch.roll(tensor, shifts=shifts, dims=BATCH_DIM)
+
+
+def roll_along_seq(tensor: torch.Tensor, shifts: int) -> torch.Tensor:
+    r"""Return the tensor with the elements rolled along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        shifts: The number of places by which the elements are shifted. The elements shifted beyond the last position are re-introduced at the first position.
+
+    Returns:
+        A new tensor with the same shape and the tensor with the elements rolled along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import roll_along_seq
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = roll_along_seq(tensor, 1)
+        >>> out
+        tensor([[2, 0, 1, 3],
+                [6, 4, 9, 5],
+                [1, 8, 7, 2]])
+        >>> out = roll_along_seq(tensor, -1)
+        >>> out
+        tensor([[1, 3, 2, 0],
+                [9, 5, 6, 4],
+                [7, 2, 1, 8]])
+
+        ```
+    """
+    return torch.roll(tensor, shifts=shifts, dims=SEQ_DIM)

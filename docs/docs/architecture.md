@@ -11,7 +11,7 @@ The `batchtensor` library is organized into four main modules:
 batchtensor/
 ├── nested/         # Operations for nested data structures
 ├── tensor/         # Operations for individual tensors
-├── utils/          # Utility functions (seed management)
+├── utils/          # Seed management and the structure helpers
 └── constants.py    # Dimension constants
 ```
 
@@ -103,15 +103,13 @@ mirror the tensor module:
 - **permutation.py**: Nested shuffling and permuting
 - **padding.py**: Nested padding
 - **conversion.py**: NumPy conversion
-- **pointwise.py**: Element-wise operations
-- **trigo.py**: Trigonometric functions
 - **misc.py**: Miscellaneous utilities
 
 Each nested function:
 
 - Recursively applies the corresponding tensor operation
-- Preserves the nested structure (dict, list, tuple)
-- Uses `coola.recursive_apply` for recursive traversal
+- Preserves the nested structure (dict, list, tuple, named tuple, ...)
+- Goes through `apply_to_tensors`, `split_tensors` and `combine_tensors` (see Utils Module)
 - Handles arbitrary nesting depth
 
 ### Utils Module
@@ -120,6 +118,14 @@ The utils module provides supporting functionality:
 
 - **seed.py**: Random seed management for reproducibility
   - `setup_torch_generator()`: Flexible generator setup
+  - `random_permutation()`: Random permutation from a generator, a seed or the global RNG
+- **structure.py**: The only code that traverses nested structures
+  - `apply_to_tensors()`: Map a tensor function over the leaves (`TypeError` for a non-tensor leaf)
+  - `split_tensors()` / `combine_tensors()`: One structure to N, and N to one
+  - `get_size()`: Common size of the leaves along a dimension
+
+The layering is `constants` <- `utils` <- `tensor` <- `nested`, enforced by `import-linter`.
+See [Design principles](design_principles.md) and the [Migration guide](migration.md).
 
 ## Implementation Patterns
 
@@ -176,22 +182,22 @@ def slice_along_batch(
 
 This reduces code duplication and ensures nested operations behave consistently.
 
-### Pattern 3: Joining and Splitting Walk the Structure
+### Pattern 3: Joining and Splitting Use Structure Helpers
 
 `cat_along_batch`, `stack_along_batch` and the `chunk_*` / `split_*` functions cannot use
 `recursive_apply` because they combine several structures or return several structures. They use
-`batchtensor.nested.combine` and `batchtensor.nested.split`, which walk the dicts, lists and
-tuples and call the tensor function on each leaf:
+`batchtensor.utils.structure.combine_tensors` and `split_tensors`, which walk the structures and
+call the tensor function on each leaf. Container types (`OrderedDict`, named tuples, ...) are kept:
 
 ```python
 from functools import partial
 
 from batchtensor import tensor as bt
-from batchtensor.nested import split
+from batchtensor.utils.structure import split_tensors
 
 
 def chunk_along_batch(data, chunks):
-    return split(data, partial(bt.chunk_along_batch, chunks=chunks))
+    return split_tensors(data, partial(bt.chunk_along_batch, chunks=chunks))
 ```
 
 This keeps the structure of the output aligned with the structure of the input.

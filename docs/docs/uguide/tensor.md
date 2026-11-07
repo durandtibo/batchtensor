@@ -199,6 +199,8 @@ tensor([[1, 3],
 
 ### Repetition
 
+Use `repeat_along_batch` or `repeat_along_seq` to repeat the data along a dimension.
+
 Repeat sequences:
 
 ```pycon
@@ -208,6 +210,40 @@ Repeat sequences:
 >>> repeat_along_seq(tensor, repeats=3)
 tensor([[1, 2, 1, 2, 1, 2],
         [3, 4, 3, 4, 3, 4]])
+
+```
+
+## Padding Operations
+
+### Padding a Batch
+
+Pad along the batch or sequence dimension, at the end (`side="right"`, default) or at the start
+(`side="left"`):
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import pad_along_seq
+>>> pad_along_seq(torch.tensor([[1, 2], [3, 4]]), 1, side="left")
+tensor([[0, 1, 2],
+        [0, 3, 4]])
+
+```
+
+### Building a Batch from Sequences
+
+`pad_sequences` pads tensors of different lengths into one `(batch, seq, ...)` tensor, and
+`lengths_to_mask` builds the mask of the padded batch:
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import lengths_to_mask, pad_sequences
+>>> sequences = [torch.tensor([1, 2, 3]), torch.tensor([4])]
+>>> pad_sequences(sequences)
+tensor([[1, 2, 3],
+        [4, 0, 0]])
+>>> lengths_to_mask(torch.tensor([len(s) for s in sequences]))
+tensor([[ True,  True,  True],
+        [ True, False, False]])
 
 ```
 
@@ -424,6 +460,120 @@ Apply a specific permutation:
 tensor([[5, 6],
         [1, 2],
         [3, 4]])
+
+```
+
+## Additional Reductions and Reordering
+
+### std
+
+`std_along_batch` and `std_along_seq` return the standard deviation along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import std_along_batch
+>>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+>>> std_along_batch(tensor)
+tensor([4.0000, 4.1633, 1.5275, 2.6458])
+
+```
+
+### var
+
+`var_along_batch` and `var_along_seq` return the variance along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import var_along_batch
+>>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+>>> var_along_batch(tensor)
+tensor([16.0000, 17.3333,  2.3333,  7.0000])
+
+```
+
+### any
+
+`any_along_batch` and `any_along_seq` return whether any element is true along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import any_along_batch
+>>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+>>> any_along_batch(tensor)
+tensor([True, True, True, True])
+
+```
+
+### all
+
+`all_along_batch` and `all_along_seq` return whether all the elements are true along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import all_along_batch
+>>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+>>> all_along_batch(tensor)
+tensor([False, False,  True, False])
+
+```
+
+### logsumexp
+
+`logsumexp_along_batch` and `logsumexp_along_seq` return the log of the sum of exponentials along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import logsumexp_along_batch
+>>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+>>> logsumexp_along_batch(tensor)
+tensor([8.0185, 9.1272, 5.1698, 6.0247])
+
+```
+
+### flip
+
+`flip_along_batch` and `flip_along_seq` return the tensor with the order of the elements reversed along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import flip_along_batch
+>>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+>>> flip_along_batch(tensor)
+tensor([[8, 7, 2, 1],
+        [4, 9, 5, 6],
+        [0, 1, 3, 2]])
+
+```
+
+### roll
+
+`roll_along_batch` and `roll_along_seq` return the tensor with the elements rolled along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import roll_along_batch
+>>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+>>> roll_along_batch(tensor, 1)
+tensor([[8, 7, 2, 1],
+        [0, 1, 3, 2],
+        [4, 9, 5, 6]])
+
+```
+
+### topk
+
+`topk_along_batch` and `topk_along_seq` return the k largest (or smallest) elements along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import topk_along_batch
+>>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+>>> topk_along_batch(tensor, 2)
+torch.return_types.topk(
+values=tensor([[8, 9, 5, 6],
+        [4, 7, 3, 2]]),
+indices=tensor([[2, 1, 1, 1],
+        [1, 2, 0, 0]]))
 
 ```
 
