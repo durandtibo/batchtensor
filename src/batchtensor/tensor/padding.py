@@ -6,6 +6,8 @@ __all__ = ["pad_along_batch", "pad_along_seq", "pad_sequences"]
 
 from typing import TYPE_CHECKING, Literal
 
+import math
+
 import torch.nn.functional
 
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
@@ -174,7 +176,7 @@ def _check_fill_value(value: float, dtype: torch.dtype) -> None:
     if dtype.is_floating_point or dtype.is_complex:
         return
     info = torch.iinfo(dtype)
-    if value != value or value in (float("inf"), float("-inf")) or int(value) != value:  # noqa: PLR0124
+    if not math.isfinite(value) or int(value) != value:
         msg = f"value ({value}) cannot be represented with dtype {dtype}"
         raise ValueError(msg)
     if not info.min <= value <= info.max:
