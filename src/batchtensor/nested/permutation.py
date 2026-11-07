@@ -96,7 +96,7 @@ def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
     return apply_to_tensors(data, partial(tensor.permute_along_seq, permutation=permutation))
 
 
-def shuffle_along_batch(data: T, generator: torch.Generator | None = None) -> T:
+def shuffle_along_batch(data: T, *, generator: torch.Generator | None = None) -> T:
     r"""Shuffle all the tensors along the batch dimension.
 
     Note:
@@ -137,7 +137,7 @@ def shuffle_along_batch(data: T, generator: torch.Generator | None = None) -> T:
     )
 
 
-def shuffle_along_seq(data: T, generator: torch.Generator | None = None) -> T:
+def shuffle_along_seq(data: T, *, generator: torch.Generator | None = None) -> T:
     r"""Shuffle all the tensors along the sequence dimension.
 
     Note:

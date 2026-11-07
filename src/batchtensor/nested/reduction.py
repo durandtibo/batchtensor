@@ -35,7 +35,7 @@ if TYPE_CHECKING:
     from batchtensor.nested.types import NestedTensor, T
 
 
-def amax_along_batch(data: T, keepdim: bool = False) -> T:
+def amax_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
@@ -70,7 +70,7 @@ def amax_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.amax_along_batch, keepdim=keepdim))
 
 
-def amax_along_seq(data: T, keepdim: bool = False) -> T:
+def amax_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the maximum of all elements along the sequence dimension.
 
     Note:
@@ -105,7 +105,7 @@ def amax_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.amax_along_seq, keepdim=keepdim))
 
 
-def amin_along_batch(data: T, keepdim: bool = False) -> T:
+def amin_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the minimum of all elements along the batch dimension.
 
     Note:
@@ -140,7 +140,7 @@ def amin_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.amin_along_batch, keepdim=keepdim))
 
 
-def amin_along_seq(data: T, keepdim: bool = False) -> T:
+def amin_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the minimum of all elements along the sequence dimension.
 
     Note:
@@ -175,7 +175,7 @@ def amin_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.amin_along_seq, keepdim=keepdim))
 
 
-def argmax_along_batch(data: T, keepdim: bool = False) -> T:
+def argmax_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the maximum value of all elements along the
     batch dimension.
 
@@ -212,7 +212,7 @@ def argmax_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.argmax_along_batch, keepdim=keepdim))
 
 
-def argmax_along_seq(data: T, keepdim: bool = False) -> T:
+def argmax_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the maximum value of all elements along the
     sequence dimension.
 
@@ -249,7 +249,7 @@ def argmax_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.argmax_along_seq, keepdim=keepdim))
 
 
-def argmin_along_batch(data: T, keepdim: bool = False) -> T:
+def argmin_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the minimum value of all elements along the
     batch dimension.
 
@@ -286,7 +286,7 @@ def argmin_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.argmin_along_batch, keepdim=keepdim))
 
 
-def argmin_along_seq(data: T, keepdim: bool = False) -> T:
+def argmin_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the minimum value of all elements along the
     sequence dimension.
 
@@ -323,7 +323,7 @@ def argmin_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.argmin_along_seq, keepdim=keepdim))
 
 
-def max_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def max_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the batch dimension.
 
     Note:
@@ -370,7 +370,7 @@ def max_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.max_along_batch, keepdim=keepdim))
 
 
-def max_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def max_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the sequence dimension.
 
     Note:
@@ -417,7 +417,7 @@ def max_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.max_along_seq, keepdim=keepdim))
 
 
-def mean_along_batch(data: T, keepdim: bool = False) -> T:
+def mean_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the mean of all elements along the batch dimension.
 
     Note:
@@ -452,7 +452,7 @@ def mean_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.mean_along_batch, keepdim=keepdim))
 
 
-def mean_along_seq(data: T, keepdim: bool = False) -> T:
+def mean_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the mean of all elements along the sequence dimension.
 
     Note:
@@ -487,7 +487,7 @@ def mean_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.mean_along_seq, keepdim=keepdim))
 
 
-def median_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def median_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the median of all elements along the batch dimension.
 
     Note:
@@ -534,7 +534,7 @@ def median_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTenso
     return apply_to_tensors(data, partial(bt.median_along_batch, keepdim=keepdim))
 
 
-def median_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def median_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the median of all elements along the sequence dimension.
 
     Note:
@@ -581,7 +581,7 @@ def median_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.median_along_seq, keepdim=keepdim))
 
 
-def min_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def min_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the batch dimension.
 
     Note:
@@ -628,7 +628,7 @@ def min_along_batch(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.min_along_batch, keepdim=keepdim))
 
 
-def min_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
+def min_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the sequence dimension.
 
     Note:
@@ -675,7 +675,7 @@ def min_along_seq(data: NestedTensor, keepdim: bool = False) -> NestedTensor:
     return apply_to_tensors(data, partial(bt.min_along_seq, keepdim=keepdim))
 
 
-def prod_along_batch(data: T, keepdim: bool = False) -> T:
+def prod_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the product of all elements along the batch dimension.
 
     Note:
@@ -710,7 +710,7 @@ def prod_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.prod_along_batch, keepdim=keepdim))
 
 
-def prod_along_seq(data: T, keepdim: bool = False) -> T:
+def prod_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the product of all elements along the sequence dimension.
 
     Note:
@@ -745,7 +745,7 @@ def prod_along_seq(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.prod_along_seq, keepdim=keepdim))
 
 
-def sum_along_batch(data: T, keepdim: bool = False) -> T:
+def sum_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the sum of all elements along the batch dimension.
 
     Note:
@@ -780,7 +780,7 @@ def sum_along_batch(data: T, keepdim: bool = False) -> T:
     return apply_to_tensors(data, partial(bt.sum_along_batch, keepdim=keepdim))
 
 
-def sum_along_seq(data: T, keepdim: bool = False) -> T:
+def sum_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the sum of all elements along the sequence dimension.
 
     Note:

@@ -43,6 +43,11 @@ def test_contiguous_tensor() -> None:
     assert out.is_contiguous()
 
 
+def test_contiguous_memory_format() -> None:
+    out = contiguous(torch.zeros(2, 3, 4, 5), memory_format=torch.channels_last)
+    assert out.is_contiguous(memory_format=torch.channels_last)
+
+
 def test_contiguous_dict() -> None:
     data = {"a": torch.tensor([[0, 1], [2, 3]]), "b": torch.tensor([4, 5])}
     out = contiguous(data)
