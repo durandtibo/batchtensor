@@ -1,3 +1,6 @@
 tasklib:
   package:
     name: batchtensor
+  groups:
+    install: dev,docs
+    update: dev,docs
