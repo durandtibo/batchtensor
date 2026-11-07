@@ -154,6 +154,8 @@ __all__ = [
     "sum_along_seq",
     "to",
     "to_numpy",
+    "var_along_batch",
+    "var_along_seq",
 ]
 
 from batchtensor.nested.comparison import (
@@ -209,6 +211,8 @@ from batchtensor.nested.reduction import (
     std_along_seq,
     sum_along_batch,
     sum_along_seq,
+    var_along_batch,
+    var_along_seq,
 )
 from batchtensor.nested.slicing import (
     chunk_along_batch,

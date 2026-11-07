@@ -29,6 +29,8 @@ from batchtensor.nested import (
     std_along_seq,
     sum_along_batch,
     sum_along_seq,
+    var_along_batch,
+    var_along_seq,
 )
 from tests.unit.tensor.test_reduction import DTYPES, FLOATING_DTYPES
 
@@ -1477,3 +1479,90 @@ def test_std_along_seq_non_tensor_leaf() -> None:
     data: Any = {"a": "x"}
     with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
         std_along_seq(data)
+
+
+#######################################################
+#     Tests for var_along_batch and var_along_seq     #
+#######################################################
+
+
+def test_var_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        var_along_batch(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([16.0, 17.33333396911621, 2.3333332538604736, 7.0]),
+    )
+
+
+def test_var_along_batch_dict_and_list() -> None:
+    assert objects_are_equal(
+        var_along_batch(
+            {
+                "a": torch.tensor(
+                    [[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]
+                ),
+                "b": [
+                    torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+                ],
+            }
+        ),
+        {
+            "a": torch.tensor([16.0, 17.33333396911621, 2.3333332538604736, 7.0]),
+            "b": [torch.tensor([16.0, 17.33333396911621, 2.3333332538604736, 7.0])],
+        },
+    )
+
+
+def test_var_along_batch_tuple() -> None:
+    out = var_along_batch(
+        (torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),)
+    )
+    assert isinstance(out, tuple)
+
+
+def test_var_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        var_along_batch(data)
+
+
+def test_var_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        var_along_seq(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([1.6666666269302368, 4.666666507720947, 12.333333015441895]),
+    )
+
+
+def test_var_along_seq_dict_and_list() -> None:
+    assert objects_are_equal(
+        var_along_seq(
+            {
+                "a": torch.tensor(
+                    [[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]
+                ),
+                "b": [
+                    torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+                ],
+            }
+        ),
+        {
+            "a": torch.tensor([1.6666666269302368, 4.666666507720947, 12.333333015441895]),
+            "b": [torch.tensor([1.6666666269302368, 4.666666507720947, 12.333333015441895])],
+        },
+    )
+
+
+def test_var_along_seq_tuple() -> None:
+    out = var_along_seq(
+        (torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),)
+    )
+    assert isinstance(out, tuple)
+
+
+def test_var_along_seq_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        var_along_seq(data)
