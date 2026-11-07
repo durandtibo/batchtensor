@@ -7,6 +7,7 @@ __all__ = ["get_random_seed", "get_torch_generator", "setup_torch_generator"]
 
 
 import torch
+from coola.random import make_torch_generator, sample_torch_seed
 
 
 def get_random_seed(seed: int) -> int:
@@ -16,7 +17,7 @@ def get_random_seed(seed: int) -> int:
         seed: A random seed to make the process reproducible.
 
     Returns:
-        A random seed. The value is between ``-2 ** 63`` and
+        A random seed. The value is between ``0`` and
             ``2 ** 63 - 1``.
 
     Example:
@@ -27,9 +28,7 @@ def get_random_seed(seed: int) -> int:
 
         ```
     """
-    return int(
-        torch.randint(-(2**63), 2**63 - 1, size=(1,), generator=get_torch_generator(seed)).item()
-    )
+    return sample_torch_seed(seed)
 
 
 def get_torch_generator(
@@ -59,9 +58,7 @@ def get_torch_generator(
 
         ```
     """
-    generator = torch.Generator(device)
-    generator.manual_seed(random_seed)
-    return generator
+    return make_torch_generator(random_seed, device=device)
 
 
 def setup_torch_generator(generator_or_seed: int | torch.Generator) -> torch.Generator:
