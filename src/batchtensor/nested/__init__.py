@@ -120,6 +120,8 @@ __all__ = [
     "cumsum_along_batch",
     "cumsum_along_seq",
     "detach",
+    "flip_along_batch",
+    "flip_along_seq",
     "from_numpy",
     "index_select_along_batch",
     "index_select_along_seq",
@@ -189,6 +191,8 @@ from batchtensor.nested.math import (
 from batchtensor.nested.misc import clone, contiguous, detach, pin_memory, to
 from batchtensor.nested.padding import pad_along_batch, pad_along_seq
 from batchtensor.nested.permutation import (
+    flip_along_batch,
+    flip_along_seq,
     permute_along_batch,
     permute_along_seq,
     shuffle_along_batch,

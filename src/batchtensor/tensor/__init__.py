@@ -88,6 +88,8 @@ __all__ = [
     "cumprod_along_seq",
     "cumsum_along_batch",
     "cumsum_along_seq",
+    "flip_along_batch",
+    "flip_along_seq",
     "index_select_along_batch",
     "index_select_along_seq",
     "lengths_to_mask",
@@ -154,6 +156,8 @@ from batchtensor.tensor.math import (
 )
 from batchtensor.tensor.padding import pad_along_batch, pad_along_seq, pad_sequences
 from batchtensor.tensor.permutation import (
+    flip_along_batch,
+    flip_along_seq,
     permute_along_batch,
     permute_along_seq,
     shuffle_along_batch,
