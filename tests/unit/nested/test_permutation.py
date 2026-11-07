@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 from unittest.mock import patch
 
 import pytest
@@ -9,6 +9,8 @@ from coola.equality import objects_are_equal
 from coola.random import make_torch_generator
 
 from batchtensor.nested import (
+    flip_along_batch,
+    flip_along_seq,
     permute_along_batch,
     permute_along_seq,
     shuffle_along_batch,
@@ -378,3 +380,74 @@ def test_shuffle_along_seq_int_seed_repeat_call() -> None:
     assert objects_are_equal(
         shuffle_along_seq(data, generator=7), shuffle_along_seq(data, generator=7)
     )
+
+
+#########################################################
+#     Tests for flip_along_batch and flip_along_seq     #
+#########################################################
+
+
+def test_flip_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        flip_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])),
+        torch.tensor([[8, 7, 2, 1], [4, 9, 5, 6], [0, 1, 3, 2]]),
+    )
+
+
+def test_flip_along_batch_dict_and_list() -> None:
+    assert objects_are_equal(
+        flip_along_batch(
+            {
+                "a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),
+                "b": [torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])],
+            }
+        ),
+        {
+            "a": torch.tensor([[8, 7, 2, 1], [4, 9, 5, 6], [0, 1, 3, 2]]),
+            "b": [torch.tensor([[8, 7, 2, 1], [4, 9, 5, 6], [0, 1, 3, 2]])],
+        },
+    )
+
+
+def test_flip_along_batch_tuple() -> None:
+    out = flip_along_batch((torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),))
+    assert isinstance(out, tuple)
+
+
+def test_flip_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        flip_along_batch(data)
+
+
+def test_flip_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        flip_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])),
+        torch.tensor([[2, 3, 1, 0], [6, 5, 9, 4], [1, 2, 7, 8]]),
+    )
+
+
+def test_flip_along_seq_dict_and_list() -> None:
+    assert objects_are_equal(
+        flip_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),
+                "b": [torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])],
+            }
+        ),
+        {
+            "a": torch.tensor([[2, 3, 1, 0], [6, 5, 9, 4], [1, 2, 7, 8]]),
+            "b": [torch.tensor([[2, 3, 1, 0], [6, 5, 9, 4], [1, 2, 7, 8]])],
+        },
+    )
+
+
+def test_flip_along_seq_tuple() -> None:
+    out = flip_along_seq((torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),))
+    assert isinstance(out, tuple)
+
+
+def test_flip_along_seq_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        flip_along_seq(data)

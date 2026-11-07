@@ -429,6 +429,21 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ```
 
+### flip
+
+`flip_along_batch` and `flip_along_seq` return the tensor with the order of the elements reversed along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import flip_along_batch
+>>> data = {"a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])}
+>>> flip_along_batch(data)
+{'a': tensor([[8, 7, 2, 1],
+        [4, 9, 5, 6],
+        [0, 1, 3, 2]])}
+
+```
+
 ## Best Practices
 
 1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible

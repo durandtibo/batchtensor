@@ -8,6 +8,8 @@ from coola.equality import objects_are_equal
 from coola.random import make_torch_generator
 
 from batchtensor.tensor import (
+    flip_along_batch,
+    flip_along_seq,
     permute_along_batch,
     permute_along_seq,
     shuffle_along_batch,
@@ -195,3 +197,39 @@ def test_permute_along_batch_permutation_2d() -> None:
 def test_permute_along_seq_permutation_2d() -> None:
     with pytest.raises(ValueError, match="permutation"):
         permute_along_seq(torch.ones(2, 3), torch.tensor([[0, 1, 2]]))
+
+
+#########################################################
+#     Tests for flip_along_batch and flip_along_seq     #
+#########################################################
+
+
+def test_flip_along_batch_default() -> None:
+    assert objects_are_equal(
+        flip_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])),
+        torch.tensor([[8, 7, 2, 1], [4, 9, 5, 6], [0, 1, 3, 2]]),
+    )
+
+
+def test_flip_along_batch_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    flip_along_batch(tensor)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_flip_along_seq_default() -> None:
+    assert objects_are_equal(
+        flip_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])),
+        torch.tensor([[2, 3, 1, 0], [6, 5, 9, 4], [1, 2, 7, 8]]),
+    )
+
+
+def test_flip_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    flip_along_seq(tensor)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_flip_along_seq_1d_tensor() -> None:
+    with pytest.raises(IndexError, match="Dimension out of range"):
+        flip_along_seq(torch.tensor([0, 4, 8]))
