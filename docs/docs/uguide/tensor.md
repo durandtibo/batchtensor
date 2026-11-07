@@ -491,6 +491,19 @@ tensor([16.0000, 17.3333,  2.3333,  7.0000])
 
 ```
 
+### any
+
+`any_along_batch` and `any_along_seq` return whether any element is true along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import any_along_batch
+>>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+>>> any_along_batch(tensor)
+tensor([True, True, True, True])
+
+```
+
 ## Best Practices
 
 1. **Dimension Awareness**: Always ensure your tensors follow the expected shape conventions

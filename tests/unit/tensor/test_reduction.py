@@ -9,6 +9,8 @@ from batchtensor.tensor import (
     amax_along_seq,
     amin_along_batch,
     amin_along_seq,
+    any_along_batch,
+    any_along_seq,
     argmax_along_batch,
     argmax_along_seq,
     argmin_along_batch,
@@ -653,3 +655,85 @@ def test_var_along_seq_does_not_modify_input() -> None:
 def test_var_along_seq_1d_tensor() -> None:
     with pytest.raises(IndexError, match="Dimension out of range"):
         var_along_seq(torch.tensor([0.0, 4.0, 8.0]))
+
+
+#######################################################
+#     Tests for any_along_batch and any_along_seq     #
+#######################################################
+
+
+def test_any_along_batch_default() -> None:
+    assert objects_are_equal(
+        any_along_batch(
+            torch.tensor(
+                [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+            )
+        ),
+        torch.tensor([True, True, True, True]),
+    )
+
+
+def test_any_along_batch_keepdim_true() -> None:
+    assert objects_are_equal(
+        any_along_batch(
+            torch.tensor(
+                [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+            ),
+            keepdim=True,
+        ),
+        torch.tensor([[True, True, True, True]]),
+    )
+
+
+def test_any_along_batch_does_not_modify_input() -> None:
+    tensor = torch.tensor(
+        [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+    )
+    any_along_batch(tensor)
+    assert objects_are_equal(
+        tensor,
+        torch.tensor(
+            [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+        ),
+    )
+
+
+def test_any_along_seq_default() -> None:
+    assert objects_are_equal(
+        any_along_seq(
+            torch.tensor(
+                [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+            )
+        ),
+        torch.tensor([True, True, True]),
+    )
+
+
+def test_any_along_seq_keepdim_true() -> None:
+    assert objects_are_equal(
+        any_along_seq(
+            torch.tensor(
+                [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+            ),
+            keepdim=True,
+        ),
+        torch.tensor([[True], [True], [True]]),
+    )
+
+
+def test_any_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor(
+        [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+    )
+    any_along_seq(tensor)
+    assert objects_are_equal(
+        tensor,
+        torch.tensor(
+            [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+        ),
+    )
+
+
+def test_any_along_seq_1d_tensor() -> None:
+    with pytest.raises(IndexError, match="Dimension out of range"):
+        any_along_seq(torch.tensor([True, True, False]))
