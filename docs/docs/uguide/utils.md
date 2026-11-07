@@ -13,59 +13,9 @@ The utils module currently contains seed management utilities that are essential
 
 ## Seed Management
 
-### Random Seed Generation
-
-Generate a random seed for reproducible operations:
-
-```pycon
->>> from batchtensor.utils.seed import get_random_seed
->>> seed1 = get_random_seed(42)
->>> # Same input always produces same output
->>> seed2 = get_random_seed(42)
->>> # Different input produces different output
->>> seed3 = get_random_seed(100)
-
-```
-
-The `get_random_seed` function is useful when you need to derive additional random seeds from a
-master seed while maintaining reproducibility.
-
-**Key Features:**
-
-- Returns values between `-2^63` and `2^63 - 1`
-- Deterministic: same input always produces same output
-- Useful for creating multiple independent random streams
-
-### PyTorch Generator Creation
-
-Create a PyTorch generator with a specific seed:
-
-```pycon
->>> import torch
->>> from batchtensor.utils.seed import get_torch_generator
->>> generator = get_torch_generator(42)
->>> # Use with PyTorch random operations
->>> torch.rand(2, 3, generator=generator)
-tensor([[0.8823, 0.9150, 0.3829],
-        [0.9593, 0.3904, 0.6009]])
->>> # Create a new generator with the same seed for reproducibility
->>> generator = get_torch_generator(42)
->>> torch.rand(2, 3, generator=generator)
-tensor([[0.8823, 0.9150, 0.3829],
-        [0.9593, 0.3904, 0.6009]])
-
-```
-
-**Parameters:**
-
-- `random_seed` (int): The random seed to initialize the generator
-- `device` (torch.device | str | None): The device for the generator (default: "cpu")
-
-**Use Cases:**
-
-- Creating reproducible random tensors
-- Ensuring consistent shuffling operations
-- Testing and debugging with deterministic behavior
+Seeds and generators are created with [`coola.random`](https://durandtibo.github.io/coola/):
+`make_torch_generator(seed, device=...)` creates a seeded `torch.Generator` and
+`sample_torch_seed(seed)` derives a deterministic seed from a master seed.
 
 ### Generator Setup
 
@@ -100,13 +50,13 @@ Use generators to ensure reproducible shuffling:
 ```pycon
 >>> import torch
 >>> from batchtensor.tensor import shuffle_along_batch
->>> from batchtensor.utils.seed import get_torch_generator
+>>> from coola.random import make_torch_generator
 >>> data = torch.tensor([[1, 2], [3, 4], [5, 6], [7, 8]])
 >>> # First run with seed 42
->>> generator = get_torch_generator(42)
+>>> generator = make_torch_generator(42)
 >>> shuffled = shuffle_along_batch(data, generator=generator)
 >>> # Second run with same seed produces same result
->>> generator = get_torch_generator(42)
+>>> generator = make_torch_generator(42)
 >>> shuffled = shuffle_along_batch(data, generator=generator)
 
 ```
@@ -116,16 +66,16 @@ Use generators to ensure reproducible shuffling:
 Create multiple independent random streams from a master seed:
 
 ```pycon
->>> from batchtensor.utils.seed import get_random_seed, get_torch_generator
+>>> from coola.random import make_torch_generator, sample_torch_seed
 >>> master_seed = 42
 >>> # Create seeds for different purposes
->>> train_seed = get_random_seed(master_seed)
->>> val_seed = get_random_seed(master_seed + 1)
->>> test_seed = get_random_seed(master_seed + 2)
+>>> train_seed = sample_torch_seed(master_seed)
+>>> val_seed = sample_torch_seed(master_seed + 1)
+>>> test_seed = sample_torch_seed(master_seed + 2)
 >>> # Create independent generators
->>> train_gen = get_torch_generator(train_seed)
->>> val_gen = get_torch_generator(val_seed)
->>> test_gen = get_torch_generator(test_seed)
+>>> train_gen = make_torch_generator(train_seed)
+>>> val_gen = make_torch_generator(val_seed)
+>>> test_gen = make_torch_generator(test_seed)
 
 ```
 
@@ -134,12 +84,12 @@ Create multiple independent random streams from a master seed:
 Create generators for different devices:
 
 ```pycon
->>> from batchtensor.utils.seed import get_torch_generator
+>>> from coola.random import make_torch_generator
 >>> # CPU generator
->>> cpu_gen = get_torch_generator(42, device="cpu")
+>>> cpu_gen = make_torch_generator(42, device="cpu")
 >>> # GPU generator (if CUDA is available)
 >>> if torch.cuda.is_available():  # doctest: +SKIP
-...     gpu_gen = get_torch_generator(42, device="cuda")
+...     gpu_gen = make_torch_generator(42, device="cuda")
 
 ```
 

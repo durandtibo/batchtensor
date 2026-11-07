@@ -6,7 +6,7 @@ from unittest.mock import Mock
 import pytest
 import torch
 from coola.equality import objects_are_equal
-from coola.testing.fixtures import numpy_available
+from coola.testing.marks import numpy_available
 from coola.utils.imports import is_numpy_available
 from coola.utils.tensor import get_available_devices
 

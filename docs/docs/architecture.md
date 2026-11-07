@@ -116,8 +116,6 @@ Each nested function:
 The utils module provides supporting functionality:
 
 - **seed.py**: Random seed management for reproducibility
-  - `get_random_seed()`: Generate deterministic random seeds
-  - `get_torch_generator()`: Create PyTorch generators
   - `setup_torch_generator()`: Flexible generator setup
 
 ## Implementation Patterns

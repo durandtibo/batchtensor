@@ -5,6 +5,7 @@ from unittest.mock import patch
 import pytest
 import torch
 from coola.equality import objects_are_equal
+from coola.random import make_torch_generator
 
 from batchtensor.nested import (
     permute_along_batch,
@@ -12,7 +13,6 @@ from batchtensor.nested import (
     shuffle_along_batch,
     shuffle_along_seq,
 )
-from batchtensor.utils.seed import get_torch_generator
 
 INDEX_DTYPES = [torch.int, torch.long]
 
@@ -208,8 +208,8 @@ def test_shuffle_along_batch_same_random_seed() -> None:
         "b": torch.tensor([4, 3, 2, 1, 0]),
     }
     assert objects_are_equal(
-        shuffle_along_batch(data, get_torch_generator(1)),
-        shuffle_along_batch(data, get_torch_generator(1)),
+        shuffle_along_batch(data, make_torch_generator(1)),
+        shuffle_along_batch(data, make_torch_generator(1)),
     )
 
 
@@ -219,8 +219,8 @@ def test_shuffle_along_batch_different_random_seeds() -> None:
         "b": torch.tensor([4, 3, 2, 1, 0]),
     }
     assert not objects_are_equal(
-        shuffle_along_batch(data, get_torch_generator(1)),
-        shuffle_along_batch(data, get_torch_generator(2)),
+        shuffle_along_batch(data, make_torch_generator(1)),
+        shuffle_along_batch(data, make_torch_generator(2)),
     )
 
 
@@ -229,7 +229,7 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
         "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
         "b": torch.tensor([4, 3, 2, 1, 0]),
     }
-    generator = get_torch_generator(1)
+    generator = make_torch_generator(1)
     assert not objects_are_equal(
         shuffle_along_batch(data, generator), shuffle_along_batch(data, generator)
     )
@@ -297,8 +297,8 @@ def test_shuffle_along_seq_same_random_seed() -> None:
         "b": torch.tensor([[4, 3, 2, 1, 0]]),
     }
     assert objects_are_equal(
-        shuffle_along_seq(data, get_torch_generator(1)),
-        shuffle_along_seq(data, get_torch_generator(1)),
+        shuffle_along_seq(data, make_torch_generator(1)),
+        shuffle_along_seq(data, make_torch_generator(1)),
     )
 
 
@@ -308,8 +308,8 @@ def test_shuffle_along_seq_different_random_seeds() -> None:
         "b": torch.tensor([[4, 3, 2, 1, 0]]),
     }
     assert not objects_are_equal(
-        shuffle_along_seq(data, get_torch_generator(1)),
-        shuffle_along_seq(data, get_torch_generator(2)),
+        shuffle_along_seq(data, make_torch_generator(1)),
+        shuffle_along_seq(data, make_torch_generator(2)),
     )
 
 
@@ -318,7 +318,7 @@ def test_shuffle_along_seq_multiple_shuffle() -> None:
         "a": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
         "b": torch.tensor([[4, 3, 2, 1, 0]]),
     }
-    generator = get_torch_generator(1)
+    generator = make_torch_generator(1)
     assert not objects_are_equal(
         shuffle_along_seq(data, generator), shuffle_along_seq(data, generator)
     )
