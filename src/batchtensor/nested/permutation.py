@@ -38,8 +38,8 @@ def permute_along_batch(data: T, permutation: torch.Tensor) -> T:
             The output data has the same structure as the input data.
 
     Raises:
-        ValueError: if the shape of the permutation does not match
-            the batch dimension of the tensor.
+        ValueError: if the permutation is not a 1-D tensor, or if its
+            shape does not match the batch dimension of the tensor.
 
     Example:
         ```pycon
@@ -77,8 +77,8 @@ def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
             The output data has the same structure as the input data.
 
     Raises:
-        ValueError: if the shape of the permutation does not match
-            the sequence dimension of the tensor.
+        ValueError: if the permutation is not a 1-D tensor, or if its
+            shape does not match the sequence dimension of the tensor.
 
     Example:
         ```pycon
