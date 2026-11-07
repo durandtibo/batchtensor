@@ -5,13 +5,10 @@ from __future__ import annotations
 __all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_batch", "shuffle_along_seq"]
 
 
-from typing import TYPE_CHECKING
+import torch
 
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
 from batchtensor.utils.seed import random_permutation
-
-if TYPE_CHECKING:
-    import torch
 
 
 def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.Tensor:
@@ -209,3 +206,61 @@ def shuffle_along_seq(
         tensor=tensor,
         permutation=random_permutation(tensor.shape[SEQ_DIM], generator=generator),
     )
+
+
+def flip_along_batch(tensor: torch.Tensor) -> torch.Tensor:
+    r"""Return the tensor with the order of the elements reversed along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+
+    Returns:
+        A new tensor with the same shape and the tensor with the order of the elements reversed along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import flip_along_batch
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = flip_along_batch(tensor)
+        >>> out
+        tensor([[8, 7, 2, 1],
+                [4, 9, 5, 6],
+                [0, 1, 3, 2]])
+
+        ```
+    """
+    return torch.flip(tensor, dims=(BATCH_DIM,))
+
+
+def flip_along_seq(tensor: torch.Tensor) -> torch.Tensor:
+    r"""Return the tensor with the order of the elements reversed along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+
+    Returns:
+        A new tensor with the same shape and the tensor with the order of the elements reversed along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import flip_along_seq
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = flip_along_seq(tensor)
+        >>> out
+        tensor([[2, 3, 1, 0],
+                [6, 5, 9, 4],
+                [1, 2, 7, 8]])
+
+        ```
+    """
+    return torch.flip(tensor, dims=(SEQ_DIM,))

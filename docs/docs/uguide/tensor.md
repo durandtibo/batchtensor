@@ -530,6 +530,21 @@ tensor([8.0185, 9.1272, 5.1698, 6.0247])
 
 ```
 
+### flip
+
+`flip_along_batch` and `flip_along_seq` return the tensor with the order of the elements reversed along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import flip_along_batch
+>>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+>>> flip_along_batch(tensor)
+tensor([[8, 7, 2, 1],
+        [4, 9, 5, 6],
+        [0, 1, 3, 2]])
+
+```
+
 ## Best Practices
 
 1. **Dimension Awareness**: Always ensure your tensors follow the expected shape conventions

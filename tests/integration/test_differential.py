@@ -65,6 +65,7 @@ CASES = (
         for dim in ("batch", "seq")
         for variant in [{}, {"keepdim": True}]
     ]
+    + [(f"flip_along_{dim}", variant) for dim in ("batch", "seq") for variant in [{}]]
     + [
         (f"pad_along_{dim}", {"pad_size": 2, "value": 1.0, "side": side})
         for dim in ("batch", "seq")
