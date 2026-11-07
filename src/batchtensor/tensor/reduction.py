@@ -3,6 +3,8 @@ r"""Implements reduction functions for tensors."""
 from __future__ import annotations
 
 __all__ = [
+    "all_along_batch",
+    "all_along_seq",
     "amax_along_batch",
     "amax_along_seq",
     "amin_along_batch",
@@ -903,3 +905,67 @@ def any_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tenso
         ```
     """
     return torch.any(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def all_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return whether all the elements are true along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with whether all the elements are true along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import all_along_batch
+        >>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+        >>> out = all_along_batch(tensor)
+        >>> out
+        tensor([False, False,  True, False])
+        >>> out = all_along_batch(tensor, keepdim=True)
+        >>> out
+        tensor([[False, False,  True, False]])
+
+        ```
+    """
+    return torch.all(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def all_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return whether all the elements are true along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with whether all the elements are true along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import all_along_seq
+        >>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+        >>> out = all_along_seq(tensor)
+        >>> out
+        tensor([False,  True, False])
+        >>> out = all_along_seq(tensor, keepdim=True)
+        >>> out
+        tensor([[False],
+                [ True],
+                [False]])
+
+        ```
+    """
+    return torch.all(tensor, dim=SEQ_DIM, keepdim=keepdim)
