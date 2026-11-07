@@ -498,7 +498,9 @@ tensor([16.0000, 17.3333,  2.3333,  7.0000])
 ```pycon
 >>> import torch
 >>> from batchtensor.tensor import any_along_batch
->>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+>>> tensor = torch.tensor(
+...     [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+... )
 >>> any_along_batch(tensor)
 tensor([True, True, True, True])
 
@@ -511,7 +513,9 @@ tensor([True, True, True, True])
 ```pycon
 >>> import torch
 >>> from batchtensor.tensor import all_along_batch
->>> tensor = torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])
+>>> tensor = torch.tensor(
+...     [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+... )
 >>> all_along_batch(tensor)
 tensor([False, False,  True, False])
 

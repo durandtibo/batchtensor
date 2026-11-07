@@ -1,7 +1,7 @@
 r"""Check the static types of the nested functions.
 
-The ``assert_type`` calls are checked by ``ty`` and ``pyright``. At runtime
-they do nothing.
+The ``assert_type`` calls are checked by ``ty`` and ``pyright``. At
+runtime they do nothing.
 """
 
 from __future__ import annotations

@@ -4,14 +4,14 @@ This page lists the breaking changes of the target-state refactoring and their r
 
 ## Removed functions
 
-| Removed                                                                                                                          | Replacement                                                                  |
-| -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `nested.abs`, `exp`, `exp2`, `expm1`, `log`, `log2`, `log10`, `log1p`, `acos`, `acosh`, `asin`, `asinh`, `atan`, `atanh`, `cos`, `cosh`, `sin`, `sinh`, `tan`, `tanh` | `apply_to_tensors(data, torch.xxx)` from `batchtensor.utils.structure`       |
-| `nested.clamp(data, min, max)`                                                                                                   | `apply_to_tensors(data, partial(torch.clamp, min=..., max=...))`             |
-| `nested.as_tensor(data)`                                                                                                         | `coola.recursive.recursive_apply(data, torch.as_tensor)`                     |
-| `nested.combine(items, fn)`                                                                                                      | `batchtensor.utils.structure.combine_tensors(items, fn)`                     |
-| `nested.split(data, fn)`                                                                                                         | `batchtensor.utils.structure.split_tensors(data, fn)`                        |
-| `batchtensor.nested.types.NestedTensor`                                                                                          | `batchtensor.nested.NestedTensor` (public, excludes `str` and `bytes`)       |
+| Removed                                                                                                                                                               | Replacement                                                            |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `nested.abs`, `exp`, `exp2`, `expm1`, `log`, `log2`, `log10`, `log1p`, `acos`, `acosh`, `asin`, `asinh`, `atan`, `atanh`, `cos`, `cosh`, `sin`, `sinh`, `tan`, `tanh` | `apply_to_tensors(data, torch.xxx)` from `batchtensor.utils.structure` |
+| `nested.clamp(data, min, max)`                                                                                                                                        | `apply_to_tensors(data, partial(torch.clamp, min=..., max=...))`       |
+| `nested.as_tensor(data)`                                                                                                                                              | `coola.recursive.recursive_apply(data, torch.as_tensor)`               |
+| `nested.combine(items, fn)`                                                                                                                                           | `batchtensor.utils.structure.combine_tensors(items, fn)`               |
+| `nested.split(data, fn)`                                                                                                                                              | `batchtensor.utils.structure.split_tensors(data, fn)`                  |
+| `batchtensor.nested.types.NestedTensor`                                                                                                                               | `batchtensor.nested.NestedTensor` (public, excludes `str` and `bytes`) |
 
 ```pycon
 >>> import torch
@@ -30,31 +30,31 @@ This page lists the breaking changes of the target-state refactoring and their r
 `keepdim`, `descending`, `stable`, `step`, `value`, `side`, `generator`, `max_len` and
 `memory_format` can no longer be passed positionally.
 
-| Before                                  | After                                       |
-| --------------------------------------- | ------------------------------------------- |
-| `sum_along_batch(x, True)`              | `sum_along_batch(x, keepdim=True)`          |
-| `sort_along_seq(x, True)`               | `sort_along_seq(x, descending=True)`        |
-| `slice_along_batch(x, 0, 4, 2)`         | `slice_along_batch(x, 0, 4, step=2)`        |
-| `pad_along_seq(x, 2, 1.0)`              | `pad_along_seq(x, 2, value=1.0)`            |
-| `shuffle_along_batch(x, generator)`     | `shuffle_along_batch(x, generator=generator)` |
-| `lengths_to_mask(lengths, 5)`           | `lengths_to_mask(lengths, max_len=5)`       |
+| Before                              | After                                         |
+| ----------------------------------- | --------------------------------------------- |
+| `sum_along_batch(x, True)`          | `sum_along_batch(x, keepdim=True)`            |
+| `sort_along_seq(x, True)`           | `sort_along_seq(x, descending=True)`          |
+| `slice_along_batch(x, 0, 4, 2)`     | `slice_along_batch(x, 0, 4, step=2)`          |
+| `pad_along_seq(x, 2, 1.0)`          | `pad_along_seq(x, 2, value=1.0)`              |
+| `shuffle_along_batch(x, generator)` | `shuffle_along_batch(x, generator=generator)` |
+| `lengths_to_mask(lengths, 5)`       | `lengths_to_mask(lengths, max_len=5)`         |
 
 `sort_along_*` and `argsort_along_*` no longer forward an arbitrary `**kwargs` to torch: they take
 `descending` and `stable`. `nested.contiguous` takes `memory_format` instead of `*args, **kwargs`.
 
 ## Errors
 
-| Case                                                                         | Before                                       | After                          |
-| ---------------------------------------------------------------------------- | -------------------------------------------- | ------------------------------ |
+| Case                                                                         | Before                                        | After                            |
+| ---------------------------------------------------------------------------- | --------------------------------------------- | -------------------------------- |
 | Non-tensor leaf in a nested function                                         | `TypeError`, `AttributeError`... per function | `TypeError` naming the leaf type |
-| `cat_*`/`stack_*` on an empty sequence                                       | `{}`                                         | `ValueError`                   |
-| `cat_*`/`stack_*` on dicts with different keys                               | `KeyError`                                   | `ValueError`                   |
-| `chunk_*`/`split_*`/`shuffle_*` on data without tensor                       | `()` / unchanged data                        | `ValueError`                   |
-| `chunk_*`/`split_*` on leaves with different sizes                           | misaligned chunks, no error                  | `ValueError`                   |
-| `index_select_along_seq` with a batch mismatch                               | `RuntimeError`                               | `ValueError`                   |
-| `index_select_*` with an index of the wrong ndim, `permute_*` with a 2-D one | `IndexError`                                 | `ValueError`                   |
-| `lengths_to_mask` with a float tensor                                        | accepted                                     | `ValueError`                   |
-| `pad_along_*` with a `value` that does not fit the dtype                     | silent truncation                            | `ValueError`                   |
+| `cat_*`/`stack_*` on an empty sequence                                       | `{}`                                          | `ValueError`                     |
+| `cat_*`/`stack_*` on dicts with different keys                               | `KeyError`                                    | `ValueError`                     |
+| `chunk_*`/`split_*`/`shuffle_*` on data without tensor                       | `()` / unchanged data                         | `ValueError`                     |
+| `chunk_*`/`split_*` on leaves with different sizes                           | misaligned chunks, no error                   | `ValueError`                     |
+| `index_select_along_seq` with a batch mismatch                               | `RuntimeError`                                | `ValueError`                     |
+| `index_select_*` with an index of the wrong ndim, `permute_*` with a 2-D one | `IndexError`                                  | `ValueError`                     |
+| `lengths_to_mask` with a float tensor                                        | accepted                                      | `ValueError`                     |
+| `pad_along_*` with a `value` that does not fit the dtype                     | silent truncation                             | `ValueError`                     |
 
 ## Containers
 

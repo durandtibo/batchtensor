@@ -42,15 +42,15 @@ Each principle below is enforced by a test.
   validates is a `ValueError`. Anything else is the torch error, unchanged. `batchtensor` validates
   only what torch cannot see or what torch accepts but means something else.
 
-    | Situation                                                          | Exception         |
-    | ------------------------------------------------------------------ | ----------------- |
-    | A leaf is not a `torch.Tensor`                                     | `TypeError`       |
-    | `cat`/`stack` receives no item or structures with different layout | `ValueError`      |
-    | Leaves disagree on the split, chunk or shuffle dimension           | `ValueError`      |
-    | `pad_size < 0`, a `value` that does not fit the dtype, a bad `side` | `ValueError`      |
-    | A `permutation`/`index` with the wrong ndim or length              | `ValueError`      |
-    | `lengths` is not a 1-D integer tensor                              | `ValueError`      |
-    | `repeats < 0`, `chunks <= 0`, a bad dtype                          | torch's own error |
+  | Situation                                                           | Exception         |
+  | ------------------------------------------------------------------- | ----------------- |
+  | A leaf is not a `torch.Tensor`                                      | `TypeError`       |
+  | `cat`/`stack` receives no item or structures with different layout  | `ValueError`      |
+  | Leaves disagree on the split, chunk or shuffle dimension            | `ValueError`      |
+  | `pad_size < 0`, a `value` that does not fit the dtype, a bad `side` | `ValueError`      |
+  | A `permutation`/`index` with the wrong ndim or length               | `ValueError`      |
+  | `lengths` is not a 1-D integer tensor                               | `ValueError`      |
+  | `repeats < 0`, `chunks <= 0`, a bad dtype                           | torch's own error |
 
 - **Explicit randomness (P9).** Randomness comes only from an explicit `generator` (a
   `torch.Generator` or an `int` seed). Without it, the global torch RNG is used. One permutation
