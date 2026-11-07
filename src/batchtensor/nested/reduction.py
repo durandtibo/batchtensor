@@ -7,6 +7,8 @@ __all__ = [
     "amax_along_seq",
     "amin_along_batch",
     "amin_along_seq",
+    "any_along_batch",
+    "any_along_seq",
     "argmax_along_batch",
     "argmax_along_seq",
     "argmin_along_batch",
@@ -957,3 +959,69 @@ def var_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
         ```
     """
     return apply_to_tensors(data, partial(bt.var_along_seq, correction=correction, keepdim=keepdim))
+
+
+def any_along_batch(data: T, *, keepdim: bool = False) -> T:
+    r"""Return whether any element is true along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by whether any element is true along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import any_along_batch
+        >>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]]), "b": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+        >>> out = any_along_batch(data)
+        >>> out
+        {'a': tensor([True, True, True, True]), 'b': tensor([True, True, True, True])}
+        >>> out = any_along_batch(data, keepdim=True)
+        >>> out
+        {'a': tensor([[True, True, True, True]]), 'b': tensor([[True, True, True, True]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.any_along_batch, keepdim=keepdim))
+
+
+def any_along_seq(data: T, *, keepdim: bool = False) -> T:
+    r"""Return whether any element is true along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by whether any element is true along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import any_along_seq
+        >>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]]), "b": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+        >>> out = any_along_seq(data)
+        >>> out
+        {'a': tensor([True, True, True]), 'b': tensor([True, True, True])}
+        >>> out = any_along_seq(data, keepdim=True)
+        >>> out
+        {'a': tensor([[True],
+                [True],
+                [True]]), 'b': tensor([[True],
+                [True],
+                [True]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.any_along_seq, keepdim=keepdim))
