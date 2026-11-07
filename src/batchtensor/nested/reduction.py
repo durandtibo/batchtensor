@@ -15,6 +15,8 @@ __all__ = [
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "logsumexp_along_batch",
+    "logsumexp_along_seq",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -1093,3 +1095,69 @@ def all_along_seq(data: T, *, keepdim: bool = False) -> T:
         ```
     """
     return apply_to_tensors(data, partial(bt.all_along_seq, keepdim=keepdim))
+
+
+def logsumexp_along_batch(data: T, *, keepdim: bool = False) -> T:
+    r"""Return the log of the sum of exponentials along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the log of the sum of exponentials along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import logsumexp_along_batch
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = logsumexp_along_batch(data)
+        >>> out
+        {'a': tensor([8.0185, 9.1272, 5.1698, 6.0247]), 'b': tensor([8.0185, 9.1272, 5.1698, 6.0247])}
+        >>> out = logsumexp_along_batch(data, keepdim=True)
+        >>> out
+        {'a': tensor([[8.0185, 9.1272, 5.1698, 6.0247]]), 'b': tensor([[8.0185, 9.1272, 5.1698, 6.0247]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.logsumexp_along_batch, keepdim=keepdim))
+
+
+def logsumexp_along_seq(data: T, *, keepdim: bool = False) -> T:
+    r"""Return the log of the sum of exponentials along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the log of the sum of exponentials along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import logsumexp_along_seq
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = logsumexp_along_seq(data)
+        >>> out
+        {'a': tensor([3.4402, 9.0722, 8.3157]), 'b': tensor([3.4402, 9.0722, 8.3157])}
+        >>> out = logsumexp_along_seq(data, keepdim=True)
+        >>> out
+        {'a': tensor([[3.4402],
+                [9.0722],
+                [8.3157]]), 'b': tensor([[3.4402],
+                [9.0722],
+                [8.3157]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.logsumexp_along_seq, keepdim=keepdim))

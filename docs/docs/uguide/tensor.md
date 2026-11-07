@@ -517,6 +517,19 @@ tensor([False, False,  True, False])
 
 ```
 
+### logsumexp
+
+`logsumexp_along_batch` and `logsumexp_along_seq` return the log of the sum of exponentials along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import logsumexp_along_batch
+>>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+>>> logsumexp_along_batch(tensor)
+tensor([8.0185, 9.1272, 5.1698, 6.0247])
+
+```
+
 ## Best Practices
 
 1. **Dimension Awareness**: Always ensure your tensors follow the expected shape conventions
