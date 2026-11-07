@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from collections import OrderedDict, defaultdict, namedtuple
+from collections import OrderedDict, defaultdict
 from dataclasses import dataclass
+from typing import NamedTuple
 
 import pytest
 import torch
@@ -17,7 +18,10 @@ from batchtensor.utils.structure import (
     split_tensors,
 )
 
-Point = namedtuple("Point", "x y")  # noqa: PYI024
+
+class Point(NamedTuple):
+    x: torch.Tensor
+    y: torch.Tensor
 
 
 @dataclass
