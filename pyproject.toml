@@ -242,3 +242,8 @@ python-version = "3.11"
 [tool.importlinter]
 root_package = "batchtensor"
 include_external_packages = false
+
+[[tool.importlinter.contracts]]
+name = "Layered architecture"
+type = "layers"
+layers = ["batchtensor.nested", "batchtensor.tensor", "batchtensor.utils", "batchtensor.constants"]
