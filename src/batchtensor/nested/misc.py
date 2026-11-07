@@ -193,7 +193,6 @@ def to(data: T, *args: Any, **kwargs: Any) -> T:
         ```
 
     See Also:
-        ``batchtensor.nested.as_tensor``: Convert data to tensor format.
         ``batchtensor.nested.from_numpy``: Convert numpy arrays to tensors.
     """
     return apply_to_tensors(data, lambda tensor: tensor.to(*args, **kwargs))

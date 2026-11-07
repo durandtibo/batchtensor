@@ -236,30 +236,22 @@ indices=tensor([[1, 0],
 
 ```
 
-### Trigonometric Functions
+## Element-wise Operations
 
-Apply trigonometric functions element-wise:
-
-```pycon
->>> import torch
->>> from batchtensor.nested import sin
->>> batch = {"angles": torch.tensor([[0.0, 1.57], [3.14, 4.71]])}
->>> sin(batch)
-{'angles': tensor([[ 0.0000,  1.0000],
-                   [ 0.0016, -1.0000]])}
-
-```
-
-## Pointwise Operations
-
-Apply element-wise operations:
+The nested module has no function for the element-wise operations (`exp`, `log`, `sin`, `clamp`,
+...) because they do not depend on the batch or sequence dimension. Use `apply_to_tensors` with
+any torch function. It keeps the structure of the data and raises a `TypeError` for a leaf that is
+not a tensor:
 
 ```pycon
 >>> import torch
->>> from batchtensor.nested import abs
+>>> from functools import partial
+>>> from batchtensor.utils.structure import apply_to_tensors
 >>> batch = {"values": torch.tensor([[-1.0, 2.0], [-3.0, 4.0]])}
->>> abs(batch)
+>>> apply_to_tensors(batch, torch.abs)
 {'values': tensor([[1., 2.], [3., 4.]])}
+>>> apply_to_tensors(batch, partial(torch.clamp, min=0.0))
+{'values': tensor([[0., 2.], [0., 4.]])}
 
 ```
 

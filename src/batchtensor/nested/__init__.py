@@ -45,16 +45,14 @@ Function Categories:
     **Comparison operations**: Sort and find extrema
         - ``sort_along_batch``, ``argsort_along_batch``
 
-    **Mathematical operations**: Element-wise and cumulative operations
+    **Mathematical operations**: Cumulative operations
         - ``cumsum_along_batch``, ``cumprod_along_batch``
-        - ``abs``, ``exp``, ``log``, ``clamp``
 
-    **Trigonometric operations**: Standard trigonometric functions
-        - ``sin``, ``cos``, ``tan``, ``asin``, ``acos``, ``atan``
-        - ``sinh``, ``cosh``, ``tanh``, ``asinh``, ``acosh``, ``atanh``
+    For element-wise operations, use ``batchtensor.utils.structure.apply_to_tensors``
+    with the torch function (e.g. ``apply_to_tensors(batch, torch.exp)``).
 
     **Conversion operations**: Convert between tensor types and formats
-        - ``as_tensor``, ``from_numpy``, ``to_numpy``, ``to``
+        - ``from_numpy``, ``to_numpy``, ``to``
 
 Example:
     Working with nested dictionaries:
@@ -83,9 +81,9 @@ Example:
     ...     torch.tensor([[1, 2], [3, 4]]),
     ...     torch.tensor([[5, 6], [7, 8]]),
     ... ]
-    >>> # Apply absolute value to all tensors
-    >>> bn.abs(data)
-    [tensor([[1, 2], [3, 4]]), tensor([[5, 6], [7, 8]])]
+    >>> # Take the first sequence step of all tensors
+    >>> bn.select_along_seq(data, index=0)
+    [tensor([1, 3]), tensor([5, 7])]
 
     ```
 
@@ -97,9 +95,6 @@ from __future__ import annotations
 
 __all__ = [
     "NestedTensor",
-    "abs",
-    "acos",
-    "acosh",
     "amax_along_batch",
     "amax_along_seq",
     "amin_along_batch",
@@ -110,35 +105,20 @@ __all__ = [
     "argmin_along_seq",
     "argsort_along_batch",
     "argsort_along_seq",
-    "as_tensor",
-    "asin",
-    "asinh",
-    "atan",
-    "atanh",
     "cat_along_batch",
     "cat_along_seq",
     "chunk_along_batch",
     "chunk_along_seq",
-    "clamp",
     "clone",
     "contiguous",
-    "cos",
-    "cosh",
     "cumprod_along_batch",
     "cumprod_along_seq",
     "cumsum_along_batch",
     "cumsum_along_seq",
     "detach",
-    "exp",
-    "exp2",
-    "expm1",
     "from_numpy",
     "index_select_along_batch",
     "index_select_along_seq",
-    "log",
-    "log1p",
-    "log2",
-    "log10",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -159,8 +139,6 @@ __all__ = [
     "select_along_seq",
     "shuffle_along_batch",
     "shuffle_along_seq",
-    "sin",
-    "sinh",
     "slice_along_batch",
     "slice_along_seq",
     "sort_along_batch",
@@ -171,8 +149,6 @@ __all__ = [
     "stack_along_seq",
     "sum_along_batch",
     "sum_along_seq",
-    "tan",
-    "tanh",
     "to",
     "to_numpy",
 ]
@@ -183,7 +159,7 @@ from batchtensor.nested.comparison import (
     sort_along_batch,
     sort_along_seq,
 )
-from batchtensor.nested.conversion import as_tensor, from_numpy, to_numpy
+from batchtensor.nested.conversion import from_numpy, to_numpy
 from batchtensor.nested.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.nested.joining import (
     cat_along_batch,
@@ -205,17 +181,6 @@ from batchtensor.nested.permutation import (
     permute_along_seq,
     shuffle_along_batch,
     shuffle_along_seq,
-)
-from batchtensor.nested.pointwise import (
-    abs,  # noqa: A004
-    clamp,
-    exp,
-    exp2,
-    expm1,
-    log,
-    log1p,
-    log2,
-    log10,
 )
 from batchtensor.nested.reduction import (
     amax_along_batch,
@@ -248,19 +213,5 @@ from batchtensor.nested.slicing import (
     slice_along_seq,
     split_along_batch,
     split_along_seq,
-)
-from batchtensor.nested.trigo import (
-    acos,
-    acosh,
-    asin,
-    asinh,
-    atan,
-    atanh,
-    cos,
-    cosh,
-    sin,
-    sinh,
-    tan,
-    tanh,
 )
 from batchtensor.nested.types import NestedTensor
