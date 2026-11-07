@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from typing import Any
+
+import pytest
 import torch
 from coola.equality import objects_are_equal
 
@@ -8,6 +11,8 @@ from batchtensor.nested import (
     argsort_along_seq,
     sort_along_batch,
     sort_along_seq,
+    topk_along_batch,
+    topk_along_seq,
 )
 from tests.conftest import torch_greater_equal_1_13
 
@@ -415,3 +420,76 @@ def test_sort_along_seq_nested() -> None:
             ],
         },
     )
+
+
+#########################################################
+#     Tests for topk_along_batch and topk_along_seq     #
+#########################################################
+
+
+def test_topk_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        topk_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2),
+        torch.topk(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), k=2, dim=0),
+    )
+
+
+def test_topk_along_batch_dict_and_list() -> None:
+    assert objects_are_equal(
+        topk_along_batch(
+            {
+                "a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),
+                "b": [torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])],
+            },
+            2,
+        ),
+        {
+            "a": torch.topk(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), k=2, dim=0),
+            "b": [torch.topk(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), k=2, dim=0)],
+        },
+    )
+
+
+def test_topk_along_batch_tuple() -> None:
+    out = topk_along_batch((torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),), 2)
+    assert isinstance(out, tuple)
+
+
+def test_topk_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        topk_along_batch(data, 2)
+
+
+def test_topk_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        topk_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2),
+        torch.topk(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), k=2, dim=1),
+    )
+
+
+def test_topk_along_seq_dict_and_list() -> None:
+    assert objects_are_equal(
+        topk_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),
+                "b": [torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])],
+            },
+            2,
+        ),
+        {
+            "a": torch.topk(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), k=2, dim=1),
+            "b": [torch.topk(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), k=2, dim=1)],
+        },
+    )
+
+
+def test_topk_along_seq_tuple() -> None:
+    out = topk_along_seq((torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),), 2)
+    assert isinstance(out, tuple)
+
+
+def test_topk_along_seq_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        topk_along_seq(data, 2)

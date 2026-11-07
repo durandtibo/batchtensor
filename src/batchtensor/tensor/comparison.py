@@ -197,3 +197,93 @@ def sort_along_seq(
         ```
     """
     return torch.sort(tensor, dim=SEQ_DIM, descending=descending, stable=stable)
+
+
+def topk_along_batch(
+    tensor: torch.Tensor, k: int, *, largest: bool = True, sort_output: bool = True
+) -> torch.return_types.topk:
+    r"""Return the k largest (or smallest) elements along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        k: The number of top elements to return.
+        largest: Whether to return the largest or the smallest elements.
+        sort_output: Whether to return the elements in sorted order (the ``sorted`` argument of ``torch.topk``).
+
+    Returns:
+        A named tuple ``(values, indices)`` with the the k largest (or smallest) elements along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import topk_along_batch
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = topk_along_batch(tensor, 2)
+        >>> out
+        torch.return_types.topk(
+        values=tensor([[8, 9, 5, 6],
+                [4, 7, 3, 2]]),
+        indices=tensor([[2, 1, 1, 1],
+                [1, 2, 0, 0]]))
+        >>> out = topk_along_batch(tensor, 2, largest=False)
+        >>> out
+        torch.return_types.topk(
+        values=tensor([[0, 1, 2, 1],
+                [4, 7, 3, 2]]),
+        indices=tensor([[0, 0, 2, 2],
+                [1, 2, 0, 0]]))
+
+        ```
+    """
+    return torch.topk(tensor, k=k, dim=BATCH_DIM, largest=largest, sorted=sort_output)
+
+
+def topk_along_seq(
+    tensor: torch.Tensor, k: int, *, largest: bool = True, sort_output: bool = True
+) -> torch.return_types.topk:
+    r"""Return the k largest (or smallest) elements along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        k: The number of top elements to return.
+        largest: Whether to return the largest or the smallest elements.
+        sort_output: Whether to return the elements in sorted order (the ``sorted`` argument of ``torch.topk``).
+
+    Returns:
+        A named tuple ``(values, indices)`` with the the k largest (or smallest) elements along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import topk_along_seq
+        >>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+        >>> out = topk_along_seq(tensor, 2)
+        >>> out
+        torch.return_types.topk(
+        values=tensor([[3, 2],
+                [9, 6],
+                [8, 7]]),
+        indices=tensor([[2, 3],
+                [1, 3],
+                [0, 1]]))
+        >>> out = topk_along_seq(tensor, 2, largest=False)
+        >>> out
+        torch.return_types.topk(
+        values=tensor([[0, 1],
+                [4, 5],
+                [1, 2]]),
+        indices=tensor([[0, 1],
+                [0, 2],
+                [3, 2]]))
+
+        ```
+    """
+    return torch.topk(tensor, k=k, dim=SEQ_DIM, largest=largest, sorted=sort_output)

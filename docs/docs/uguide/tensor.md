@@ -560,6 +560,23 @@ tensor([[8, 7, 2, 1],
 
 ```
 
+### topk
+
+`topk_along_batch` and `topk_along_seq` return the k largest (or smallest) elements along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import topk_along_batch
+>>> tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+>>> topk_along_batch(tensor, 2)
+torch.return_types.topk(
+values=tensor([[8, 9, 5, 6],
+        [4, 7, 3, 2]]),
+indices=tensor([[2, 1, 1, 1],
+        [1, 2, 0, 0]]))
+
+```
+
 ## Best Practices
 
 1. **Dimension Awareness**: Always ensure your tensors follow the expected shape conventions

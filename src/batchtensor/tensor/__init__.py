@@ -130,6 +130,8 @@ __all__ = [
     "std_along_seq",
     "sum_along_batch",
     "sum_along_seq",
+    "topk_along_batch",
+    "topk_along_seq",
     "var_along_batch",
     "var_along_seq",
 ]
@@ -139,6 +141,8 @@ from batchtensor.tensor.comparison import (
     argsort_along_seq,
     sort_along_batch,
     sort_along_seq,
+    topk_along_batch,
+    topk_along_seq,
 )
 from batchtensor.tensor.indexing import index_select_along_batch, index_select_along_seq
 from batchtensor.tensor.joining import (

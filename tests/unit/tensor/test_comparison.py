@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pytest
 import torch
 from coola.equality import objects_are_equal
 
@@ -8,6 +9,8 @@ from batchtensor.tensor import (
     argsort_along_seq,
     sort_along_batch,
     sort_along_seq,
+    topk_along_batch,
+    topk_along_seq,
 )
 from tests.conftest import torch_greater_equal_1_13
 
@@ -149,3 +152,139 @@ def test_sort_along_seq_stable_true() -> None:
             )
         ),
     )
+
+
+#########################################################
+#     Tests for topk_along_batch and topk_along_seq     #
+#########################################################
+
+
+def test_topk_along_batch_k_2_values() -> None:
+    assert objects_are_equal(
+        topk_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2).values,
+        torch.tensor([[8, 9, 5, 6], [4, 7, 3, 2]]),
+    )
+
+
+def test_topk_along_batch_k_2_indices() -> None:
+    assert objects_are_equal(
+        topk_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2).indices,
+        torch.tensor([[2, 1, 1, 1], [1, 2, 0, 0]]),
+    )
+
+
+def test_topk_along_batch_k_2_largest_false_values() -> None:
+    assert objects_are_equal(
+        topk_along_batch(
+            torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2, largest=False
+        ).values,
+        torch.tensor([[0, 1, 2, 1], [4, 7, 3, 2]]),
+    )
+
+
+def test_topk_along_batch_k_2_largest_false_indices() -> None:
+    assert objects_are_equal(
+        topk_along_batch(
+            torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2, largest=False
+        ).indices,
+        torch.tensor([[0, 0, 2, 2], [1, 2, 0, 0]]),
+    )
+
+
+def test_topk_along_batch_k_3_sort_output_false_values() -> None:
+    assert objects_are_equal(
+        topk_along_batch(
+            torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 3, sort_output=False
+        ).values,
+        torch.tensor([[8, 9, 5, 6], [4, 7, 3, 2], [0, 1, 2, 1]]),
+    )
+
+
+def test_topk_along_batch_k_3_sort_output_false_indices() -> None:
+    assert objects_are_equal(
+        topk_along_batch(
+            torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 3, sort_output=False
+        ).indices,
+        torch.tensor([[2, 1, 1, 1], [1, 2, 0, 0], [0, 0, 2, 2]]),
+    )
+
+
+def test_topk_along_batch_returns_named_tuple() -> None:
+    assert isinstance(
+        topk_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2),
+        torch.return_types.topk,
+    )
+
+
+def test_topk_along_batch_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    topk_along_batch(tensor, 2)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_topk_along_seq_k_2_values() -> None:
+    assert objects_are_equal(
+        topk_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2).values,
+        torch.tensor([[3, 2], [9, 6], [8, 7]]),
+    )
+
+
+def test_topk_along_seq_k_2_indices() -> None:
+    assert objects_are_equal(
+        topk_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2).indices,
+        torch.tensor([[2, 3], [1, 3], [0, 1]]),
+    )
+
+
+def test_topk_along_seq_k_2_largest_false_values() -> None:
+    assert objects_are_equal(
+        topk_along_seq(
+            torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2, largest=False
+        ).values,
+        torch.tensor([[0, 1], [4, 5], [1, 2]]),
+    )
+
+
+def test_topk_along_seq_k_2_largest_false_indices() -> None:
+    assert objects_are_equal(
+        topk_along_seq(
+            torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2, largest=False
+        ).indices,
+        torch.tensor([[0, 1], [0, 2], [3, 2]]),
+    )
+
+
+def test_topk_along_seq_k_3_sort_output_false_values() -> None:
+    assert objects_are_equal(
+        topk_along_seq(
+            torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 3, sort_output=False
+        ).values,
+        torch.tensor([[3, 2, 1], [9, 6, 5], [8, 7, 2]]),
+    )
+
+
+def test_topk_along_seq_k_3_sort_output_false_indices() -> None:
+    assert objects_are_equal(
+        topk_along_seq(
+            torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 3, sort_output=False
+        ).indices,
+        torch.tensor([[2, 3, 1], [1, 3, 2], [0, 1, 2]]),
+    )
+
+
+def test_topk_along_seq_returns_named_tuple() -> None:
+    assert isinstance(
+        topk_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 2),
+        torch.return_types.topk,
+    )
+
+
+def test_topk_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    topk_along_seq(tensor, 2)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_topk_along_seq_1d_tensor() -> None:
+    with pytest.raises(IndexError, match="Dimension out of range"):
+        topk_along_seq(torch.tensor([0, 4, 8]), 2)

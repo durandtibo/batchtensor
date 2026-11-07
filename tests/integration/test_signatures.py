@@ -14,7 +14,7 @@ OPTIONS = (
     "side",
     "correction",
     "largest",
-    "sorted",
+    "sort_output",
     "keepdim",
     "descending",
     "stable",
