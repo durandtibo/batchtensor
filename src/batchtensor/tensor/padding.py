@@ -4,9 +4,8 @@ from __future__ import annotations
 
 __all__ = ["pad_along_batch", "pad_along_seq", "pad_sequences"]
 
-from typing import TYPE_CHECKING, Literal
-
 import math
+from typing import TYPE_CHECKING, Literal
 
 import torch.nn.functional
 
