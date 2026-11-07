@@ -27,9 +27,9 @@ NESTED_FUNCTIONS = [
     (name, getattr(nested, name)) for name in nested.__all__ if name != "NestedTensor"
 ]
 
-######################################
-#     Tests for keyword-only options #
-######################################
+##########################################
+#     Tests for keyword-only options     #
+##########################################
 
 
 def get_positional_options(fn: Callable[..., object]) -> list[str]:
