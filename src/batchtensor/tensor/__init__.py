@@ -120,6 +120,8 @@ __all__ = [
     "std_along_seq",
     "sum_along_batch",
     "sum_along_seq",
+    "var_along_batch",
+    "var_along_seq",
 ]
 
 from batchtensor.tensor.comparison import (
@@ -174,6 +176,8 @@ from batchtensor.tensor.reduction import (
     std_along_seq,
     sum_along_batch,
     sum_along_seq,
+    var_along_batch,
+    var_along_seq,
 )
 from batchtensor.tensor.slicing import (
     chunk_along_batch,

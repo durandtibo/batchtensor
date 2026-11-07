@@ -377,6 +377,19 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ```
 
+### var
+
+`var_along_batch` and `var_along_seq` return the variance along the batch or the sequence dimension.
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import var_along_batch
+>>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+>>> var_along_batch(data)
+{'a': tensor([16.0000, 17.3333,  2.3333,  7.0000])}
+
+```
+
 ## Best Practices
 
 1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible
