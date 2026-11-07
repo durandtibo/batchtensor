@@ -27,6 +27,8 @@ from batchtensor.tensor import (
     std_along_seq,
     sum_along_batch,
     sum_along_seq,
+    var_along_batch,
+    var_along_seq,
 )
 
 DTYPES = [torch.float, torch.double, torch.long]
@@ -565,3 +567,89 @@ def test_std_along_seq_does_not_modify_input() -> None:
 def test_std_along_seq_1d_tensor() -> None:
     with pytest.raises(IndexError, match="Dimension out of range"):
         std_along_seq(torch.tensor([0.0, 4.0, 8.0]))
+
+
+#######################################################
+#     Tests for var_along_batch and var_along_seq     #
+#######################################################
+
+
+def test_var_along_batch_default() -> None:
+    assert objects_are_equal(
+        var_along_batch(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([16.0, 17.33333396911621, 2.3333332538604736, 7.0]),
+    )
+
+
+def test_var_along_batch_keepdim_true() -> None:
+    assert objects_are_equal(
+        var_along_batch(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),
+            keepdim=True,
+        ),
+        torch.tensor([[16.0, 17.33333396911621, 2.3333332538604736, 7.0]]),
+    )
+
+
+def test_var_along_batch_correction_0() -> None:
+    assert objects_are_equal(
+        var_along_batch(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),
+            correction=0,
+        ),
+        torch.tensor(
+            [10.666666984558105, 11.55555534362793, 1.5555555820465088, 4.666666507720947]
+        ),
+    )
+
+
+def test_var_along_batch_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+    var_along_batch(tensor)
+    assert objects_are_equal(
+        tensor, torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+    )
+
+
+def test_var_along_seq_default() -> None:
+    assert objects_are_equal(
+        var_along_seq(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([1.6666666269302368, 4.666666507720947, 12.333333015441895]),
+    )
+
+
+def test_var_along_seq_keepdim_true() -> None:
+    assert objects_are_equal(
+        var_along_seq(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),
+            keepdim=True,
+        ),
+        torch.tensor([[1.6666666269302368], [4.666666507720947], [12.333333015441895]]),
+    )
+
+
+def test_var_along_seq_correction_0() -> None:
+    assert objects_are_equal(
+        var_along_seq(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),
+            correction=0,
+        ),
+        torch.tensor([1.25, 3.5, 9.25]),
+    )
+
+
+def test_var_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+    var_along_seq(tensor)
+    assert objects_are_equal(
+        tensor, torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+    )
+
+
+def test_var_along_seq_1d_tensor() -> None:
+    with pytest.raises(IndexError, match="Dimension out of range"):
+        var_along_seq(torch.tensor([0.0, 4.0, 8.0]))

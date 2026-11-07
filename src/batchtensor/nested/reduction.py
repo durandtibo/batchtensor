@@ -25,6 +25,8 @@ __all__ = [
     "std_along_seq",
     "sum_along_batch",
     "sum_along_seq",
+    "var_along_batch",
+    "var_along_seq",
 ]
 
 from functools import partial
@@ -885,3 +887,73 @@ def std_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
         ```
     """
     return apply_to_tensors(data, partial(bt.std_along_seq, correction=correction, keepdim=keepdim))
+
+
+def var_along_batch(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
+    r"""Return the variance along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the variance along the batch dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import var_along_batch
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = var_along_batch(data)
+        >>> out
+        {'a': tensor([16.0000, 17.3333,  2.3333,  7.0000]), 'b': tensor([16.0000, 17.3333,  2.3333,  7.0000])}
+        >>> out = var_along_batch(data, keepdim=True)
+        >>> out
+        {'a': tensor([[16.0000, 17.3333,  2.3333,  7.0000]]), 'b': tensor([[16.0000, 17.3333,  2.3333,  7.0000]])}
+
+        ```
+    """
+    return apply_to_tensors(
+        data, partial(bt.var_along_batch, correction=correction, keepdim=keepdim)
+    )
+
+
+def var_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
+    r"""Return the variance along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension of the tensors.
+
+    Args:
+        data: The input data. Each item must be a tensor.
+        correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The data where each tensor is replaced by the variance along the sequence dimension. The output has the same structure as the input.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.nested import var_along_seq
+        >>> data = {"a": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]), "b": torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])}
+        >>> out = var_along_seq(data)
+        >>> out
+        {'a': tensor([ 1.6667,  4.6667, 12.3333]), 'b': tensor([ 1.6667,  4.6667, 12.3333])}
+        >>> out = var_along_seq(data, keepdim=True)
+        >>> out
+        {'a': tensor([[ 1.6667],
+                [ 4.6667],
+                [12.3333]]), 'b': tensor([[ 1.6667],
+                [ 4.6667],
+                [12.3333]])}
+
+        ```
+    """
+    return apply_to_tensors(data, partial(bt.var_along_seq, correction=correction, keepdim=keepdim))
