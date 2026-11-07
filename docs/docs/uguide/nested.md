@@ -31,7 +31,7 @@ tensors in these structures while preserving the nested structure.
 **Leaves:**
 
 Every leaf must be a `torch.Tensor`. Non-tensor leaves (`str`, `None`, `int`, ...)
-are not skipped: the call fails with the error of the underlying operation.
+are not skipped: the call raises a `TypeError`.
 
 **Dimension Conventions:**
 

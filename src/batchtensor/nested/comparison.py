@@ -6,19 +6,16 @@ from __future__ import annotations
 __all__ = ["argsort_along_batch", "argsort_along_seq", "sort_along_batch", "sort_along_seq"]
 
 from functools import partial
-from typing import TYPE_CHECKING, Any
-
-from coola.recursive import recursive_apply
+from typing import TYPE_CHECKING
 
 from batchtensor import tensor as bt
+from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.nested.types import NestedTensor, T
 
 
-def argsort_along_batch(
-    data: NestedTensor, descending: bool = False, **kwargs: Any
-) -> NestedTensor:
+def argsort_along_batch(data: T, *, descending: bool = False, stable: bool = False) -> T:
     r"""Return the indices that sort a tensor along the batch dimension
     in ascending order by value.
 
@@ -31,7 +28,7 @@ def argsort_along_batch(
         data: The input data. Each item must be a tensor.
         descending: Controls the sorting order (ascending or
             descending).
-        kwargs: Additional keywords arguments for ``torch.argsort``.
+        stable: Whether to preserve the order of equal elements (see ``torch.argsort``).
 
     Returns:
         The indices that sort each tensor along the batch dimension
@@ -53,10 +50,12 @@ def argsort_along_batch(
 
         ```
     """
-    return recursive_apply(data, partial(bt.argsort_along_batch, descending=descending, **kwargs))
+    return apply_to_tensors(
+        data, partial(bt.argsort_along_batch, descending=descending, stable=stable)
+    )
 
 
-def argsort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
+def argsort_along_seq(data: T, *, descending: bool = False, stable: bool = False) -> T:
     r"""Return the indices that sort each tensor along the sequence
     dimension in ascending order by value.
 
@@ -69,7 +68,7 @@ def argsort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: An
         data: The input data. Each item must be a tensor.
         descending: Controls the sorting order (ascending or
             descending).
-        kwargs: Additional keywords arguments for ``torch.argsort``.
+        stable: Whether to preserve the order of equal elements (see ``torch.argsort``).
 
     Returns:
         The indices that sort each tensor along the sequence dimension.
@@ -91,10 +90,14 @@ def argsort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: An
 
         ```
     """
-    return recursive_apply(data, partial(bt.argsort_along_seq, descending=descending, **kwargs))
+    return apply_to_tensors(
+        data, partial(bt.argsort_along_seq, descending=descending, stable=stable)
+    )
 
 
-def sort_along_batch(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
+def sort_along_batch(
+    data: NestedTensor, *, descending: bool = False, stable: bool = False
+) -> NestedTensor:
     r"""Sort the elements of the input tensor along the batch dimension
     in ascending order by value.
 
@@ -107,7 +110,7 @@ def sort_along_batch(data: NestedTensor, descending: bool = False, **kwargs: Any
         data: The input data. Each item must be a tensor.
         descending: Controls the sorting order (ascending or
             descending).
-        kwargs: Additional keywords arguments for ``torch.sort``.
+        stable: Whether to preserve the order of equal elements (see ``torch.sort``).
 
     Returns:
         A similar object where each tensor is replaced by a namedtuple
@@ -142,10 +145,14 @@ def sort_along_batch(data: NestedTensor, descending: bool = False, **kwargs: Any
 
         ```
     """
-    return recursive_apply(data, partial(bt.sort_along_batch, descending=descending, **kwargs))
+    return apply_to_tensors(
+        data, partial(bt.sort_along_batch, descending=descending, stable=stable)
+    )
 
 
-def sort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
+def sort_along_seq(
+    data: NestedTensor, *, descending: bool = False, stable: bool = False
+) -> NestedTensor:
     r"""Sort the elements of the input tensor along the sequence
     dimension in ascending order by value.
 
@@ -158,7 +165,7 @@ def sort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) 
         data: The input data. Each item must be a tensor.
         descending: Controls the sorting order (ascending or
             descending).
-        kwargs: Additional keywords arguments for ``torch.sort``.
+        stable: Whether to preserve the order of equal elements (see ``torch.sort``).
 
     Returns:
         A similar object where each tensor is replaced by a namedtuple
@@ -194,4 +201,4 @@ def sort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) 
 
         ```
     """
-    return recursive_apply(data, partial(bt.sort_along_seq, descending=descending, **kwargs))
+    return apply_to_tensors(data, partial(bt.sort_along_seq, descending=descending, stable=stable))

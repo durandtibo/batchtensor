@@ -176,7 +176,7 @@ def select_along_seq(tensor: torch.Tensor, index: int) -> torch.Tensor:
 
 
 def slice_along_batch(
-    tensor: torch.Tensor, start: int = 0, stop: int | None = None, step: int = 1
+    tensor: torch.Tensor, start: int = 0, stop: int | None = None, *, step: int = 1
 ) -> torch.Tensor:
     r"""Slice the tensor along the batch dimension.
 
@@ -221,7 +221,7 @@ def slice_along_batch(
 
 
 def slice_along_seq(
-    tensor: torch.Tensor, start: int = 0, stop: int | None = None, step: int = 1
+    tensor: torch.Tensor, start: int = 0, stop: int | None = None, *, step: int = 1
 ) -> torch.Tensor:
     r"""Slice the tensor along the sequence dimension.
 

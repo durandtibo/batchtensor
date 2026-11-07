@@ -25,3 +25,7 @@ jobs:
       - name: check modules
         run: |
           inv imports.check-cycles
+
+      - name: check layering contract
+        run: |
+          lint-imports

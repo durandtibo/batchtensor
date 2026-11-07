@@ -7,15 +7,14 @@ __all__ = ["pad_along_batch", "pad_along_seq"]
 from functools import partial
 from typing import TYPE_CHECKING
 
-from coola.recursive import recursive_apply
-
 from batchtensor import tensor as bt
+from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.nested.types import T
 
 
-def pad_along_batch(data: NestedTensor, pad_size: int, value: float = 0.0) -> NestedTensor:
+def pad_along_batch(data: T, pad_size: int, *, value: float = 0.0) -> T:
     r"""Pad all the tensors along the batch dimension.
 
     The padding is added at the end of the batch dimension.
@@ -47,10 +46,10 @@ def pad_along_batch(data: NestedTensor, pad_size: int, value: float = 0.0) -> Ne
     See Also:
         ``pad_along_seq``: Pad along the sequence dimension instead.
     """
-    return recursive_apply(data, partial(bt.pad_along_batch, pad_size=pad_size, value=value))
+    return apply_to_tensors(data, partial(bt.pad_along_batch, pad_size=pad_size, value=value))
 
 
-def pad_along_seq(data: NestedTensor, pad_size: int, value: float = 0.0) -> NestedTensor:
+def pad_along_seq(data: T, pad_size: int, *, value: float = 0.0) -> T:
     r"""Pad all the tensors along the sequence dimension.
 
     The padding is added at the end of the sequence dimension.
@@ -86,4 +85,4 @@ def pad_along_seq(data: NestedTensor, pad_size: int, value: float = 0.0) -> Nest
         ``pad_along_batch``: Pad along the batch dimension instead.
         ``lengths_to_mask``: Build a mask that flags the padded positions.
     """
-    return recursive_apply(data, partial(bt.pad_along_seq, pad_size=pad_size, value=value))
+    return apply_to_tensors(data, partial(bt.pad_along_seq, pad_size=pad_size, value=value))
