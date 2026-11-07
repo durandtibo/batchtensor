@@ -13,6 +13,8 @@ from batchtensor.nested import (
     flip_along_seq,
     permute_along_batch,
     permute_along_seq,
+    roll_along_batch,
+    roll_along_seq,
     shuffle_along_batch,
     shuffle_along_seq,
 )
@@ -451,3 +453,76 @@ def test_flip_along_seq_non_tensor_leaf() -> None:
     data: Any = {"a": "x"}
     with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
         flip_along_seq(data)
+
+
+#########################################################
+#     Tests for roll_along_batch and roll_along_seq     #
+#########################################################
+
+
+def test_roll_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 1),
+        torch.tensor([[8, 7, 2, 1], [0, 1, 3, 2], [4, 9, 5, 6]]),
+    )
+
+
+def test_roll_along_batch_dict_and_list() -> None:
+    assert objects_are_equal(
+        roll_along_batch(
+            {
+                "a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),
+                "b": [torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])],
+            },
+            1,
+        ),
+        {
+            "a": torch.tensor([[8, 7, 2, 1], [0, 1, 3, 2], [4, 9, 5, 6]]),
+            "b": [torch.tensor([[8, 7, 2, 1], [0, 1, 3, 2], [4, 9, 5, 6]])],
+        },
+    )
+
+
+def test_roll_along_batch_tuple() -> None:
+    out = roll_along_batch((torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),), 1)
+    assert isinstance(out, tuple)
+
+
+def test_roll_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        roll_along_batch(data, 1)
+
+
+def test_roll_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        roll_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 1),
+        torch.tensor([[2, 0, 1, 3], [6, 4, 9, 5], [1, 8, 7, 2]]),
+    )
+
+
+def test_roll_along_seq_dict_and_list() -> None:
+    assert objects_are_equal(
+        roll_along_seq(
+            {
+                "a": torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),
+                "b": [torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])],
+            },
+            1,
+        ),
+        {
+            "a": torch.tensor([[2, 0, 1, 3], [6, 4, 9, 5], [1, 8, 7, 2]]),
+            "b": [torch.tensor([[2, 0, 1, 3], [6, 4, 9, 5], [1, 8, 7, 2]])],
+        },
+    )
+
+
+def test_roll_along_seq_tuple() -> None:
+    out = roll_along_seq((torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]),), 1)
+    assert isinstance(out, tuple)
+
+
+def test_roll_along_seq_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        roll_along_seq(data, 1)

@@ -12,6 +12,8 @@ from batchtensor.tensor import (
     flip_along_seq,
     permute_along_batch,
     permute_along_seq,
+    roll_along_batch,
+    roll_along_seq,
     shuffle_along_batch,
     shuffle_along_seq,
 )
@@ -233,3 +235,67 @@ def test_flip_along_seq_does_not_modify_input() -> None:
 def test_flip_along_seq_1d_tensor() -> None:
     with pytest.raises(IndexError, match="Dimension out of range"):
         flip_along_seq(torch.tensor([0, 4, 8]))
+
+
+#########################################################
+#     Tests for roll_along_batch and roll_along_seq     #
+#########################################################
+
+
+def test_roll_along_batch_shifts_1() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 1),
+        torch.tensor([[8, 7, 2, 1], [0, 1, 3, 2], [4, 9, 5, 6]]),
+    )
+
+
+def test_roll_along_batch_shifts_neg1() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), -1),
+        torch.tensor([[4, 9, 5, 6], [8, 7, 2, 1], [0, 1, 3, 2]]),
+    )
+
+
+def test_roll_along_batch_shifts_5() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 5),
+        torch.tensor([[4, 9, 5, 6], [8, 7, 2, 1], [0, 1, 3, 2]]),
+    )
+
+
+def test_roll_along_batch_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    roll_along_batch(tensor, 1)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_roll_along_seq_shifts_1() -> None:
+    assert objects_are_equal(
+        roll_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 1),
+        torch.tensor([[2, 0, 1, 3], [6, 4, 9, 5], [1, 8, 7, 2]]),
+    )
+
+
+def test_roll_along_seq_shifts_neg1() -> None:
+    assert objects_are_equal(
+        roll_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), -1),
+        torch.tensor([[1, 3, 2, 0], [9, 5, 6, 4], [7, 2, 1, 8]]),
+    )
+
+
+def test_roll_along_seq_shifts_5() -> None:
+    assert objects_are_equal(
+        roll_along_seq(torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 5),
+        torch.tensor([[2, 0, 1, 3], [6, 4, 9, 5], [1, 8, 7, 2]]),
+    )
+
+
+def test_roll_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]])
+    roll_along_seq(tensor, 1)
+    assert objects_are_equal(tensor, torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]))
+
+
+def test_roll_along_seq_1d_tensor() -> None:
+    with pytest.raises(IndexError, match="Dimension out of range"):
+        roll_along_seq(torch.tensor([0, 4, 8]), 1)
