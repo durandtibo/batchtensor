@@ -397,7 +397,11 @@ See the [Type Conversion](#type-conversion) section for more examples.
 ```pycon
 >>> import torch
 >>> from batchtensor.nested import any_along_batch
->>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+>>> data = {
+...     "a": torch.tensor(
+...         [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+...     )
+... }
 >>> any_along_batch(data)
 {'a': tensor([True, True, True, True])}
 
@@ -410,7 +414,11 @@ See the [Type Conversion](#type-conversion) section for more examples.
 ```pycon
 >>> import torch
 >>> from batchtensor.nested import all_along_batch
->>> data = {"a": torch.tensor([[True, False, True, True], [True, True, True, True], [False, False, True, False]])}
+>>> data = {
+...     "a": torch.tensor(
+...         [[True, False, True, True], [True, True, True, True], [False, False, True, False]]
+...     )
+... }
 >>> all_along_batch(data)
 {'a': tensor([False, False,  True, False])}
 
