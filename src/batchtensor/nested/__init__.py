@@ -148,6 +148,8 @@ __all__ = [
     "split_along_seq",
     "stack_along_batch",
     "stack_along_seq",
+    "std_along_batch",
+    "std_along_seq",
     "sum_along_batch",
     "sum_along_seq",
     "to",
@@ -203,6 +205,8 @@ from batchtensor.nested.reduction import (
     min_along_seq,
     prod_along_batch,
     prod_along_seq,
+    std_along_batch,
+    std_along_seq,
     sum_along_batch,
     sum_along_seq,
 )

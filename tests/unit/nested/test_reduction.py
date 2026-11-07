@@ -25,6 +25,8 @@ from batchtensor.nested import (
     min_along_seq,
     prod_along_batch,
     prod_along_seq,
+    std_along_batch,
+    std_along_seq,
     sum_along_batch,
     sum_along_seq,
 )
@@ -1388,3 +1390,90 @@ def test_sort_along_seq_keeps_namedtuple() -> None:
 
     out = cast("Any", sort_along_seq({"a": torch.rand(3, 4)}))
     assert isinstance(out["a"], torch.return_types.sort)
+
+
+#######################################################
+#     Tests for std_along_batch and std_along_seq     #
+#######################################################
+
+
+def test_std_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        std_along_batch(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([4.0, 4.163331985473633, 1.5275251865386963, 2.6457512378692627]),
+    )
+
+
+def test_std_along_batch_dict_and_list() -> None:
+    assert objects_are_equal(
+        std_along_batch(
+            {
+                "a": torch.tensor(
+                    [[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]
+                ),
+                "b": [
+                    torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+                ],
+            }
+        ),
+        {
+            "a": torch.tensor([4.0, 4.163331985473633, 1.5275251865386963, 2.6457512378692627]),
+            "b": [torch.tensor([4.0, 4.163331985473633, 1.5275251865386963, 2.6457512378692627])],
+        },
+    )
+
+
+def test_std_along_batch_tuple() -> None:
+    out = std_along_batch(
+        (torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),)
+    )
+    assert isinstance(out, tuple)
+
+
+def test_std_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        std_along_batch(data)
+
+
+def test_std_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        std_along_seq(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([1.29099440574646, 2.1602468490600586, 3.5118846893310547]),
+    )
+
+
+def test_std_along_seq_dict_and_list() -> None:
+    assert objects_are_equal(
+        std_along_seq(
+            {
+                "a": torch.tensor(
+                    [[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]
+                ),
+                "b": [
+                    torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+                ],
+            }
+        ),
+        {
+            "a": torch.tensor([1.29099440574646, 2.1602468490600586, 3.5118846893310547]),
+            "b": [torch.tensor([1.29099440574646, 2.1602468490600586, 3.5118846893310547])],
+        },
+    )
+
+
+def test_std_along_seq_tuple() -> None:
+    out = std_along_seq(
+        (torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),)
+    )
+    assert isinstance(out, tuple)
+
+
+def test_std_along_seq_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        std_along_seq(data)
