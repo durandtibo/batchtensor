@@ -817,6 +817,7 @@ def sum_along_seq(data: T, *, keepdim: bool = False) -> T:
         ```
     """
     return apply_to_tensors(data, partial(bt.sum_along_seq, keepdim=keepdim))
+<<<<<<< HEAD
 
 
 def std_along_batch(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
@@ -957,3 +958,5 @@ def var_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
         ```
     """
     return apply_to_tensors(data, partial(bt.var_along_seq, correction=correction, keepdim=keepdim))
+=======
+>>>>>>> origin/main
