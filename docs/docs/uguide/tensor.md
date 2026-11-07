@@ -404,9 +404,9 @@ For reproducible shuffling, use a generator:
 ```pycon
 >>> import torch
 >>> from batchtensor.tensor import shuffle_along_batch
->>> from batchtensor.utils.seed import get_torch_generator
+>>> from coola.random import make_torch_generator
 >>> tensor = torch.tensor([[1, 2], [3, 4], [5, 6]])
->>> generator = get_torch_generator(42)
+>>> generator = make_torch_generator(42)
 >>> shuffled = shuffle_along_batch(tensor, generator=generator)
 
 ```

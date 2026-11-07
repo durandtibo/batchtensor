@@ -3,62 +3,11 @@ tensor operations."""
 
 from __future__ import annotations
 
-__all__ = ["get_random_seed", "get_torch_generator", "setup_torch_generator"]
+__all__ = ["setup_torch_generator"]
 
 
 import torch
-from coola.random import make_torch_generator, sample_torch_seed
-
-
-def get_random_seed(seed: int) -> int:
-    r"""Get a random seed.
-
-    Args:
-        seed: A random seed to make the process reproducible.
-
-    Returns:
-        A random seed. The value is between ``0`` and
-            ``2 ** 63 - 1``.
-
-    Example:
-        ```pycon
-        >>> from batchtensor.utils.seed import get_random_seed
-        >>> get_random_seed(44)
-        6176747449835261348
-
-        ```
-    """
-    return sample_torch_seed(seed)
-
-
-def get_torch_generator(
-    random_seed: int = 1, device: torch.device | str | None = "cpu"
-) -> torch.Generator:
-    r"""Create a ``torch.Generator`` initialized with a given seed.
-
-    Args:
-        random_seed: A random seed.
-        device: The desired device for the generator.
-
-    Returns:
-        A ``torch.Generator`` object.
-
-    Example:
-        ```pycon
-        >>> import torch
-        >>> from batchtensor.utils.seed import get_torch_generator
-        >>> generator = get_torch_generator(42)
-        >>> torch.rand(2, 4, generator=generator)
-        tensor([[0.8823, 0.9150, 0.3829, 0.9593],
-                [0.3904, 0.6009, 0.2566, 0.7936]])
-        >>> generator = get_torch_generator(42)
-        >>> torch.rand(2, 4, generator=generator)
-        tensor([[0.8823, 0.9150, 0.3829, 0.9593],
-                [0.3904, 0.6009, 0.2566, 0.7936]])
-
-        ```
-    """
-    return make_torch_generator(random_seed, device=device)
+from coola.random import make_torch_generator
 
 
 def setup_torch_generator(generator_or_seed: int | torch.Generator) -> torch.Generator:
@@ -82,4 +31,4 @@ def setup_torch_generator(generator_or_seed: int | torch.Generator) -> torch.Gen
     """
     if isinstance(generator_or_seed, torch.Generator):
         return generator_or_seed
-    return get_torch_generator(generator_or_seed)
+    return make_torch_generator(generator_or_seed)
