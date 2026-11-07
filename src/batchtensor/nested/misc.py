@@ -7,13 +7,14 @@ __all__ = ["clone", "contiguous", "detach", "pin_memory", "to"]
 
 from typing import TYPE_CHECKING, Any
 
-from coola.recursive import recursive_apply
-
 if TYPE_CHECKING:
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.nested.types import T
 
 
-def clone(data: NestedTensor) -> NestedTensor:
+from batchtensor.utils.structure import apply_to_tensors
+
+
+def clone(data: T) -> T:
     r"""Return a nested data structure with a copy of each tensor.
 
     This function recursively applies ``torch.Tensor.clone()`` to all
@@ -44,10 +45,10 @@ def clone(data: NestedTensor) -> NestedTensor:
     See Also:
         ``batchtensor.nested.detach``: Detach tensors from the computation graph.
     """
-    return recursive_apply(data, lambda tensor: tensor.clone())
+    return apply_to_tensors(data, lambda tensor: tensor.clone())
 
 
-def contiguous(data: NestedTensor, *args: Any, **kwargs: Any) -> NestedTensor:
+def contiguous(data: T, *args: Any, **kwargs: Any) -> T:
     r"""Return a nested data structure with a contiguous copy of each
     tensor.
 
@@ -77,10 +78,10 @@ def contiguous(data: NestedTensor, *args: Any, **kwargs: Any) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, lambda tensor: tensor.contiguous(*args, **kwargs))
+    return apply_to_tensors(data, lambda tensor: tensor.contiguous(*args, **kwargs))
 
 
-def detach(data: NestedTensor) -> NestedTensor:
+def detach(data: T) -> T:
     r"""Return a nested data structure with each tensor detached from the
     current computation graph.
 
@@ -113,10 +114,10 @@ def detach(data: NestedTensor) -> NestedTensor:
     See Also:
         ``batchtensor.nested.clone``: Create an independent copy of each tensor.
     """
-    return recursive_apply(data, lambda tensor: tensor.detach())
+    return apply_to_tensors(data, lambda tensor: tensor.detach())
 
 
-def pin_memory(data: NestedTensor) -> NestedTensor:
+def pin_memory(data: T) -> T:
     r"""Return a nested data structure with each tensor copied to pinned
     memory.
 
@@ -142,10 +143,10 @@ def pin_memory(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, lambda tensor: tensor.pin_memory())
+    return apply_to_tensors(data, lambda tensor: tensor.pin_memory())
 
 
-def to(data: NestedTensor, *args: Any, **kwargs: Any) -> NestedTensor:
+def to(data: T, *args: Any, **kwargs: Any) -> T:
     r"""Perform Tensor dtype and/or device conversion on all tensors in
     nested data.
 
@@ -196,4 +197,4 @@ def to(data: NestedTensor, *args: Any, **kwargs: Any) -> NestedTensor:
         ``batchtensor.nested.as_tensor``: Convert data to tensor format.
         ``batchtensor.nested.from_numpy``: Convert numpy arrays to tensors.
     """
-    return recursive_apply(data, lambda tensor: tensor.to(*args, **kwargs))
+    return apply_to_tensors(data, lambda tensor: tensor.to(*args, **kwargs))

@@ -8,17 +8,16 @@ __all__ = ["index_select_along_batch", "index_select_along_seq"]
 from functools import partial
 from typing import TYPE_CHECKING
 
-from coola.recursive import recursive_apply
-
 from batchtensor import tensor
+from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
     import torch
 
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.nested.types import T
 
 
-def index_select_along_batch(data: NestedTensor, index: torch.Tensor) -> NestedTensor:
+def index_select_along_batch(data: T, index: torch.Tensor) -> T:
     r"""Return the tensors which indexes the ``input`` tensor along the
     batch dimension using the entries in ``index`` which is a
     ``LongTensor``.
@@ -52,10 +51,10 @@ def index_select_along_batch(data: NestedTensor, index: torch.Tensor) -> NestedT
 
         ```
     """
-    return recursive_apply(data, partial(tensor.index_select_along_batch, index=index))
+    return apply_to_tensors(data, partial(tensor.index_select_along_batch, index=index))
 
 
-def index_select_along_seq(data: NestedTensor, index: torch.Tensor) -> NestedTensor:
+def index_select_along_seq(data: T, index: torch.Tensor) -> T:
     r"""Return the tensors which indexes the ``input`` tensor along the
     sequence dimension using the entries in ``index`` which is a
     ``LongTensor``.
@@ -89,4 +88,4 @@ def index_select_along_seq(data: NestedTensor, index: torch.Tensor) -> NestedTen
 
         ```
     """
-    return recursive_apply(data, partial(tensor.index_select_along_seq, index=index))
+    return apply_to_tensors(data, partial(tensor.index_select_along_seq, index=index))

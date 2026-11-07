@@ -19,13 +19,15 @@ from functools import partial
 from typing import TYPE_CHECKING
 
 import torch
-from coola.recursive import recursive_apply
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.nested.types import T
 
 
-def abs(data: NestedTensor) -> NestedTensor:  # noqa: A001
+from batchtensor.utils.structure import apply_to_tensors
+
+
+def abs(data: T) -> T:  # noqa: A001
     r"""Return new tensors with the absolute value of each element.
 
     Args:
@@ -49,14 +51,14 @@ def abs(data: NestedTensor) -> NestedTensor:  # noqa: A001
 
         ```
     """
-    return recursive_apply(data, torch.abs)
+    return apply_to_tensors(data, torch.abs)
 
 
 def clamp(
-    data: NestedTensor,
+    data: T,
     min: float | None = None,  # noqa: A002
     max: float | None = None,  # noqa: A002
-) -> NestedTensor:
+) -> T:
     r"""Clamp all elements in input into the range ``[min, max]``.
 
     Args:
@@ -82,10 +84,10 @@ def clamp(
 
         ```
     """
-    return recursive_apply(data, partial(torch.clamp, min=min, max=max))
+    return apply_to_tensors(data, partial(torch.clamp, min=min, max=max))
 
 
-def exp(data: NestedTensor) -> NestedTensor:
+def exp(data: T) -> T:
     r"""Return new tensors with the exponential of the elements.
 
     Args:
@@ -109,10 +111,10 @@ def exp(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, torch.exp)
+    return apply_to_tensors(data, torch.exp)
 
 
-def exp2(data: NestedTensor) -> NestedTensor:
+def exp2(data: T) -> T:
     r"""Return new tensors with the base two exponential of the elements.
 
     Args:
@@ -136,10 +138,10 @@ def exp2(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, torch.exp2)
+    return apply_to_tensors(data, torch.exp2)
 
 
-def expm1(data: NestedTensor) -> NestedTensor:
+def expm1(data: T) -> T:
     r"""Return new tensors with the exponential of the elements minus 1.
 
     Args:
@@ -163,10 +165,10 @@ def expm1(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, torch.expm1)
+    return apply_to_tensors(data, torch.expm1)
 
 
-def log(data: NestedTensor) -> NestedTensor:
+def log(data: T) -> T:
     r"""Return new tensors with the natural logarithm of the elements.
 
     Args:
@@ -190,10 +192,10 @@ def log(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, torch.log)
+    return apply_to_tensors(data, torch.log)
 
 
-def log2(data: NestedTensor) -> NestedTensor:
+def log2(data: T) -> T:
     r"""Return new tensors with the logarithm to the base 2 of the
     elements.
 
@@ -218,10 +220,10 @@ def log2(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, torch.log2)
+    return apply_to_tensors(data, torch.log2)
 
 
-def log10(data: NestedTensor) -> NestedTensor:
+def log10(data: T) -> T:
     r"""Return new tensors with the logarithm to the base 10 of the
     elements.
 
@@ -246,10 +248,10 @@ def log10(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, torch.log10)
+    return apply_to_tensors(data, torch.log10)
 
 
-def log1p(data: NestedTensor) -> NestedTensor:
+def log1p(data: T) -> T:
     r"""Return new tensors with the natural logarithm of ``(1 + input)``.
 
     Args:
@@ -273,4 +275,4 @@ def log1p(data: NestedTensor) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, torch.log1p)
+    return apply_to_tensors(data, torch.log1p)

@@ -9,25 +9,20 @@ __all__ = [
     "select_along_seq",
     "slice_along_batch",
     "slice_along_seq",
-    "split",
     "split_along_batch",
     "split_along_seq",
 ]
 
-from collections.abc import Mapping
 from functools import partial
-from typing import TYPE_CHECKING, cast
-
-from coola.recursive import recursive_apply
+from typing import TYPE_CHECKING
 
 from batchtensor import tensor as bt
+from batchtensor.utils.structure import apply_to_tensors, split_tensors
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Sequence
+    from collections.abc import Sequence
 
-    import torch
-
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.nested.types import NestedTensor, T
 
 
 def chunk_along_batch(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ...]:
@@ -63,7 +58,7 @@ def chunk_along_batch(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ..
 
         ```
     """
-    return split(data, partial(bt.chunk_along_batch, chunks=chunks))
+    return split_tensors(data, partial(bt.chunk_along_batch, chunks=chunks))
 
 
 def chunk_along_seq(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ...]:
@@ -99,10 +94,10 @@ def chunk_along_seq(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ...]
 
         ```
     """
-    return split(data, partial(bt.chunk_along_seq, chunks=chunks))
+    return split_tensors(data, partial(bt.chunk_along_seq, chunks=chunks))
 
 
-def select_along_batch(data: NestedTensor, index: int) -> NestedTensor:
+def select_along_batch(data: T, index: int) -> T:
     r"""Slice the tensors along the batch dimension at the given index.
 
     This function returns a view of the original tensor with the batch
@@ -134,10 +129,10 @@ def select_along_batch(data: NestedTensor, index: int) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, partial(bt.select_along_batch, index=index))
+    return apply_to_tensors(data, partial(bt.select_along_batch, index=index))
 
 
-def select_along_seq(data: NestedTensor, index: int) -> NestedTensor:
+def select_along_seq(data: T, index: int) -> T:
     r"""Slice the tensors along the sequence dimension at the given
     index.
 
@@ -170,12 +165,10 @@ def select_along_seq(data: NestedTensor, index: int) -> NestedTensor:
 
         ```
     """
-    return recursive_apply(data, partial(bt.select_along_seq, index=index))
+    return apply_to_tensors(data, partial(bt.select_along_seq, index=index))
 
 
-def slice_along_batch(
-    data: NestedTensor, start: int = 0, stop: int | None = None, step: int = 1
-) -> NestedTensor:
+def slice_along_batch(data: T, start: int = 0, stop: int | None = None, step: int = 1) -> T:
     r"""Slice all the tensors along the batch dimension.
 
     Note:
@@ -213,12 +206,10 @@ def slice_along_batch(
 
         ```
     """
-    return recursive_apply(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
+    return apply_to_tensors(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
 
 
-def slice_along_seq(
-    data: NestedTensor, start: int = 0, stop: int | None = None, step: int = 1
-) -> NestedTensor:
+def slice_along_seq(data: T, start: int = 0, stop: int | None = None, step: int = 1) -> T:
     r"""Slice all the tensors along the sequence dimension.
 
     Note:
@@ -256,7 +247,7 @@ def slice_along_seq(
 
         ```
     """
-    return recursive_apply(data, partial(bt.slice_along_seq, start=start, stop=stop, step=step))
+    return apply_to_tensors(data, partial(bt.slice_along_seq, start=start, stop=stop, step=step))
 
 
 def split_along_batch(
@@ -295,7 +286,9 @@ def split_along_batch(
 
         ```
     """
-    return split(data, partial(bt.split_along_batch, split_size_or_sections=split_size_or_sections))
+    return split_tensors(
+        data, partial(bt.split_along_batch, split_size_or_sections=split_size_or_sections)
+    )
 
 
 def split_along_seq(
@@ -334,47 +327,6 @@ def split_along_seq(
 
         ```
     """
-    return split(data, partial(bt.split_along_seq, split_size_or_sections=split_size_or_sections))
-
-
-def split(
-    data: NestedTensor, fn: Callable[[torch.Tensor], tuple[torch.Tensor, ...]]
-) -> tuple[NestedTensor, ...]:
-    r"""Split every tensor of a nested structure and regroup the pieces.
-
-    Dictionaries, lists and tuples are traversed recursively. The i-th
-    output has the same structure as ``data`` and contains the i-th piece
-    of every tensor. An empty container returns an empty tuple.
-
-    Args:
-        data: The nested structure to split.
-        fn: The function that splits a tensor into a tuple of tensors,
-            e.g. ``lambda t: t.chunk(2, dim=0)``.
-
-    Returns:
-        A tuple of nested structures with the same structure as ``data``.
-
-    Example:
-        ```pycon
-        >>> import torch
-        >>> from batchtensor.nested import split
-        >>> data = {"a": torch.arange(4), "b": [torch.arange(4)]}
-        >>> out = split(data, lambda t: t.chunk(2, dim=0))
-        >>> out[1]["a"]
-        tensor([2, 3])
-
-        ```
-
-    Raises:
-        ValueError: if the tensors are not split into the same number of pieces.
-    """
-    if isinstance(data, Mapping):
-        parts = {key: split(value, fn) for key, value in data.items()}
-        return tuple(
-            dict(zip(parts, values, strict=True)) for values in zip(*parts.values(), strict=True)
-        )
-    if isinstance(data, (list, tuple)):
-        parts_seq = [split(value, fn) for value in data]
-        outs = zip(*parts_seq, strict=True)
-        return tuple(list(v) if isinstance(data, list) else tuple(v) for v in outs)
-    return tuple(fn(cast("torch.Tensor", data)))
+    return split_tensors(
+        data, partial(bt.split_along_seq, split_size_or_sections=split_size_or_sections)
+    )

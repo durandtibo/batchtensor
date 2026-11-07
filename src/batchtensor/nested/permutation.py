@@ -9,17 +9,16 @@ from functools import partial
 from typing import TYPE_CHECKING
 
 import torch
-from coola.iterator import dfs_iterate
-from coola.recursive import recursive_apply
 
 from batchtensor import tensor
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
+from batchtensor.utils.structure import apply_to_tensors, get_size
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.nested.types import T
 
 
-def permute_along_batch(data: NestedTensor, permutation: torch.Tensor) -> NestedTensor:
+def permute_along_batch(data: T, permutation: torch.Tensor) -> T:
     r"""Permute all the tensors along the batch dimension.
 
     Note:
@@ -55,10 +54,10 @@ def permute_along_batch(data: NestedTensor, permutation: torch.Tensor) -> Nested
 
         ```
     """
-    return recursive_apply(data, partial(tensor.permute_along_batch, permutation=permutation))
+    return apply_to_tensors(data, partial(tensor.permute_along_batch, permutation=permutation))
 
 
-def permute_along_seq(data: NestedTensor, permutation: torch.Tensor) -> NestedTensor:
+def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
     r"""Permute all the tensors along the sequence dimension.
 
     Note:
@@ -94,12 +93,10 @@ def permute_along_seq(data: NestedTensor, permutation: torch.Tensor) -> NestedTe
 
         ```
     """
-    return recursive_apply(data, partial(tensor.permute_along_seq, permutation=permutation))
+    return apply_to_tensors(data, partial(tensor.permute_along_seq, permutation=permutation))
 
 
-def shuffle_along_batch(
-    data: NestedTensor, generator: torch.Generator | None = None
-) -> NestedTensor:
+def shuffle_along_batch(data: T, generator: torch.Generator | None = None) -> T:
     r"""Shuffle all the tensors along the batch dimension.
 
     Note:
@@ -129,9 +126,7 @@ def shuffle_along_batch(
 
         ```
     """
-    size = _get_size(data, BATCH_DIM)
-    if size is None:
-        return data
+    size = get_size(data, BATCH_DIM)
     return permute_along_batch(
         data=data,
         permutation=torch.randperm(
@@ -142,7 +137,7 @@ def shuffle_along_batch(
     )
 
 
-def shuffle_along_seq(data: NestedTensor, generator: torch.Generator | None = None) -> NestedTensor:
+def shuffle_along_seq(data: T, generator: torch.Generator | None = None) -> T:
     r"""Shuffle all the tensors along the sequence dimension.
 
     Note:
@@ -172,9 +167,7 @@ def shuffle_along_seq(data: NestedTensor, generator: torch.Generator | None = No
 
         ```
     """
-    size = _get_size(data, SEQ_DIM)
-    if size is None:
-        return data
+    size = get_size(data, SEQ_DIM)
     return permute_along_seq(
         data=data,
         permutation=torch.randperm(
@@ -183,22 +176,3 @@ def shuffle_along_seq(data: NestedTensor, generator: torch.Generator | None = No
             device=generator.device if generator is not None else None,
         ),
     )
-
-
-def _get_size(data: NestedTensor, dim: int) -> int | None:
-    r"""Get the size of the dimension ``dim`` shared by all the tensors.
-
-    Returns ``None`` if ``data`` does not contain any tensor.
-
-    Raises:
-        ValueError: if the tensors have different sizes along ``dim``.
-    """
-    sizes = {tensor.shape[dim] for tensor in dfs_iterate(data)}
-    if not sizes:
-        return None
-    if len(sizes) > 1:
-        msg = (
-            f"All the tensors must have the same size along dimension {dim} but got {sorted(sizes)}"
-        )
-        raise ValueError(msg)
-    return sizes.pop()

@@ -176,22 +176,22 @@ def slice_along_batch(
 
 This reduces code duplication and ensures nested operations behave consistently.
 
-### Pattern 3: Joining and Splitting Walk the Structure
+### Pattern 3: Joining and Splitting Use Structure Helpers
 
 `cat_along_batch`, `stack_along_batch` and the `chunk_*` / `split_*` functions cannot use
 `recursive_apply` because they combine several structures or return several structures. They use
-`batchtensor.nested.combine` and `batchtensor.nested.split`, which walk the dicts, lists and
-tuples and call the tensor function on each leaf:
+`batchtensor.utils.structure.combine_tensors` and `split_tensors`, which walk the structures and
+call the tensor function on each leaf. Container types (`OrderedDict`, named tuples, ...) are kept:
 
 ```python
 from functools import partial
 
 from batchtensor import tensor as bt
-from batchtensor.nested import split
+from batchtensor.utils.structure import split_tensors
 
 
 def chunk_along_batch(data, chunks):
-    return split(data, partial(bt.chunk_along_batch, chunks=chunks))
+    return split_tensors(data, partial(bt.chunk_along_batch, chunks=chunks))
 ```
 
 This keeps the structure of the output aligned with the structure of the input.
