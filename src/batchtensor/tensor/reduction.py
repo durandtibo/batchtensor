@@ -15,6 +15,8 @@ __all__ = [
     "argmax_along_seq",
     "argmin_along_batch",
     "argmin_along_seq",
+    "logsumexp_along_batch",
+    "logsumexp_along_seq",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -969,3 +971,67 @@ def all_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tenso
         ```
     """
     return torch.all(tensor, dim=SEQ_DIM, keepdim=keepdim)
+
+
+def logsumexp_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return the log of the sum of exponentials along the batch dimension.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the log of the sum of exponentials along the batch dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import logsumexp_along_batch
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = logsumexp_along_batch(tensor)
+        >>> out
+        tensor([8.0185, 9.1272, 5.1698, 6.0247])
+        >>> out = logsumexp_along_batch(tensor, keepdim=True)
+        >>> out
+        tensor([[8.0185, 9.1272, 5.1698, 6.0247]])
+
+        ```
+    """
+    return torch.logsumexp(tensor, dim=BATCH_DIM, keepdim=keepdim)
+
+
+def logsumexp_along_seq(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
+    r"""Return the log of the sum of exponentials along the sequence dimension.
+
+    Note:
+        This function assumes the sequence dimension is the second
+            dimension.
+
+    Args:
+        tensor: The input tensor.
+        keepdim: Whether the output tensor has dim retained or not.
+
+    Returns:
+        The tensor with the log of the sum of exponentials along the sequence dimension.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import logsumexp_along_seq
+        >>> tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        >>> out = logsumexp_along_seq(tensor)
+        >>> out
+        tensor([3.4402, 9.0722, 8.3157])
+        >>> out = logsumexp_along_seq(tensor, keepdim=True)
+        >>> out
+        tensor([[3.4402],
+                [9.0722],
+                [8.3157]])
+
+        ```
+    """
+    return torch.logsumexp(tensor, dim=SEQ_DIM, keepdim=keepdim)

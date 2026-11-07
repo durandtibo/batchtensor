@@ -19,6 +19,8 @@ from batchtensor.nested import (
     argmax_along_seq,
     argmin_along_batch,
     argmin_along_seq,
+    logsumexp_along_batch,
+    logsumexp_along_seq,
     max_along_batch,
     max_along_seq,
     mean_along_batch,
@@ -1802,3 +1804,96 @@ def test_all_along_seq_non_tensor_leaf() -> None:
     data: Any = {"a": "x"}
     with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
         all_along_seq(data)
+
+
+###################################################################
+#     Tests for logsumexp_along_batch and logsumexp_along_seq     #
+###################################################################
+
+
+def test_logsumexp_along_batch_tensor() -> None:
+    assert objects_are_equal(
+        logsumexp_along_batch(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([8.018479347229004, 9.127223014831543, 5.169846057891846, 6.024744987487793]),
+    )
+
+
+def test_logsumexp_along_batch_dict_and_list() -> None:
+    assert objects_are_equal(
+        logsumexp_along_batch(
+            {
+                "a": torch.tensor(
+                    [[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]
+                ),
+                "b": [
+                    torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+                ],
+            }
+        ),
+        {
+            "a": torch.tensor(
+                [8.018479347229004, 9.127223014831543, 5.169846057891846, 6.024744987487793]
+            ),
+            "b": [
+                torch.tensor(
+                    [8.018479347229004, 9.127223014831543, 5.169846057891846, 6.024744987487793]
+                )
+            ],
+        },
+    )
+
+
+def test_logsumexp_along_batch_tuple() -> None:
+    out = logsumexp_along_batch(
+        (torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),)
+    )
+    assert isinstance(out, tuple)
+
+
+def test_logsumexp_along_batch_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        logsumexp_along_batch(data)
+
+
+def test_logsumexp_along_seq_tensor() -> None:
+    assert objects_are_equal(
+        logsumexp_along_seq(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([3.440189838409424, 9.072172164916992, 8.3157377243042]),
+    )
+
+
+def test_logsumexp_along_seq_dict_and_list() -> None:
+    assert objects_are_equal(
+        logsumexp_along_seq(
+            {
+                "a": torch.tensor(
+                    [[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]
+                ),
+                "b": [
+                    torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+                ],
+            }
+        ),
+        {
+            "a": torch.tensor([3.440189838409424, 9.072172164916992, 8.3157377243042]),
+            "b": [torch.tensor([3.440189838409424, 9.072172164916992, 8.3157377243042])],
+        },
+    )
+
+
+def test_logsumexp_along_seq_tuple() -> None:
+    out = logsumexp_along_seq(
+        (torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),)
+    )
+    assert isinstance(out, tuple)
+
+
+def test_logsumexp_along_seq_non_tensor_leaf() -> None:
+    data: Any = {"a": "x"}
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        logsumexp_along_seq(data)

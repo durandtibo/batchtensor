@@ -17,6 +17,8 @@ from batchtensor.tensor import (
     argmax_along_seq,
     argmin_along_batch,
     argmin_along_seq,
+    logsumexp_along_batch,
+    logsumexp_along_seq,
     max_along_batch,
     max_along_seq,
     mean_along_batch,
@@ -821,3 +823,69 @@ def test_all_along_seq_does_not_modify_input() -> None:
 def test_all_along_seq_1d_tensor() -> None:
     with pytest.raises(IndexError, match="Dimension out of range"):
         all_along_seq(torch.tensor([True, True, False]))
+
+
+###################################################################
+#     Tests for logsumexp_along_batch and logsumexp_along_seq     #
+###################################################################
+
+
+def test_logsumexp_along_batch_default() -> None:
+    assert objects_are_equal(
+        logsumexp_along_batch(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([8.018479347229004, 9.127223014831543, 5.169846057891846, 6.024744987487793]),
+    )
+
+
+def test_logsumexp_along_batch_keepdim_true() -> None:
+    assert objects_are_equal(
+        logsumexp_along_batch(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),
+            keepdim=True,
+        ),
+        torch.tensor(
+            [[8.018479347229004, 9.127223014831543, 5.169846057891846, 6.024744987487793]]
+        ),
+    )
+
+
+def test_logsumexp_along_batch_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+    logsumexp_along_batch(tensor)
+    assert objects_are_equal(
+        tensor, torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+    )
+
+
+def test_logsumexp_along_seq_default() -> None:
+    assert objects_are_equal(
+        logsumexp_along_seq(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+        ),
+        torch.tensor([3.440189838409424, 9.072172164916992, 8.3157377243042]),
+    )
+
+
+def test_logsumexp_along_seq_keepdim_true() -> None:
+    assert objects_are_equal(
+        logsumexp_along_seq(
+            torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]]),
+            keepdim=True,
+        ),
+        torch.tensor([[3.440189838409424], [9.072172164916992], [8.3157377243042]]),
+    )
+
+
+def test_logsumexp_along_seq_does_not_modify_input() -> None:
+    tensor = torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+    logsumexp_along_seq(tensor)
+    assert objects_are_equal(
+        tensor, torch.tensor([[0.0, 1.0, 3.0, 2.0], [4.0, 9.0, 5.0, 6.0], [8.0, 7.0, 2.0, 1.0]])
+    )
+
+
+def test_logsumexp_along_seq_1d_tensor() -> None:
+    with pytest.raises(IndexError, match="Dimension out of range"):
+        logsumexp_along_seq(torch.tensor([0.0, 4.0, 8.0]))
