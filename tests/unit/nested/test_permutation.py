@@ -325,11 +325,13 @@ def test_shuffle_along_seq_multiple_shuffle() -> None:
 
 
 def test_shuffle_along_batch_empty() -> None:
-    assert shuffle_along_batch({}) == {}
+    with pytest.raises(ValueError, match="does not contain any tensor"):
+        shuffle_along_batch({})
 
 
 def test_shuffle_along_seq_empty() -> None:
-    assert shuffle_along_seq([]) == []
+    with pytest.raises(ValueError, match="does not contain any tensor"):
+        shuffle_along_seq([])
 
 
 def test_shuffle_along_batch_size_mismatch() -> None:
