@@ -79,6 +79,8 @@ sub-modules by operation type:
 - **comparison.py**: Sorting and comparison
 - **math.py**: Cumulative operations
 - **permutation.py**: Shuffling and permuting
+- **masking.py**: Sequence length masks
+- **padding.py**: Padding along the batch and sequence dimensions
 
 Each function:
 
@@ -99,6 +101,7 @@ mirror the tensor module:
 - **comparison.py**: Nested sorting
 - **math.py**: Nested cumulative operations
 - **permutation.py**: Nested shuffling and permuting
+- **padding.py**: Nested padding
 - **conversion.py**: NumPy conversion
 - **pointwise.py**: Element-wise operations
 - **trigo.py**: Trigonometric functions
@@ -173,36 +176,25 @@ def slice_along_batch(
 
 This reduces code duplication and ensures nested operations behave consistently.
 
-### Pattern 3: Dictionary Operations Preserve Structure
+### Pattern 3: Joining and Splitting Walk the Structure
+
+`cat_along_batch`, `stack_along_batch` and the `chunk_*` / `split_*` functions cannot use
+`recursive_apply` because they combine several structures or return several structures. They use
+`batchtensor.nested.combine` and `batchtensor.nested.split`, which walk the dicts, lists and
+tuples and call the tensor function on each leaf:
 
 ```python
-from collections.abc import Hashable
-import torch
+from functools import partial
+
 from batchtensor import tensor as bt
+from batchtensor.nested import split
 
 
-def chunk_along_batch(
-    data: dict[Hashable, torch.Tensor], chunks: int
-) -> tuple[dict[Hashable, torch.Tensor], ...]:
-    """Split all tensors into chunks along the batch dimension.
-
-    Args:
-        data: Dictionary of tensors.
-        chunks: Number of chunks.
-
-    Returns:
-        Tuple of dictionaries with chunked tensors.
-    """
-    keys = data.keys()
-    return tuple(
-        dict(zip(keys, values, strict=True))
-        for values in zip(
-            *[bt.chunk_along_batch(tensor, chunks) for tensor in data.values()], strict=True
-        )
-    )
+def chunk_along_batch(data, chunks):
+    return split(data, partial(bt.chunk_along_batch, chunks=chunks))
 ```
 
-This pattern ensures the output structure matches the input structure.
+This keeps the structure of the output aligned with the structure of the input.
 
 ## Extension Points
 
@@ -228,7 +220,7 @@ The nested operations work with any data structure that `coola.recursive_apply` 
 - Dictionaries
 - Lists
 - Tuples
-- Custom classes (with appropriate handlers)
+- Custom classes: register a transformer with `coola.recursive.register_transformers`
 
 ## Performance Considerations
 
@@ -257,7 +249,7 @@ The library uses comprehensive testing:
 - **Unit tests**: Test individual functions with various inputs
 - **Integration tests**: Test combinations of operations
 - **Doctests**: Verify examples in docstrings
-- **Type checking**: Use pyright for static type checking
+- **Type checking**: Use ty for static type checking
 
 ## Future Directions
 
