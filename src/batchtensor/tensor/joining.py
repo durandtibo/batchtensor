@@ -5,6 +5,7 @@ from __future__ import annotations
 __all__ = [
     "cat_along_batch",
     "cat_along_seq",
+    "repeat_along_batch",
     "repeat_along_seq",
     "stack_along_batch",
     "stack_along_seq",
@@ -109,6 +110,59 @@ def cat_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> tor
         ```
     """
     return torch.cat(tensors, dim=SEQ_DIM)
+
+
+def repeat_along_batch(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
+    r"""Repeat the data along the batch dimension.
+
+    The resulting tensor has a batch size that is ``repeats`` times the
+    original batch size. The batch items are repeated as a block (like
+    ``torch.Tensor.repeat``), not item by item.
+
+    Note:
+        This function assumes the batch dimension is the first
+            dimension (index 0).
+
+    Args:
+        tensor: The input tensor. Must have at least one dimension.
+        repeats: The number of times to repeat the data along the batch
+            dimension. If ``repeats=1``, returns a copy of the input.
+
+    Returns:
+        A new tensor with the data repeated along the batch dimension.
+            If the input has shape ``(batch_size, ...)``, the output
+            has shape ``(batch_size * repeats, ...)``.
+
+    Raises:
+        ValueError: if the tensor is a scalar.
+
+    Example:
+        ```pycon
+        >>> import torch
+        >>> from batchtensor.tensor import repeat_along_batch
+        >>> tensor = torch.tensor([[0, 1], [2, 3]])
+        >>> out = repeat_along_batch(tensor, 2)
+        >>> out
+        tensor([[0, 1],
+                [2, 3],
+                [0, 1],
+                [2, 3]])
+
+        ```
+
+    See Also:
+        ``repeat_along_seq``: Repeat along the sequence dimension.
+        ``cat_along_batch``: Concatenate different tensors (not repeating the same).
+    """
+    if tensor.dim() <= BATCH_DIM:
+        msg = (
+            f"repeat_along_batch requires a tensor with at least {BATCH_DIM + 1} dimensions "
+            f"but received a tensor with {tensor.dim()} dimension(s)"
+        )
+        raise ValueError(msg)
+    sizes = [1] * tensor.dim()
+    sizes[BATCH_DIM] = repeats
+    return tensor.repeat(*sizes)
 
 
 def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
