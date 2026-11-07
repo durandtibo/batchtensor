@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from unittest.mock import patch
 
 import pytest
@@ -13,6 +14,9 @@ from batchtensor.nested import (
     shuffle_along_batch,
     shuffle_along_seq,
 )
+
+if TYPE_CHECKING:
+    from batchtensor.nested import NestedTensor
 
 INDEX_DTYPES = [torch.int, torch.long]
 
@@ -152,7 +156,7 @@ def test_permute_along_seq_incorrect_shape() -> None:
 
 
 @patch(
-    "batchtensor.nested.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch_tensor() -> None:
@@ -163,7 +167,7 @@ def test_shuffle_along_batch_tensor() -> None:
 
 
 @patch(
-    "batchtensor.nested.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch_dict() -> None:
@@ -182,7 +186,7 @@ def test_shuffle_along_batch_dict() -> None:
 
 
 @patch(
-    "batchtensor.nested.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_batch_nested() -> None:
@@ -242,7 +246,7 @@ def test_shuffle_along_batch_multiple_shuffle() -> None:
 
 
 @patch(
-    "batchtensor.nested.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq_tensor() -> None:
@@ -253,7 +257,7 @@ def test_shuffle_along_seq_tensor() -> None:
 
 
 @patch(
-    "batchtensor.nested.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq_dict() -> None:
@@ -272,7 +276,7 @@ def test_shuffle_along_seq_dict() -> None:
 
 
 @patch(
-    "batchtensor.nested.permutation.torch.randperm",
+    "batchtensor.utils.seed.torch.randperm",
     lambda *args, **kwargs: torch.tensor([2, 4, 1, 3, 0]),  # noqa: ARG005
 )
 def test_shuffle_along_seq_nested() -> None:
@@ -338,3 +342,39 @@ def test_shuffle_along_seq_empty() -> None:
 def test_shuffle_along_batch_size_mismatch() -> None:
     with pytest.raises(ValueError, match="same size"):
         shuffle_along_batch({"a": torch.ones(3, 2), "b": torch.ones(4)})
+
+
+def test_shuffle_along_batch_int_seed_same_as_generator() -> None:
+    data: NestedTensor = {"a": torch.arange(12).reshape(4, 3), "b": [torch.arange(4)]}
+    assert objects_are_equal(
+        shuffle_along_batch(data, generator=7),
+        shuffle_along_batch(data, generator=make_torch_generator(7)),
+    )
+
+
+def test_shuffle_along_batch_int_seed_repeat_call() -> None:
+    data: NestedTensor = {"a": torch.arange(12).reshape(4, 3), "b": [torch.arange(4)]}
+    assert objects_are_equal(
+        shuffle_along_batch(data, generator=7), shuffle_along_batch(data, generator=7)
+    )
+
+
+def test_shuffle_along_seq_int_seed_same_as_generator() -> None:
+    data: NestedTensor = {
+        "a": torch.arange(12).reshape(2, 6),
+        "b": [torch.arange(12).reshape(2, 6)],
+    }
+    assert objects_are_equal(
+        shuffle_along_seq(data, generator=7),
+        shuffle_along_seq(data, generator=make_torch_generator(7)),
+    )
+
+
+def test_shuffle_along_seq_int_seed_repeat_call() -> None:
+    data: NestedTensor = {
+        "a": torch.arange(12).reshape(2, 6),
+        "b": [torch.arange(12).reshape(2, 6)],
+    }
+    assert objects_are_equal(
+        shuffle_along_seq(data, generator=7), shuffle_along_seq(data, generator=7)
+    )

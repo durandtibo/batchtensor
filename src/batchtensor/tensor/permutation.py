@@ -5,9 +5,13 @@ from __future__ import annotations
 __all__ = ["permute_along_batch", "permute_along_seq", "shuffle_along_batch", "shuffle_along_seq"]
 
 
-import torch
+from typing import TYPE_CHECKING
 
 from batchtensor.constants import BATCH_DIM, SEQ_DIM
+from batchtensor.utils.seed import random_permutation
+
+if TYPE_CHECKING:
+    import torch
 
 
 def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.Tensor:
@@ -118,7 +122,7 @@ def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.
 
 
 def shuffle_along_batch(
-    tensor: torch.Tensor, *, generator: torch.Generator | None = None
+    tensor: torch.Tensor, *, generator: torch.Generator | int | None = None
 ) -> torch.Tensor:
     r"""Shuffle the tensor along the batch dimension.
 
@@ -132,10 +136,11 @@ def shuffle_along_batch(
 
     Args:
         tensor: The tensor to shuffle. Must have at least one dimension.
-        generator: An optional random number generator for reproducible
-            shuffling. If provided, the shuffling will be deterministic
-            based on the generator's state. If ``None``, uses PyTorch's
-            default random state.
+        generator: An optional random number generator or random seed
+            for reproducible shuffling. If a generator is provided, the
+            shuffling is deterministic based on the generator's state.
+            An integer is used as the seed of a new generator. If
+            ``None``, uses PyTorch's default random state.
 
     Returns:
         The shuffled tensor. The shape is unchanged, but elements along
@@ -154,6 +159,10 @@ def shuffle_along_batch(
         >>> out = shuffle_along_batch(tensor, generator=generator)
         >>> out  # Order is random
         tensor([[...]])
+        >>> # An integer is a seed
+        >>> out = shuffle_along_batch(tensor, generator=42)
+        >>> out  # Order is random
+        tensor([[...]])
 
         ```
 
@@ -164,16 +173,12 @@ def shuffle_along_batch(
     """
     return permute_along_batch(
         tensor=tensor,
-        permutation=torch.randperm(
-            tensor.shape[BATCH_DIM],
-            generator=generator,
-            device=generator.device if generator is not None else None,
-        ),
+        permutation=random_permutation(tensor.shape[BATCH_DIM], generator=generator),
     )
 
 
 def shuffle_along_seq(
-    tensor: torch.Tensor, *, generator: torch.Generator | None = None
+    tensor: torch.Tensor, *, generator: torch.Generator | int | None = None
 ) -> torch.Tensor:
     r"""Shuffle the tensor along the sequence dimension.
 
@@ -183,7 +188,8 @@ def shuffle_along_seq(
 
     Args:
         tensor: The tensor to shuffle.
-        generator: An optional random number generator.
+        generator: An optional random number generator or random seed
+            (see ``shuffle_along_batch``).
 
     Returns:
         The shuffled tensor.
@@ -201,9 +207,5 @@ def shuffle_along_seq(
     """
     return permute_along_seq(
         tensor=tensor,
-        permutation=torch.randperm(
-            tensor.shape[SEQ_DIM],
-            generator=generator,
-            device=generator.device if generator is not None else None,
-        ),
+        permutation=random_permutation(tensor.shape[SEQ_DIM], generator=generator),
     )
