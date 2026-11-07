@@ -72,6 +72,11 @@ CASES = (
         for variant in [{"shifts": 1}, {"shifts": -1}, {"shifts": 5}]
     ]
     + [
+        (f"topk_along_{dim}", variant)
+        for dim in ("batch", "seq")
+        for variant in [{"k": 2}, {"k": 2, "largest": False}, {"k": 3, "sort_output": False}]
+    ]
+    + [
         (f"pad_along_{dim}", {"pad_size": 2, "value": 1.0, "side": side})
         for dim in ("batch", "seq")
         for side in ("left", "right")
