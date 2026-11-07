@@ -75,14 +75,14 @@ the core.
 | F7  | **21 element-wise functions (`pointwise.py`, `trigo.py`) have no batch or sequence meaning and no `tensor` twin.** They are `recursive_apply(data, torch.xxx)` with a 25-line docstring. ~590 lines. The module shadows the builtin `abs` (needs `noqa: A001`) and `clamp(min, max)` shadows two more.                                                                                                                                  | `nested/pointwise.py`, `nested/trigo.py`                                         | P3       |
 | F8  | **Options are positional-or-keyword.** `keepdim`, `descending`, `value` can be passed positionally. `argsort` and `sort` forward an untyped `**kwargs` to torch (`stable` works by accident, undocumented). `contiguous` and `to` forward `*args, **kwargs`.                                                                                                                                                                            | Signatures; probe `argsort kw`                                                   | P12      |
 | F9  | **Validation is inconsistent.** `index_select_along_seq` raises `RuntimeError` for a batch mismatch (the docs say `ValueError`). A 3-D index gives `IndexError: shape mismatch`. A 2-D permutation passes the length check and then fails inside torch. `lengths_to_mask` accepts floats and negative values silently. `shuffle_*(x, 0)` (an int seed) raises `AttributeError`, although `utils.setup_torch_generator` exists for this. | Probes `idx seq *`, `permute 2d perm`, `mask *`, `shuffle seed int`              | P8, P9   |
-| F10 | **`permute_along_*` duplicates `index_select_along_*`.** Both call `index_select` with a 1-D index. `permute` only adds a length check and does not check that the index is a permutation (duplicates pass). The name also collides with `torch.permute`, which permutes dims.                                                                                                                                                          | Probe `permute dup`                                                              | P2       |
+| F10 | **`permute_along_*` overlaps with `index_select_along_*`.** Both call `index_select` with a 1-D index. `permute` only adds a length check and does not check that the index is a permutation (duplicates pass). Kept by decision D6: the length check and the name document the intent. The name collides with `torch.permute` (which permutes dims), so the docstring says so.                                                                                                                                                          | Probe `permute dup`                                                              | P2       |
 | F11 | **`pad_along_*` only pads on the right, and there is no way to build a batch from variable-length tensors.** An integer tensor padded with a float `value` truncates silently (`1.5` becomes `1`). There is no `repeat_along_batch` next to `repeat_along_seq`.                                                                                                                                                                         | Probe `pad int value`                                                            | P3, P8   |
 | F12 | **`NestedTensor` hides the result type.** Every nested function returns `NestedTensor`, so a type checker cannot see that a tensor goes in and a tensor comes out. The alias also accepts `str` and `bytes` (they are `Sequence`).                                                                                                                                                                                                      | `nested/types.py`                                                                | P13      |
 | F13 | **`utils.setup_torch_generator` is not used in `src`.** The only helper in `utils` is dead in the package. The private `nested.permutation._get_size` is the shared helper of F4, and `CLAUDE.md` asks for shared helpers to be public in `utils`.                                                                                                                                                                                      | `grep`                                                                           | P4, P9   |
 | F14 | **The layering is not enforced.** `[tool.importlinter]` has a root package and no contract.                                                                                                                                                                                                                                                                                                                                             | `pyproject.toml`                                                                 | P14      |
 | F15 | **The documentation contradicts the code.** See Appendix C (README version table, `pyright`, Pattern 3, "returned unchanged", "flat dict", a stale `suggestions.md`).                                                                                                                                                                                                                                                                   | Appendix C                                                                       | P15      |
 | F16 | **The tests have no parity or differential gate.** Parity of `tensor` and `nested` is only checked by hand, one function at a time. `test_types.py` asserts nothing about the alias (`value == value`). `package_checks.py` covers one function per package.                                                                                                                                                                            | `tests/`                                                                         | P3       |
-| F17 | **Smaller issues.** `lengths_to_mask` has no `nested` twin and no documented reason. `import-linter`, `pyright` and `ty` are all configured; `ty` is the checker in `CLAUDE.md`.                                                                                                                                                                                                                                                        | `pyproject.toml`                                                                 | P3, P14  |
+| F17 | **Smaller issues.** `lengths_to_mask` has no `nested` twin and no documented reason. `import-linter`, `pyright` and `ty` are all configured. Both are kept by decision D9, so they must both pass in CI.                                                                                                                                                                                                                                                        | `pyproject.toml`                                                                 | P3, P14  |
 
 What is **already right** and stays: the `tensor` layer (one-liners over torch with the dim constant),
 the strict `zip` use, the `dim`-constant use everywhere, the device-safe `shuffle` (the permutation
@@ -195,14 +195,21 @@ torch, so the messages stay the ones users already know.
 | `cat`, `stack`                                                                                         | No change.                                                                                                                                                                                                                                                                               |
 | `repeat_along_seq`                                                                                     | No change. **Add `repeat_along_batch`** for symmetry (F11).                                                                                                                                                                                                                              |
 | `index_select_along_{batch,seq}`                                                                       | Validation moves to `ValueError`: the index must be 1-D, or 2-D for `_seq` with `index.shape[0] == tensor.shape[0]`. The 2-D mode stays (D5).                                                                                                                                            |
-| `permute_along_{batch,seq}`                                                                            | **Removed** (F10, D6). `index_select_along_*` does the same.                                                                                                                                                                                                                             |
-| `shuffle_along_{batch,seq}`                                                                            | `f(tensor, *, generator=None)` where `generator` is `torch.Generator \| int \| None`. It calls `index_select`. Uses `setup_torch_generator` (F9, F13).                                                                                                                                   |
+| `permute_along_{batch,seq}`                                                                            | Kept (D6). Validation becomes `ValueError` for a non-1-D or wrong-length permutation. It does not check for duplicates (documented). `shuffle_*` calls it.                                                                                                                                                                                                                             |
+| `shuffle_along_{batch,seq}`                                                                            | `f(tensor, *, generator=None)` where `generator` is `torch.Generator \| int \| None`. It calls `permute_along_*`. Uses `setup_torch_generator` (F9, F13).                                                                                                                                   |
 | `pad_along_{batch,seq}`                                                                                | `f(tensor, pad_size, *, value=0.0, side="right")` with `side` in `{"left", "right"}`. A `value` that does not fit the dtype raises `ValueError` (F11).                                                                                                                                   |
 | `lengths_to_mask`                                                                                      | `f(lengths, *, max_len=None)`. Rejects non-integer dtype and non-1-D input with `ValueError`. Negative lengths give an all-`False` row. `max_len < lengths.max()` truncates (documented).                                                                                                |
 | **`pad_sequences`** (new)                                                                              | `pad_sequences(tensors, *, value=0.0, side="right") -> Tensor`. Pads a list of tensors that differ along dim 0 into one `(batch, seq, ...)` tensor. Returns the tensor only. Lengths come from `[t.shape[0] for t in tensors]`. It is the batch-building step next to `lengths_to_mask`. |
 
-`tensor.__all__` stays at 50 names: two removed (`permute_*`), two added (`repeat_along_batch`,
-`pad_sequences`). See Appendix B.
+`tensor.__all__` goes from 50 to 68 names: two added in this table (`repeat_along_batch`,
+`pad_sequences`) and 16 from the new operations below (D10). See Appendix B.
+
+**New operations (D10).** Eight operations, each as `_along_batch` and `_along_seq`, each with its
+`nested` twin, its parity entry and its tests: `std`, `var`, `any`, `all`, `logsumexp`, `flip`,
+`roll`, `topk`. Options are keyword-only (`std`/`var`: `correction=1, keepdim=False`; `any`/`all`/
+`logsumexp`: `keepdim=False`; `flip`: none; `roll`: `shifts`; `topk`: `k`, `largest=True`,
+`sorted=True`). `topk` returns `torch.return_types.topk` like `max` (D7). Masked reductions
+(`mean_along_seq(x, mask=...)`) are not part of this set and need their own design.
 
 ### 4.2 `nested`
 
@@ -235,10 +242,10 @@ The parity exceptions (`lengths_to_mask`, `pad_sequences`) are the only entries 
 
 ### 4.4 Size
 
-The change removes `pointwise.py`, `trigo.py`, their tests, `as_tensor`, `permute`, `nested.combine`
-and `nested.split` (about 800 lines of source and 700 of tests), and adds `structure.py` (about 120
-lines) and `pad_sequences`. The number of public names goes from 130 (`50 + 80`) to 107
-(`50 + 57`, Appendix B).
+The change removes `pointwise.py`, `trigo.py`, their tests, `as_tensor`, `nested.combine`
+and `nested.split` (about 700 lines of source), and adds `structure.py` (about 120 lines), `pad_sequences` and the
+eight new operations. The number of public names goes from 130 (`50 + 80`) to 143
+(`68 + 75`, Appendix B).
 
 ## 5. Dependents
 
@@ -247,7 +254,7 @@ lines) and `pad_sequences`. The number of public names goes from 130 (`50 + 80`)
   `coola.recursive.__all__`. Ask for them to be exported (or accept the module path) before the
   first release (decision D8). The pin in `pyproject.toml` is `coola>=2.0.0a2,<3.0`; the README
   table still says `>=1.0,<2.0`.
-- **Users.** The breaking changes are: positional options, `permute_*`, `as_tensor`, the pointwise
+- **Users.** The breaking changes are: positional options, `as_tensor`, the pointwise
   and trigonometric functions, `nested.combine`/`nested.split`, `RuntimeError` to `ValueError` in
   `index_select_along_seq`, the error type for non-tensor leaves, the error for empty `cat`/`stack`.
   A migration page lists each one with the replacement (Step 9).
@@ -328,18 +335,19 @@ entry or the tracking table with the PR number.
 
 | Step | Branch                          | Content                                                                                                                                                                                                                                             | Breaking                                                             |
 | ---- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| 1    | `docs/fix-contradictions`       | Fix Appendix C (README table, `pyright`, "returned unchanged", Pattern 3, "flat dict", the `suggestions.md` status). Delete `review/suggestions.md` or mark it superseded.                                                                          | No                                                                   |
-| 2    | `chore/enforce-layering`        | Add the `import-linter` contract (P14). Remove `pyright` from the dev group if `ty` is the only checker (D9).                                                                                                                                       | No                                                                   |
+| 1    | `docs/fix-contradictions`       | Fix Appendix C (README table, "returned unchanged", Pattern 3, "flat dict", the `suggestions.md` status). Delete `review/suggestions.md` or mark it superseded.                                                                          | No                                                                   |
+| 2    | `chore/enforce-layering`        | Add the `import-linter` contract (P14). Keep `pyright` and `ty` (D9).                                                                                                                                       | No                                                                   |
 | 3    | `refactor/structure-helpers`    | Add `utils/structure.py` with `apply_to_tensors`, `split_tensors`, `combine_tensors`, `get_size`. Move `nested.combine`/`split`/`_get_size` there. Switch every nested function to the helpers. Add `T -> T` typing and make `NestedTensor` public. | Yes (error types, container types, removed `nested.combine`/`split`) |
 | 4    | `refactor/keyword-only-options` | Make options keyword-only. Replace `**kwargs` in `sort`/`argsort` by `stable`. Add the signature test.                                                                                                                                              | Yes                                                                  |
 | 5    | `refactor/remove-pointwise`     | Remove `pointwise.py`, `trigo.py`, `as_tensor` and their tests. Add the `apply_to_tensors` idiom to the user guide.                                                                                                                                 | Yes                                                                  |
-| 6    | `refactor/remove-permute`       | Remove `permute_along_*` (tensor and nested). `shuffle_*` calls `index_select`. `shuffle_*` accepts an `int` seed through `setup_torch_generator`.                                                                                                  | Yes                                                                  |
+| 6    | `refactor/shuffle-seed`         | `shuffle_*` accepts an `int` seed through `setup_torch_generator` and keeps calling `permute_*`.                                                                                                  | Yes                                                                  |
 | 7    | `bugfix/validation-contract`    | Apply the error table of Section 3.3: `ValueError` in `index_select_along_*`, `lengths_to_mask`, `pad_*`. Regression test for each, checked to fail without the fix.                                                                                | Yes (`RuntimeError` to `ValueError`)                                 |
 | 8    | `feat/pad-side-and-sequences`   | Add `side` to `pad_along_*`, `repeat_along_batch`, `pad_sequences`.                                                                                                                                                                                 | No                                                                   |
 | 9    | `docs/target-state`             | Rewrite `design_principles.md` from the property table. Update `architecture.md`, the user guides and `package_checks.py`. Add a migration page that lists each break and its replacement.                                                          | No                                                                   |
 | 10   | `test/api-parity`               | Add `test_api_parity`, the differential tests, the autograd test and the device smoke test (Section 9). Can land early: it needs only the allow-list.                                                                                               | No                                                                   |
+| 11   | `feat/add-<operation>` (x8)     | One PR per operation of D10: `std`, `var`, `any`, `all`, `logsumexp`, `flip`, `roll`, `topk`. Each adds the `tensor` pair, the `nested` pair, tests, docstring examples and the user guide entry. | No |
 
-Steps 4 to 7 depend on 3 and are independent of each other after it. Step 10 can be the first PR
+Steps 4 to 8 and 11 depend on 3 and are independent of each other after it. Step 10 can be the first PR
 (it only fails if parity is already broken, which it is not).
 
 ## 9. Tests and gates
@@ -398,15 +406,17 @@ Steps 4 to 7 depend on 3 and are independent of each other after it. Step 10 can
 | D3  | Remove `as_tensor`?                                                                                       | **Yes.** It is ill-defined on lists (F6). `recursive_apply(data, torch.as_tensor)` is the same length and explicit about its leaf semantics. Alternative: keep and document that lists are containers.                                       |
 | D4  | Support dataclasses in `combine_tensors` and `split_tensors`?                                             | **Not now.** Map functions already enter dataclasses through `coola`. The parallel walk needs a rebuild rule for dataclasses; add it when a user asks (or when `coola` exposes a multi-input apply). Document the difference.                |
 | D5  | Keep the 2-D mode of `index_select_along_seq`?                                                            | **Yes**, validated and documented. It is the per-sample gather users need on `(batch, seq, ...)`. Alternative: a separate `gather_along_seq`, with a 1-D-only `index_select_along_seq`. Revisit if a third mode appears.                     |
-| D6  | Remove `permute_along_*`?                                                                                 | **Yes.** It duplicates `index_select_along_*`, does not check that the index is a permutation, and shares its name with `torch.permute`. Alternative: keep it with a real permutation check (an `O(n)` sort).                                |
+| D6  | Remove `permute_along_*`? | **Decided: keep.** The name and the length check document the intent. It is validated (`ValueError`), documented as not checking duplicates, and the docstring warns about `torch.permute`. `shuffle_*` keeps calling it. |
 | D7  | Keep named-tuple leaves for `max`, `min`, `median`, `sort` in `nested`?                                   | **Yes.** It follows P5 (leaf replaced, structure kept). Alternative: a named tuple of structures `(values=tree, indices=tree)`. It is handier but breaks P5 and needs its own helper.                                                        |
 | D8  | Use `coola.recursive.rebuild` from `batchtensor`?                                                         | **Yes**, after asking `coola` to export `rebuild_mapping` and `rebuild_sequence` from `coola.recursive`. Alternative: a local copy (about 20 lines) that diverges from `coola`.                                                              |
-| D9  | Drop `pyright` and keep `ty` only?                                                                        | **Yes.** `CLAUDE.md` names `ty`. Two checkers double the typing issues for no coverage gain.                                                                                                                                                 |
-| D10 | Add more operations (`std`, `var`, `any`, `all`, `logsumexp`, `topk`, `flip`, `roll`, masked reductions)? | **Not in this target.** Rule: add a function only when a user needs it, as one PR with its `tensor` function, its `nested` twin, its parity entry and its tests. Masked reductions (`mean_along_seq(x, mask=...)`) deserve their own design. |
+| D9  | Drop `pyright` and keep `ty` only? | **Decided: keep both.** Both checkers run in CI and both must pass. The `T -> T` typing (P13) must be checked with both (a `pyright` run of `test_typing.py`). |
+| D10 | Add more operations (`std`, `var`, `any`, `all`, `logsumexp`, `topk`, `flip`, `roll`, masked reductions)? | **Decided: add.** Eight operations are in the target (Section 4.1, Step 11). Rule: one PR per operation with its `tensor` function, its `nested` twin, its parity entry and its tests. Masked reductions need their own design and are not in the set. |
+
+Decisions changed by the maintainer: D6 (keep `permute_along_*`), D9 (keep both checkers), D10 (add more operations).
 
 ## 11. Not covered
 
-- Masked reductions, `std`/`var`, and other new operations (D10).
+- Masked reductions and operations beyond the eight of D10.
 - Sequence-first or channel-first layouts, a configurable `seq_dim`.
 - Dataclass support in `combine_tensors` and `split_tensors` (D4).
 - Reporting the path of a bad leaf in the `TypeError` (needs a path-aware `coola` engine).
@@ -419,7 +429,7 @@ Steps 4 to 7 depend on 3 and are independent of each other after it. Step 10 can
 | Item (section.number)                        | Status on `main`                                                                    | In target    |
 | -------------------------------------------- | ----------------------------------------------------------------------------------- | ------------ |
 | 1.1 `repeat_along_seq` hard-coded `sizes[1]` | Fixed (uses `SEQ_DIM`, raises `ValueError`)                                         | Kept         |
-| 1.2 `permute` uses `shape[0]`/`shape[1]`     | Fixed (uses the constants, `ValueError`)                                            | Removed (D6) |
+| 1.2 `permute` uses `shape[0]`/`shape[1]`     | Fixed (uses the constants, `ValueError`)                                            | Kept (D6)    |
 | 1.3 `shuffle` device mismatch                | Fixed (permutation on the generator device, then moved)                             | Kept         |
 | 1.4 nested `shuffle` on empty data / sizes   | Fixed (`_get_size` handles empty and checks sizes)                                  | `get_size`   |
 | 1.5 `index_select_along_seq` 2-D branch      | Fixed (`reshape`, `.long()`, batch check). Error type and 3-D index still open (F9) | Step 7       |
@@ -432,7 +442,7 @@ Steps 4 to 7 depend on 3 and are independent of each other after it. Step 10 can
 | 2.2 `NestedTensor` matches `str`             | Open (F12)                                                                          | Step 3       |
 | 2.3 hard-coded dims                          | By design (P1), documented in `design_principles.md`                                | Kept         |
 | 2.4 padding options                          | Open (F11)                                                                          | Step 8       |
-| 2.5 missing operations                       | Open, by decision D10                                                               | Deferred     |
+| 2.5 missing operations                       | Open. Eight operations are added (D10); masked reductions stay open               | Step 11      |
 | 2.6 builtin shadowing                        | Resolved by D1                                                                      | Step 5       |
 | 2.7 `to`/`contiguous`/`pin_memory`           | Kept as pass-through (D2)                                                           | Step 4       |
 | 2.8 argument validation                      | Open (F9)                                                                           | Step 7       |
@@ -458,17 +468,18 @@ Steps 4 to 7 depend on 3 and are independent of each other after it. Step 10 can
 | joining (`cat`, `stack`)       | 4            | 4               | 4            | 4               |
 | `repeat`                       | 1            | 2               | 1            | 2               |
 | indexing                       | 2            | 2               | 2            | 2               |
-| permutation (`permute`)        | 2            | 0               | 2            | 0               |
+| permutation (`permute`)        | 2            | 2               | 2            | 2               |
 | shuffle                        | 2            | 2               | 2            | 2               |
 | padding                        | 2            | 2               | 2            | 2               |
 | masking and sequences          | 1            | 2               | 0            | 0               |
 | pointwise and trigonometric    | 0            | 0               | 21           | 0               |
+| new operations (D10)           | 0            | 16              | 0            | 16              |
 | misc (lifecycle)               | 0            | 0               | 5            | 5               |
 | conversion                     | 0            | 0               | 3            | 2               |
 | `combine`, `split`             | 0            | 0               | 2            | 0               |
-| **Total**                      | **50**       | **50**          | **80**       | **57**          |
+| **Total**                      | **50**       | **68**          | **80**       | **75**          |
 
-(`nested` now: 80 names in `__all__`; target: 57. `utils` gains four public helpers.)
+(`nested` now: 80 names in `__all__`; target: 75. `utils` gains four public helpers.)
 
 ## Appendix C. Documentation fixes (Step 1 and Step 9)
 
