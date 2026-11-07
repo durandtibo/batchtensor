@@ -9,3 +9,7 @@ For usage examples and tutorials, see the [Utils User Guide](../uguide/utils.md)
 ## Seed Management
 
 ::: batchtensor.utils.seed
+
+## Structure Helpers
+
+::: batchtensor.utils.structure

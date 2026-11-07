@@ -17,7 +17,7 @@ from batchtensor.nested import clone, contiguous, detach, pin_memory, to
 
 def test_clone_tensor() -> None:
     tensor = torch.tensor([[0, 1], [2, 3]])
-    out = cast("torch.Tensor", clone(tensor))
+    out = clone(tensor)
     assert objects_are_equal(out, tensor)
     assert out is not tensor
     out[0, 0] = 999
@@ -38,7 +38,7 @@ def test_clone_dict() -> None:
 
 def test_contiguous_tensor() -> None:
     tensor = torch.tensor([[0, 1], [2, 3]]).t()
-    out = cast("torch.Tensor", contiguous(tensor))
+    out = contiguous(tensor)
     assert objects_are_equal(out, tensor)
     assert out.is_contiguous()
 
@@ -56,7 +56,7 @@ def test_contiguous_dict() -> None:
 
 def test_detach_tensor() -> None:
     tensor = torch.tensor([[0.0, 1.0], [2.0, 3.0]], requires_grad=True)
-    out = cast("torch.Tensor", detach(tensor))
+    out = detach(tensor)
     assert out.requires_grad is False
     assert objects_are_equal(out, tensor.detach())
 

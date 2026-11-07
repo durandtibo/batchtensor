@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, cast
 
+import pytest
 import torch
 from coola.equality import objects_are_equal
 
@@ -12,10 +13,12 @@ from batchtensor.nested import (
     select_along_seq,
     slice_along_batch,
     slice_along_seq,
-    split,
     split_along_batch,
     split_along_seq,
 )
+
+if TYPE_CHECKING:
+    from batchtensor.nested import NestedTensor
 
 INDEX_DTYPES = [torch.int, torch.long]
 
@@ -580,7 +583,7 @@ def test_split_along_seq_split_size_list() -> None:
 
 
 def test_chunk_along_batch_nested() -> None:
-    data = {"a": torch.arange(4), "b": [torch.arange(4), (torch.arange(4),)]}
+    data: NestedTensor = {"a": torch.arange(4), "b": [torch.arange(4), (torch.arange(4),)]}
     out = cast("Any", chunk_along_batch(data, chunks=2))
     assert len(out) == 2
     assert out[1]["a"].tolist() == [2, 3]
@@ -595,9 +598,5 @@ def test_split_along_seq_list() -> None:
 
 
 def test_split_along_batch_empty() -> None:
-    assert split_along_batch({}, 2) == ()
-
-
-def test_split_custom_fn() -> None:
-    out = split({"a": torch.arange(4)}, lambda t: t.chunk(2))
-    assert objects_are_equal(out, ({"a": torch.tensor([0, 1])}, {"a": torch.tensor([2, 3])}))
+    with pytest.raises(ValueError, match="does not contain any tensor"):
+        split_along_batch({}, 2)

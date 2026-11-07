@@ -8,17 +8,14 @@ __all__ = ["argsort_along_batch", "argsort_along_seq", "sort_along_batch", "sort
 from functools import partial
 from typing import TYPE_CHECKING, Any
 
-from coola.recursive import recursive_apply
-
 from batchtensor import tensor as bt
+from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.nested.types import NestedTensor, T
 
 
-def argsort_along_batch(
-    data: NestedTensor, descending: bool = False, **kwargs: Any
-) -> NestedTensor:
+def argsort_along_batch(data: T, descending: bool = False, **kwargs: Any) -> T:
     r"""Return the indices that sort a tensor along the batch dimension
     in ascending order by value.
 
@@ -53,10 +50,10 @@ def argsort_along_batch(
 
         ```
     """
-    return recursive_apply(data, partial(bt.argsort_along_batch, descending=descending, **kwargs))
+    return apply_to_tensors(data, partial(bt.argsort_along_batch, descending=descending, **kwargs))
 
 
-def argsort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
+def argsort_along_seq(data: T, descending: bool = False, **kwargs: Any) -> T:
     r"""Return the indices that sort each tensor along the sequence
     dimension in ascending order by value.
 
@@ -91,7 +88,7 @@ def argsort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: An
 
         ```
     """
-    return recursive_apply(data, partial(bt.argsort_along_seq, descending=descending, **kwargs))
+    return apply_to_tensors(data, partial(bt.argsort_along_seq, descending=descending, **kwargs))
 
 
 def sort_along_batch(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
@@ -142,7 +139,7 @@ def sort_along_batch(data: NestedTensor, descending: bool = False, **kwargs: Any
 
         ```
     """
-    return recursive_apply(data, partial(bt.sort_along_batch, descending=descending, **kwargs))
+    return apply_to_tensors(data, partial(bt.sort_along_batch, descending=descending, **kwargs))
 
 
 def sort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) -> NestedTensor:
@@ -194,4 +191,4 @@ def sort_along_seq(data: NestedTensor, descending: bool = False, **kwargs: Any) 
 
         ```
     """
-    return recursive_apply(data, partial(bt.sort_along_seq, descending=descending, **kwargs))
+    return apply_to_tensors(data, partial(bt.sort_along_seq, descending=descending, **kwargs))
