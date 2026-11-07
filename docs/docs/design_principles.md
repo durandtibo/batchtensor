@@ -6,10 +6,12 @@
 - **Nested functions apply the tensor function with `recursive_apply`.**
   Dicts, lists and tuples are traversed and the tensor function is applied to
   each `torch.Tensor` leaf. The container type is preserved.
-- **Non-tensor leaves** are returned unchanged by pointwise and reduction
-  functions that go through `recursive_apply`.
-- **Joining and slicing** (`cat_*`, `stack_*`, `chunk_*`, `split_*`) accept a
-  flat `dict` of tensors.
+- **Leaves must be `torch.Tensor`.** Non-tensor leaves are not skipped or
+  returned unchanged: the call fails with the error of the underlying
+  operation (the exception type depends on the function).
+- **Joining and slicing** (`cat_*`, `stack_*`, `chunk_*`, `split_*`) recurse
+  into dicts, lists and tuples like the other nested functions. They return
+  plain `dict`, `list` and `tuple` containers.
 - **Named-tuple results** (`max`, `min`, `median`, `sort`) keep their
   `torch.return_types.*` type in the nested output.
 - **Views versus copies.** `slice`, `select`, `chunk` and `split` return views
