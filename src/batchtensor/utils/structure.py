@@ -11,8 +11,9 @@ from __future__ import annotations
 
 __all__ = ["apply_to_tensors", "combine_tensors", "get_size", "split_tensors"]
 
+import dataclasses
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, final
+from typing import TYPE_CHECKING, Any, final
 
 import torch
 from coola.iterator import dfs_iterate
@@ -22,7 +23,7 @@ from coola.recursive.rebuild import rebuild_mapping, rebuild_sequence
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
 
-T = TypeVar("T")
+    from batchtensor.utils.types import T
 
 
 def apply_to_tensors(data: T, fn: Callable[[torch.Tensor], Any]) -> T:
@@ -56,9 +57,7 @@ def apply_to_tensors(data: T, fn: Callable[[torch.Tensor], Any]) -> T:
     return recursive_apply(data, _guard(fn))
 
 
-def split_tensors(
-    data: Any, fn: Callable[[torch.Tensor], tuple[torch.Tensor, ...]]
-) -> tuple[Any, ...]:
+def split_tensors(data: T, fn: Callable[[torch.Tensor], tuple[torch.Tensor, ...]]) -> tuple[T, ...]:
     r"""Split every tensor of a nested structure and regroup the pieces.
 
     The i-th output has the same structure as ``data`` and contains the
@@ -106,7 +105,7 @@ def split_tensors(
     return tuple(recursive_apply(parts, lambda leaf, i=i: leaf.parts[i]) for i in range(num_parts))
 
 
-def combine_tensors(items: Sequence[Any], fn: Callable[[list[torch.Tensor]], torch.Tensor]) -> Any:
+def combine_tensors(items: Sequence[T], fn: Callable[[list[torch.Tensor]], torch.Tensor]) -> T:
     r"""Combine structures with the same layout into one structure.
 
     The structures are traversed in parallel and ``fn`` is applied to the
@@ -123,7 +122,8 @@ def combine_tensors(items: Sequence[Any], fn: Callable[[list[torch.Tensor]], tor
         A structure with the same layout as the items.
 
     Raises:
-        TypeError: if a leaf is not a ``torch.Tensor``.
+        TypeError: if a leaf is not a ``torch.Tensor``, or if an item is a
+            dataclass.
         ValueError: if ``items`` is empty, or if the structures do not have
             the same keys or the same lengths.
 
@@ -138,10 +138,36 @@ def combine_tensors(items: Sequence[Any], fn: Callable[[list[torch.Tensor]], tor
 
         ```
     """
+    return _combine_tensors(items, fn)
+
+
+def _combine_tensors(items: Sequence[Any], fn: Callable[[list[torch.Tensor]], torch.Tensor]) -> Any:
+    r"""Combine structures with the same layout into one structure.
+
+    This is the untyped implementation of ``combine_tensors``: the recursion
+    goes through containers whose type is not known statically, so the
+    public function declares the type.
+
+    Args:
+        items: The structures to combine.
+        fn: The function that combines a list of tensors into one tensor.
+
+    Returns:
+        A structure with the same layout as the items.
+
+    Raises:
+        TypeError: if a leaf is not a ``torch.Tensor``, or if an item is a
+            dataclass.
+        ValueError: if ``items`` is empty, or if the structures do not have
+            the same keys or the same lengths.
+    """
     if not items:
         msg = "Cannot combine an empty sequence of structures"
         raise ValueError(msg)
     first = items[0]
+    if dataclasses.is_dataclass(first) and not isinstance(first, type):
+        msg = f"dataclasses are not supported by combine_tensors; got {type(first).__qualname__}"
+        raise TypeError(msg)
     if isinstance(first, Mapping):
         keys = set(first)
         for i, item in enumerate(items[1:], start=1):
@@ -153,7 +179,7 @@ def combine_tensors(items: Sequence[Any], fn: Callable[[list[torch.Tensor]], tor
                 )
                 raise ValueError(msg)
         return rebuild_mapping(
-            first, {key: combine_tensors([item[key] for item in items], fn) for key in first}
+            first, {key: _combine_tensors([item[key] for item in items], fn) for key in first}
         )
     if isinstance(first, (list, tuple)):
         for i, item in enumerate(items[1:], start=1):
@@ -162,7 +188,7 @@ def combine_tensors(items: Sequence[Any], fn: Callable[[list[torch.Tensor]], tor
                 raise ValueError(msg)
         return rebuild_sequence(
             first,
-            [combine_tensors([item[j] for item in items], fn) for j in range(len(first))],
+            [_combine_tensors([item[j] for item in items], fn) for j in range(len(first))],
         )
     for item in items:
         _check_tensor(item)

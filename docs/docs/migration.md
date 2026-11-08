@@ -11,7 +11,7 @@ This page lists the breaking changes of the target-state refactoring and their r
 | `nested.as_tensor(data)`                                                                                                                                              | `coola.recursive.recursive_apply(data, torch.as_tensor)`               |
 | `nested.combine(items, fn)`                                                                                                                                           | `batchtensor.utils.structure.combine_tensors(items, fn)`               |
 | `nested.split(data, fn)`                                                                                                                                              | `batchtensor.utils.structure.split_tensors(data, fn)`                  |
-| `batchtensor.nested.types.NestedTensor`                                                                                                                               | `batchtensor.nested.NestedTensor` (public, excludes `str` and `bytes`) |
+| `batchtensor.nested.types.NestedTensor`                                                                                                                               | `batchtensor.nested.NestedTensor` (public, excludes `str` and `bytes`). The module is now `batchtensor.utils.types`; `batchtensor.nested.types` is removed |
 
 ```pycon
 >>> import torch
@@ -48,6 +48,7 @@ This page lists the breaking changes of the target-state refactoring and their r
 | ---------------------------------------------------------------------------- | --------------------------------------------- | -------------------------------- |
 | Non-tensor leaf in a nested function                                         | `TypeError`, `AttributeError`... per function | `TypeError` naming the leaf type |
 | `to_numpy` with a non-tensor leaf                                            | `AttributeError`                              | `TypeError` naming the leaf type |
+| `cat_*`/`stack_*` on dataclasses                                             | `TypeError` (leaf)                            | `TypeError` that names dataclasses|
 | `cat_*`/`stack_*` on an empty sequence                                       | `{}`                                          | `ValueError`                     |
 | `cat_*`/`stack_*` on dicts with different keys                               | `KeyError`                                    | `ValueError`                     |
 | `chunk_*`/`split_*`/`shuffle_*` on data without tensor                       | `()` / unchanged data                         | `ValueError`                     |

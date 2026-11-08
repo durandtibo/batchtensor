@@ -42,7 +42,7 @@ from batchtensor import tensor as bt
 from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import NestedTensor, T
+    from batchtensor.utils.types import NestedTensor, T
 
 
 def amax_along_batch(data: T, *, keepdim: bool = False) -> T:

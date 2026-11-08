@@ -20,7 +20,7 @@ from batchtensor.utils.structure import apply_to_tensors, combine_tensors
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from batchtensor.nested.types import T
+    from batchtensor.utils.types import T
 
 
 def cat_along_batch(data: Sequence[T]) -> T:

@@ -11,8 +11,8 @@ from batchtensor import tensor as bt
 from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import T
     from batchtensor.tensor.padding import Side
+    from batchtensor.utils.types import T
 
 
 def pad_along_batch(data: T, pad_size: int, *, value: float = 0.0, side: Side = "right") -> T:
