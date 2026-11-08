@@ -195,6 +195,12 @@ def pad_sequences(
     sequences are ``[t.shape[0] for t in tensors]``, and
     ``lengths_to_mask`` builds the mask of the padded batch.
 
+    Note:
+        The dtype and device of the output are the ones of the first tensor.
+        The other tensors are copied into it, which casts them to this dtype
+        (e.g. ``1.5`` becomes ``1`` when the first tensor is a ``long``
+        tensor). No type promotion is done.
+
     Args:
         tensors: The sequences to pad. Each tensor must have at least one
             dimension and the tensors must have the same shape except for
