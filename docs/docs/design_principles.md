@@ -29,8 +29,8 @@ Each principle below is enforced by a test.
   tuples, `OrderedDict`, `defaultdict` and dataclasses. `cat_*`, `stack_*`, `chunk_*` and
   `split_*` also keep these types but do not support dataclasses.
 - **Tensor leaves only (P6).** A leaf that is not a `torch.Tensor` raises a `TypeError` that names
-  the leaf type. Nothing is skipped silently. The conversion functions (`to_numpy`, `from_numpy`)
-  are the exception.
+  the leaf type. Nothing is skipped silently. `from_numpy` is the only exception: its leaves
+  are arrays, and the leaf type error is the `TypeError` of `torch.from_numpy`.
 - **Named-tuple results.** `max`, `min`, `median` and `sort` keep their `torch.return_types.*`
   type as the leaf of the nested output.
 
