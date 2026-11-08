@@ -26,6 +26,8 @@ Function Categories:
 
     **Padding and masking operations**: Pad ragged batches and build masks
         - ``pad_along_batch``, ``pad_along_seq``, ``pad_sequences``, ``lengths_to_mask``
+        - ``masked_sum_along_seq``, ``masked_mean_along_seq``, ``masked_amax_along_seq``,
+          ``masked_amin_along_seq``
 
     **Permutation operations**: Reorder elements
         - ``permute_along_batch``, ``shuffle_along_batch``
@@ -95,6 +97,10 @@ __all__ = [
     "lengths_to_mask",
     "logsumexp_along_batch",
     "logsumexp_along_seq",
+    "masked_amax_along_seq",
+    "masked_amin_along_seq",
+    "masked_mean_along_seq",
+    "masked_sum_along_seq",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -153,7 +159,13 @@ from batchtensor.tensor.joining import (
     stack_along_batch,
     stack_along_seq,
 )
-from batchtensor.tensor.masking import lengths_to_mask
+from batchtensor.tensor.masking import (
+    lengths_to_mask,
+    masked_amax_along_seq,
+    masked_amin_along_seq,
+    masked_mean_along_seq,
+    masked_sum_along_seq,
+)
 from batchtensor.tensor.math import (
     cumprod_along_batch,
     cumprod_along_seq,
