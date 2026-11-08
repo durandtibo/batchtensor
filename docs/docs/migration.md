@@ -47,6 +47,7 @@ This page lists the breaking changes of the target-state refactoring and their r
 | Case                                                                         | Before                                        | After                            |
 | ---------------------------------------------------------------------------- | --------------------------------------------- | -------------------------------- |
 | Non-tensor leaf in a nested function                                         | `TypeError`, `AttributeError`... per function | `TypeError` naming the leaf type |
+| `to_numpy` with a non-tensor leaf                                            | `AttributeError`                              | `TypeError` naming the leaf type |
 | `cat_*`/`stack_*` on an empty sequence                                       | `{}`                                          | `ValueError`                     |
 | `cat_*`/`stack_*` on dicts with different keys                               | `KeyError`                                    | `ValueError`                     |
 | `chunk_*`/`split_*`/`shuffle_*` on data without tensor                       | `()` / unchanged data                         | `ValueError`                     |

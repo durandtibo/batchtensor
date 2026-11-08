@@ -10,6 +10,8 @@ from typing import TYPE_CHECKING, Any
 import torch
 from coola.recursive import recursive_apply
 
+from batchtensor.utils.structure import apply_to_tensors
+
 if TYPE_CHECKING:
     from batchtensor.nested.types import NestedTensor
 
@@ -99,6 +101,9 @@ def to_numpy(data: NestedTensor) -> NestedTensor:
             as the input. For CPU tensors with compatible dtypes, the
             arrays share memory with the original tensors.
 
+    Raises:
+        TypeError: if a leaf is not a ``torch.Tensor``.
+
     Example:
         ```pycon
 
@@ -118,4 +123,4 @@ def to_numpy(data: NestedTensor) -> NestedTensor:
     See Also:
         ``batchtensor.nested.from_numpy``: Convert numpy arrays to tensors (shares memory).
     """
-    return recursive_apply(data, lambda tensor: tensor.detach().cpu().numpy())
+    return apply_to_tensors(data, lambda tensor: tensor.detach().cpu().numpy())
