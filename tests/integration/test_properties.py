@@ -136,6 +136,8 @@ def get_inputs(name: str) -> tuple[list[Any], dict[str, Any]]:
     args, kwargs = OPERATION_ARGS.get(operation, ((), {}))
     is_nested = name.startswith("nested.")
     data: Any = {"a": x, "b": x + 1} if is_nested else x
+    if operation == "pad_sequences" and is_nested:
+        return [[data, {"a": x[:2], "b": x[:2] + 1}], *args], kwargs
     if operation == "pad_sequences":
         return [[x, x[:2]], *args], kwargs
     if operation in JOINING:

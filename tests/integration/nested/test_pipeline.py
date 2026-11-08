@@ -9,11 +9,14 @@ from batchtensor.nested import (
     cumsum_along_batch,
     pad_along_batch,
     pad_along_seq,
+    pad_sequences,
     permute_along_batch,
     select_along_batch,
+    shuffle_along_batch,
     slice_along_batch,
     split_along_batch,
     sum_along_batch,
+    sum_along_seq,
 )
 from batchtensor.tensor import lengths_to_mask
 
@@ -65,3 +68,31 @@ def test_pad_seq_and_mask_consistent() -> None:
     assert isinstance(x, torch.Tensor)
     assert x.shape[1] == mask.shape[1] + 2
     assert mask.sum(dim=1).tolist() == lengths.tolist()
+
+
+def _samples() -> list:
+    return [
+        {"x": torch.tensor([[1.0], [2.0], [3.0]]), "ids": torch.tensor([1, 2, 3])},
+        {"x": torch.tensor([[4.0]]), "ids": torch.tensor([4])},
+        {"x": torch.tensor([[5.0], [6.0]]), "ids": torch.tensor([5, 6])},
+    ]
+
+
+def test_collate_then_mask_matches_lengths() -> None:
+    samples = _samples()
+    batch = pad_sequences(samples)
+    mask = lengths_to_mask(torch.tensor([3, 1, 2]))
+    assert objects_are_equal(sum_along_seq(batch)["ids"], torch.tensor([6, 4, 11]))
+    assert objects_are_equal(batch["ids"] * mask, batch["ids"])
+
+
+def test_collate_then_shuffle_keeps_the_leaves_aligned() -> None:
+    batch = pad_sequences(_samples())
+    out = shuffle_along_batch(batch, generator=0)
+    assert objects_are_equal(out["x"].squeeze(-1), out["ids"].float())
+
+
+def test_collate_then_chunk_then_cat_roundtrip() -> None:
+    batch = pad_sequences(_samples())
+    out = cat_along_batch(chunk_along_batch(batch, chunks=2))
+    assert objects_are_equal(out, batch)

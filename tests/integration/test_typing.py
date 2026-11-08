@@ -39,3 +39,8 @@ def test_batch_size_returns_int() -> None:
 
 def test_seq_len_returns_int() -> None:
     assert_type(nested.seq_len({"a": torch.ones(2, 3)}), int)
+
+
+def test_pad_sequences_dict_in_dict_out() -> None:
+    samples = [{"a": torch.ones(2, 3)}, {"a": torch.ones(1, 3)}]
+    assert_type(nested.pad_sequences(samples), dict[str, torch.Tensor])
