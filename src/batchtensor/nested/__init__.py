@@ -33,7 +33,7 @@ Function Categories:
         - ``stack_along_batch``, ``stack_along_seq``
 
     **Padding operations**: Pad ragged batches
-        - ``pad_along_batch``, ``pad_along_seq``
+        - ``pad_along_batch``, ``pad_along_seq``, ``pad_sequences``
 
     **Permutation operations**: Reorder elements
         - ``permute_along_batch``, ``shuffle_along_batch``
@@ -141,6 +141,7 @@ __all__ = [
     "min_along_seq",
     "pad_along_batch",
     "pad_along_seq",
+    "pad_sequences",
     "permute_along_batch",
     "permute_along_seq",
     "pin_memory",
@@ -200,7 +201,7 @@ from batchtensor.nested.math import (
     cumsum_along_seq,
 )
 from batchtensor.nested.misc import clone, contiguous, detach, pin_memory, to
-from batchtensor.nested.padding import pad_along_batch, pad_along_seq
+from batchtensor.nested.padding import pad_along_batch, pad_along_seq, pad_sequences
 from batchtensor.nested.permutation import (
     flip_along_batch,
     flip_along_seq,
