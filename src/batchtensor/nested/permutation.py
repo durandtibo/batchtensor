@@ -16,7 +16,7 @@ from batchtensor.utils.structure import apply_to_tensors, get_size
 if TYPE_CHECKING:
     import torch
 
-    from batchtensor.nested.types import T
+    from batchtensor.utils.types import T
 
 
 def permute_along_batch(data: T, permutation: torch.Tensor) -> T:
