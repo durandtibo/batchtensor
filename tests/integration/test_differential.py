@@ -11,6 +11,13 @@ from batchtensor import nested, tensor
 if TYPE_CHECKING:
     from batchtensor.nested import NestedTensor
 
+
+def make_mask() -> torch.Tensor:
+    return torch.tensor(
+        [[True] * 5, [True, True, True, False, False], [True, False] + [False] * 3, [True] * 5]
+    )
+
+
 REDUCTIONS = ["sum", "mean", "prod", "amax", "amin", "argmax", "argmin", "max", "min", "median"]
 
 # (function name, keyword arguments) for the functions that map a tensor to a
@@ -80,6 +87,11 @@ CASES = (
         (f"pad_along_{dim}", {"pad_size": 2, "value": 1.0, "side": side})
         for dim in ("batch", "seq")
         for side in ("left", "right")
+    ]
+    + [
+        (f"masked_{name}_along_seq", {"mask": make_mask(), "keepdim": keepdim})
+        for name in ("sum", "mean", "amax", "amin")
+        for keepdim in (False, True)
     ]
 )
 IDS = [f"{name}-{i}" for i, (name, _) in enumerate(CASES)]

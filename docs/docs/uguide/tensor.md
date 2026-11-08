@@ -247,6 +247,28 @@ tensor([[ True,  True,  True],
 
 ```
 
+### Masked Reductions
+
+`masked_sum_along_seq`, `masked_mean_along_seq`, `masked_amax_along_seq` and
+`masked_amin_along_seq` reduce only the valid steps of a padded batch. The `mask` is a `bool`
+tensor of shape `(batch, seq)` (what `lengths_to_mask` returns) and is broadcast over the
+trailing dimensions:
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import lengths_to_mask, masked_mean_along_seq, masked_amax_along_seq
+>>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 9.0, 9.0]])
+>>> mask = lengths_to_mask(torch.tensor([3, 1]))
+>>> masked_mean_along_seq(tensor, mask)
+tensor([2., 4.])
+>>> masked_amax_along_seq(tensor, mask)
+tensor([3., 4.])
+
+```
+
+A row without valid step gives `0` for the sum, `nan` for the mean and the lowest (`amax`) or the
+highest (`amin`) value of the dtype. The mean requires a floating point tensor.
+
 ## Reduction Operations
 
 ### Sum and Mean
