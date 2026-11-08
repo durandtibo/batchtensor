@@ -51,6 +51,9 @@ Function Categories:
     For element-wise operations, use ``batchtensor.utils.structure.apply_to_tensors``
     with the torch function (e.g. ``apply_to_tensors(batch, torch.exp)``).
 
+    **Size operations**: Read the batch size and the sequence length
+        - ``batch_size``, ``seq_len``
+
     **Conversion operations**: Convert between tensor types and formats
         - ``from_numpy``, ``to_numpy``, ``to``
 
@@ -109,6 +112,7 @@ __all__ = [
     "argmin_along_seq",
     "argsort_along_batch",
     "argsort_along_seq",
+    "batch_size",
     "cat_along_batch",
     "cat_along_seq",
     "chunk_along_batch",
@@ -148,6 +152,7 @@ __all__ = [
     "roll_along_seq",
     "select_along_batch",
     "select_along_seq",
+    "seq_len",
     "shuffle_along_batch",
     "shuffle_along_seq",
     "slice_along_batch",
@@ -238,6 +243,7 @@ from batchtensor.nested.reduction import (
     var_along_batch,
     var_along_seq,
 )
+from batchtensor.nested.size import batch_size, seq_len
 from batchtensor.nested.slicing import (
     chunk_along_batch,
     chunk_along_seq,

@@ -104,6 +104,7 @@ mirror the tensor module:
 - **padding.py**: Nested padding
 - **conversion.py**: NumPy conversion
 - **misc.py**: Miscellaneous utilities
+- **size.py**: Batch size and sequence length of a nested structure
 
 Each nested function:
 

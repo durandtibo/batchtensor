@@ -31,3 +31,11 @@ def test_list_in_list_out() -> None:
 def test_tuple_in_tuple_out() -> None:
     data = (torch.ones(2, 3),)
     assert_type(nested.pad_along_batch(data, 1), tuple[torch.Tensor])
+
+
+def test_batch_size_returns_int() -> None:
+    assert_type(nested.batch_size({"a": torch.ones(2, 3)}), int)
+
+
+def test_seq_len_returns_int() -> None:
+    assert_type(nested.seq_len({"a": torch.ones(2, 3)}), int)
