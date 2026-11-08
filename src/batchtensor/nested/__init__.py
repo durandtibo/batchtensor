@@ -51,6 +51,10 @@ Function Categories:
     For element-wise operations, use ``batchtensor.utils.structure.apply_to_tensors``
     with the torch function (e.g. ``apply_to_tensors(batch, torch.exp)``).
 
+    **Masked reductions**: Reduce the valid steps of padded sequences
+        - ``masked_sum_along_seq``, ``masked_mean_along_seq``, ``masked_amax_along_seq``,
+          ``masked_amin_along_seq``
+
     **Size operations**: Read the batch size and the sequence length
         - ``batch_size``, ``seq_len``
 
@@ -131,6 +135,10 @@ __all__ = [
     "index_select_along_seq",
     "logsumexp_along_batch",
     "logsumexp_along_seq",
+    "masked_amax_along_seq",
+    "masked_amin_along_seq",
+    "masked_mean_along_seq",
+    "masked_sum_along_seq",
     "max_along_batch",
     "max_along_seq",
     "mean_along_batch",
@@ -193,6 +201,12 @@ from batchtensor.nested.joining import (
     repeat_along_seq,
     stack_along_batch,
     stack_along_seq,
+)
+from batchtensor.nested.masking import (
+    masked_amax_along_seq,
+    masked_amin_along_seq,
+    masked_mean_along_seq,
+    masked_sum_along_seq,
 )
 from batchtensor.nested.math import (
     cumprod_along_batch,

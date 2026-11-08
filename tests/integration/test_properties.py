@@ -119,6 +119,10 @@ OPERATION_ARGS: dict[str, tuple[tuple[Any, ...], dict[str, Any]]] = {
     "split": ((2,), {}),
     "topk": ((2,), {}),
     "to": ((), {"dtype": torch.float64}),
+    **{
+        f"masked_{name}": ((torch.ones(3, 3, dtype=torch.bool),), {})
+        for name in ("sum", "mean", "amax", "amin")
+    },
 }
 JOINING = {"cat", "stack"}
 SKIPPED = {"nested.from_numpy", "nested.pin_memory", "tensor.lengths_to_mask"}

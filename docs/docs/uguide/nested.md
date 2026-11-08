@@ -312,6 +312,21 @@ stacks them into a batch, one leaf position at a time:
 
 The dtype of each leaf is the one of the leaf of the first sample.
 
+## Masked Reductions
+
+The masked reductions take one `mask` of shape `(batch, seq)` that is shared by all the leaves:
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import masked_mean_along_seq
+>>> from batchtensor.tensor import lengths_to_mask
+>>> batch = {"x": torch.tensor([[1.0, 2.0, 3.0], [4.0, 9.0, 9.0]]), "y": torch.ones(2, 3, 2)}
+>>> mask = lengths_to_mask(torch.tensor([3, 1]))
+>>> masked_mean_along_seq(batch, mask)
+{'x': tensor([2., 4.]), 'y': tensor([[1., 1.], [1., 1.]])}
+
+```
+
 ## Size Operations
 
 Read the batch size and the sequence length shared by all the tensors, instead of
