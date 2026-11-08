@@ -17,11 +17,13 @@ TENSOR_ONLY = {"lengths_to_mask", "pad_sequences"}
 # The functions of ``nested`` that have no ``tensor`` twin.
 NESTED_ONLY = {
     "NestedTensor",
+    "batch_size",
     "clone",
     "contiguous",
     "detach",
     "from_numpy",
     "pin_memory",
+    "seq_len",
     "to",
     "to_numpy",
 }

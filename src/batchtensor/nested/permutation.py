@@ -9,9 +9,9 @@ from functools import partial
 from typing import TYPE_CHECKING
 
 from batchtensor import tensor
-from batchtensor.constants import BATCH_DIM, SEQ_DIM
+from batchtensor.nested.size import batch_size, seq_len
 from batchtensor.utils.seed import random_permutation
-from batchtensor.utils.structure import apply_to_tensors, get_size
+from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
     import torch
@@ -128,7 +128,7 @@ def shuffle_along_batch(data: T, *, generator: torch.Generator | int | None = No
 
         ```
     """
-    size = get_size(data, BATCH_DIM)
+    size = batch_size(data)
     return permute_along_batch(
         data=data,
         permutation=random_permutation(size, generator=generator),
@@ -166,7 +166,7 @@ def shuffle_along_seq(data: T, *, generator: torch.Generator | int | None = None
 
         ```
     """
-    size = get_size(data, SEQ_DIM)
+    size = seq_len(data)
     return permute_along_seq(
         data=data,
         permutation=random_permutation(size, generator=generator),
