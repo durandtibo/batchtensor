@@ -14,7 +14,7 @@ from batchtensor.utils.structure import apply_to_tensors
 if TYPE_CHECKING:
     import torch
 
-    from batchtensor.nested.types import T
+    from batchtensor.utils.types import T
 
 
 def index_select_along_batch(data: T, index: torch.Tensor) -> T:

@@ -13,7 +13,7 @@ from coola.recursive import recursive_apply
 from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import NestedTensor
+    from batchtensor.utils.types import NestedTensor
 
 
 def from_numpy(data: Any) -> NestedTensor:

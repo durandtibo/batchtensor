@@ -22,7 +22,7 @@ from batchtensor.utils.structure import apply_to_tensors, split_tensors
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from batchtensor.nested.types import NestedTensor, T
+    from batchtensor.utils.types import NestedTensor, T
 
 
 def chunk_along_batch(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ...]:

@@ -248,4 +248,4 @@ from batchtensor.nested.slicing import (
     split_along_batch,
     split_along_seq,
 )
-from batchtensor.nested.types import NestedTensor
+from batchtensor.utils.types import NestedTensor
