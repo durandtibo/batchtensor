@@ -44,3 +44,14 @@ def test_seq_len_returns_int() -> None:
 def test_pad_sequences_dict_in_dict_out() -> None:
     samples = [{"a": torch.ones(2, 3)}, {"a": torch.ones(1, 3)}]
     assert_type(nested.pad_sequences(samples), dict[str, torch.Tensor])
+
+
+def test_masked_mean_along_seq_dict_in_dict_out() -> None:
+    data = {"a": torch.ones(2, 3)}
+    mask = torch.ones(2, 3, dtype=torch.bool)
+    assert_type(nested.masked_mean_along_seq(data, mask), dict[str, torch.Tensor])
+
+
+def test_masked_mean_along_seq_tensor_in_tensor_out() -> None:
+    mask = torch.ones(2, 3, dtype=torch.bool)
+    assert_type(nested.masked_mean_along_seq(torch.ones(2, 3), mask), torch.Tensor)
