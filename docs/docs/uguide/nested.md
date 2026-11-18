@@ -293,6 +293,25 @@ Apply a specific permutation:
 
 ```
 
+## Building a Batch from Samples
+
+`pad_sequences` pads the sequences of a list of samples (structures with the same layout) and
+stacks them into a batch, one leaf position at a time:
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import pad_sequences
+>>> samples = [
+...     {"x": torch.tensor([1, 2, 3]), "mask": torch.tensor([True, True, True])},
+...     {"x": torch.tensor([4]), "mask": torch.tensor([True])},
+... ]
+>>> pad_sequences(samples)
+{'x': tensor([[1, 2, 3], [4, 0, 0]]), 'mask': tensor([[ True,  True,  True], [ True, False, False]])}
+
+```
+
+The dtype of each leaf is the one of the leaf of the first sample.
+
 ## Size Operations
 
 Read the batch size and the sequence length shared by all the tensors, instead of

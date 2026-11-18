@@ -67,4 +67,4 @@ This page lists the breaking changes of the target-state refactoring and their r
 
 `pad_along_*(..., side="left")`, `repeat_along_batch`, `pad_sequences`, an `int` seed for
 `shuffle_*(generator=...)`, and `batchtensor.utils.structure` (`apply_to_tensors`,
-`split_tensors`, `combine_tensors`, `get_size`), `nested.batch_size` and `nested.seq_len`.
+`split_tensors`, `combine_tensors`, `get_size`), `nested.batch_size`, `nested.seq_len` and `nested.pad_sequences`.

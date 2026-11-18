@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 # The functions of ``tensor`` that have no ``nested`` twin because their input
 # is not a batch of tensors.
-TENSOR_ONLY = {"lengths_to_mask", "pad_sequences"}
+TENSOR_ONLY = {"lengths_to_mask"}
 
 # The functions of ``nested`` that have no ``tensor`` twin.
 NESTED_ONLY = {
