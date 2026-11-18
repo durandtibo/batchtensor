@@ -16,7 +16,7 @@ from batchtensor import tensor as bt
 from batchtensor.utils.structure import apply_to_tensors
 
 if TYPE_CHECKING:
-    from batchtensor.nested.types import T
+    from batchtensor.utils.types import T
 
 
 def cumprod_along_batch(data: T) -> T:

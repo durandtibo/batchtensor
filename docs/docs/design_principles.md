@@ -27,7 +27,10 @@ Each principle below is enforced by a test.
 - **Structure-preserving (P5).** A map function returns the input structure with every leaf
   replaced. Container types, keys and order follow `coola.recursive`: dicts, lists, tuples, named
   tuples, `OrderedDict`, `defaultdict` and dataclasses. `cat_*`, `stack_*`, `chunk_*` and
-  `split_*` also keep these types but do not support dataclasses.
+  `split_*` also keep these types. Dataclasses are supported at runtime by every map function and
+  by `chunk_*`/`split_*`, not by `cat_*`/`stack_*` (`combine_tensors` raises a `TypeError`).
+  Dataclasses are not typed: `NestedTensor` does not include them, so the type checkers reject a
+  dataclass argument.
 - **Tensor leaves only (P6).** A leaf that is not a `torch.Tensor` raises a `TypeError` that names
   the leaf type. Nothing is skipped silently. `from_numpy` is the only exception: its leaves
   are arrays, and the leaf type error is the `TypeError` of `torch.from_numpy`.

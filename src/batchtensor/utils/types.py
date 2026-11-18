@@ -1,4 +1,8 @@
-r"""Defines type aliases used by the ``batchtensor.nested`` package."""
+r"""Defines the type aliases of nested structures of tensors.
+
+They live in ``batchtensor.utils`` because the helpers of
+``batchtensor.utils.structure`` use them. ``NestedTensor`` is re-exported by
+``batchtensor.nested``."""
 
 from __future__ import annotations
 
@@ -10,7 +14,7 @@ from typing import Any, TypeVar
 import torch
 
 # A recursive alias for the nested data structures accepted by the functions
-# in ``batchtensor.nested``: a tensor, or an arbitrarily nested mapping, list
+# in ``batchtensor.nested`` and by the helpers of ``batchtensor.utils.structure``: a tensor, or an arbitrarily nested mapping, list
 # or tuple of such structures (e.g. a dict of lists of tensors). ``str`` and
 # ``bytes`` are not accepted.
 NestedTensor = (
