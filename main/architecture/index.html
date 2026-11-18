@@ -316,6 +316,25 @@
   
   
   
+    <li class="md-tabs__item">
+      <a href="../migration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Migration guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
     
     
       <li class="md-tabs__item">
@@ -703,10 +722,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pattern-3-dictionary-operations-preserve-structure" class="md-nav__link">
+  <a href="#pattern-3-joining-and-splitting-use-structure-helpers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pattern 3: Dictionary Operations Preserve Structure
+        Pattern 3: Joining and Splitting Use Structure Helpers
       
     </span>
   </a>
@@ -892,6 +911,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migration guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -906,10 +952,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -927,8 +973,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1077,10 +1123,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1098,8 +1144,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1449,10 +1495,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pattern-3-dictionary-operations-preserve-structure" class="md-nav__link">
+  <a href="#pattern-3-joining-and-splitting-use-structure-helpers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pattern 3: Dictionary Operations Preserve Structure
+        Pattern 3: Joining and Splitting Use Structure Helpers
       
     </span>
   </a>
@@ -1625,7 +1671,7 @@ implementation details.</p>
 <div class="highlight"><pre><span></span><code>batchtensor/
 ├── nested/         # Operations for nested data structures
 ├── tensor/         # Operations for individual tensors
-├── utils/          # Utility functions (seed management)
+├── utils/          # Seed management and the structure helpers
 └── constants.py    # Dimension constants
 </code></pre></div>
 <h2 id="design-principles">Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">&para;</a></h2>
@@ -1682,6 +1728,8 @@ sub-modules by operation type:</p>
 <li><strong>comparison.py</strong>: Sorting and comparison</li>
 <li><strong>math.py</strong>: Cumulative operations</li>
 <li><strong>permutation.py</strong>: Shuffling and permuting</li>
+<li><strong>masking.py</strong>: Sequence length masks</li>
+<li><strong>padding.py</strong>: Padding along the batch and sequence dimensions</li>
 </ul>
 <p>Each function:</p>
 <ul>
@@ -1701,26 +1749,30 @@ mirror the tensor module:</p>
 <li><strong>comparison.py</strong>: Nested sorting</li>
 <li><strong>math.py</strong>: Nested cumulative operations</li>
 <li><strong>permutation.py</strong>: Nested shuffling and permuting</li>
+<li><strong>padding.py</strong>: Nested padding</li>
 <li><strong>conversion.py</strong>: NumPy conversion</li>
-<li><strong>pointwise.py</strong>: Element-wise operations</li>
-<li><strong>trigo.py</strong>: Trigonometric functions</li>
 <li><strong>misc.py</strong>: Miscellaneous utilities</li>
 </ul>
 <p>Each nested function:</p>
 <ul>
 <li>Recursively applies the corresponding tensor operation</li>
-<li>Preserves the nested structure (dict, list, tuple)</li>
-<li>Uses <code>coola.recursive_apply</code> for recursive traversal</li>
+<li>Preserves the nested structure (dict, list, tuple, named tuple, ...)</li>
+<li>Goes through <code>apply_to_tensors</code>, <code>split_tensors</code> and <code>combine_tensors</code> (see Utils Module)</li>
 <li>Handles arbitrary nesting depth</li>
 </ul>
 <h3 id="utils-module">Utils Module<a class="headerlink" href="#utils-module" title="Permanent link">&para;</a></h3>
 <p>The utils module provides supporting functionality:</p>
 <ul>
 <li><strong>seed.py</strong>: Random seed management for reproducibility</li>
-<li><code>get_random_seed()</code>: Generate deterministic random seeds</li>
-<li><code>get_torch_generator()</code>: Create PyTorch generators</li>
 <li><code>setup_torch_generator()</code>: Flexible generator setup</li>
+<li><code>random_permutation()</code>: Random permutation from a generator, a seed or the global RNG</li>
+<li><strong>structure.py</strong>: The only code that traverses nested structures</li>
+<li><code>apply_to_tensors()</code>: Map a tensor function over the leaves (<code>TypeError</code> for a non-tensor leaf)</li>
+<li><code>split_tensors()</code> / <code>combine_tensors()</code>: One structure to N, and N to one</li>
+<li><code>get_size()</code>: Common size of the leaves along a dimension</li>
 </ul>
+<p>The layering is <code>constants</code> &lt;- <code>utils</code> &lt;- <code>tensor</code> &lt;- <code>nested</code>, enforced by <code>import-linter</code>.
+See <a href="../design_principles/">Design principles</a> and the <a href="../migration/">Migration guide</a>.</p>
 <h2 id="implementation-patterns">Implementation Patterns<a class="headerlink" href="#implementation-patterns" title="Permanent link">&para;</a></h2>
 <h3 id="pattern-1-tensor-operations-use-constants">Pattern 1: Tensor Operations Use Constants<a class="headerlink" href="#pattern-1-tensor-operations-use-constants" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -1767,33 +1819,21 @@ mirror the tensor module:</p>
     <span class="k">return</span> <span class="n">recursive_apply</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">bt</span><span class="o">.</span><span class="n">slice_along_batch</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">))</span>
 </code></pre></div>
 <p>This reduces code duplication and ensures nested operations behave consistently.</p>
-<h3 id="pattern-3-dictionary-operations-preserve-structure">Pattern 3: Dictionary Operations Preserve Structure<a class="headerlink" href="#pattern-3-dictionary-operations-preserve-structure" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Hashable</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<h3 id="pattern-3-joining-and-splitting-use-structure-helpers">Pattern 3: Joining and Splitting Use Structure Helpers<a class="headerlink" href="#pattern-3-joining-and-splitting-use-structure-helpers" title="Permanent link">&para;</a></h3>
+<p><code>cat_along_batch</code>, <code>stack_along_batch</code> and the <code>chunk_*</code> / <code>split_*</code> functions cannot use
+<code>recursive_apply</code> because they combine several structures or return several structures. They use
+<code>batchtensor.utils.structure.combine_tensors</code> and <code>split_tensors</code>, which walk the structures and
+call the tensor function on each leaf. Container types (<code>OrderedDict</code>, named tuples, ...) are kept:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensor</span> <span class="k">as</span> <span class="n">bt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">split_tensors</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">chunk_along_batch</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Hashable</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">chunks</span><span class="p">:</span> <span class="nb">int</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="n">Hashable</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="o">...</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Split all tensors into chunks along the batch dimension.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        data: Dictionary of tensors.</span>
-<span class="sd">        chunks: Number of chunks.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Tuple of dictionaries with chunked tensors.</span>
-<span class="sd">    """</span>
-    <span class="n">keys</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
-        <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-            <span class="o">*</span><span class="p">[</span><span class="n">bt</span><span class="o">.</span><span class="n">chunk_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">chunks</span><span class="p">)</span> <span class="k">for</span> <span class="n">tensor</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">chunk_along_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">chunks</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">split_tensors</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">bt</span><span class="o">.</span><span class="n">chunk_along_batch</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">))</span>
 </code></pre></div>
-<p>This pattern ensures the output structure matches the input structure.</p>
+<p>This keeps the structure of the output aligned with the structure of the input.</p>
 <h2 id="extension-points">Extension Points<a class="headerlink" href="#extension-points" title="Permanent link">&para;</a></h2>
 <p>The library can be extended in several ways:</p>
 <h3 id="adding-new-tensor-operations">Adding New Tensor Operations<a class="headerlink" href="#adding-new-tensor-operations" title="Permanent link">&para;</a></h3>
@@ -1815,7 +1855,7 @@ mirror the tensor module:</p>
 <li>Dictionaries</li>
 <li>Lists</li>
 <li>Tuples</li>
-<li>Custom classes (with appropriate handlers)</li>
+<li>Custom classes: register a transformer with <code>coola.recursive.register_transformers</code></li>
 </ul>
 <h2 id="performance-considerations">Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">&para;</a></h2>
 <h3 id="memory-efficiency">Memory Efficiency<a class="headerlink" href="#memory-efficiency" title="Permanent link">&para;</a></h3>
@@ -1842,7 +1882,7 @@ mirror the tensor module:</p>
 <li><strong>Unit tests</strong>: Test individual functions with various inputs</li>
 <li><strong>Integration tests</strong>: Test combinations of operations</li>
 <li><strong>Doctests</strong>: Verify examples in docstrings</li>
-<li><strong>Type checking</strong>: Use pyright for static type checking</li>
+<li><strong>Type checking</strong>: Use ty for static type checking</li>
 </ul>
 <h2 id="future-directions">Future Directions<a class="headerlink" href="#future-directions" title="Permanent link">&para;</a></h2>
 <p>Potential areas for expansion:</p>

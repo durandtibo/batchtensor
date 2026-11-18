@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://durandtibo.github.io/batchtensor/main/uguide/tensor/">
       
       
-        <link rel="prev" href="../../design_principles/">
+        <link rel="prev" href="../../migration/">
       
       
         <link rel="next" href="../nested/">
@@ -313,6 +313,25 @@
   
   
   
+  
+    <li class="md-tabs__item">
+      <a href="../../migration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Migration guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
     
   
   
@@ -527,6 +546,33 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migration guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -546,10 +592,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -567,8 +613,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -795,6 +841,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#padding-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Padding Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Padding Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#padding-a-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Padding a Batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-a-batch-from-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building a Batch from Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reduction-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -962,6 +1047,111 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#additional-reductions-and-reordering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Reductions and Reordering
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Reductions and Reordering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#std" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        std
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#var" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        var
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        any
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        all
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logsumexp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        logsumexp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        roll
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#topk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        topk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1114,10 +1304,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1135,8 +1325,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1469,6 +1659,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#padding-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Padding Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Padding Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#padding-a-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Padding a Batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-a-batch-from-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building a Batch from Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reduction-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1624,6 +1853,111 @@
     <span class="md-ellipsis">
       
         Permuting with Specific Order
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-reductions-and-reordering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Reductions and Reordering
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Reductions and Reordering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#std" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        std
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#var" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        var
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        any
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        all
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logsumexp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        logsumexp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        roll
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#topk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        topk
       
     </span>
   </a>
@@ -1839,6 +2173,7 @@ be used directly when working with single tensors.</p>
 <span class="go">        [2, 4]])</span>
 </code></pre></div>
 <h3 id="repetition">Repetition<a class="headerlink" href="#repetition" title="Permanent link">&para;</a></h3>
+<p>Use <code>repeat_along_batch</code> or <code>repeat_along_seq</code> to repeat the data along a dimension.</p>
 <p>Repeat sequences:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">repeat_along_seq</span>
@@ -1846,6 +2181,29 @@ be used directly when working with single tensors.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">repeat_along_seq</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">repeats</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">tensor([[1, 2, 1, 2, 1, 2],</span>
 <span class="go">        [3, 4, 3, 4, 3, 4]])</span>
+</code></pre></div>
+<h2 id="padding-operations">Padding Operations<a class="headerlink" href="#padding-operations" title="Permanent link">&para;</a></h2>
+<h3 id="padding-a-batch">Padding a Batch<a class="headerlink" href="#padding-a-batch" title="Permanent link">&para;</a></h3>
+<p>Pad along the batch or sequence dimension, at the end (<code>side="right"</code>, default) or at the start
+(<code>side="left"</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">pad_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_seq</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
+<span class="go">tensor([[0, 1, 2],</span>
+<span class="go">        [0, 3, 4]])</span>
+</code></pre></div>
+<h3 id="building-a-batch-from-sequences">Building a Batch from Sequences<a class="headerlink" href="#building-a-batch-from-sequences" title="Permanent link">&para;</a></h3>
+<p><code>pad_sequences</code> pads tensors of different lengths into one <code>(batch, seq, ...)</code> tensor, and
+<code>lengths_to_mask</code> builds the mask of the padded batch:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">lengths_to_mask</span><span class="p">,</span> <span class="n">pad_sequences</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">])]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_sequences</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+<span class="go">tensor([[1, 2, 3],</span>
+<span class="go">        [4, 0, 0]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lengths_to_mask</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">]))</span>
+<span class="go">tensor([[ True,  True,  True],</span>
+<span class="go">        [ True, False, False]])</span>
 </code></pre></div>
 <h2 id="reduction-operations">Reduction Operations<a class="headerlink" href="#reduction-operations" title="Permanent link">&para;</a></h2>
 <h3 id="sum-and-mean">Sum and Mean<a class="headerlink" href="#sum-and-mean" title="Permanent link">&para;</a></h3>
@@ -1986,9 +2344,9 @@ be used directly when working with single tensors.</p>
 <p>For reproducible shuffling, use a generator:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">shuffle_along_batch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.seed</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_torch_generator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">coola.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_torch_generator</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">get_torch_generator</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">make_torch_generator</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">shuffled</span> <span class="o">=</span> <span class="n">shuffle_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="n">generator</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="permuting-with-specific-order">Permuting with Specific Order<a class="headerlink" href="#permuting-with-specific-order" title="Permanent link">&para;</a></h3>
@@ -2001,6 +2359,83 @@ be used directly when working with single tensors.</p>
 <span class="go">tensor([[5, 6],</span>
 <span class="go">        [1, 2],</span>
 <span class="go">        [3, 4]])</span>
+</code></pre></div>
+<h2 id="additional-reductions-and-reordering">Additional Reductions and Reordering<a class="headerlink" href="#additional-reductions-and-reordering" title="Permanent link">&para;</a></h2>
+<h3 id="std">std<a class="headerlink" href="#std" title="Permanent link">&para;</a></h3>
+<p><code>std_along_batch</code> and <code>std_along_seq</code> return the standard deviation along the batch or the sequence dimension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">std_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">std_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+<span class="go">tensor([4.0000, 4.1633, 1.5275, 2.6458])</span>
+</code></pre></div>
+<h3 id="var">var<a class="headerlink" href="#var" title="Permanent link">&para;</a></h3>
+<p><code>var_along_batch</code> and <code>var_along_seq</code> return the variance along the batch or the sequence dimension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">var_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+<span class="go">tensor([16.0000, 17.3333,  2.3333,  7.0000])</span>
+</code></pre></div>
+<h3 id="any">any<a class="headerlink" href="#any" title="Permanent link">&para;</a></h3>
+<p><code>any_along_batch</code> and <code>any_along_seq</code> return whether any element is true along the batch or the sequence dimension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">any_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">any_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+<span class="go">tensor([True, True, True, True])</span>
+</code></pre></div>
+<h3 id="all">all<a class="headerlink" href="#all" title="Permanent link">&para;</a></h3>
+<p><code>all_along_batch</code> and <code>all_along_seq</code> return whether all the elements are true along the batch or the sequence dimension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">all_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+<span class="go">tensor([False, False,  True, False])</span>
+</code></pre></div>
+<h3 id="logsumexp">logsumexp<a class="headerlink" href="#logsumexp" title="Permanent link">&para;</a></h3>
+<p><code>logsumexp_along_batch</code> and <code>logsumexp_along_seq</code> return the log of the sum of exponentials along the batch or the sequence dimension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">logsumexp_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logsumexp_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+<span class="go">tensor([8.0185, 9.1272, 5.1698, 6.0247])</span>
+</code></pre></div>
+<h3 id="flip">flip<a class="headerlink" href="#flip" title="Permanent link">&para;</a></h3>
+<p><code>flip_along_batch</code> and <code>flip_along_seq</code> return the tensor with the order of the elements reversed along the batch or the sequence dimension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">flip_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flip_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+<span class="go">tensor([[8, 7, 2, 1],</span>
+<span class="go">        [4, 9, 5, 6],</span>
+<span class="go">        [0, 1, 3, 2]])</span>
+</code></pre></div>
+<h3 id="roll">roll<a class="headerlink" href="#roll" title="Permanent link">&para;</a></h3>
+<p><code>roll_along_batch</code> and <code>roll_along_seq</code> return the tensor with the elements rolled along the batch or the sequence dimension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">roll_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">roll_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">tensor([[8, 7, 2, 1],</span>
+<span class="go">        [0, 1, 3, 2],</span>
+<span class="go">        [4, 9, 5, 6]])</span>
+</code></pre></div>
+<h3 id="topk">topk<a class="headerlink" href="#topk" title="Permanent link">&para;</a></h3>
+<p><code>topk_along_batch</code> and <code>topk_along_seq</code> return the k largest (or smallest) elements along the batch or the sequence dimension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">topk_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">topk_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">torch.return_types.topk(</span>
+<span class="go">values=tensor([[8, 9, 5, 6],</span>
+<span class="go">        [4, 7, 3, 2]]),</span>
+<span class="go">indices=tensor([[2, 1, 1, 1],</span>
+<span class="go">        [1, 2, 0, 0]]))</span>
 </code></pre></div>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
 <ol>
