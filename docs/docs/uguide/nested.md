@@ -293,6 +293,22 @@ Apply a specific permutation:
 
 ```
 
+## Size Operations
+
+Read the batch size and the sequence length shared by all the tensors, instead of
+hard-coding the dimension:
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import batch_size, seq_len
+>>> batch = {"features": torch.ones(4, 6, 2), "mask": torch.ones(4, 6)}
+>>> batch_size(batch)
+4
+>>> seq_len(batch)
+6
+
+```
+
 ## Type Conversion
 
 ### Change Device
