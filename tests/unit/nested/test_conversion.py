@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, cast
 from unittest.mock import Mock
 
+import pytest
 import torch
 from coola.equality import objects_are_equal
 from coola.testing.marks import numpy_available
@@ -136,3 +137,15 @@ def test_to_numpy_nested() -> None:
 def test_to_numpy_requires_grad() -> None:
     out = cast("Any", to_numpy({"a": torch.ones(2, requires_grad=True)}))
     assert out["a"].tolist() == [1.0, 1.0]
+
+
+@numpy_available
+def test_to_numpy_non_tensor_leaf() -> None:
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received int"):
+        to_numpy(cast("Any", {"a": 3}))
+
+
+@numpy_available
+def test_to_numpy_non_tensor_leaf_in_list() -> None:
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
+        to_numpy(cast("Any", [torch.ones(2), "abc"]))

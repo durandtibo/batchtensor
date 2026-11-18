@@ -29,7 +29,7 @@ CASES: list[tuple[str, dict[str, Any]]] = (
     ]
     + [(f"shuffle_along_{dim}", {}) for dim in ("batch", "seq")]
     + [(f"pad_along_{dim}", {"pad_size": 1}) for dim in ("batch", "seq")]
-    + [("clone", {}), ("detach", {}), ("contiguous", {}), ("to", {})]
+    + [("clone", {}), ("detach", {}), ("contiguous", {}), ("to", {}), ("to_numpy", {})]
 )
 
 
