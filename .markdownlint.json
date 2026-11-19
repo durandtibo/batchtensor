@@ -1,5 +1,18 @@
 {
-  "MD013": { "line_length": 100, "code_blocks": false, "tables": false },
-  "MD024": { "siblings_only": true },
-  "MD033": false
+  "MD013": {
+    "line_length": 100,
+    "tables": false,
+    "code_blocks": false
+  },
+  "MD024": {
+    "siblings_only": true
+  },
+  "MD033": {
+    "allowed_elements": ["p", "a", "img", "br", "sup", "details", "summary"]
+  },
+  "MD041": false,
+  "MD046": false,
+  "MD060": {
+    "style": "consistent"
+  }
 }
