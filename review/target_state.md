@@ -164,8 +164,9 @@ explicit, not to widen it:
 
 - the docs say: dataclasses are supported by every map function and by `chunk`/`split` at runtime,
   not by `cat`/`stack`, and the type aliases do not include them;
-- `combine_tensors` raises `TypeError("... dataclasses are not supported by combine_tensors; got D")`
-  for a dataclass (one `dataclasses.is_dataclass` check, one test);
+- `combine_tensors` raises
+  `TypeError("... dataclasses are not supported by combine_tensors; got D")` for a dataclass (one
+  `dataclasses.is_dataclass` check, one test);
 - `NestedTensor` stays strict, and the docs say dataclasses are untyped: a dataclass in/out cannot
   be expressed by `T -> T` with a bound, and widening the bound to a protocol would weaken the
   checks for every other input.
@@ -215,9 +216,10 @@ operation (P12). A `masked_*_along_batch` is not added (Section 10).
 
 ## 5. Dependents
 
-- **`coola`.** `batchtensor` depends on `coola.recursive.recursive_apply`, `coola.iterator.dfs_iterate`
-  and `coola.recursive.rebuild.rebuild_mapping`/`rebuild_sequence`. Ask for the `rebuild_*` functions
-  to be exported from `coola.recursive` (D8, G11) before the first release.
+- **`coola`.** `batchtensor` depends on `coola.recursive.recursive_apply`,
+  `coola.iterator.dfs_iterate` and `coola.recursive.rebuild.rebuild_mapping`/`rebuild_sequence`. Ask
+  for the `rebuild_*` functions to be exported from `coola.recursive` (D8, G11) before
+  the first release.
 - **Users.** The breaking changes of this plan are small: `to_numpy` error type, the import path
   `batchtensor.nested.types` (the public path `batchtensor.nested.NestedTensor` is unchanged), and
   the `masked_*`, `pad_sequences`, `batch_size`, `seq_len` additions. They are added to
@@ -323,8 +325,8 @@ on `coola` only.
   `seq_len` and the lifecycle/conversion functions nested-only).
 - `test_differential.py` and `test_torch_reference.py`: add the masked family (compared with
   the manual `masked_fill` form, not a torch call, since P2 has no single torch call to match).
-- `test_pipeline.py`: collate with `nested.pad_sequences` on a list of dicts, then `lengths_to_mask`,
-  `masked_mean_along_seq`, `shuffle`, `chunk` on the same batch.
+- `test_pipeline.py`: collate with `nested.pad_sequences` on a list of dicts, then
+  `lengths_to_mask`, `masked_mean_along_seq`, `shuffle`, `chunk` on the same batch.
 - `test_typing.py`: add `masked_mean_along_seq`, `pad_sequences`, `batch_size` (`assert_type`).
 
 **Gates (CI):**
@@ -406,6 +408,7 @@ Decisions D1 to D10 of the first version are closed and applied (Appendix B). Ne
 | 10   | API parity, differential, autograd, device tests                     | #727                                           |
 | 11   | `std`, `var`, `any`, `all`, `logsumexp`, `flip`, `roll`, `topk`      | #729, #730, #731, #740, #741, #742, #743, #744 |
 
-Closed decisions: D1 (remove pointwise: yes), D2 (keep `clone`/`detach`/`contiguous`/`pin_memory`/`to`),
-D3 (remove `as_tensor`), D5 (keep the 2-D `index_select_along_seq`), D6 (keep `permute_along_*`),
-D7 (named-tuple leaves), D10 (add the eight operations).
+Closed decisions: D1 (remove pointwise: yes), D2 (keep
+`clone`/`detach`/`contiguous`/`pin_memory`/`to`), D3 (remove `as_tensor`), D5 (keep the 2-D
+`index_select_along_seq`), D6 (keep `permute_along_*`), D7 (named-tuple leaves), D10 (add
+the eight operations).

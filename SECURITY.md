@@ -12,7 +12,7 @@ We release patches for security vulnerabilities. Currently supported versions:
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability in `batchtensor`, please report it by emailing the
-maintainer at durand.tibo+gh@gmail.com.
+maintainer at <durand.tibo+gh@gmail.com>.
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
