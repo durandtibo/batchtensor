@@ -1567,8 +1567,8 @@ module, so the rules for containers and leaves are defined in one place:</p>
 
 <a href="#batchtensor.utils.structure.apply_to_tensors" class="headerlink" title="Permanent link">&para;</a></h3>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">apply_to_tensors</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n"><span title="batchtensor.utils.structure.T">T</span></span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="n"><span title="collections.abc.Callable">Callable</span></span><span class="p">[[</span><span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">],</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="batchtensor.utils.structure.T">T</span></span>
+    <span class="n">data</span><span class="p">:</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="n"><span title="collections.abc.Callable">Callable</span></span><span class="p">[[</span><span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">],</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -1595,7 +1595,7 @@ leaf is replaced by the output of <code>fn</code>.</p>
                 <code>data</code>
             </td>
             <td>
-                  <code><span title="batchtensor.utils.structure.T">T</span></code>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1637,7 +1637,7 @@ leaf is replaced by the output of <code>fn</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="batchtensor.utils.structure.T">T</span></code>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1696,9 +1696,9 @@ of <code>fn</code> as leaves.</p>
 
 <a href="#batchtensor.utils.structure.combine_tensors" class="headerlink" title="Permanent link">&para;</a></h3>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">combine_tensors</span><span class="p">(</span>
-    <span class="n">items</span><span class="p">:</span> <span class="n"><span title="collections.abc.Sequence">Sequence</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">],</span>
+    <span class="n">items</span><span class="p">:</span> <span class="n"><span title="collections.abc.Sequence">Sequence</span></span><span class="p">[</span><span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">],</span>
     <span class="n">fn</span><span class="p">:</span> <span class="n"><span title="collections.abc.Callable">Callable</span></span><span class="p">[[</span><span class="n"><span title="list">list</span></span><span class="p">[</span><span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">]],</span> <span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Any">Any</span></span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -1725,7 +1725,7 @@ output are the ones of the first item. Dataclasses are not supported.</p>
                 <code>items</code>
             </td>
             <td>
-                  <code><span title="collections.abc.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]</code>
+                  <code><span title="collections.abc.Sequence">Sequence</span>[<span title="batchtensor.utils.types.T">T</span>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1769,7 +1769,7 @@ e.g. <code>lambda tensors: torch.cat(tensors, dim=0)</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="typing.Any">Any</span></code>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1796,7 +1796,8 @@ e.g. <code>lambda tensors: torch.cat(tensors, dim=0)</code>.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>if a leaf is not a <code>torch.Tensor</code>.</p>
+                <p>if a leaf is not a <code>torch.Tensor</code>, or if an item is a
+dataclass.</p>
               </div>
             </td>
           </tr>
@@ -1972,8 +1973,8 @@ the same keys or the same lengths.</p>
 
 <a href="#batchtensor.utils.structure.split_tensors" class="headerlink" title="Permanent link">&para;</a></h3>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">split_tensors</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="n"><span title="collections.abc.Callable">Callable</span></span><span class="p">[[</span><span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">],</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="typing.Any">Any</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="n"><span title="collections.abc.Callable">Callable</span></span><span class="p">[[</span><span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">],</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -1999,7 +2000,7 @@ i-th piece of every tensor.</p>
                 <code>data</code>
             </td>
             <td>
-                  <code><span title="typing.Any">Any</span></code>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2043,7 +2044,7 @@ e.g. <code>lambda t: t.chunk(2, dim=0)</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="tuple">tuple</span>[<span title="typing.Any">Any</span>, ...]</code>
+                  <code><span title="tuple">tuple</span>[<span title="batchtensor.utils.types.T">T</span>, ...]</code>
             </td>
             <td>
               <div class="doc-md-description">

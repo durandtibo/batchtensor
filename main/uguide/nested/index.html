@@ -969,6 +969,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#size-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Size Operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#type-conversion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1731,6 +1742,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#size-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Size Operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#type-conversion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1989,8 +2011,10 @@ tensors in these structures while preserving the nested structure.</p>
 <li>Nested combinations: <code>{'key': [tensor1, tensor2], ...}</code></li>
 <li>Other containers handled by <code>coola.recursive</code> (for example <code>OrderedDict</code>,
   <code>defaultdict</code>, named tuples and dataclasses) are supported by the functions
-  that map a tensor function over the leaves. <code>cat_*</code>, <code>stack_*</code>, <code>chunk_*</code> and
-  <code>split_*</code> only support dictionaries, lists and tuples.</li>
+  that map a tensor function over the leaves, and by <code>chunk_*</code> and <code>split_*</code>.
+  <code>cat_*</code> and <code>stack_*</code> do not support dataclasses and raise a <code>TypeError</code>.</li>
+<li>Dataclasses work at runtime but are not part of the <code>NestedTensor</code> type, so
+  the type checkers reject them.</li>
 </ul>
 <p><strong>Leaves:</strong></p>
 <p>Every leaf must be a <code>torch.Tensor</code>. Non-tensor leaves (<code>str</code>, <code>None</code>, <code>int</code>, ...)
@@ -2178,6 +2202,17 @@ not a tensor:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">permutation</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">permute_along_batch</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">permutation</span><span class="p">)</span>
 <span class="go">{'features': tensor([[5, 6], [1, 2], [3, 4]]), 'labels': tensor([2, 0, 1])}</span>
+</code></pre></div>
+<h2 id="size-operations">Size Operations<a class="headerlink" href="#size-operations" title="Permanent link">&para;</a></h2>
+<p>Read the batch size and the sequence length shared by all the tensors, instead of
+hard-coding the dimension:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"features"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">"mask"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch_size</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq_len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="go">6</span>
 </code></pre></div>
 <h2 id="type-conversion">Type Conversion<a class="headerlink" href="#type-conversion" title="Permanent link">&para;</a></h2>
 <h3 id="change-device">Change Device<a class="headerlink" href="#change-device" title="Permanent link">&para;</a></h3>
