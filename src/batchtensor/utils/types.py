@@ -1,8 +1,9 @@
 r"""Defines the type aliases of nested structures of tensors.
 
 They live in ``batchtensor.utils`` because the helpers of
-``batchtensor.utils.structure`` use them. ``NestedTensor`` is re-exported by
-``batchtensor.nested``."""
+``batchtensor.utils.structure`` use them. ``NestedTensor`` is re-
+exported by ``batchtensor.nested``.
+"""
 
 from __future__ import annotations
 
