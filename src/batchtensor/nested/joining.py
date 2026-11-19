@@ -31,10 +31,12 @@ def cat_along_batch(data: Sequence[T]) -> T:
 
     Args:
         data: The input data to concatenate. The structures must have
-            the same keys.
+            the same keys and lengths. The container types of the output
+            are the ones of the first structure.
 
     Raises:
-        ValueError: if the structures are empty, or do not have the same keys or lengths.
+        ValueError: if the structures are empty, do not have the same keys or
+            lengths, or if a mapping is combined with a sequence.
 
     Returns:
         The concatenated tensors along the batch dimension.
@@ -69,10 +71,12 @@ def cat_along_seq(data: Sequence[T]) -> T:
 
     Args:
         data: The input data to concatenate. The structures must have
-            the same keys.
+            the same keys and lengths. The container types of the output
+            are the ones of the first structure.
 
     Raises:
-        ValueError: if the structures are empty, or do not have the same keys or lengths.
+        ValueError: if the structures are empty, do not have the same keys or
+            lengths, or if a mapping is combined with a sequence.
 
     Returns:
         The concatenated tensors along the sequence dimension.
@@ -167,10 +171,12 @@ def stack_along_batch(data: Sequence[T]) -> T:
 
     Args:
         data: The input samples to stack. The structures must have
-            the same keys.
+            the same keys and lengths. The container types of the output
+            are the ones of the first structure.
 
     Raises:
-        ValueError: if the structures are empty, or do not have the same keys or lengths.
+        ValueError: if the structures are empty, do not have the same keys or
+            lengths, or if a mapping is combined with a sequence.
 
     Returns:
         The stacked tensors along a new batch dimension.
@@ -206,10 +212,12 @@ def stack_along_seq(data: Sequence[T]) -> T:
 
     Args:
         data: The input samples to stack. The structures must have
-            the same keys.
+            the same keys and lengths. The container types of the output
+            are the ones of the first structure.
 
     Raises:
-        ValueError: if the structures are empty, or do not have the same keys or lengths.
+        ValueError: if the structures are empty, do not have the same keys or
+            lengths, or if a mapping is combined with a sequence.
 
     Returns:
         The stacked tensors along a new sequence dimension.

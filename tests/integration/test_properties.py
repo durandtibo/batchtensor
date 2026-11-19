@@ -1,6 +1,7 @@
 r"""Gates for the properties of ``design_principles.md`` that no other
 test enforces: P1 (no ``dim`` argument), P4 (one traversal) and P7
-(inputs are not modified, outputs do not alias the inputs)."""
+(inputs are not modified, outputs do not alias the inputs), P2 (the
+closed list of functions that are not one torch call) and P10 (no cast)."""
 
 from __future__ import annotations
 
@@ -229,3 +230,123 @@ def test_output_does_not_alias_input(name: str, fn: Any) -> None:
     args, kwargs = get_inputs(name)
     out = fn(*args, **kwargs)
     assert not shares_memory(get_tensors(args), get_tensors(out))
+
+
+#######################################################
+#     Tests for P2 (the closed list of exceptions)    #
+#######################################################
+
+TENSOR_DIR = Path(tensor.__file__).parent
+
+# The ``tensor`` functions that are not one torch call
+# (``design_principles.md``).
+NOT_THIN = {
+    "masked_sum_along_seq",
+    "masked_mean_along_seq",
+    "masked_amax_along_seq",
+    "masked_amin_along_seq",
+    "lengths_to_mask",
+    "pad_sequences",
+    "pad_along_batch",
+    "pad_along_seq",
+    "repeat_along_batch",
+    "repeat_along_seq",
+    "index_select_along_batch",
+    "index_select_along_seq",
+    "permute_along_batch",
+    "permute_along_seq",
+    "shuffle_along_batch",
+    "shuffle_along_seq",
+}
+
+
+def is_one_torch_call(node: ast.FunctionDef) -> bool:
+    r"""Indicate if a function is a docstring and one ``return`` of a call
+    on ``torch`` or on the tensor, or of an index of the tensor."""
+    body = [
+        stmt
+        for stmt in node.body
+        if not (isinstance(stmt, ast.Expr) and isinstance(stmt.value, ast.Constant))
+    ]
+    if len(body) != 1 or not isinstance(body[0], ast.Return):
+        return False
+    value = body[0].value
+    if isinstance(value, ast.Subscript):
+        value = value.value
+    elif isinstance(value, ast.Call):
+        value = value.func
+    else:
+        return False
+    while isinstance(value, (ast.Attribute, ast.Call, ast.Subscript)):
+        value = value.func if isinstance(value, ast.Call) else value.value
+    return isinstance(value, ast.Name) and value.id in {"torch", "tensor"}
+
+
+def get_tensor_functions() -> dict[str, ast.FunctionDef]:
+    r"""Return the AST of the public functions of the ``tensor`` package."""
+    functions = {}
+    for path in sorted(TENSOR_DIR.glob("*.py")):
+        for node in ast.parse(path.read_text()).body:
+            if isinstance(node, ast.FunctionDef) and node.name in tensor.__all__:
+                functions[node.name] = node
+    return functions
+
+
+TENSOR_ASTS = get_tensor_functions()
+
+
+@pytest.mark.parametrize("name", sorted(set(TENSOR_ASTS) - NOT_THIN))
+def test_thin_wrappers(name: str) -> None:
+    assert is_one_torch_call(TENSOR_ASTS[name])
+
+
+@pytest.mark.parametrize("name", sorted(NOT_THIN))
+def test_not_thin_list_has_no_stale_entry(name: str) -> None:
+    assert name in TENSOR_ASTS
+
+
+###################################
+#     Tests for P10 (no cast)     #
+###################################
+
+# The functions whose output is not of the dtype of the input.
+INDEX_OPERATIONS = {"argmax", "argmin", "argsort"}
+BOOL_OPERATIONS = {"any", "all"}
+# The functions that return the values and the indices.
+PAIR_OPERATIONS = {"max", "min", "median", "sort", "topk"}
+NO_CAST_SKIPPED = SKIPPED | {"tensor.to", "nested.to", "nested.to_numpy"}
+
+
+def to_float64(value: Any) -> Any:
+    r"""Cast the floating point tensors of a nested value to float64."""
+    if isinstance(value, torch.Tensor):
+        return value.double() if value.is_floating_point() else value
+    if isinstance(value, dict):
+        return {key: to_float64(val) for key, val in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [to_float64(val) for val in value]
+    return value
+
+
+def get_expected_dtypes(operation: str) -> set[torch.dtype]:
+    r"""Return the dtypes allowed in the output of an operation."""
+    if operation in INDEX_OPERATIONS:
+        return {torch.int64}
+    if operation in BOOL_OPERATIONS:
+        return {torch.bool}
+    if operation in PAIR_OPERATIONS:
+        return {torch.float64, torch.int64}
+    if operation == "lengths_to_mask":
+        return {torch.bool}
+    return {torch.float64}
+
+
+NO_CAST_CASES = [(name, fn) for name, fn in ALL_FUNCTIONS if name not in NO_CAST_SKIPPED]
+
+
+@pytest.mark.parametrize(("name", "fn"), NO_CAST_CASES, ids=[name for name, _ in NO_CAST_CASES])
+def test_output_dtype_is_the_one_of_torch(name: str, fn: Any) -> None:
+    args, kwargs = get_inputs(name)
+    out = fn(*to_float64(args), **kwargs)
+    dtypes = {t.dtype for t in get_tensors(out)}
+    assert dtypes <= get_expected_dtypes(get_operation(name))
