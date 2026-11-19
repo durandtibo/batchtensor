@@ -191,6 +191,7 @@ def pad_sequences(
         All the tensors must have the same dtype and the same device, and the
         output has them. No cast, type promotion or device move is done. Cast
         the tensors first (e.g. ``t.to(torch.float)``) if their dtypes differ.
+        A tensor of length 0 gives a row of ``value``.
 
     Args:
         tensors: The sequences to pad. Each tensor must have at least one

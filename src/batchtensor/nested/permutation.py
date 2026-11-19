@@ -22,6 +22,11 @@ if TYPE_CHECKING:
 def permute_along_batch(data: T, permutation: torch.Tensor) -> T:
     r"""Permute all the tensors along the batch dimension.
 
+    Note:
+        Only the length of ``permutation`` is checked, not that it is a
+        permutation (it would need a host-device sync). A repeated index
+        repeats a row and drops another one.
+
     Args:
         data: The input data. Each item must be a tensor.
         permutation: The 1-D tensor containing the indices of the
@@ -55,6 +60,11 @@ def permute_along_batch(data: T, permutation: torch.Tensor) -> T:
 
 def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
     r"""Permute all the tensors along the sequence dimension.
+
+    Note:
+        Only the length of ``permutation`` is checked, not that it is a
+        permutation (it would need a host-device sync). A repeated index
+        repeats a step and drops another one.
 
     Args:
         data: The input data. Each item must be a tensor.

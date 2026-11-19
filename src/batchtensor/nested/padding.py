@@ -119,7 +119,8 @@ def pad_sequences(samples: Sequence[T], *, value: float = 0.0, side: Side = "rig
         Like ``batchtensor.tensor.pad_sequences``, the tensors at a leaf
         position must have the same dtype and the same device. No cast or
         device move is done. Cast the samples first with
-        ``batchtensor.nested.to`` if their dtypes differ.
+        ``batchtensor.nested.to`` if their dtypes differ. A tensor of length 0
+        gives a row of ``value``.
 
     Args:
         samples: The samples to batch. They must have the same keys and
