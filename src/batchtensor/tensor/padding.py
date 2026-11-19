@@ -36,7 +36,8 @@ def pad_along_batch(
 
     Returns:
         The padded tensor. If the input has batch size ``b``, the output
-            has batch size ``b + pad_size``.
+            has batch size ``b + pad_size``. It is a new tensor, also
+            when ``pad_size`` is 0.
 
     Raises:
         ValueError: if ``pad_size`` is negative, if ``value`` cannot
@@ -84,7 +85,8 @@ def pad_along_seq(
 
     Returns:
         The padded tensor. If the input has sequence length ``s``, the
-            output has sequence length ``s + pad_size``.
+            output has sequence length ``s + pad_size``. It is a new
+            tensor, also when ``pad_size`` is 0.
 
     Raises:
         ValueError: if ``pad_size`` is negative, if ``value`` cannot
@@ -137,8 +139,6 @@ def _pad(tensor: torch.Tensor, dim: int, pad_size: int, value: float, side: Side
         msg = f"pad_size must be a non-negative integer but received {pad_size}"
         raise ValueError(msg)
     _check_fill_value(value, tensor.dtype)
-    if pad_size == 0:
-        return tensor
     # ``F.pad`` expects the padding widths starting from the last dimension,
     # so the target dimension index is counted from the end.
     ndim = tensor.dim()
