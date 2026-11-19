@@ -28,12 +28,20 @@ Each principle below is enforced by a test.
 ## Structure and leaves
 
 - **Structure-preserving (P5).** A map function returns the input structure with every leaf
-  replaced. Container types, keys and order follow `coola.recursive`: dicts, lists, tuples, named
-  tuples, `OrderedDict`, `defaultdict` and dataclasses. `cat_*`, `stack_*`, `chunk_*` and
-  `split_*` also keep these types. Dataclasses are supported at runtime by every map function and
-  by `chunk_*`/`split_*`, not by `cat_*`/`stack_*` (`combine_tensors` raises a `TypeError`).
-  Dataclasses are not typed: `NestedTensor` does not include them, so the type checkers reject a
-  dataclass argument.
+  replaced. Container types, keys and order follow `coola.recursive`. `cat_*`, `stack_*`,
+  `chunk_*` and `split_*` also keep these types.
+- **Supported containers (D1).** The supported structure is `dict`, `list`, `tuple` and their
+  subclasses (named tuples, `OrderedDict`, `defaultdict`). This is exactly `NestedTensor`, and the
+  three helpers of `batchtensor.utils.structure` share this rule. Anything else (sets,
+  dataclasses) is outside the contract: it may work through `coola`, and no test, doc or type
+  promises it. The one documented limit is that `combine_tensors` (and so `cat_*`, `stack_*` and
+  `pad_sequences`) raises a `TypeError` on a dataclass.
+- **Cross-leaf rule.** The functions that map a tensor function do not compare the sizes of the
+  leaves. `chunk_*`, `split_*` and `shuffle_*` do, because the alignment of their output depends
+  on it. `cat_*` and `stack_*` check that the structures have the same layout (keys and lengths).
+- **Empty structures.** A function that does not need a size keeps the empty structure:
+  `sum_along_batch({})` returns `{}`. A function that needs a size raises a `ValueError`:
+  `chunk_*`, `split_*` and `shuffle_*` on a structure without tensor.
 - **Tensor leaves only (P6).** A leaf that is not a `torch.Tensor` raises a `TypeError` that names
   the leaf type. Nothing is skipped silently. `from_numpy` is the only exception: its leaves
   are arrays, and the leaf type error is the `TypeError` of `torch.from_numpy`.

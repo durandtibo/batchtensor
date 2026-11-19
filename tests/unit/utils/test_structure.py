@@ -83,11 +83,6 @@ def test_apply_to_tensors_defaultdict() -> None:
     assert objects_are_equal(out, defaultdict(_zeros, {"a": -torch.ones(1)}))
 
 
-def test_apply_to_tensors_dataclass() -> None:
-    out = apply_to_tensors(cast("Any", Pair(torch.ones(1), torch.zeros(1))), lambda t: t + 1)
-    assert objects_are_equal(out, Pair(torch.full((1,), 2.0), torch.ones(1)))
-
-
 def test_apply_to_tensors_nested_mix() -> None:
     data = {"a": [torch.ones(1), (torch.zeros(1),)], "b": {"c": torch.ones(2)}}
     out = apply_to_tensors(cast("Any", data), lambda t: t + 1)

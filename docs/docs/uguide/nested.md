@@ -23,12 +23,12 @@ tensors in these structures while preserving the nested structure.
 - Lists: `[tensor1, tensor2, ...]`
 - Tuples: `(tensor1, tensor2, ...)`
 - Nested combinations: `{'key': [tensor1, tensor2], ...}`
-- Other containers handled by `coola.recursive` (for example `OrderedDict`,
-  `defaultdict`, named tuples and dataclasses) are supported by the functions
-  that map a tensor function over the leaves, and by `chunk_*` and `split_*`.
-  `cat_*` and `stack_*` do not support dataclasses and raise a `TypeError`.
-- Dataclasses work at runtime but are not part of the `NestedTensor` type, so
-  the type checkers reject them.
+- Subclasses of these containers (`OrderedDict`, `defaultdict`, named tuples) are kept: the output
+  has the container type of the input.
+
+Other containers (sets, dataclasses) are outside the contract and the `NestedTensor` type. They
+may work through `coola`, but this is neither tested nor guaranteed. `cat_*`, `stack_*` and
+`pad_sequences` raise a `TypeError` on a dataclass.
 
 **Leaves:**
 
