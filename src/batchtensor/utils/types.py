@@ -17,7 +17,7 @@ import torch
 # A recursive alias for the nested data structures accepted by the functions
 # in ``batchtensor.nested`` and by the helpers of ``batchtensor.utils.structure``: a tensor, or an arbitrarily nested mapping, list
 # or tuple of such structures (e.g. a dict of lists of tensors). ``str`` and
-# ``bytes`` are not accepted.
+# ``bytes`` are not accepted. Sets and dataclasses are outside the contract.
 NestedTensor = (
     torch.Tensor | Mapping[Any, "NestedTensor"] | list["NestedTensor"] | tuple["NestedTensor", ...]
 )
