@@ -2331,7 +2331,8 @@ hard-coding the dimension:</p>
 <p>See the <a href="#type-conversion">Type Conversion</a> section for more examples.</p>
 <h2 id="additional-reductions-and-reordering">Additional Reductions and Reordering<a class="headerlink" href="#additional-reductions-and-reordering" title="Permanent link">&para;</a></h2>
 <h3 id="std">std<a class="headerlink" href="#std" title="Permanent link">&para;</a></h3>
-<p><code>std_along_batch</code> and <code>std_along_seq</code> return the standard deviation along the batch or the sequence dimension.</p>
+<p><code>std_along_batch</code> and <code>std_along_seq</code> return the standard deviation along the batch or
+the sequence dimension.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">std_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])}</span>
@@ -2347,7 +2348,8 @@ hard-coding the dimension:</p>
 <span class="go">{'a': tensor([16.0000, 17.3333,  2.3333,  7.0000])}</span>
 </code></pre></div>
 <h3 id="any">any<a class="headerlink" href="#any" title="Permanent link">&para;</a></h3>
-<p><code>any_along_batch</code> and <code>any_along_seq</code> return whether any element is true along the batch or the sequence dimension.</p>
+<p><code>any_along_batch</code> and <code>any_along_seq</code> return whether any element is true along the batch or
+the sequence dimension.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">any_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -2359,7 +2361,8 @@ hard-coding the dimension:</p>
 <span class="go">{'a': tensor([True, True, True, True])}</span>
 </code></pre></div>
 <h3 id="all">all<a class="headerlink" href="#all" title="Permanent link">&para;</a></h3>
-<p><code>all_along_batch</code> and <code>all_along_seq</code> return whether all the elements are true along the batch or the sequence dimension.</p>
+<p><code>all_along_batch</code> and <code>all_along_seq</code> return whether all the elements are true along the batch or
+the sequence dimension.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">all_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -2371,7 +2374,8 @@ hard-coding the dimension:</p>
 <span class="go">{'a': tensor([False, False,  True, False])}</span>
 </code></pre></div>
 <h3 id="logsumexp">logsumexp<a class="headerlink" href="#logsumexp" title="Permanent link">&para;</a></h3>
-<p><code>logsumexp_along_batch</code> and <code>logsumexp_along_seq</code> return the log of the sum of exponentials along the batch or the sequence dimension.</p>
+<p><code>logsumexp_along_batch</code> and <code>logsumexp_along_seq</code> return the log of the sum of exponentials along
+the batch or the sequence dimension.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">logsumexp_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])}</span>
@@ -2379,7 +2383,8 @@ hard-coding the dimension:</p>
 <span class="go">{'a': tensor([8.0185, 9.1272, 5.1698, 6.0247])}</span>
 </code></pre></div>
 <h3 id="flip">flip<a class="headerlink" href="#flip" title="Permanent link">&para;</a></h3>
-<p><code>flip_along_batch</code> and <code>flip_along_seq</code> return the tensor with the order of the elements reversed along the batch or the sequence dimension.</p>
+<p><code>flip_along_batch</code> and <code>flip_along_seq</code> return the tensor with the order of the elements reversed
+along the batch or the sequence dimension.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">flip_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])}</span>
@@ -2389,7 +2394,8 @@ hard-coding the dimension:</p>
 <span class="go">        [0, 1, 3, 2]])}</span>
 </code></pre></div>
 <h3 id="roll">roll<a class="headerlink" href="#roll" title="Permanent link">&para;</a></h3>
-<p><code>roll_along_batch</code> and <code>roll_along_seq</code> return the tensor with the elements rolled along the batch or the sequence dimension.</p>
+<p><code>roll_along_batch</code> and <code>roll_along_seq</code> return the tensor with the elements rolled along the batch
+or the sequence dimension.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">roll_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])}</span>
@@ -2399,7 +2405,8 @@ hard-coding the dimension:</p>
 <span class="go">        [4, 9, 5, 6]])}</span>
 </code></pre></div>
 <h3 id="topk">topk<a class="headerlink" href="#topk" title="Permanent link">&para;</a></h3>
-<p><code>topk_along_batch</code> and <code>topk_along_seq</code> return the k largest (or smallest) elements along the batch or the sequence dimension.</p>
+<p><code>topk_along_batch</code> and <code>topk_along_seq</code> return the k largest (or smallest) elements along the batch
+or the sequence dimension.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">topk_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])}</span>
