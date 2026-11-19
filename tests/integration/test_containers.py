@@ -1,10 +1,9 @@
-r"""Gates for the container rule (D1), the empty-structure rule and the
-documented limit on dataclasses of ``design_principles.md``."""
+r"""Gates for the container rule (D1) and the empty-structure rule of
+``design_principles.md``."""
 
 from __future__ import annotations
 
 from collections import OrderedDict, defaultdict
-from dataclasses import dataclass
 from typing import Any, NamedTuple
 
 import pytest
@@ -17,12 +16,6 @@ from batchtensor import nested
 class Point(NamedTuple):
     x: torch.Tensor
     y: torch.Tensor
-
-
-@dataclass
-class Pair:
-    first: torch.Tensor
-    second: torch.Tensor
 
 
 def make_tensor() -> torch.Tensor:
@@ -121,16 +114,3 @@ def test_shuffle_raises_on_the_empty_structure(data: Any) -> None:
         ValueError, match=r"Cannot get the size of data that does not contain any tensor"
     ):
         nested.shuffle_along_batch(data)
-
-
-##########################################
-#     Tests for the documented limit     #
-##########################################
-
-
-def test_cat_raises_on_a_dataclass() -> None:
-    items: Any = [Pair(make_tensor(), make_tensor()), Pair(make_tensor(), make_tensor())]
-    with pytest.raises(
-        TypeError, match=r"dataclasses are not supported by combine_tensors; got Pair"
-    ):
-        nested.cat_along_batch(items)

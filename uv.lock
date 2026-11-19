@@ -73,7 +73,7 @@ docs = [
 
 [package.metadata]
 requires-dist = [
-    { name = "coola", specifier = ">=2.0.0a3,<3.0" },
+    { name = "coola", specifier = ">=2.0.0a4,<3.0" },
     { name = "numpy", marker = "extra == 'numpy'", specifier = ">=1.24,<3.0" },
     { name = "torch", specifier = ">=2.4,<3.0" },
 ]
@@ -309,11 +309,11 @@ wheels = [
 
 [[package]]
 name = "coola"
-version = "2.0.0a3"
+version = "2.0.0a4"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/11/76/2d793da4cba5a2300cb3de51a42a3387b7358d7b5b5e7a6a27d8a189ce32/coola-2.0.0a3.tar.gz", hash = "sha256:620543fc725a811ac0d310c51f29fab5eb829d052c6ea525e2a00b6f027aaedd", size = 649237, upload-time = "2026-11-19T20:35:09.431Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/57/04/1ffc6bda7e191a6f8366c486665c95512bdc6d1c8e718a42ff7561951146/coola-2.0.0a4.tar.gz", hash = "sha256:7c64928d2fda5ab0c3ef30d54a7233237ebe279a290a440728e7ff66d1ee469e", size = 652398, upload-time = "2026-11-19T21:42:06.475Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a7/bf/32cc5a057e0a5f043dbb70e5399fd9b461fe06b122882117ea20c4e34208/coola-2.0.0a3-py3-none-any.whl", hash = "sha256:d1169114ea87058e8b001eb982e10813c54e9bf1200069614a4e5f4b7a5e28e5", size = 399537, upload-time = "2026-11-19T20:35:08.143Z" },
+    { url = "https://files.pythonhosted.org/packages/4b/90/9e566c12f12d973c6b3f636d959e4a30ad0cf9c259542b1e9323d6b516eb/coola-2.0.0a4-py3-none-any.whl", hash = "sha256:5d422c792e36d21b80734ad64a6e9254073f47dd8cce16f6d82f4a9ac88bdda1", size = 401662, upload-time = "2026-11-19T21:42:05.156Z" },
 ]
 
 [[package]]

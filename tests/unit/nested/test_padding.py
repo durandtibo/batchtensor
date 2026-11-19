@@ -200,7 +200,7 @@ def test_pad_sequences_different_lengths_of_lists() -> None:
 
 
 def test_pad_sequences_empty_sequence() -> None:
-    with pytest.raises(ValueError, match="empty sequence of structures"):
+    with pytest.raises(ValueError, match="items must contain at least one structure"):
         pad_sequences([])
 
 

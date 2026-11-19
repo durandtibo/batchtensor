@@ -34,8 +34,7 @@ Each principle below is enforced by a test.
   subclasses (named tuples, `OrderedDict`, `defaultdict`). This is exactly `NestedTensor`, and the
   three helpers of `batchtensor.utils.structure` share this rule. Anything else (sets,
   dataclasses) is outside the contract: it may work through `coola`, and no test, doc or type
-  promises it. The one documented limit is that `combine_tensors` (and so `cat_*`, `stack_*` and
-  `pad_sequences`) raises a `TypeError` on a dataclass.
+  promises it.
 - **Cross-leaf rule.** The functions that map a tensor function do not compare the sizes of the
   leaves. `chunk_*`, `split_*` and `shuffle_*` do, because the alignment of their output depends
   on it. `cat_*` and `stack_*` check that the structures have the same layout (keys and lengths).

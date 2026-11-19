@@ -11,13 +11,11 @@ from __future__ import annotations
 
 __all__ = ["apply_to_tensors", "combine_tensors", "get_size", "split_tensors"]
 
-import dataclasses
-from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, final
 
 import torch
 from coola.iterator import dfs_iterate
-from coola.recursive import rebuild_mapping, rebuild_sequence, recursive_apply
+from coola.recursive import recursive_apply, recursive_zip_apply
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
@@ -107,9 +105,10 @@ def split_tensors(data: T, fn: Callable[[torch.Tensor], tuple[torch.Tensor, ...]
 def combine_tensors(items: Sequence[T], fn: Callable[[list[torch.Tensor]], torch.Tensor]) -> T:
     r"""Combine structures with the same layout into one structure.
 
-    The structures are traversed in parallel and ``fn`` is applied to the
+    The structures are traversed in parallel with
+    ``coola.recursive.recursive_zip_apply`` and ``fn`` is applied to the
     list of tensors found at each leaf position. The container types of the
-    output are the ones of the first item. Dataclasses are not supported.
+    output are the ones of the first item.
 
     Args:
         items: The structures to combine. They must have the same keys
@@ -121,10 +120,9 @@ def combine_tensors(items: Sequence[T], fn: Callable[[list[torch.Tensor]], torch
         A structure with the same layout as the items.
 
     Raises:
-        TypeError: if a leaf is not a ``torch.Tensor``, or if an item is a
-            dataclass.
+        TypeError: if a leaf is not a ``torch.Tensor``.
         ValueError: if ``items`` is empty, or if the structures do not have
-            the same keys or the same lengths.
+            the same keys, the same lengths or the same kind of containers.
 
     Example:
         ```pycon
@@ -137,61 +135,7 @@ def combine_tensors(items: Sequence[T], fn: Callable[[list[torch.Tensor]], torch
 
         ```
     """
-    return _combine_tensors(items, fn)
-
-
-def _combine_tensors(items: Sequence[Any], fn: Callable[[list[torch.Tensor]], torch.Tensor]) -> Any:
-    r"""Combine structures with the same layout into one structure.
-
-    This is the untyped implementation of ``combine_tensors``: the recursion
-    goes through containers whose type is not known statically, so the
-    public function declares the type.
-
-    Args:
-        items: The structures to combine.
-        fn: The function that combines a list of tensors into one tensor.
-
-    Returns:
-        A structure with the same layout as the items.
-
-    Raises:
-        TypeError: if a leaf is not a ``torch.Tensor``, or if an item is a
-            dataclass.
-        ValueError: if ``items`` is empty, or if the structures do not have
-            the same keys or the same lengths.
-    """
-    if not items:
-        msg = "Cannot combine an empty sequence of structures"
-        raise ValueError(msg)
-    first = items[0]
-    if dataclasses.is_dataclass(first) and not isinstance(first, type):
-        msg = f"dataclasses are not supported by combine_tensors; got {type(first).__qualname__}"
-        raise TypeError(msg)
-    if isinstance(first, Mapping):
-        keys = set(first)
-        for i, item in enumerate(items[1:], start=1):
-            if not isinstance(item, Mapping) or set(item) != keys:
-                other = list(item) if isinstance(item, Mapping) else type(item).__qualname__
-                msg = (
-                    "The mappings must have the same keys but item 0 has keys "
-                    f"{list(first)} and item {i} has keys {other}"
-                )
-                raise ValueError(msg)
-        return rebuild_mapping(
-            first, {key: _combine_tensors([item[key] for item in items], fn) for key in first}
-        )
-    if isinstance(first, (list, tuple)):
-        for i, item in enumerate(items[1:], start=1):
-            if not isinstance(item, (list, tuple)) or len(item) != len(first):
-                msg = f"The sequences must have the same length but item {i} does not match item 0"
-                raise ValueError(msg)
-        return rebuild_sequence(
-            first,
-            [_combine_tensors([item[j] for item in items], fn) for j in range(len(first))],
-        )
-    for item in items:
-        _check_tensor(item)
-    return fn(list(items))
+    return recursive_zip_apply(items, _guard_many(fn))
 
 
 def get_size(data: Any, dim: int) -> int:
@@ -274,5 +218,26 @@ def _guard(fn: Callable[[torch.Tensor], Any]) -> Callable[[Any], Any]:
     def guarded(leaf: Any) -> Any:
         _check_tensor(leaf)
         return fn(leaf)
+
+    return guarded
+
+
+def _guard_many(
+    fn: Callable[[list[torch.Tensor]], torch.Tensor],
+) -> Callable[[Sequence[Any]], Any]:
+    r"""Wrap a function so that it only accepts lists of tensors.
+
+    Args:
+        fn: The function to wrap.
+
+    Returns:
+        A function that calls ``fn`` on a sequence of tensors and raises a
+            ``TypeError`` if one of the items is not a tensor.
+    """
+
+    def guarded(leaves: Sequence[Any]) -> Any:
+        for leaf in leaves:
+            _check_tensor(leaf)
+        return fn(list(leaves))
 
     return guarded

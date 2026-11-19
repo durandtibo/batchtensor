@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections import OrderedDict, defaultdict
-from dataclasses import dataclass
 from typing import Any, NamedTuple, cast
 
 import pytest
@@ -10,8 +9,8 @@ from coola.equality import objects_are_equal
 
 from batchtensor.utils.structure import (
     _check_tensor,
-    _combine_tensors,
     _guard,
+    _guard_many,
     _Parts,
     apply_to_tensors,
     combine_tensors,
@@ -23,12 +22,6 @@ from batchtensor.utils.structure import (
 class Point(NamedTuple):
     x: torch.Tensor
     y: torch.Tensor
-
-
-@dataclass
-class Pair:
-    first: torch.Tensor
-    second: torch.Tensor
 
 
 def _zeros() -> torch.Tensor:
@@ -288,7 +281,7 @@ def test_combine_tensors_single_item() -> None:
 
 
 def test_combine_tensors_empty_items() -> None:
-    with pytest.raises(ValueError, match="empty sequence of structures"):
+    with pytest.raises(ValueError, match="items must contain at least one structure"):
         combine_tensors([], cat)
 
 
@@ -298,7 +291,9 @@ def test_combine_tensors_different_keys() -> None:
 
 
 def test_combine_tensors_mapping_and_tensor() -> None:
-    with pytest.raises(ValueError, match="item 1 has keys Tensor"):
+    with pytest.raises(
+        ValueError, match=r"item 0 is a container of type .*dict.* but item 1 is a leaf"
+    ):
         combine_tensors([{"a": torch.ones(1)}, torch.ones(1)], cat)
 
 
@@ -308,34 +303,15 @@ def test_combine_tensors_different_lengths() -> None:
 
 
 def test_combine_tensors_list_and_tensor() -> None:
-    with pytest.raises(ValueError, match="must have the same length"):
+    with pytest.raises(
+        ValueError, match=r"item 0 is a container of type .*list.* but item 1 is a leaf"
+    ):
         combine_tensors(cast("Any", [[torch.ones(1)], torch.ones(1)]), cat)
 
 
 def test_combine_tensors_non_tensor_leaf() -> None:
     with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
         combine_tensors(cast("Any", [{"a": "x"}, {"a": "y"}]), cat)
-
-
-def test_combine_tensors_dataclass() -> None:
-    items = [Pair(torch.ones(1), torch.ones(1)), Pair(torch.zeros(1), torch.zeros(1))]
-    with pytest.raises(
-        TypeError, match=r"dataclasses are not supported by combine_tensors; got Pair"
-    ):
-        combine_tensors(cast("Any", items), cat)
-
-
-def test_combine_tensors_dataclass_nested_in_dict() -> None:
-    items = [{"a": Pair(torch.ones(1), torch.ones(1))}] * 2
-    with pytest.raises(
-        TypeError, match=r"dataclasses are not supported by combine_tensors; got Pair"
-    ):
-        combine_tensors(cast("Any", items), cat)
-
-
-def test_combine_tensors_dataclass_class_is_not_a_dataclass_instance() -> None:
-    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received type"):
-        combine_tensors(cast("Any", [Pair, Pair]), cat)
 
 
 def test_combine_tensors_list_and_tuple_use_type_of_first_item() -> None:
@@ -439,27 +415,17 @@ def test_parts_keeps_parts() -> None:
     assert _Parts(parts).parts is parts
 
 
-######################################
-#     Tests for _combine_tensors     #
-######################################
+###############################
+#     Tests for _guard_many     #
+###############################
 
 
-def test__combine_tensors_tensor() -> None:
+def test_guard_many_tensors() -> None:
     assert objects_are_equal(
-        _combine_tensors([torch.ones(1), torch.zeros(1)], cat), torch.tensor([1.0, 0.0])
+        _guard_many(cat)([torch.ones(1), torch.zeros(1)]), torch.tensor([1.0, 0.0])
     )
 
 
-def test__combine_tensors_dict() -> None:
-    out = _combine_tensors([{"a": torch.ones(1)}, {"a": torch.zeros(1)}], cat)
-    assert objects_are_equal(out, {"a": torch.tensor([1.0, 0.0])})
-
-
-def test__combine_tensors_empty_items() -> None:
-    with pytest.raises(ValueError, match="empty sequence of structures"):
-        _combine_tensors([], cat)
-
-
-def test__combine_tensors_dataclass() -> None:
-    with pytest.raises(TypeError, match=r"dataclasses are not supported by combine_tensors"):
-        _combine_tensors([Pair(torch.ones(1), torch.ones(1))], cat)
+def test_guard_many_non_tensor() -> None:
+    with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received float"):
+        _guard_many(cat)([torch.ones(1), 1.0])

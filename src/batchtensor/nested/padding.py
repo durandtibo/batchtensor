@@ -137,8 +137,7 @@ def pad_sequences(samples: Sequence[T], *, value: float = 0.0, side: Side = "rig
             tensor of shape ``(batch_size, max_len, ...)``.
 
     Raises:
-        TypeError: if a leaf is not a ``torch.Tensor``, or if a sample is
-            a dataclass.
+        TypeError: if a leaf is not a ``torch.Tensor``.
         ValueError: if ``samples`` is empty, if the samples do not have the
             same keys or lengths, if the trailing shapes of the tensors at
             a leaf position differ, if a tensor is a scalar, if ``value``
