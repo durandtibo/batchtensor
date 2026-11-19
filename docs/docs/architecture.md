@@ -1,275 +1,73 @@
-# Architecture and Design
+# Architecture
 
-This document provides an overview of the `batchtensor` library architecture, design principles, and
-implementation details.
+This page describes how `batchtensor` is built. The properties it guarantees (P1 to P15) are in
+[Design principles](design_principles.md). They are not repeated here.
 
-## Library Structure
-
-The `batchtensor` library is organized into four main modules:
+## Layers
 
 ```text
-batchtensor/
-├── nested/         # Operations for nested data structures
-├── tensor/         # Operations for individual tensors
-├── utils/          # Seed management and the structure helpers
-└── constants.py    # Dimension constants
+constants          BATCH_DIM, SEQ_DIM
+   ^
+utils              types      NestedTensor, T
+                   structure  apply_to_tensors, split_tensors, combine_tensors, get_size
+                   seed       setup_torch_generator, random_permutation
+   ^
+tensor             one torch call with the dim fixed (+ masked_*, lengths_to_mask, pad_sequences)
+   ^
+nested             one helper call per function
 ```
 
-## Design Principles
+A module imports only from the layers on its left in this list: `constants` <- `utils` <-
+`tensor` <- `nested`. `import-linter` enforces it in CI.
 
-### 1. Consistency
+## The `tensor` level
 
-All functions in batchtensor follow consistent conventions:
-
-- **Batch dimension is always dimension 0**: The first dimension of tensors represents the batch
-- **Sequence dimension is always dimension 1**: The second dimension represents sequences/time steps
-- **Function naming**: Functions are named with the pattern `operation_along_dimension`
-
-### 2. Separation of Concerns
-
-The library separates operations into two levels:
-
-- **`tensor` module**: Low-level operations on individual tensors
-- **`nested` module**: High-level operations that recursively apply tensor operations to nested
-  structures
-
-This separation allows users to:
-
-- Use tensor operations directly when working with single tensors
-- Use nested operations when working with complex data structures
-- Compose operations from both modules as needed
-
-### 3. Minimal Dependencies
-
-The library has minimal dependencies:
-
-- **PyTorch**: Core tensor operations
-- **coola**: Recursive operations on nested structures
-
-This keeps the library lightweight and reduces potential conflicts with other packages.
-
-### 4. Type Safety
-
-All functions include comprehensive type hints:
-
-- Input and output types are explicitly declared
-- Generic types are used appropriately
-- TYPE_CHECKING blocks avoid runtime overhead
-
-## Module Details
-
-### Constants Module
-
-Defines dimension indices used throughout the library:
-
-- `BATCH_DIM = 0`: Identifies the batch dimension
-- `SEQ_DIM = 1`: Identifies the sequence dimension
-
-Using constants instead of magic numbers improves code clarity and maintainability.
-
-### Tensor Module
-
-The tensor module provides low-level operations for individual tensors. It's organized into
-sub-modules by operation type:
-
-- **slicing.py**: Slice, chunk, split operations
-- **indexing.py**: Index selection operations
-- **joining.py**: Concatenation and repetition
-- **reduction.py**: Sum, mean, min, max, median, etc.
-- **comparison.py**: Sorting and comparison
-- **math.py**: Cumulative operations
-- **permutation.py**: Shuffling and permuting
-- **masking.py**: Sequence length masks
-- **padding.py**: Padding along the batch and sequence dimensions
-
-Each function:
-
-- Operates on a single PyTorch tensor
-- Assumes standard dimension conventions (batch=0, seq=1)
-- Returns a new tensor (or tuple of tensors)
-- Includes comprehensive docstrings with examples
-
-### Nested Module
-
-The nested module provides high-level operations for nested data structures. It's organized to
-mirror the tensor module:
-
-- **slicing.py**: Nested slicing operations
-- **indexing.py**: Nested index selection
-- **joining.py**: Nested concatenation and repetition
-- **reduction.py**: Nested reductions
-- **comparison.py**: Nested sorting
-- **math.py**: Nested cumulative operations
-- **permutation.py**: Nested shuffling and permuting
-- **padding.py**: Nested padding
-- **conversion.py**: NumPy conversion
-- **misc.py**: Miscellaneous utilities
-- **size.py**: Batch size and sequence length of a nested structure
-
-Each nested function:
-
-- Recursively applies the corresponding tensor operation
-- Preserves the nested structure (dict, list, tuple, named tuple, ...)
-- Goes through `apply_to_tensors`, `split_tensors` and `combine_tensors` (see Utils Module)
-- Handles arbitrary nesting depth
-
-### Utils Module
-
-The utils module provides supporting functionality:
-
-- **seed.py**: Random seed management for reproducibility
-  - `setup_torch_generator()`: Flexible generator setup
-  - `random_permutation()`: Random permutation from a generator, a seed or the global RNG
-- **structure.py**: The only code that traverses nested structures
-  - `apply_to_tensors()`: Map a tensor function over the leaves (`TypeError` for a non-tensor leaf)
-  - `split_tensors()` / `combine_tensors()`: One structure to N, and N to one
-  - `get_size()`: Common size of the leaves along a dimension
-
-The layering is `constants` <- `utils` <- `tensor` <- `nested`, enforced by `import-linter`.
-See [Design principles](design_principles.md) and the [Migration guide](migration.md).
-
-## Implementation Patterns
-
-### Pattern 1: Tensor Operations Use Constants
+A function of `tensor` is one torch call with the dimension taken from `BATCH_DIM` or `SEQ_DIM`:
 
 ```python
-import torch
-from batchtensor.constants import BATCH_DIM
-
-
-def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
-    """Sum all elements along the batch dimension.
-
-    Args:
-        tensor: The input tensor.
-        keepdim: Whether to keep the reduced dimension.
-
-    Returns:
-        The sum along the batch dimension.
-    """
+def sum_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     return tensor.sum(dim=BATCH_DIM, keepdim=keepdim)
 ```
 
-This ensures consistency and makes the code self-documenting.
+The sub-modules group the functions by operation: `slicing`, `indexing`, `joining`, `reduction`,
+`comparison`, `math`, `permutation`, `masking` and `padding`.
 
-### Pattern 2: Nested Operations Delegate to Tensor Operations
+## The `nested` level
 
-```python
-from functools import partial
-from typing import Any
-from coola.recursive import recursive_apply
-from batchtensor import tensor as bt
+The sub-modules of `nested` mirror the ones of `tensor`, plus `conversion` (NumPy), `misc`
+(`clone`, `detach`, `to`, ...) and `size` (`batch_size`, `seq_len`). A nested function has no
+logic. It is one call to one of three helpers of `batchtensor.utils.structure`, which are the only
+code that traverses a nested structure:
 
-
-def slice_along_batch(
-    data: Any,
-    start: int | None = None,
-    stop: int | None = None,
-    step: int | None = None,
-) -> Any:
-    """Slice all tensors along the batch dimension.
-
-    Args:
-        data: Nested structure containing tensors.
-        start: Start index.
-        stop: Stop index.
-        step: Step size.
-
-    Returns:
-        Sliced nested structure.
-    """
-    return recursive_apply(data, partial(bt.slice_along_batch, start=start, stop=stop, step=step))
-```
-
-This reduces code duplication and ensures nested operations behave consistently.
-
-### Pattern 3: Joining and Splitting Use Structure Helpers
-
-`cat_along_batch`, `stack_along_batch` and the `chunk_*` / `split_*` functions cannot use
-`recursive_apply` because they combine several structures or return several structures. They use
-`batchtensor.utils.structure.combine_tensors` and `split_tensors`, which walk the structures and
-call the tensor function on each leaf. Container types (`OrderedDict`, named tuples, ...) are kept:
+| Shape  | Helper                       | Used by                                               |
+| ------ | ---------------------------- | ----------------------------------------------------- |
+| 1 -> 1 | `apply_to_tensors(data, fn)` | reductions, math, indexing, slicing, padding, masking |
+| 1 -> N | `split_tensors(data, fn)`    | `chunk_*`, `split_*`                                  |
+| N -> 1 | `combine_tensors(items, fn)` | `cat_*`, `stack_*`, `pad_sequences`                   |
 
 ```python
-from functools import partial
-
-from batchtensor import tensor as bt
-from batchtensor.utils.structure import split_tensors
-
-
-def chunk_along_batch(data, chunks):
-    return split_tensors(data, partial(bt.chunk_along_batch, chunks=chunks))
+def sum_along_batch(data: T, *, keepdim: bool = False) -> T:
+    return apply_to_tensors(data, partial(bt.sum_along_batch, keepdim=keepdim))
 ```
 
-This keeps the structure of the output aligned with the structure of the input.
+`apply_to_tensors` and `split_tensors` use `coola.recursive.recursive_apply`, so the container
+types, keys and order are the ones of `coola`. `combine_tensors` walks several structures in
+parallel because `coola` has no multi-input traversal. A function that does not fit one of the
+three shapes is not a nested wrapper: it is a helper of `utils.structure`, like `get_size`.
 
-## Extension Points
+## Adding an operation
 
-The library can be extended in several ways:
+1. Add the function to the sub-module of `tensor` and export it from `tensor/__init__.py`.
+2. Add its twin to the sub-module of `nested` with the same name, options and defaults, using one
+   of the three helpers, and export it from `nested/__init__.py`.
+3. Add the `_along_batch` and `_along_seq` variants, with a docstring and a runnable example.
+4. Add the unit tests, and update the parity and property tests if the function is an exception.
 
-### Adding New Tensor Operations
+A pointwise function (`exp`, `clamp`) is not added: use `apply_to_tensors(data, torch.exp)`.
 
-1. Add the function to the appropriate sub-module in `tensor/`
-2. Follow existing naming conventions
-3. Include comprehensive docstring with example
-4. Export from `tensor/__init__.py`
+## See also
 
-### Adding New Nested Operations
-
-1. Add the corresponding function to `nested/`
-2. Use `recursive_apply` to delegate to tensor operations
-3. Export from `nested/__init__.py`
-
-### Adding New Data Types
-
-The nested operations work with any data structure that `coola.recursive_apply` supports:
-
-- Dictionaries
-- Lists
-- Tuples
-- Custom classes: register a transformer with `coola.recursive.register_transformers`
-
-## Performance Considerations
-
-### Memory Efficiency
-
-- Operations use views when possible (e.g., `slice`, `select`)
-- Avoid unnecessary copies
-- Leverage PyTorch's memory management
-
-### Computational Efficiency
-
-- Delegate to PyTorch's optimized operations
-- Minimize Python overhead
-- Support GPU acceleration through PyTorch
-
-### Nested Structure Overhead
-
-- Recursive operations have minimal overhead
-- Dictionary access is O(1)
-- Most time is spent in PyTorch operations, not structure traversal
-
-## Testing Strategy
-
-The library uses comprehensive testing:
-
-- **Unit tests**: Test individual functions with various inputs
-- **Integration tests**: Test combinations of operations
-- **Doctests**: Verify examples in docstrings
-- **Type checking**: Use ty for static type checking
-
-## Future Directions
-
-Potential areas for expansion:
-
-1. **Additional operations**: More mathematical and statistical functions
-2. **Custom data structures**: Support for more complex nested types
-3. **Performance optimizations**: Specialized implementations for common patterns
-4. **Batch dataset utilities**: Higher-level abstractions for common workflows
-
-## See Also
-
-- [Tensor Operations Guide](uguide/tensor.md)
-- [Nested Operations Guide](uguide/nested.md)
-- [Utils Guide](uguide/utils.md)
-- [Constants Documentation](uguide/constants.md)
+- [Design principles](design_principles.md)
+- [Migration guide](migration.md)
+- [Tensor](uguide/tensor.md), [Nested](uguide/nested.md), [Utils](uguide/utils.md) and
+  [Constants](uguide/constants.md) guides
