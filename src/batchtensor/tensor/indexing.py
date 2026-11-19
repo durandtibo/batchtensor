@@ -20,10 +20,6 @@ def index_select_along_batch(tensor: torch.Tensor, index: torch.Tensor) -> torch
     dimensionality, this function maintains the batch dimension and can select
     multiple items, duplicate items, or reorder items.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
-
     Args:
         tensor: The input tensor. Must have at least one dimension.
         index: A 1-D tensor containing the indices to select. Must be a
@@ -82,10 +78,6 @@ def index_select_along_seq(tensor: torch.Tensor, index: torch.Tensor) -> torch.T
     r"""Return a new tensor which indexes the ``input`` tensor along the
     sequence dimension using the entries in ``index`` which is a
     ``LongTensor``.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Args:
         tensor: The input tensor.

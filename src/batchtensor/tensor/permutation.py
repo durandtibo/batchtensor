@@ -18,10 +18,6 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
     to a specified permutation. The permutation defines a mapping from new
     positions to original positions: ``output[i] = input[permutation[i]]``.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
-
     Args:
         tensor: The tensor to permute. Must have at least one dimension.
         permutation: A 1-D tensor containing the indices of the permutation.
@@ -80,10 +76,6 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
 def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.Tensor:
     r"""Permute the tensor along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The tensor to permute.
         permutation: The 1-D tensor containing the indices of the
@@ -126,10 +118,6 @@ def shuffle_along_batch(
     This function randomly reorders the elements along the batch dimension,
     creating a random permutation of the batch items. All elements within
     each batch item are kept together and maintain their relative positions.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
 
     Args:
         tensor: The tensor to shuffle. Must have at least one dimension.
@@ -179,10 +167,6 @@ def shuffle_along_seq(
 ) -> torch.Tensor:
     r"""Shuffle the tensor along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The tensor to shuffle.
         generator: An optional random number generator or random seed
@@ -211,10 +195,6 @@ def shuffle_along_seq(
 def flip_along_batch(tensor: torch.Tensor) -> torch.Tensor:
     r"""Return the tensor with the order of the elements reversed along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension.
-
     Args:
         tensor: The input tensor.
 
@@ -240,10 +220,6 @@ def flip_along_batch(tensor: torch.Tensor) -> torch.Tensor:
 def flip_along_seq(tensor: torch.Tensor) -> torch.Tensor:
     r"""Return the tensor with the order of the elements reversed along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The input tensor.
 
@@ -268,10 +244,6 @@ def flip_along_seq(tensor: torch.Tensor) -> torch.Tensor:
 
 def roll_along_batch(tensor: torch.Tensor, shifts: int) -> torch.Tensor:
     r"""Return the tensor with the elements rolled along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension.
 
     Args:
         tensor: The input tensor.
@@ -303,10 +275,6 @@ def roll_along_batch(tensor: torch.Tensor, shifts: int) -> torch.Tensor:
 
 def roll_along_seq(tensor: torch.Tensor, shifts: int) -> torch.Tensor:
     r"""Return the tensor with the elements rolled along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Args:
         tensor: The input tensor.

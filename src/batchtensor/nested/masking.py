@@ -27,10 +27,6 @@ def masked_sum_along_seq(data: T, mask: torch.Tensor, *, keepdim: bool = False) 
     ``mask`` is one tensor shared by all the leaves. See
     ``batchtensor.tensor.masked_sum_along_seq`` for the semantics.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         data: The input data. Each leaf must be a ``torch.Tensor`` of shape
             ``(batch_size, seq_len, ...)``.
@@ -71,10 +67,6 @@ def masked_mean_along_seq(data: T, mask: torch.Tensor, *, keepdim: bool = False)
 
     ``mask`` is one tensor shared by all the leaves. See
     ``batchtensor.tensor.masked_mean_along_seq`` for the semantics.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Args:
         data: The input data. Each leaf must be a ``torch.Tensor`` of shape
@@ -117,10 +109,6 @@ def masked_amax_along_seq(data: T, mask: torch.Tensor, *, keepdim: bool = False)
     ``mask`` is one tensor shared by all the leaves. See
     ``batchtensor.tensor.masked_amax_along_seq`` for the semantics.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         data: The input data. Each leaf must be a ``torch.Tensor`` of shape
             ``(batch_size, seq_len, ...)``.
@@ -161,10 +149,6 @@ def masked_amin_along_seq(data: T, mask: torch.Tensor, *, keepdim: bool = False)
 
     ``mask`` is one tensor shared by all the leaves. See
     ``batchtensor.tensor.masked_amin_along_seq`` for the semantics.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Args:
         data: The input data. Each leaf must be a ``torch.Tensor`` of shape

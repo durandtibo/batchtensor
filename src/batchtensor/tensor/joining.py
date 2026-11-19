@@ -27,10 +27,6 @@ def cat_along_batch(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> t
     All tensors must either have the same data type and shape (except
     in the concatenating dimension) or be empty.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
-
     Args:
         tensors: A sequence (list or tuple) of tensors to concatenate. All
             tensors must have the same number of dimensions and the same
@@ -84,10 +80,6 @@ def cat_along_seq(tensors: list[torch.Tensor] | tuple[torch.Tensor, ...]) -> tor
     All tensors must either have the same data type and shape (except
     in the concatenating dimension) or be empty.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensors: The tensors to concatenate.
 
@@ -118,10 +110,6 @@ def repeat_along_batch(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
     The resulting tensor has a batch size that is ``repeats`` times the
     original batch size. The batch items are repeated as a block (like
     ``torch.Tensor.repeat``), not item by item.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
 
     Args:
         tensor: The input tensor. Must have at least one dimension.
@@ -171,10 +159,6 @@ def repeat_along_seq(tensor: torch.Tensor, repeats: int) -> torch.Tensor:
     This function repeats the sequence data a specified number of times,
     effectively duplicating the sequence content. The resulting tensor has
     a sequence length that is ``repeats`` times the original sequence length.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension (index 1).
 
     Args:
         tensor: The input tensor. Must have at least two dimensions

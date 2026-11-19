@@ -30,11 +30,6 @@ def chunk_along_batch(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ..
 
     Each chunk is a view of the input tensor.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         chunks: Number of chunks to return.
@@ -65,11 +60,6 @@ def chunk_along_seq(data: NestedTensor, chunks: int) -> tuple[NestedTensor, ...]
     r"""Split all the tensors into chunks along the sequence dimension.
 
     Each chunk is a view of the input tensor.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -103,11 +93,6 @@ def select_along_batch(data: T, index: int) -> T:
     This function returns a view of the original tensor with the batch
     dimension removed.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         index: The index to select with.
@@ -139,11 +124,6 @@ def select_along_seq(data: T, index: int) -> T:
     This function returns a view of the original tensor with the
     sequence dimension removed.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data. Each item must be a tensor.
         index: The index to select with.
@@ -170,11 +150,6 @@ def select_along_seq(data: T, index: int) -> T:
 
 def slice_along_batch(data: T, start: int = 0, stop: int | None = None, *, step: int = 1) -> T:
     r"""Slice all the tensors along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -211,11 +186,6 @@ def slice_along_batch(data: T, start: int = 0, stop: int | None = None, *, step:
 
 def slice_along_seq(data: T, start: int = 0, stop: int | None = None, *, step: int = 1) -> T:
     r"""Slice all the tensors along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -257,11 +227,6 @@ def split_along_batch(
 
     Each chunk is a view of the original tensor.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         split_size_or_sections: Size of a single chunk or list of
@@ -297,11 +262,6 @@ def split_along_seq(
     r"""Split all the tensors into chunks along the sequence dimension.
 
     Each chunk is a view of the original tensor.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.

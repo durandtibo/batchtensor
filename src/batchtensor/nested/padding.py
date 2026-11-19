@@ -23,10 +23,6 @@ def pad_along_batch(data: T, pad_size: int, *, value: float = 0.0, side: Side = 
     The padding is added at the end of the batch dimension by default,
     or at the start with ``side="left"``.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
         pad_size: The number of items to add to the batch dimension.
@@ -68,10 +64,6 @@ def pad_along_seq(data: T, pad_size: int, *, value: float = 0.0, side: Side = "r
 
     The padding is added at the end of the sequence dimension by default,
     or at the start with ``side="left"``.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.

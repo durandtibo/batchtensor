@@ -48,11 +48,6 @@ if TYPE_CHECKING:
 def amax_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the maximum of all elements along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -82,11 +77,6 @@ def amax_along_batch(data: T, *, keepdim: bool = False) -> T:
 
 def amax_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the maximum of all elements along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -118,11 +108,6 @@ def amax_along_seq(data: T, *, keepdim: bool = False) -> T:
 def amin_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the minimum of all elements along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -152,11 +137,6 @@ def amin_along_batch(data: T, *, keepdim: bool = False) -> T:
 
 def amin_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the minimum of all elements along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -188,11 +168,6 @@ def amin_along_seq(data: T, *, keepdim: bool = False) -> T:
 def argmax_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the maximum value of all elements along the
     batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -226,11 +201,6 @@ def argmax_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the maximum value of all elements along the
     sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -262,11 +232,6 @@ def argmax_along_seq(data: T, *, keepdim: bool = False) -> T:
 def argmin_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the minimum value of all elements along the
     batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -300,11 +265,6 @@ def argmin_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the indices of the minimum value of all elements along the
     sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -335,11 +295,6 @@ def argmin_along_seq(data: T, *, keepdim: bool = False) -> T:
 
 def max_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -383,11 +338,6 @@ def max_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTenso
 def max_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the maximum of all elements along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -430,11 +380,6 @@ def max_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
 def mean_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the mean of all elements along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -465,11 +410,6 @@ def mean_along_batch(data: T, *, keepdim: bool = False) -> T:
 def mean_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the mean of all elements along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -499,11 +439,6 @@ def mean_along_seq(data: T, *, keepdim: bool = False) -> T:
 
 def median_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the median of all elements along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -547,11 +482,6 @@ def median_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTe
 def median_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the median of all elements along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -593,11 +523,6 @@ def median_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTens
 
 def min_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -641,11 +566,6 @@ def min_along_batch(data: NestedTensor, *, keepdim: bool = False) -> NestedTenso
 def min_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
     r"""Return the minimum of all elements along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -688,11 +608,6 @@ def min_along_seq(data: NestedTensor, *, keepdim: bool = False) -> NestedTensor:
 def prod_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the product of all elements along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -722,11 +637,6 @@ def prod_along_batch(data: T, *, keepdim: bool = False) -> T:
 
 def prod_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the product of all elements along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -758,11 +668,6 @@ def prod_along_seq(data: T, *, keepdim: bool = False) -> T:
 def sum_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the sum of all elements along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -792,11 +697,6 @@ def sum_along_batch(data: T, *, keepdim: bool = False) -> T:
 
 def sum_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the sum of all elements along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -828,10 +728,6 @@ def sum_along_seq(data: T, *, keepdim: bool = False) -> T:
 def std_along_batch(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
     r"""Return the standard deviation along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
         correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
@@ -861,10 +757,6 @@ def std_along_batch(data: T, *, correction: int = 1, keepdim: bool = False) -> T
 
 def std_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
     r"""Return the standard deviation along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -898,10 +790,6 @@ def std_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
 def var_along_batch(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
     r"""Return the variance along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
         correction: The difference between the sample size and the sample degrees of freedom (``1`` is Bessel's correction).
@@ -931,10 +819,6 @@ def var_along_batch(data: T, *, correction: int = 1, keepdim: bool = False) -> T
 
 def var_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
     r"""Return the variance along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -968,10 +852,6 @@ def var_along_seq(data: T, *, correction: int = 1, keepdim: bool = False) -> T:
 def any_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return whether any element is true along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -998,10 +878,6 @@ def any_along_batch(data: T, *, keepdim: bool = False) -> T:
 
 def any_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return whether any element is true along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -1034,10 +910,6 @@ def any_along_seq(data: T, *, keepdim: bool = False) -> T:
 def all_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return whether all the elements are true along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -1064,10 +936,6 @@ def all_along_batch(data: T, *, keepdim: bool = False) -> T:
 
 def all_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return whether all the elements are true along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -1100,10 +968,6 @@ def all_along_seq(data: T, *, keepdim: bool = False) -> T:
 def logsumexp_along_batch(data: T, *, keepdim: bool = False) -> T:
     r"""Return the log of the sum of exponentials along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
         keepdim: Whether the output tensor has dim retained or not.
@@ -1130,10 +994,6 @@ def logsumexp_along_batch(data: T, *, keepdim: bool = False) -> T:
 
 def logsumexp_along_seq(data: T, *, keepdim: bool = False) -> T:
     r"""Return the log of the sum of exponentials along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.

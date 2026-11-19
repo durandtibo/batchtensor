@@ -22,11 +22,6 @@ if TYPE_CHECKING:
 def permute_along_batch(data: T, permutation: torch.Tensor) -> T:
     r"""Permute all the tensors along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         permutation: The 1-D tensor containing the indices of the
@@ -60,11 +55,6 @@ def permute_along_batch(data: T, permutation: torch.Tensor) -> T:
 
 def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
     r"""Permute all the tensors along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -100,11 +90,6 @@ def permute_along_seq(data: T, permutation: torch.Tensor) -> T:
 def shuffle_along_batch(data: T, *, generator: torch.Generator | int | None = None) -> T:
     r"""Shuffle all the tensors along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         generator: An optional random number generator or random seed.
@@ -137,11 +122,6 @@ def shuffle_along_batch(data: T, *, generator: torch.Generator | int | None = No
 
 def shuffle_along_seq(data: T, *, generator: torch.Generator | int | None = None) -> T:
     r"""Shuffle all the tensors along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -176,10 +156,6 @@ def shuffle_along_seq(data: T, *, generator: torch.Generator | int | None = None
 def flip_along_batch(data: T) -> T:
     r"""Return the tensor with the order of the elements reversed along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
 
@@ -207,10 +183,6 @@ def flip_along_batch(data: T) -> T:
 def flip_along_seq(data: T) -> T:
     r"""Return the tensor with the order of the elements reversed along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
 
@@ -237,10 +209,6 @@ def flip_along_seq(data: T) -> T:
 
 def roll_along_batch(data: T, shifts: int) -> T:
     r"""Return the tensor with the elements rolled along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -276,10 +244,6 @@ def roll_along_batch(data: T, shifts: int) -> T:
 
 def roll_along_seq(data: T, shifts: int) -> T:
     r"""Return the tensor with the elements rolled along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.
