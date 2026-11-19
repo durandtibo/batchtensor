@@ -36,7 +36,7 @@ def masked_sum_along_seq(data: T, mask: torch.Tensor, *, keepdim: bool = False) 
         keepdim: Whether the output tensors have dim retained or not.
 
     Returns:
-        A structure with the same layout as ``data``. Each leaf is the sum of the valid steps.
+        A structure with the same layout as ``data``. Each leaf is the sum of the valid steps (``0`` for a row without valid step).
 
     Raises:
         TypeError: if a leaf is not a ``torch.Tensor``.
@@ -118,7 +118,8 @@ def masked_amax_along_seq(data: T, mask: torch.Tensor, *, keepdim: bool = False)
         keepdim: Whether the output tensors have dim retained or not.
 
     Returns:
-        A structure with the same layout as ``data``. Each leaf is the maximum of the valid steps.
+        A structure with the same layout as ``data``. Each leaf is the maximum of the valid steps (the lowest value of the dtype
+            for a row without valid step).
 
     Raises:
         TypeError: if a leaf is not a ``torch.Tensor``.
@@ -159,7 +160,8 @@ def masked_amin_along_seq(data: T, mask: torch.Tensor, *, keepdim: bool = False)
         keepdim: Whether the output tensors have dim retained or not.
 
     Returns:
-        A structure with the same layout as ``data``. Each leaf is the minimum of the valid steps.
+        A structure with the same layout as ``data``. Each leaf is the minimum of the valid steps (the highest value of the dtype
+            for a row without valid step).
 
     Raises:
         TypeError: if a leaf is not a ``torch.Tensor``.

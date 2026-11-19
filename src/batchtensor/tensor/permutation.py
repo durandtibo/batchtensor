@@ -18,6 +18,11 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
     to a specified permutation. The permutation defines a mapping from new
     positions to original positions: ``output[i] = input[permutation[i]]``.
 
+    Note:
+        Only the length of ``permutation`` is checked, not that it is a
+        permutation (it would need a host-device sync). A repeated index
+        repeats a row and drops another one.
+
     Args:
         tensor: The tensor to permute. Must have at least one dimension.
         permutation: A 1-D tensor containing the indices of the permutation.
@@ -75,6 +80,11 @@ def permute_along_batch(tensor: torch.Tensor, permutation: torch.Tensor) -> torc
 
 def permute_along_seq(tensor: torch.Tensor, permutation: torch.Tensor) -> torch.Tensor:
     r"""Permute the tensor along the sequence dimension.
+
+    Note:
+        Only the length of ``permutation`` is checked, not that it is a
+        permutation (it would need a host-device sync). A repeated index
+        repeats a step and drops another one.
 
     Args:
         tensor: The tensor to permute.
