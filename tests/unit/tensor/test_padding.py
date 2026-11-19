@@ -340,6 +340,24 @@ def test_pad_sequences_value_not_representable() -> None:
         pad_sequences([torch.arange(3)], value=1.5)
 
 
+def test_pad_sequences_mixed_dtype() -> None:
+    with pytest.raises(
+        ValueError,
+        match=r"tensor 0 has dtype torch.int64 on cpu and tensor 1 has dtype torch.float32 on cpu",
+    ):
+        pad_sequences([torch.tensor([1]), torch.tensor([1.5, 2.5])])
+
+
+def test_pad_sequences_mixed_dtype_does_not_truncate() -> None:
+    with pytest.raises(ValueError, match="same dtype and device"):
+        pad_sequences([torch.tensor([1.5]), torch.tensor([1, 2])])
+
+
+def test_pad_sequences_mixed_device() -> None:
+    with pytest.raises(ValueError, match=r"tensor 1 has dtype torch.float32 on meta"):
+        pad_sequences([torch.ones(2), torch.ones(1, device="meta")])
+
+
 def test_pad_sequences_invalid_side() -> None:
     side: Any = "top"
     with pytest.raises(ValueError, match="side must be 'left' or 'right'"):

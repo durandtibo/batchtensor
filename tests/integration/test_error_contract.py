@@ -120,6 +120,18 @@ CASES = [
         r"side must be 'left' or 'right' but received 'up'",
         id="pad-bad-side",
     ),
+    pytest.param(
+        lambda: bt.pad_sequences([ones(2, dtype=torch.long), ones(1)]),
+        ValueError,
+        r"tensors must have the same dtype and device",
+        id="pad-sequences-mixed-dtype",
+    ),
+    pytest.param(
+        lambda: nested.pad_sequences([{"a": ones(2, dtype=torch.long)}, {"a": ones(1)}]),
+        ValueError,
+        r"tensors must have the same dtype and device",
+        id="pad-sequences-mixed-dtype-nested",
+    ),
     # A ``permutation``/``index`` with the wrong ndim or length
     pytest.param(
         lambda: bt.permute_along_batch(ones(4, 3), torch.zeros(2, 2, dtype=torch.long)),

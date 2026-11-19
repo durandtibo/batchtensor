@@ -62,6 +62,13 @@ This page lists the breaking changes of the target-state refactoring and their r
 `cat_*`, `stack_*`, `chunk_*` and `split_*` keep `OrderedDict`, `defaultdict` and named-tuple types
 (they returned plain `dict` and `tuple`).
 
+## `pad_sequences` does not cast
+
+`pad_sequences` (`tensor` and `nested`) raises a `ValueError` when the tensors have different dtypes
+or devices. It used to cast them silently to the dtype of the first tensor (`1.5` became `1`).
+Cast the tensors first: `[t.to(torch.float) for t in tensors]`, or
+`nested.to(sample, dtype=torch.float)` for each sample.
+
 ## New
 
 `pad_along_*(..., side="left")`, `repeat_along_batch`, `pad_sequences`, an `int` seed for

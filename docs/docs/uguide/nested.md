@@ -309,7 +309,7 @@ stacks them into a batch, one leaf position at a time:
 
 ```
 
-The dtype of each leaf is the one of the leaf of the first sample.
+The tensors at a leaf position must have the same dtype and device, as in `tensor.pad_sequences`.
 
 ## Masked Reductions
 

@@ -61,6 +61,7 @@ Each principle below is enforced by a test.
   | `cat`/`stack` receives no item or structures with different layout  | `ValueError`      |
   | Leaves disagree on the split, chunk or shuffle dimension            | `ValueError`      |
   | `pad_size < 0`, a `value` that does not fit the dtype, a bad `side` | `ValueError`      |
+  | `pad_sequences` receives tensors of different dtype or device       | `ValueError`      |
   | A `permutation`/`index` with the wrong ndim or length               | `ValueError`      |
   | `lengths` is not a 1-D integer tensor                               | `ValueError`      |
   | `repeats < 0`, `chunks <= 0`, a bad dtype                           | torch's own error |
