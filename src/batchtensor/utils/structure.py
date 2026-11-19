@@ -121,8 +121,10 @@ def combine_tensors(items: Sequence[T], fn: Callable[[list[torch.Tensor]], torch
 
     Raises:
         TypeError: if a leaf is not a ``torch.Tensor``.
-        ValueError: if ``items`` is empty, or if the structures do not have
-            the same keys, the same lengths or the same kind of containers.
+        ValueError: if ``items`` is empty, if the structures do not have
+            the same keys or the same lengths, or if a mapping is combined
+            with a sequence. Two mappings (or two sequences) of different
+            types are accepted: the output follows the first item.
 
     Example:
         ```pycon

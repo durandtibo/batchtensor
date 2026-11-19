@@ -114,3 +114,49 @@ def test_shuffle_raises_on_the_empty_structure(data: Any) -> None:
         ValueError, match=r"Cannot get the size of data that does not contain any tensor"
     ):
         nested.shuffle_along_batch(data)
+
+
+#######################################
+#     Tests for the container kind    #
+#######################################
+
+JOIN_FUNCTIONS = [nested.cat_along_batch, nested.stack_along_batch, nested.pad_sequences]
+
+
+def make_leaf() -> torch.Tensor:
+    r"""Return a leaf that every function of ``JOIN_FUNCTIONS`` accepts."""
+    return torch.ones(2)
+
+
+@pytest.mark.parametrize("fn", JOIN_FUNCTIONS)
+def test_join_list_and_tuple_returns_a_list(fn: Any) -> None:
+    assert type(fn([[make_leaf()], (make_leaf(),)])) is list
+
+
+@pytest.mark.parametrize("fn", JOIN_FUNCTIONS)
+def test_join_tuple_and_list_returns_a_tuple(fn: Any) -> None:
+    assert type(fn([(make_leaf(),), [make_leaf()]])) is tuple
+
+
+@pytest.mark.parametrize("fn", JOIN_FUNCTIONS)
+def test_join_dict_and_ordered_dict_returns_a_dict(fn: Any) -> None:
+    out = fn([{"a": make_leaf()}, OrderedDict(a=make_leaf())])
+    assert type(out) is dict
+
+
+@pytest.mark.parametrize("fn", JOIN_FUNCTIONS)
+def test_join_ordered_dict_and_dict_returns_an_ordered_dict(fn: Any) -> None:
+    out = fn([OrderedDict(a=make_leaf()), {"a": make_leaf()}])
+    assert type(out) is OrderedDict
+
+
+@pytest.mark.parametrize("fn", JOIN_FUNCTIONS)
+def test_join_mapping_and_sequence_raises(fn: Any) -> None:
+    with pytest.raises(ValueError, match="must have the same kind"):
+        fn([{"a": make_leaf()}, [make_leaf()]])
+
+
+@pytest.mark.parametrize("fn", JOIN_FUNCTIONS)
+def test_join_sequence_and_mapping_raises(fn: Any) -> None:
+    with pytest.raises(ValueError, match="must have the same kind"):
+        fn([[make_leaf()], {"a": make_leaf()}])
