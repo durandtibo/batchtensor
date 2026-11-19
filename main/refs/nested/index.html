@@ -1237,6 +1237,50 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#batchtensor.nested.masked_amax_along_seq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        masked_amax_along_seq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batchtensor.nested.masked_amin_along_seq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        masked_amin_along_seq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batchtensor.nested.masked_mean_along_seq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        masked_mean_along_seq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batchtensor.nested.masked_sum_along_seq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        masked_sum_along_seq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#batchtensor.nested.max_along_batch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2243,6 +2287,50 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#batchtensor.nested.masked_amax_along_seq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        masked_amax_along_seq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batchtensor.nested.masked_amin_along_seq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        masked_amin_along_seq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batchtensor.nested.masked_mean_along_seq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        masked_mean_along_seq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batchtensor.nested.masked_sum_along_seq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        masked_sum_along_seq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#batchtensor.nested.max_along_batch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2806,6 +2894,9 @@ the same simple API as individual tensors.</p>
     - <code>cumsum_along_batch</code>, <code>cumprod_along_batch</code></p>
 <p>For element-wise operations, use <code>batchtensor.utils.structure.apply_to_tensors</code>
 with the torch function (e.g. <code>apply_to_tensors(batch, torch.exp)</code>).</p>
+<p><strong>Masked reductions</strong>: Reduce the valid steps of padded sequences
+    - <code>masked_sum_along_seq</code>, <code>masked_mean_along_seq</code>, <code>masked_amax_along_seq</code>,
+      <code>masked_amin_along_seq</code></p>
 <p><strong>Size operations</strong>: Read the batch size and the sequence length
     - <code>batch_size</code>, <code>seq_len</code></p>
 <p><strong>Conversion operations</strong>: Convert between tensor types and formats
@@ -6582,6 +6673,690 @@ sequence dimension using the entries in <code>index</code> which is a
 <span class="go">        [9.0722],</span>
 <span class="go">        [8.3157]])}</span>
 </code></pre></div>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="batchtensor.nested.masked_amax_along_seq" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">batchtensor.nested.masked_amax_along_seq</span>
+
+
+<a href="#batchtensor.nested.masked_amax_along_seq" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">masked_amax_along_seq</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return the maximum of the valid steps of every tensor along the sequence dimension.</p>
+<p><code>mask</code> is one tensor shared by all the leaves. See
+<code>batchtensor.tensor.masked_amax_along_seq</code> for the semantics.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>This function assumes the sequence dimension is the second
+    dimension.</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>data</code>
+            </td>
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The input data. Each leaf must be a <code>torch.Tensor</code> of shape
+<code>(batch_size, seq_len, ...)</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mask</code>
+            </td>
+            <td>
+                  <code><span title="torch.Tensor">Tensor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A boolean tensor of shape <code>(batch_size, seq_len)</code>, e.g.
+the output of <code>lengths_to_mask</code>. <code>True</code> marks a valid
+step. It is shared by all the leaves.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>keepdim</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether the output tensors have dim retained or not.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A structure with the same layout as <code>data</code>. Each leaf is the maximum of the valid steps.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if a leaf is not a <code>torch.Tensor</code>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if <code>mask</code> is not a boolean tensor, if it is not 2-D,
+or if its shape is not the two first dimensions of a leaf.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">masked_amax_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">lengths_to_mask</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]),</span> <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">lengths_to_mask</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">masked_amax_along_seq</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">{'a': tensor([2, 4]), 'b': [tensor([2, 4])]}</span>
+</code></pre></div>
+</details>
+
+<details class="see-also" open>
+  <summary>See Also</summary>
+  <p><code>batchtensor.tensor.masked_amax_along_seq</code>: The same function for tensors.</p>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="batchtensor.nested.masked_amin_along_seq" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">batchtensor.nested.masked_amin_along_seq</span>
+
+
+<a href="#batchtensor.nested.masked_amin_along_seq" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">masked_amin_along_seq</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum of the valid steps of every tensor along the sequence dimension.</p>
+<p><code>mask</code> is one tensor shared by all the leaves. See
+<code>batchtensor.tensor.masked_amin_along_seq</code> for the semantics.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>This function assumes the sequence dimension is the second
+    dimension.</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>data</code>
+            </td>
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The input data. Each leaf must be a <code>torch.Tensor</code> of shape
+<code>(batch_size, seq_len, ...)</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mask</code>
+            </td>
+            <td>
+                  <code><span title="torch.Tensor">Tensor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A boolean tensor of shape <code>(batch_size, seq_len)</code>, e.g.
+the output of <code>lengths_to_mask</code>. <code>True</code> marks a valid
+step. It is shared by all the leaves.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>keepdim</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether the output tensors have dim retained or not.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A structure with the same layout as <code>data</code>. Each leaf is the minimum of the valid steps.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if a leaf is not a <code>torch.Tensor</code>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if <code>mask</code> is not a boolean tensor, if it is not 2-D,
+or if its shape is not the two first dimensions of a leaf.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">masked_amin_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">lengths_to_mask</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]),</span> <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">lengths_to_mask</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">masked_amin_along_seq</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">{'a': tensor([1, 4]), 'b': [tensor([1, 4])]}</span>
+</code></pre></div>
+</details>
+
+<details class="see-also" open>
+  <summary>See Also</summary>
+  <p><code>batchtensor.tensor.masked_amin_along_seq</code>: The same function for tensors.</p>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="batchtensor.nested.masked_mean_along_seq" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">batchtensor.nested.masked_mean_along_seq</span>
+
+
+<a href="#batchtensor.nested.masked_mean_along_seq" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">masked_mean_along_seq</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return the mean of the valid steps of every tensor along the sequence dimension.</p>
+<p><code>mask</code> is one tensor shared by all the leaves. See
+<code>batchtensor.tensor.masked_mean_along_seq</code> for the semantics.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>This function assumes the sequence dimension is the second
+    dimension.</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>data</code>
+            </td>
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The input data. Each leaf must be a <code>torch.Tensor</code> of shape
+<code>(batch_size, seq_len, ...)</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mask</code>
+            </td>
+            <td>
+                  <code><span title="torch.Tensor">Tensor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A boolean tensor of shape <code>(batch_size, seq_len)</code>, e.g.
+the output of <code>lengths_to_mask</code>. <code>True</code> marks a valid
+step. It is shared by all the leaves.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>keepdim</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether the output tensors have dim retained or not.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A structure with the same layout as <code>data</code>. Each leaf is the mean of the valid steps (<code>nan</code> for a row without valid step).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if a leaf is not a <code>torch.Tensor</code>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if a leaf does not have a floating point or complex dtype, if <code>mask</code> is not a boolean tensor, if it is not 2-D,
+or if its shape is not the two first dimensions of a leaf.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">masked_mean_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">lengths_to_mask</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]]),</span> <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]])]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">lengths_to_mask</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">masked_mean_along_seq</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">{'a': tensor([1.5000, 4.0000]), 'b': [tensor([1.5000, 4.0000])]}</span>
+</code></pre></div>
+</details>
+
+<details class="see-also" open>
+  <summary>See Also</summary>
+  <p><code>batchtensor.tensor.masked_mean_along_seq</code>: The same function for tensors.</p>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="batchtensor.nested.masked_sum_along_seq" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">batchtensor.nested.masked_sum_along_seq</span>
+
+
+<a href="#batchtensor.nested.masked_sum_along_seq" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">masked_sum_along_seq</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return the sum of the valid steps of every tensor along the sequence dimension.</p>
+<p><code>mask</code> is one tensor shared by all the leaves. See
+<code>batchtensor.tensor.masked_sum_along_seq</code> for the semantics.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>This function assumes the sequence dimension is the second
+    dimension.</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>data</code>
+            </td>
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The input data. Each leaf must be a <code>torch.Tensor</code> of shape
+<code>(batch_size, seq_len, ...)</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mask</code>
+            </td>
+            <td>
+                  <code><span title="torch.Tensor">Tensor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A boolean tensor of shape <code>(batch_size, seq_len)</code>, e.g.
+the output of <code>lengths_to_mask</code>. <code>True</code> marks a valid
+step. It is shared by all the leaves.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>keepdim</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether the output tensors have dim retained or not.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A structure with the same layout as <code>data</code>. Each leaf is the sum of the valid steps.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if a leaf is not a <code>torch.Tensor</code>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if <code>mask</code> is not a boolean tensor, if it is not 2-D,
+or if its shape is not the two first dimensions of a leaf.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">masked_sum_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">lengths_to_mask</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]),</span> <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">lengths_to_mask</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">masked_sum_along_seq</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">{'a': tensor([3, 4]), 'b': [tensor([3, 4])]}</span>
+</code></pre></div>
+</details>
+
+<details class="see-also" open>
+  <summary>See Also</summary>
+  <p><code>batchtensor.tensor.masked_sum_along_seq</code>: The same function for tensors.</p>
 </details>
 
     </div>

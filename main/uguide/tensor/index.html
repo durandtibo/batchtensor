@@ -874,6 +874,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#masked-reductions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Masked Reductions
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1692,6 +1703,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#masked-reductions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Masked Reductions
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2205,6 +2227,22 @@ be used directly when working with single tensors.</p>
 <span class="go">tensor([[ True,  True,  True],</span>
 <span class="go">        [ True, False, False]])</span>
 </code></pre></div>
+<h3 id="masked-reductions">Masked Reductions<a class="headerlink" href="#masked-reductions" title="Permanent link">&para;</a></h3>
+<p><code>masked_sum_along_seq</code>, <code>masked_mean_along_seq</code>, <code>masked_amax_along_seq</code> and
+<code>masked_amin_along_seq</code> reduce only the valid steps of a padded batch. The <code>mask</code> is a <code>bool</code>
+tensor of shape <code>(batch, seq)</code> (what <code>lengths_to_mask</code> returns) and is broadcast over the
+trailing dimensions:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">lengths_to_mask</span><span class="p">,</span> <span class="n">masked_mean_along_seq</span><span class="p">,</span> <span class="n">masked_amax_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">lengths_to_mask</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">masked_mean_along_seq</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+<span class="go">tensor([2., 4.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">masked_amax_along_seq</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+<span class="go">tensor([3., 4.])</span>
+</code></pre></div>
+<p>A row without valid step gives <code>0</code> for the sum, <code>nan</code> for the mean and the lowest (<code>amax</code>) or the
+highest (<code>amin</code>) value of the dtype. The mean requires a floating point tensor.</p>
 <h2 id="reduction-operations">Reduction Operations<a class="headerlink" href="#reduction-operations" title="Permanent link">&para;</a></h2>
 <h3 id="sum-and-mean">Sum and Mean<a class="headerlink" href="#sum-and-mean" title="Permanent link">&para;</a></h3>
 <p>Compute sum along dimensions:</p>

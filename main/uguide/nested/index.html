@@ -980,6 +980,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#masked-reductions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Masked Reductions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#size-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1764,6 +1775,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#masked-reductions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Masked Reductions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#size-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2238,6 +2260,16 @@ stacks them into a batch, one leaf position at a time:</p>
 <span class="go">{'x': tensor([[1, 2, 3], [4, 0, 0]]), 'mask': tensor([[ True,  True,  True], [ True, False, False]])}</span>
 </code></pre></div>
 <p>The dtype of each leaf is the one of the leaf of the first sample.</p>
+<h2 id="masked-reductions">Masked Reductions<a class="headerlink" href="#masked-reductions" title="Permanent link">&para;</a></h2>
+<p>The masked reductions take one <code>mask</code> of shape <code>(batch, seq)</code> that is shared by all the leaves:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">masked_mean_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">lengths_to_mask</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">]]),</span> <span class="s2">"y"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">lengths_to_mask</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">masked_mean_along_seq</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+<span class="go">{'x': tensor([2., 4.]), 'y': tensor([[1., 1.], [1., 1.]])}</span>
+</code></pre></div>
 <h2 id="size-operations">Size Operations<a class="headerlink" href="#size-operations" title="Permanent link">&para;</a></h2>
 <p>Read the batch size and the sequence length shared by all the tensors, instead of
 hard-coding the dimension:</p>

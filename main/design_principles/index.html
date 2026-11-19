@@ -1176,10 +1176,13 @@ Each principle below is enforced by a test.</p>
 <h2 id="two-symmetric-levels">Two symmetric levels<a class="headerlink" href="#two-symmetric-levels" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Thin wrappers (P2).</strong> A <code>tensor</code> function is one torch call with the dimension fixed. It has
-  the same semantics and result as torch, with no hidden copy, cast or device move.</li>
+  the same semantics and result as torch, with no hidden copy, cast or device move. The one
+  documented exception is <code>masked_{sum,mean,amax,amin}_along_seq</code>: a fixed composition of
+  <code>masked_fill</code> and a reduction, tested against the manual form.</li>
 <li><strong>Two symmetric levels (P3).</strong> Every <code>tensor</code> function that maps batch data has a <code>nested</code>
-  twin with the same name, options and defaults. The exceptions are <code>lengths_to_mask</code> and
-  <code>pad_sequences</code> (their input is not a batch of tensors). <code>nested</code> also has <code>clone</code>, <code>detach</code>,
+  twin with the same name, options and defaults. The one exception is <code>lengths_to_mask</code> (its input
+  is not a batch of tensors). In <code>nested</code>, the <code>mask</code> of a masked reduction is one tensor shared
+  by all the leaves. <code>nested</code> also has <code>clone</code>, <code>detach</code>,
   <code>contiguous</code>, <code>pin_memory</code>, <code>to</code>, <code>to_numpy</code> and <code>from_numpy</code>.</li>
 <li><strong>One traversal (P4).</strong> All the nested functions go through <code>apply_to_tensors</code>,
   <code>split_tensors</code> and <code>combine_tensors</code> of <code>batchtensor.utils.structure</code>. A nested function has no
