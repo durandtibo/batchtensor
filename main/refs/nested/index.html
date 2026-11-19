@@ -1347,6 +1347,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#batchtensor.nested.pad_sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pad_sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#batchtensor.nested.permute_along_batch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2342,6 +2353,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#batchtensor.nested.pad_sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pad_sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#batchtensor.nested.permute_along_batch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2772,7 +2794,7 @@ the same simple API as individual tensors.</p>
     - <code>cat_along_batch</code>, <code>cat_along_seq</code>, <code>repeat_along_batch</code>, <code>repeat_along_seq</code>
     - <code>stack_along_batch</code>, <code>stack_along_seq</code></p>
 <p><strong>Padding operations</strong>: Pad ragged batches
-    - <code>pad_along_batch</code>, <code>pad_along_seq</code></p>
+    - <code>pad_along_batch</code>, <code>pad_along_seq</code>, <code>pad_sequences</code></p>
 <p><strong>Permutation operations</strong>: Reorder elements
     - <code>permute_along_batch</code>, <code>shuffle_along_batch</code>
     - <code>permute_along_seq</code>, <code>shuffle_along_seq</code></p>
@@ -7922,6 +7944,196 @@ represented in the dtype of a tensor, or if <code>side</code> is not
   <summary>See Also</summary>
   <p><code>pad_along_batch</code>: Pad along the batch dimension instead.
 <code>lengths_to_mask</code>: Build a mask that flags the padded positions.</p>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="batchtensor.nested.pad_sequences" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">batchtensor.nested.pad_sequences</span>
+
+
+<a href="#batchtensor.nested.pad_sequences" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">pad_sequences</span><span class="p">(</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="n"><span title="collections.abc.Sequence">Sequence</span></span><span class="p">[</span><span class="n"><span title="batchtensor.utils.types.T">T</span></span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">side</span><span class="p">:</span> <span class="n"><span title="batchtensor.tensor.padding.Side">Side</span></span> <span class="o">=</span> <span class="s2">"right"</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="batchtensor.utils.types.T">T</span></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Pad the sequences of several samples and stack them into a batch.</p>
+<p>The samples are structures with the same layout. At each leaf position,
+the tensors of the samples are sequences of shape <code>(seq_len_i, ...)</code>
+that can have different lengths along their first dimension. They are
+padded and stacked with <code>batchtensor.tensor.pad_sequences</code>, so the
+leaf of the output has shape <code>(len(samples), max_i(seq_len_i), ...)</code>.
+The container types of the output are the ones of the first sample.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Like <code>batchtensor.tensor.pad_sequences</code>, the dtype and device of
+a leaf of the output are the ones of the leaf of the first sample.
+The tensors of the other samples are copied into it, which casts
+them to this dtype (e.g. a <code>float</code> value is truncated when the
+first sample has an integer tensor).</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>samples</code>
+            </td>
+            <td>
+                  <code><span title="collections.abc.Sequence">Sequence</span>[<span title="batchtensor.utils.types.T">T</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The samples to batch. They must have the same keys and
+the same lengths, and each leaf must be a <code>torch.Tensor</code> with
+at least one dimension. The tensors at a given leaf position
+must have the same shape except for the first dimension.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>value</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The fill value used for the padding. It must be
+representable in the dtype of the tensors.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>side</code>
+            </td>
+            <td>
+                  <code><span title="batchtensor.tensor.padding.Side">Side</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The side of the sequences where the padding is added,
+<code>"right"</code> (end) or <code>"left"</code> (start).</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;right&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="batchtensor.utils.types.T">T</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A structure with the layout of the samples. Each leaf is the padded
+tensor of shape <code>(batch_size, max_len, ...)</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if a leaf is not a <code>torch.Tensor</code>, or if a sample is
+a dataclass.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if <code>samples</code> is empty, if the samples do not have the
+same keys or lengths, if the trailing shapes of the tensors at
+a leaf position differ, if a tensor is a scalar, if <code>value</code>
+cannot be represented in the dtype of the tensors, or if
+<code>side</code> is not <code>"left"</code> or <code>"right"</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.nested</span><span class="w"> </span><span class="kn">import</span> <span class="n">pad_sequences</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="s2">"y"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">]),</span> <span class="s2">"y"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">4.0</span><span class="p">])},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">{'x': tensor([[1, 2, 3], [4, 0, 0]]), 'y': tensor([[1., 2., 3.], [4., 0., 0.]])}</span>
+</code></pre></div>
+</details>
+
+<details class="see-also" open>
+  <summary>See Also</summary>
+  <p><code>batchtensor.tensor.pad_sequences</code>: The same function for tensors.
+<code>batchtensor.tensor.lengths_to_mask</code>: Build the mask of a padded batch.</p>
 </details>
 
     </div>

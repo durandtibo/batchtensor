@@ -7384,6 +7384,14 @@ sequences are <code>[t.shape[0] for t in tensors]</code>, and
 <code>lengths_to_mask</code> builds the mask of the padded batch.</p>
 
 
+<details class="note" open>
+  <summary>Note</summary>
+  <p>The dtype and device of the output are the ones of the first tensor.
+The other tensors are copied into it, which casts them to this dtype
+(e.g. <code>1.5</code> becomes <code>1</code> when the first tensor is a <code>long</code>
+tensor). No type promotion is done.</p>
+</details>
+
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
