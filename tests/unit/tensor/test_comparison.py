@@ -256,19 +256,25 @@ def test_topk_along_seq_k_2_largest_false_indices() -> None:
 
 def test_topk_along_seq_k_3_sort_output_false_values() -> None:
     assert objects_are_equal(
+        # The order of the elements is not specified when sort_output=False.
         topk_along_seq(
             torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 3, sort_output=False
-        ).values,
+        )
+        .values.sort(dim=1, descending=True)
+        .values,
         torch.tensor([[3, 2, 1], [9, 6, 5], [8, 7, 2]]),
     )
 
 
 def test_topk_along_seq_k_3_sort_output_false_indices() -> None:
     assert objects_are_equal(
+        # The order of the elements is not specified when sort_output=False.
         topk_along_seq(
             torch.tensor([[0, 1, 3, 2], [4, 9, 5, 6], [8, 7, 2, 1]]), 3, sort_output=False
-        ).indices,
-        torch.tensor([[2, 3, 1], [1, 3, 2], [0, 1, 2]]),
+        )
+        .indices.sort(dim=1)
+        .values,
+        torch.tensor([[1, 2, 3], [1, 2, 3], [0, 1, 2]]),
     )
 
 
