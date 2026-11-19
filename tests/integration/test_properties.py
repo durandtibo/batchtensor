@@ -1,6 +1,6 @@
 r"""Gates for the properties of ``design_principles.md`` that no other
 test enforces: P1 (no ``dim`` argument), P4 (one traversal) and P7
-(inputs are not modified)."""
+(inputs are not modified, outputs do not alias the inputs)."""
 
 from __future__ import annotations
 
@@ -180,3 +180,52 @@ def test_inputs_are_not_modified(name: str, fn: Any) -> None:
 @pytest.mark.parametrize("fn", [f for _, f in ALL_FUNCTIONS], ids=[n for n, _ in ALL_FUNCTIONS])
 def test_docstring_does_not_repeat_layout(fn: Any) -> None:
     assert "This function assumes the" not in (inspect.getdoc(fn) or "")
+
+
+############################################
+#     Tests for P7 (no aliasing)           #
+############################################
+
+# Functions whose output may share memory with the input: the views of torch
+# (``slice``, ``select``, ``chunk``, ``split``, ``detach``, ``to_numpy`` on
+# CPU), ``from_numpy`` and the functions that return the input when nothing
+# changes (``to``, ``contiguous``, ``pin_memory``).
+MAY_ALIAS = {
+    "slice",
+    "select",
+    "chunk",
+    "split",
+    "detach",
+    "to",
+    "contiguous",
+    "pin_memory",
+    "to_numpy",
+    "from_numpy",
+}
+
+
+def get_tensors(value: Any) -> list[torch.Tensor]:
+    r"""Return the tensors of a nested value."""
+    if isinstance(value, torch.Tensor):
+        return [value]
+    if isinstance(value, dict):
+        return [t for val in value.values() for t in get_tensors(val)]
+    if isinstance(value, (list, tuple)):
+        return [t for val in value for t in get_tensors(val)]
+    return []
+
+
+def shares_memory(inputs: list[torch.Tensor], outputs: list[torch.Tensor]) -> bool:
+    r"""Indicate if an output tensor shares a storage with an input tensor."""
+    storages = {t.untyped_storage().data_ptr() for t in inputs}
+    return any(t.untyped_storage().data_ptr() in storages for t in outputs)
+
+
+ALIAS_CASES = [(name, fn) for name, fn in PURE_CASES if get_operation(name) not in MAY_ALIAS]
+
+
+@pytest.mark.parametrize(("name", "fn"), ALIAS_CASES, ids=[name for name, _ in ALIAS_CASES])
+def test_output_does_not_alias_input(name: str, fn: Any) -> None:
+    args, kwargs = get_inputs(name)
+    out = fn(*args, **kwargs)
+    assert not shares_memory(get_tensors(args), get_tensors(out))

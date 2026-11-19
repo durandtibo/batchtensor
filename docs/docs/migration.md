@@ -69,6 +69,11 @@ or devices. It used to cast them silently to the dtype of the first tensor (`1.5
 Cast the tensors first: `[t.to(torch.float) for t in tensors]`, or
 `nested.to(sample, dtype=torch.float)` for each sample.
 
+## `pad_along_*` with `pad_size=0` returns a new tensor
+
+`pad_along_batch(x, 0)` and `pad_along_seq(x, 0)` used to return `x` itself. They now return a new
+tensor equal to `x`, like `pad_size > 0`. Code that relied on `out is x` must not.
+
 ## New
 
 `pad_along_*(..., side="left")`, `repeat_along_batch`, `pad_sequences`, an `int` seed for

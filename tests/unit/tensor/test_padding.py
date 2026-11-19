@@ -14,6 +14,18 @@ from batchtensor.tensor.padding import _check_fill_value
 #####################################
 
 
+def test_pad_along_batch_pad_size_0_returns_a_new_tensor() -> None:
+    tensor = torch.tensor([[0, 1], [2, 3]])
+    assert pad_along_batch(tensor, pad_size=0) is not tensor
+
+
+def test_pad_along_batch_pad_size_0_does_not_share_memory() -> None:
+    tensor = torch.tensor([[0, 1], [2, 3]])
+    out = pad_along_batch(tensor, pad_size=0)
+    out[0, 0] = 9
+    assert objects_are_equal(tensor, torch.tensor([[0, 1], [2, 3]]))
+
+
 def test_pad_along_batch_pad_size_0() -> None:
     tensor = torch.tensor([[0, 1], [2, 3], [4, 5]])
     assert objects_are_equal(pad_along_batch(tensor, pad_size=0), tensor)
@@ -48,6 +60,18 @@ def test_pad_along_batch_negative_pad_size() -> None:
 ###################################
 #     Tests for pad_along_seq     #
 ###################################
+
+
+def test_pad_along_seq_pad_size_0_returns_a_new_tensor() -> None:
+    tensor = torch.tensor([[0, 1], [2, 3]])
+    assert pad_along_seq(tensor, pad_size=0) is not tensor
+
+
+def test_pad_along_seq_pad_size_0_does_not_share_memory() -> None:
+    tensor = torch.tensor([[0, 1], [2, 3]])
+    out = pad_along_seq(tensor, pad_size=0)
+    out[0, 0] = 9
+    assert objects_are_equal(tensor, torch.tensor([[0, 1], [2, 3]]))
 
 
 def test_pad_along_seq_pad_size_0() -> None:
