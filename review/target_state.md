@@ -207,16 +207,16 @@ Commands: `ruff check` clean, `ty check` clean, `lint-imports` 1 contract kept, 
 
 One pull request per step, each releasable.
 
-| Step | Change                                                                                                                                                              | Breaking |
-| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| 1    | Rewrite `architecture.md` from Section 3 and delete the contradicting patterns (F3). Link, do not copy, the properties.                                             | No       |
-| 2    | Remove the 136 `Note:` blocks. Put the layout sentence in the module docstrings of `tensor` and `nested` (F4). Doctests unchanged.                                  | No       |
-| 3    | State the container rule (D1), the cross-leaf rule and the empty-structure rule (F8) in `design_principles.md`. Remove "dataclass" from P5, the docs and the tests that promise it; add one test that pins the documented `TypeError` of `combine_tensors` on a dataclass. | Yes (doc) |
-| 4    | Add the contract test T3 (P8 table).                                                                                                                                | No       |
-| 5    | Add the admission rule (Section 3.4) to `CONTRIBUTING.md`.                                                                                                          | No       |
-| 6    | Require `coola>=2.0.0a3` and import `rebuild_mapping` and `rebuild_sequence` from `coola.recursive` (F1). Verified on `a3`: tests, `ty`, `pyright` and `lint-imports` pass; `ruff` only asks to re-sort the import. Update `uv.lock`. | No       |
-| 7    | When `coola` 2.0 is stable: depend on `coola>=2.0,<3.0`.                                                                                                            | No       |
-| 8    | Set the classifier `Development Status` and the version to the first non-alpha release. Remove the `README` sentence "the API is not stable" only when D3 is answered. | No       |
+| Step | Change                                                                                                                                                              | Breaking | Status |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------ |
+| 1    | Rewrite `architecture.md` from Section 3 and delete the contradicting patterns (F3). Link, do not copy, the properties.                                             | No       | Done (#777) |
+| 2    | Remove the 136 `Note:` blocks. Put the layout sentence in the module docstrings of `tensor` and `nested` (F4). Doctests unchanged.                                  | No       | Done (#778) |
+| 3    | State the container rule (D1), the cross-leaf rule and the empty-structure rule (F8) in `design_principles.md`. Remove "dataclass" from P5, the docs and the tests that promise it; add one test that pins the documented `TypeError` of `combine_tensors` on a dataclass. | Yes (doc) | Done (#779) |
+| 4    | Add the contract test T3 (P8 table).                                                                                                                                | No       | Done (#780) |
+| 5    | Add the admission rule (Section 3.4) to `CONTRIBUTING.md`.                                                                                                          | No       | Done (#781) |
+| 6    | Require `coola>=2.0.0a3` and import `rebuild_mapping` and `rebuild_sequence` from `coola.recursive` (F1). Verified on `a3`: tests, `ty`, `pyright` and `lint-imports` pass; `ruff` only asks to re-sort the import. Update `uv.lock`. | No       | Done (#782) |
+| 7    | When `coola` 2.0 is stable: depend on `coola>=2.0,<3.0`.                                                                                                            | No       | Blocked: no stable `coola` 2.0 |
+| 8    | Set the classifier `Development Status` and the version to the first non-alpha release. Remove the `README` sentence "the API is not stable" only when D3 is answered. | No       | Blocked: step 7 and D3 |
 
 Steps 1 to 6 can ship now. Step 7 blocks the release.
 
@@ -287,4 +287,5 @@ The previous version listed 11 steps, all merged: the three structure helpers
 pointwise nested functions, the validation contract, `nested.batch_size` and `seq_len`,
 `pad_sequences`, the masked reductions, `pyright` in CI, the gates for P1, P4 and P7, and the
 migration guide. The findings G1 to G8 of that version are fixed on `main`. Of G9 to G11, G9 (the
-cost of repetition) is F5 here, G10 (small edges) is F8, and G11 (private `rebuild` import) is F1: `coola 2.0.0a3` exports the functions, the import in `batchtensor` is step 6.
+cost of repetition) is F5 here, G10 (small edges) is F8, and G11 (private `rebuild` import) is F1:
+`coola 2.0.0a3` exports the functions, the import in `batchtensor` is step 6.
