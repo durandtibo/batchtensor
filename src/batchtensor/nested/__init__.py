@@ -13,8 +13,12 @@ the same simple API as individual tensors.
 All functions in this module follow these conventions:
     - Functions ending with ``_along_batch`` operate on the batch dimension (dim=0)
     - Functions ending with ``_along_seq`` operate on the sequence dimension (dim=1)
+    - The batch dimension is the first dimension (index 0) and the sequence
+      dimension is the second dimension (index 1) of every tensor. This is
+      stated here, not in each docstring
     - All tensors in the nested structure must have compatible shapes for the
-      operation being performed
+      operation being performed. The functions that map a tensor function do
+      not compare the sizes of the leaves
     - The output structure mirrors the input structure
     - The ``data`` parameters and return values are annotated with
       ``batchtensor.nested.NestedTensor``, a recursive type alias for

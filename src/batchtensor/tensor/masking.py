@@ -82,9 +82,8 @@ def masked_sum_along_seq(
     the sum, i.e. this is ``tensor.masked_fill(~mask, 0).sum(dim=1)``.
 
     Note:
-        This function assumes the sequence dimension is the second
-            dimension. It is a fixed composition of torch operations,
-            not a single torch call.
+        This function is a fixed composition of torch operations, not a single
+            torch call.
 
     Args:
         tensor: The input tensor of shape ``(batch_size, seq_len, ...)``.
@@ -133,9 +132,8 @@ def masked_mean_along_seq(
     steps.
 
     Note:
-        This function assumes the sequence dimension is the second
-            dimension. It is a fixed composition of torch operations,
-            not a single torch call.
+        This function is a fixed composition of torch operations, not a single
+            torch call.
 
     Args:
         tensor: The input tensor of shape ``(batch_size, seq_len, ...)``.
@@ -195,9 +193,8 @@ def masked_amax_along_seq(
     value of the dtype of ``tensor`` before the reduction.
 
     Note:
-        This function assumes the sequence dimension is the second
-            dimension. It is a fixed composition of torch operations,
-            not a single torch call.
+        This function is a fixed composition of torch operations, not a single
+            torch call.
 
     Args:
         tensor: The input tensor of shape ``(batch_size, seq_len, ...)``.
@@ -245,9 +242,8 @@ def masked_amin_along_seq(
     value of the dtype of ``tensor`` before the reduction.
 
     Note:
-        This function assumes the sequence dimension is the second
-            dimension. It is a fixed composition of torch operations,
-            not a single torch call.
+        This function is a fixed composition of torch operations, not a single
+            torch call.
 
     Args:
         tensor: The input tensor of shape ``(batch_size, seq_len, ...)``.

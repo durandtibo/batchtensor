@@ -23,11 +23,6 @@ def cumprod_along_batch(data: T) -> T:
     r"""Return the cumulative product of elements of input in the batch
     dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
 
@@ -55,11 +50,6 @@ def cumprod_along_batch(data: T) -> T:
 def cumprod_along_seq(data: T) -> T:
     r"""Return the cumulative product of elements of input in the
     sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -90,11 +80,6 @@ def cumsum_along_batch(data: T) -> T:
     r"""Return the cumulative sum of elements of input in the batch
     dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
 
@@ -122,11 +107,6 @@ def cumsum_along_batch(data: T) -> T:
 def cumsum_along_seq(data: T) -> T:
     r"""Return the cumulative sum of elements of input in the sequence
     dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.

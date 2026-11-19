@@ -26,10 +26,6 @@ def cumprod_along_batch(tensor: torch.Tensor) -> torch.Tensor:
     that position in the batch. This is useful for computing running products
     or compound growth factors over batch items.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
-
     Warning:
         Cumulative products can quickly overflow for large tensors or
         grow very large. Consider using log-space computations if needed.
@@ -72,10 +68,6 @@ def cumprod_along_seq(tensor: torch.Tensor) -> torch.Tensor:
     r"""Return the cumulative product of elements of input in the
     sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The input tensor.
 
@@ -106,10 +98,6 @@ def cumsum_along_batch(tensor: torch.Tensor) -> torch.Tensor:
     where each element in the output is the sum of all elements up to that
     position in the batch. This is useful for computing running totals or
     prefix sums over batch items.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
 
     Args:
         tensor: The input tensor. Must have at least one dimension.
@@ -148,10 +136,6 @@ def cumsum_along_batch(tensor: torch.Tensor) -> torch.Tensor:
 def cumsum_along_seq(tensor: torch.Tensor) -> torch.Tensor:
     r"""Return the cumulative sum of elements of input in the sequence
     dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Args:
         tensor: The input tensor.

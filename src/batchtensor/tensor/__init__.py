@@ -10,6 +10,9 @@ All functions in this module follow these conventions:
     - Functions ending with ``_along_seq`` operate on the sequence dimension (dim=1)
     - The batch dimension always represents independent samples
     - The sequence dimension represents sequential/temporal data within each sample
+    - The batch dimension is the first dimension (index 0) and the sequence
+      dimension is the second dimension (index 1) of every tensor. This is
+      stated here, not in each docstring
 
 Function Categories:
     **Reduction operations**: Aggregate values along a dimension

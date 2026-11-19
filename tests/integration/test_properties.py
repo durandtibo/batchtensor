@@ -170,3 +170,13 @@ def test_inputs_are_not_modified(name: str, fn: Any) -> None:
     before = snapshot(args)
     fn(*args, **kwargs)
     assert objects_are_equal(snapshot(args), before)
+
+
+#####################################################
+#     Tests for P15 (the layout is stated once)     #
+#####################################################
+
+
+@pytest.mark.parametrize("fn", [f for _, f in ALL_FUNCTIONS], ids=[n for n, _ in ALL_FUNCTIONS])
+def test_docstring_does_not_repeat_layout(fn: Any) -> None:
+    assert "This function assumes the" not in (inspect.getdoc(fn) or "")

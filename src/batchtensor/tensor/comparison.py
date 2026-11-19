@@ -20,10 +20,6 @@ def argsort_along_batch(
     batch dimension. The actual sorted values can be obtained by using
     ``sort_along_batch`` or by indexing with the returned indices.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
-
     Args:
         tensor: The input tensor to sort.
         descending: Controls the sorting order. If ``False`` (default),
@@ -65,10 +61,6 @@ def argsort_along_seq(
     r"""Return the indices that sort a tensor along the sequence
     dimension in ascending order by value.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The input tensor.
         descending: Controls the sorting order (ascending or
@@ -106,10 +98,6 @@ def sort_along_batch(
     This function sorts the tensor along the batch dimension and returns
     both the sorted values and the corresponding indices. This is useful
     when you need both the sorted data and the permutation that created it.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
 
     Args:
         tensor: The input tensor to sort.
@@ -163,10 +151,6 @@ def sort_along_seq(
     r"""Sort the elements of the input tensor along the sequence
     dimension in ascending order by value.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The input tensor.
         descending: Controls the sorting order (ascending or
@@ -203,10 +187,6 @@ def topk_along_batch(
     tensor: torch.Tensor, k: int, *, largest: bool = True, sort_output: bool = True
 ) -> torch.return_types.topk:
     r"""Return the k largest (or smallest) elements along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension.
 
     Args:
         tensor: The input tensor.
@@ -246,10 +226,6 @@ def topk_along_seq(
     tensor: torch.Tensor, k: int, *, largest: bool = True, sort_output: bool = True
 ) -> torch.return_types.topk:
     r"""Return the k largest (or smallest) elements along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Args:
         tensor: The input tensor.

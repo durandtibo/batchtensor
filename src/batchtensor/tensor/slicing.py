@@ -32,10 +32,6 @@ def chunk_along_batch(tensor: torch.Tensor, chunks: int) -> tuple[torch.Tensor, 
     equal size. If the tensor size is not evenly divisible by the number
     of chunks, the last chunk will be smaller.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
-
     Args:
         tensor: The tensor to split. Must have at least one dimension.
         chunks: Number of chunks to return. Must be a positive integer.
@@ -72,10 +68,6 @@ def chunk_along_seq(tensor: torch.Tensor, chunks: int) -> tuple[torch.Tensor, ..
 
     Each chunk is a view of the input tensor.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The tensor to split.
         chunks: Number of chunks to return.
@@ -106,10 +98,6 @@ def select_along_batch(tensor: torch.Tensor, index: int) -> torch.Tensor:
     This function returns a view of the original tensor with the batch dimension
     removed. It selects a single element from the batch dimension, reducing the
     tensor's dimensionality by one.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension (index 0).
 
     Args:
         tensor: The input tensor. Must have at least one dimension.
@@ -150,10 +138,6 @@ def select_along_seq(tensor: torch.Tensor, index: int) -> torch.Tensor:
 
     This function returns a view of the original tensor with the sequence dimension removed.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The input tensor.
         index: The index to select with.
@@ -179,10 +163,6 @@ def slice_along_batch(
     tensor: torch.Tensor, start: int = 0, stop: int | None = None, *, step: int = 1
 ) -> torch.Tensor:
     r"""Slice the tensor along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension.
 
     Args:
         tensor: The input tensor.
@@ -225,10 +205,6 @@ def slice_along_seq(
 ) -> torch.Tensor:
     r"""Slice the tensor along the sequence dimension.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
-
     Args:
         tensor: The input tensor.
         start: The index where the slicing of object starts.
@@ -269,10 +245,6 @@ def split_along_batch(
 
     Each chunk is a view of the original tensor.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension.
-
     Args:
         tensor: The input tensor.
         split_size_or_sections: Size of a single chunk or list of
@@ -303,10 +275,6 @@ def split_along_seq(
     r"""Split the tensor into chunks along the sequence dimension.
 
     Each chunk is a view of the original tensor.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension.
 
     Args:
         tensor: The input tensor.

@@ -29,11 +29,6 @@ def cat_along_batch(data: Sequence[T]) -> T:
     All tensors must either have the same data type and shape (except
     in the concatenating dimension) or be empty.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data to concatenate. The dictionaries must have
             the same keys.
@@ -72,11 +67,6 @@ def cat_along_seq(data: Sequence[T]) -> T:
     All tensors must either have the same data type and shape (except
     in the concatenating dimension) or be empty.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data to concatenate. The dictionaries must have
             the same keys.
@@ -112,10 +102,6 @@ def cat_along_seq(data: Sequence[T]) -> T:
 def repeat_along_batch(data: T, repeats: int) -> T:
     r"""Repeat all the tensors along the batch dimension.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
-
     Args:
         data: The input data. Each item must be a tensor.
         repeats: The number of times to repeat the data along the batch
@@ -144,11 +130,6 @@ def repeat_along_batch(data: T, repeats: int) -> T:
 
 def repeat_along_seq(data: T, repeats: int) -> T:
     r"""Repeat all the tensors along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.

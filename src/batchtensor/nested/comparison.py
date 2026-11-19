@@ -19,11 +19,6 @@ def argsort_along_batch(data: T, *, descending: bool = False, stable: bool = Fal
     r"""Return the indices that sort a tensor along the batch dimension
     in ascending order by value.
 
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
-
     Args:
         data: The input data. Each item must be a tensor.
         descending: Controls the sorting order (ascending or
@@ -58,11 +53,6 @@ def argsort_along_batch(data: T, *, descending: bool = False, stable: bool = Fal
 def argsort_along_seq(data: T, *, descending: bool = False, stable: bool = False) -> T:
     r"""Return the indices that sort each tensor along the sequence
     dimension in ascending order by value.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -100,11 +90,6 @@ def sort_along_batch(
 ) -> NestedTensor:
     r"""Sort the elements of the input tensor along the batch dimension
     in ascending order by value.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors. All the tensors should have the
-            same batch size.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -156,11 +141,6 @@ def sort_along_seq(
     r"""Sort the elements of the input tensor along the sequence
     dimension in ascending order by value.
 
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors. All the tensors should have the
-            same sequence size.
-
     Args:
         data: The input data. Each item must be a tensor.
         descending: Controls the sorting order (ascending or
@@ -208,10 +188,6 @@ def topk_along_batch(
     data: NestedTensor, k: int, *, largest: bool = True, sort_output: bool = True
 ) -> NestedTensor:
     r"""Return the k largest (or smallest) elements along the batch dimension.
-
-    Note:
-        This function assumes the batch dimension is the first
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.
@@ -261,10 +237,6 @@ def topk_along_seq(
     data: NestedTensor, k: int, *, largest: bool = True, sort_output: bool = True
 ) -> NestedTensor:
     r"""Return the k largest (or smallest) elements along the sequence dimension.
-
-    Note:
-        This function assumes the sequence dimension is the second
-            dimension of the tensors.
 
     Args:
         data: The input data. Each item must be a tensor.
