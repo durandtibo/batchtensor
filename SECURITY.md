@@ -2,23 +2,17 @@
 
 ## Supported Versions
 
-We release patches for security vulnerabilities. Currently supported versions:
+Only the latest version on the `main` branch is supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.1.x   | :white_check_mark: |
-| 0.0.x   | :x:                |
+| main    | :white_check_mark: |
+| < main  | :x:                |
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in `batchtensor`, please report it by emailing the
-maintainer at durand.tibo+gh@gmail.com.
+If you discover a security vulnerability, please report it privately using
+[GitHub Security Advisories](../../security/advisories/new) rather than opening a public issue.
 
-**Please do not report security vulnerabilities through public GitHub issues.**
-
-When reporting a vulnerability, please include:
-
-- A description of the vulnerability
-- Steps to reproduce the issue
-- Potential impact of the vulnerability
-- Suggested fix (if available)
+You can expect an initial response within 7 days. If the vulnerability is accepted, we will work
+on a fix and coordinate a disclosure timeline with you. If it is declined, we will explain why.
