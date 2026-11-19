@@ -17,8 +17,7 @@ from typing import TYPE_CHECKING, Any, final
 
 import torch
 from coola.iterator import dfs_iterate
-from coola.recursive import recursive_apply
-from coola.recursive.rebuild import rebuild_mapping, rebuild_sequence
+from coola.recursive import rebuild_mapping, rebuild_sequence, recursive_apply
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
