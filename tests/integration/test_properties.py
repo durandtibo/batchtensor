@@ -1,6 +1,6 @@
-r"""Gates for the properties of ``design_principles.md`` that no other test
-enforces: P1 (no ``dim`` argument), P4 (one traversal) and P7 (inputs are not
-modified)."""
+r"""Gates for the properties of ``design_principles.md`` that no other
+test enforces: P1 (no ``dim`` argument), P4 (one traversal) and P7
+(inputs are not modified)."""
 
 from __future__ import annotations
 
@@ -129,7 +129,8 @@ SKIPPED = {"nested.from_numpy", "nested.pin_memory", "tensor.lengths_to_mask"}
 
 
 def get_operation(name: str) -> str:
-    r"""Return the operation of a function (the name without the dimension)."""
+    r"""Return the operation of a function (the name without the
+    dimension)."""
     return name.split(".")[1].split("_along_")[0]
 
 
