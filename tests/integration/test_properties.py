@@ -1,7 +1,8 @@
 r"""Gates for the properties of ``design_principles.md`` that no other
 test enforces: P1 (no ``dim`` argument), P4 (one traversal) and P7
 (inputs are not modified, outputs do not alias the inputs), P2 (the
-closed list of functions that are not one torch call) and P10 (no cast)."""
+closed list of functions that are not one torch call) and P10 (no
+cast)."""
 
 from __future__ import annotations
 
@@ -217,7 +218,8 @@ def get_tensors(value: Any) -> list[torch.Tensor]:
 
 
 def shares_memory(inputs: list[torch.Tensor], outputs: list[torch.Tensor]) -> bool:
-    r"""Indicate if an output tensor shares a storage with an input tensor."""
+    r"""Indicate if an output tensor shares a storage with an input
+    tensor."""
     storages = {t.untyped_storage().data_ptr() for t in inputs}
     return any(t.untyped_storage().data_ptr() in storages for t in outputs)
 
@@ -261,8 +263,8 @@ NOT_THIN = {
 
 
 def is_one_torch_call(node: ast.FunctionDef) -> bool:
-    r"""Indicate if a function is a docstring and one ``return`` of a call
-    on ``torch`` or on the tensor, or of an index of the tensor."""
+    r"""Indicate if a function is a docstring and one ``return`` of a
+    call on ``torch`` or on the tensor, or of an index of the tensor."""
     body = [
         stmt
         for stmt in node.body
@@ -283,7 +285,8 @@ def is_one_torch_call(node: ast.FunctionDef) -> bool:
 
 
 def get_tensor_functions() -> dict[str, ast.FunctionDef]:
-    r"""Return the AST of the public functions of the ``tensor`` package."""
+    r"""Return the AST of the public functions of the ``tensor``
+    package."""
     functions = {}
     for path in sorted(TENSOR_DIR.glob("*.py")):
         for node in ast.parse(path.read_text()).body:

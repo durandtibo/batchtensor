@@ -1,8 +1,9 @@
-r"""Pin the documented result of the edge cases (P16, ``design_principles.md``).
+r"""Pin the documented result of the edge cases (P16,
+``design_principles.md``).
 
-A check that needs the values of a tensor would need a host-device sync, so
-the functions do not make it. The docstrings state the result instead, and
-this table fails when it changes.
+A check that needs the values of a tensor would need a host-device sync,
+so the functions do not make it. The docstrings state the result
+instead, and this table fails when it changes.
 """
 
 from __future__ import annotations

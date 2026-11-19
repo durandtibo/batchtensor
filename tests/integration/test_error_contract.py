@@ -1,7 +1,7 @@
 r"""Gate for the error contract (P8) of ``design_principles.md``.
 
-Each row of the table of P8 has at least one case: a call that is expected
-to raise the exception of the contract.
+Each row of the table of P8 has at least one case: a call that is
+expected to raise the exception of the contract.
 """
 
 from __future__ import annotations

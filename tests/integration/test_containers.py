@@ -45,7 +45,8 @@ STRUCTURES = list(make_structures())
 
 
 def get_layout(data: Any) -> Any:
-    r"""Return the containers of a structure, with a placeholder for a leaf."""
+    r"""Return the containers of a structure, with a placeholder for a
+    leaf."""
     if isinstance(data, torch.Tensor):
         return "leaf"
     if isinstance(data, dict):
@@ -124,7 +125,8 @@ JOIN_FUNCTIONS = [nested.cat_along_batch, nested.stack_along_batch, nested.pad_s
 
 
 def make_leaf() -> torch.Tensor:
-    r"""Return a leaf that every function of ``JOIN_FUNCTIONS`` accepts."""
+    r"""Return a leaf that every function of ``JOIN_FUNCTIONS``
+    accepts."""
     return torch.ones(2)
 
 

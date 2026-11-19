@@ -44,18 +44,18 @@ This page lists the breaking changes of the target-state refactoring and their r
 
 ## Errors
 
-| Case                                                                         | Before                                        | After                              |
-| ---------------------------------------------------------------------------- | --------------------------------------------- | ---------------------------------- |
-| Non-tensor leaf in a nested function                                         | `TypeError`, `AttributeError`... per function | `TypeError` naming the leaf type   |
-| `to_numpy` with a non-tensor leaf                                            | `AttributeError`                              | `TypeError` naming the leaf type   |
-| `cat_*`/`stack_*` on an empty sequence                                       | `{}`                                          | `ValueError`                       |
-| `cat_*`/`stack_*` on dicts with different keys                               | `KeyError`                                    | `ValueError`                       |
-| `chunk_*`/`split_*`/`shuffle_*` on data without tensor                       | `()` / unchanged data                         | `ValueError`                       |
-| `chunk_*`/`split_*` on leaves with different sizes                           | misaligned chunks, no error                   | `ValueError`                       |
-| `index_select_along_seq` with a batch mismatch                               | `RuntimeError`                                | `ValueError`                       |
-| `index_select_*` with an index of the wrong ndim, `permute_*` with a 2-D one | `IndexError`                                  | `ValueError`                       |
-| `lengths_to_mask` with a float tensor                                        | accepted                                      | `ValueError`                       |
-| `pad_along_*` with a `value` that does not fit the dtype                     | silent truncation                             | `ValueError`                       |
+| Case                                                                         | Before                                        | After                            |
+| ---------------------------------------------------------------------------- | --------------------------------------------- | -------------------------------- |
+| Non-tensor leaf in a nested function                                         | `TypeError`, `AttributeError`... per function | `TypeError` naming the leaf type |
+| `to_numpy` with a non-tensor leaf                                            | `AttributeError`                              | `TypeError` naming the leaf type |
+| `cat_*`/`stack_*` on an empty sequence                                       | `{}`                                          | `ValueError`                     |
+| `cat_*`/`stack_*` on dicts with different keys                               | `KeyError`                                    | `ValueError`                     |
+| `chunk_*`/`split_*`/`shuffle_*` on data without tensor                       | `()` / unchanged data                         | `ValueError`                     |
+| `chunk_*`/`split_*` on leaves with different sizes                           | misaligned chunks, no error                   | `ValueError`                     |
+| `index_select_along_seq` with a batch mismatch                               | `RuntimeError`                                | `ValueError`                     |
+| `index_select_*` with an index of the wrong ndim, `permute_*` with a 2-D one | `IndexError`                                  | `ValueError`                     |
+| `lengths_to_mask` with a float tensor                                        | accepted                                      | `ValueError`                     |
+| `pad_along_*` with a `value` that does not fit the dtype                     | silent truncation                             | `ValueError`                     |
 
 ## Containers
 

@@ -16,18 +16,19 @@ Each principle below is enforced by a test.
   the same semantics and result as torch, with no hidden copy, cast or device move. The one
   closed list of exceptions is below. A function that is not in it is one torch call.
 
-  | Function                                | Why it is not one torch call                                         |
-  | --------------------------------------- | -------------------------------------------------------------------- |
-  | `masked_{sum,mean,amax,amin}_along_seq` | `masked_fill` + reduction; the mask is validated (no sync)           |
-  | `lengths_to_mask`                       | no torch equivalent; a sync only without `max_len`                   |
-  | `pad_sequences`                         | no torch equivalent (`pad_sequence` is sequence-first)               |
-  | `pad_along_*`                           | `F.pad` with the dim fixed; checks `value` against the dtype         |
-  | `repeat_along_*`                        | builds the `repeat` sizes; checks the number of dims                 |
+  | Function                                | Why it is not one torch call                                              |
+  | --------------------------------------- | ------------------------------------------------------------------------- |
+  | `masked_{sum,mean,amax,amin}_along_seq` | `masked_fill` + reduction; the mask is validated (no sync)                |
+  | `lengths_to_mask`                       | no torch equivalent; a sync only without `max_len`                        |
+  | `pad_sequences`                         | no torch equivalent (`pad_sequence` is sequence-first)                    |
+  | `pad_along_*`                           | `F.pad` with the dim fixed; checks `value` against the dtype              |
+  | `repeat_along_*`                        | builds the `repeat` sizes; checks the number of dims                      |
   | `index_select_along_*`                  | checks the index is 1-D (batch); a 2-D index is a per-sample gather (seq) |
-  | `permute_*`, `shuffle_*`                | `index_select` + a length check (`shuffle_*` draws the permutation)  |
-  | `topk_*`                                | option `sort_output` for `sorted` (it shadows a builtin)             |
+  | `permute_*`, `shuffle_*`                | `index_select` + a length check (`shuffle_*` draws the permutation)       |
+  | `topk_*`                                | option `sort_output` for `sorted` (it shadows a builtin)                  |
 
   `test_thin_wrappers` fails for a new function that is neither one torch call nor in this list.
+
 - **Two symmetric levels (P3).** Every `tensor` function that maps batch data has a `nested`
   twin with the same name, options and defaults. The one exception is `lengths_to_mask` (its input
   is not a batch of tensors). In `nested`, the `mask` of a masked reduction is one tensor shared
@@ -69,19 +70,19 @@ Each principle below is enforced by a test.
   validates is a `ValueError`. Anything else is the torch error, unchanged. `batchtensor` validates
   only what torch cannot see or what torch accepts but means something else.
 
-  | Situation                                                           | Exception         |
-  | ------------------------------------------------------------------- | ----------------- |
-  | A leaf is not a `torch.Tensor`                                      | `TypeError`       |
-  | `cat`/`stack` receives no item or structures with different layout  | `ValueError`      |
-  | Leaves disagree on the split, chunk or shuffle dimension            | `ValueError`      |
-  | `pad_size < 0`, a `value` that does not fit the dtype, a bad `side` | `ValueError`      |
-  | `cat`/`stack` combines a mapping with a sequence                    | `ValueError`      |
-  | `repeat_*`, `seq_len`, `shuffle_*` on a tensor with too few dims    | `ValueError`      |
+  | Situation                                                              | Exception            |
+  | ---------------------------------------------------------------------- | -------------------- |
+  | A leaf is not a `torch.Tensor`                                         | `TypeError`          |
+  | `cat`/`stack` receives no item or structures with different layout     | `ValueError`         |
+  | Leaves disagree on the split, chunk or shuffle dimension               | `ValueError`         |
+  | `pad_size < 0`, a `value` that does not fit the dtype, a bad `side`    | `ValueError`         |
+  | `cat`/`stack` combines a mapping with a sequence                       | `ValueError`         |
+  | `repeat_*`, `seq_len`, `shuffle_*` on a tensor with too few dims       | `ValueError`         |
   | `select_along_seq`, `slice_along_seq`, `sum_along_seq` on a 1-D tensor | torch's `IndexError` |
-  | `pad_sequences` receives tensors of different dtype or device       | `ValueError`      |
-  | A `permutation`/`index` with the wrong ndim or length               | `ValueError`      |
-  | `lengths` is not a 1-D integer tensor                               | `ValueError`      |
-  | `repeats < 0`, `chunks <= 0`, a bad dtype                           | torch's own error |
+  | `pad_sequences` receives tensors of different dtype or device          | `ValueError`         |
+  | A `permutation`/`index` with the wrong ndim or length                  | `ValueError`         |
+  | `lengths` is not a 1-D integer tensor                                  | `ValueError`         |
+  | `repeats < 0`, `chunks <= 0`, a bad dtype                              | torch's own error    |
 
 - **Explicit randomness (P9).** Randomness comes only from an explicit `generator` (a
   `torch.Generator` or an `int` seed). Without it, the global torch RNG is used. One permutation
@@ -92,19 +93,20 @@ Each principle below is enforced by a test.
 - **Defined on edge cases (P16).** Every function has a documented result on empty and degenerate
   input. "Undefined" is not an answer; "torch's behaviour" is. `test_edge_case` pins the results:
 
-  | Function                                  | Case                         | Result                                       |
-  | ----------------------------------------- | ---------------------------- | -------------------------------------------- |
-  | `masked_mean_along_seq`                   | a row without valid step     | `nan` (0 / 0)                                |
-  | `masked_amax_along_seq`, `masked_amin_*`  | a row without valid step     | the lowest (highest) value of the dtype      |
-  | `masked_sum_along_seq`                    | a row without valid step     | `0`                                          |
-  | `permute_*`                               | a repeated index             | not checked: only the length is              |
-  | `lengths_to_mask`                         | a negative length            | a row of `False`                             |
-  | `lengths_to_mask`                         | `max_len` below a length     | the row is truncated to `max_len`            |
-  | `pad_*`                                   | `pad_size == 0`              | a new tensor equal to the input              |
-  | `pad_sequences`                           | tensors of different dtype   | `ValueError`                                 |
-  | `pad_sequences`                           | a zero-length tensor         | a row of `value`                             |
+  | Function                                 | Case                       | Result                                  |
+  | ---------------------------------------- | -------------------------- | --------------------------------------- |
+  | `masked_mean_along_seq`                  | a row without valid step   | `nan` (0 / 0)                           |
+  | `masked_amax_along_seq`, `masked_amin_*` | a row without valid step   | the lowest (highest) value of the dtype |
+  | `masked_sum_along_seq`                   | a row without valid step   | `0`                                     |
+  | `permute_*`                              | a repeated index           | not checked: only the length is         |
+  | `lengths_to_mask`                        | a negative length          | a row of `False`                        |
+  | `lengths_to_mask`                        | `max_len` below a length   | the row is truncated to `max_len`       |
+  | `pad_*`                                  | `pad_size == 0`            | a new tensor equal to the input         |
+  | `pad_sequences`                          | tensors of different dtype | `ValueError`                            |
+  | `pad_sequences`                          | a zero-length tensor       | a row of `value`                        |
 
   A guard against a fully masked row is `mask.any(dim=1)`, tested by the caller.
+
 - **Containers of `cat_*`, `stack_*` and `pad_sequences`.** The container types of the output are
   the ones of the first item. `[list, tuple]` gives a list and `[dict, OrderedDict]` gives a
   dict. A mapping combined with a sequence raises a `ValueError`.
