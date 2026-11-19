@@ -7,7 +7,7 @@ implementation details.
 
 The `batchtensor` library is organized into four main modules:
 
-```
+```text
 batchtensor/
 ├── nested/         # Operations for nested data structures
 ├── tensor/         # Operations for individual tensors

@@ -489,7 +489,8 @@ tensor([[5, 6],
 
 ### std
 
-`std_along_batch` and `std_along_seq` return the standard deviation along the batch or the sequence dimension.
+`std_along_batch` and `std_along_seq` return the standard deviation along the batch or
+the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -515,7 +516,8 @@ tensor([16.0000, 17.3333,  2.3333,  7.0000])
 
 ### any
 
-`any_along_batch` and `any_along_seq` return whether any element is true along the batch or the sequence dimension.
+`any_along_batch` and `any_along_seq` return whether any element is true along the batch or
+the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -530,7 +532,8 @@ tensor([True, True, True, True])
 
 ### all
 
-`all_along_batch` and `all_along_seq` return whether all the elements are true along the batch or the sequence dimension.
+`all_along_batch` and `all_along_seq` return whether all the elements are true along the batch or
+the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -545,7 +548,8 @@ tensor([False, False,  True, False])
 
 ### logsumexp
 
-`logsumexp_along_batch` and `logsumexp_along_seq` return the log of the sum of exponentials along the batch or the sequence dimension.
+`logsumexp_along_batch` and `logsumexp_along_seq` return the log of the sum of exponentials along
+the batch or the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -558,7 +562,8 @@ tensor([8.0185, 9.1272, 5.1698, 6.0247])
 
 ### flip
 
-`flip_along_batch` and `flip_along_seq` return the tensor with the order of the elements reversed along the batch or the sequence dimension.
+`flip_along_batch` and `flip_along_seq` return the tensor with the order of the elements reversed
+along the batch or the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -573,7 +578,8 @@ tensor([[8, 7, 2, 1],
 
 ### roll
 
-`roll_along_batch` and `roll_along_seq` return the tensor with the elements rolled along the batch or the sequence dimension.
+`roll_along_batch` and `roll_along_seq` return the tensor with the elements rolled along the batch
+or the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -588,7 +594,8 @@ tensor([[8, 7, 2, 1],
 
 ### topk
 
-`topk_along_batch` and `topk_along_seq` return the k largest (or smallest) elements along the batch or the sequence dimension.
+`topk_along_batch` and `topk_along_seq` return the k largest (or smallest) elements along the batch
+or the sequence dimension.
 
 ```pycon
 >>> import torch

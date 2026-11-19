@@ -418,7 +418,8 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ### std
 
-`std_along_batch` and `std_along_seq` return the standard deviation along the batch or the sequence dimension.
+`std_along_batch` and `std_along_seq` return the standard deviation along the batch or
+the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -444,7 +445,8 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ### any
 
-`any_along_batch` and `any_along_seq` return whether any element is true along the batch or the sequence dimension.
+`any_along_batch` and `any_along_seq` return whether any element is true along the batch or
+the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -461,7 +463,8 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ### all
 
-`all_along_batch` and `all_along_seq` return whether all the elements are true along the batch or the sequence dimension.
+`all_along_batch` and `all_along_seq` return whether all the elements are true along the batch or
+the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -478,7 +481,8 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ### logsumexp
 
-`logsumexp_along_batch` and `logsumexp_along_seq` return the log of the sum of exponentials along the batch or the sequence dimension.
+`logsumexp_along_batch` and `logsumexp_along_seq` return the log of the sum of exponentials along
+the batch or the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -491,7 +495,8 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ### flip
 
-`flip_along_batch` and `flip_along_seq` return the tensor with the order of the elements reversed along the batch or the sequence dimension.
+`flip_along_batch` and `flip_along_seq` return the tensor with the order of the elements reversed
+along the batch or the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -506,7 +511,8 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ### roll
 
-`roll_along_batch` and `roll_along_seq` return the tensor with the elements rolled along the batch or the sequence dimension.
+`roll_along_batch` and `roll_along_seq` return the tensor with the elements rolled along the batch
+or the sequence dimension.
 
 ```pycon
 >>> import torch
@@ -521,7 +527,8 @@ See the [Type Conversion](#type-conversion) section for more examples.
 
 ### topk
 
-`topk_along_batch` and `topk_along_seq` return the k largest (or smallest) elements along the batch or the sequence dimension.
+`topk_along_batch` and `topk_along_seq` return the k largest (or smallest) elements along the batch
+or the sequence dimension.
 
 ```pycon
 >>> import torch

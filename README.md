@@ -28,7 +28,9 @@
         <img  alt="Doc style: google" src="https://img.shields.io/badge/%20style-google-3666d6.svg">
     </a>
     <a href="https://github.com/astral-sh/ruff">
-        <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff" style="max-width:100%;">
+        <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json"
+             alt="Ruff"
+             style="max-width:100%;">
     </a>
     <a href="https://github.com/guilatrova/tryceratops">
         <img  alt="Doc style: google" src="https://img.shields.io/badge/try%2Fexcept%20style-tryceratops%20%F0%9F%A6%96%E2%9C%A8-black">
@@ -117,8 +119,8 @@ Please check the documentation to see all the implemented functions.
 
 ## Installation
 
-We highly recommend installing
-a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/).
+We highly recommend installing a
+[virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/).
 `batchtensor` can be installed from pip using the following command:
 
 ```shell

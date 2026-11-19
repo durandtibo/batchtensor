@@ -10,8 +10,8 @@ This guide will help you install `batchtensor` and verify your installation.
 - PyTorch 2.4 or later
 - A compatible operating system (Linux or macOS)
 
-It is highly recommended to install in
-a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
+It is highly recommended to install in a
+[virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 to keep your system in order.
 
 ## Installing with `uv pip` (recommended)
@@ -36,8 +36,9 @@ To install `batchtensor` from source, you can follow the steps below.
 
 ### Prerequisites
 
-The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management.
-Please refer to the [uv documentation](https://docs.astral.sh/uv/getting-started/installation/) for installation instructions.
+The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management. Please refer to the
+[uv documentation](https://docs.astral.sh/uv/getting-started/installation/) for
+installation instructions.
 
 You can verify the installation by running:
 
