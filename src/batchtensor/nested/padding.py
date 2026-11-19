@@ -116,11 +116,10 @@ def pad_sequences(samples: Sequence[T], *, value: float = 0.0, side: Side = "rig
     The container types of the output are the ones of the first sample.
 
     Note:
-        Like ``batchtensor.tensor.pad_sequences``, the dtype and device of
-        a leaf of the output are the ones of the leaf of the first sample.
-        The tensors of the other samples are copied into it, which casts
-        them to this dtype (e.g. a ``float`` value is truncated when the
-        first sample has an integer tensor).
+        Like ``batchtensor.tensor.pad_sequences``, the tensors at a leaf
+        position must have the same dtype and the same device. No cast or
+        device move is done. Cast the samples first with
+        ``batchtensor.nested.to`` if their dtypes differ.
 
     Args:
         samples: The samples to batch. They must have the same keys and
@@ -140,9 +139,10 @@ def pad_sequences(samples: Sequence[T], *, value: float = 0.0, side: Side = "rig
         TypeError: if a leaf is not a ``torch.Tensor``.
         ValueError: if ``samples`` is empty, if the samples do not have the
             same keys or lengths, if the trailing shapes of the tensors at
-            a leaf position differ, if a tensor is a scalar, if ``value``
-            cannot be represented in the dtype of the tensors, or if
-            ``side`` is not ``"left"`` or ``"right"``.
+            a leaf position differ, if their dtypes or devices differ, if a
+            tensor is a scalar, if ``value`` cannot be represented in the
+            dtype of the tensors, or if ``side`` is not ``"left"`` or
+            ``"right"``.
 
     Example:
         ```pycon

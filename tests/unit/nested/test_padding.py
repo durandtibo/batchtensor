@@ -170,8 +170,8 @@ def test_pad_sequences_same_lengths() -> None:
     assert objects_are_equal(pad_sequences(samples), {"a": torch.tensor([[1, 2], [3, 4]])})
 
 
-def test_pad_sequences_dtype_is_the_one_of_the_first_sample() -> None:
-    samples = [{"a": torch.tensor([1.5, 2.5])}, {"a": torch.tensor([1])}]
+def test_pad_sequences_dtype_is_the_one_of_the_samples() -> None:
+    samples = [{"a": torch.tensor([1.5, 2.5])}, {"a": torch.tensor([1.0])}]
     assert objects_are_equal(pad_sequences(samples), {"a": torch.tensor([[1.5, 2.5], [1.0, 0.0]])})
 
 
@@ -218,6 +218,11 @@ def test_pad_sequences_non_tensor_leaf() -> None:
     samples: Any = [{"a": "abc"}, {"a": "def"}]
     with pytest.raises(TypeError, match=r"Expected a torch.Tensor leaf but received str"):
         pad_sequences(samples)
+
+
+def test_pad_sequences_mixed_dtype() -> None:
+    with pytest.raises(ValueError, match="same dtype and device"):
+        pad_sequences([{"a": torch.tensor([1])}, {"a": torch.tensor([1.5])}])
 
 
 def test_pad_sequences_invalid_side() -> None:

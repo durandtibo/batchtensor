@@ -188,10 +188,9 @@ def pad_sequences(
     ``lengths_to_mask`` builds the mask of the padded batch.
 
     Note:
-        The dtype and device of the output are the ones of the first tensor.
-        The other tensors are copied into it, which casts them to this dtype
-        (e.g. ``1.5`` becomes ``1`` when the first tensor is a ``long``
-        tensor). No type promotion is done.
+        All the tensors must have the same dtype and the same device, and the
+        output has them. No cast, type promotion or device move is done. Cast
+        the tensors first (e.g. ``t.to(torch.float)``) if their dtypes differ.
 
     Args:
         tensors: The sequences to pad. Each tensor must have at least one
@@ -204,7 +203,7 @@ def pad_sequences(
 
     Returns:
         The padded tensor of shape ``(batch_size, max_len, ...)``. The
-            dtype and device are the ones of the first tensor.
+            dtype and device are the ones of the tensors.
 
     Raises:
         ValueError: if ``tensors`` is empty, if a tensor is a scalar, if the
@@ -247,6 +246,13 @@ def pad_sequences(
                 "tensors must have the same shape except for the first dimension but "
                 f"tensor 0 has shape {tuple(first.shape)} and tensor {i} has shape "
                 f"{tuple(tensor.shape)}"
+            )
+            raise ValueError(msg)
+        if tensor.dtype != first.dtype or tensor.device != first.device:
+            msg = (
+                "tensors must have the same dtype and device but "
+                f"tensor 0 has dtype {first.dtype} on {first.device} and "
+                f"tensor {i} has dtype {tensor.dtype} on {tensor.device}"
             )
             raise ValueError(msg)
     _check_fill_value(value, first.dtype)
