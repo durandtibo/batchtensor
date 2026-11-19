@@ -74,7 +74,7 @@ lines, of which 5.7k are docstrings.
 
 | #   | Finding                                                                                                                                                                                                                                                                                                                                                                                                    | Tag        | Property |
 | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
-| F1  | **The runtime dependency is a pre-release.** `dependencies = ["coola>=2.0.0a2,<3.0", ...]`. A stable `batchtensor` cannot depend on an alpha: `pip` skips pre-releases, so users need `--pre`. `rebuild_mapping` and `rebuild_sequence` are imported from `coola.recursive.rebuild`, a module path that `coola.recursive.__all__` does not export.                                                         | [verified] | P4, P14  |
+| F1  | **The runtime dependency is a pre-release, and the code still uses the old import path.** `dependencies = ["coola>=2.0.0a2,<3.0", ...]`. A stable `batchtensor` cannot depend on an alpha: `pip` skips pre-releases, so users need `--pre`. `coola 2.0.0a3` now exports `rebuild_mapping` and `rebuild_sequence` from `coola.recursive`, but `utils/structure.py` still imports them from `coola.recursive.rebuild`, which works on `a2` only. | [verified] | P4, P14  |
 | F2  | **Dataclasses are claimed and half supported.** Map functions, `chunk_*`, `split_*` and `shuffle_*` accept a dataclass at runtime. `cat_*`, `stack_*` and `pad_sequences` raise `TypeError`. Both type checkers reject a dataclass argument because `NestedTensor` excludes it. A claim that is true for 3 of 5 function families, and untyped for all, is not a property.                                  | [verified] | P5, P13  |
 | F3  | **`docs/docs/architecture.md` contradicts the properties.** It teaches `recursive_apply` as the nested pattern (Pattern 2, "Adding New Nested Operations", step 2), says functions are named `operation_along_dimension`, says tensor functions "return a new tensor" (views exist), shows `keepdim` as positional, and lists "Future Directions" that are not a plan. `design_principles.md` is right.      | [verified] | P4, P15  |
 | F4  | **136 identical `Note:` blocks.** Every function carries "This function assumes the batch dimension is the first dimension of the tensors. All the tensors should have the same batch size." (about 4 lines, 136 times, about 550 lines). It restates P1 on every function, and for nested functions the "same size" sentence is the cross-leaf rule that P8 says is *not* validated by map functions.      | [verified] | P1, P15  |
@@ -161,13 +161,13 @@ No function is added or removed. The API is the one of Appendix A, with these ch
 | Docstrings of `tensor` and `nested` | The `Note:` block is removed (F4). The batch and sequence statement moves to the module docstring.        | No       |
 | `P5` and `NestedTensor`            | Dataclasses and sets leave the contract (D1). They are neither tested nor documented as supported.        | Yes (doc) |
 | `docs/docs/architecture.md`        | Rewritten from the properties, 80 lines or less, no code pattern that differs from `src`.                 | No       |
-| `pyproject.toml`                   | `coola` is a stable `>=2.0` release (F1).                                                                 | No       |
+| `pyproject.toml`                   | `coola>=2.0.0a3` now (F1), a stable `>=2.0` release before the first non-alpha `batchtensor`.             | No       |
 
 ## 5. Dependents
 
 | Package      | Change                                                                                                                                                  |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `coola`      | Release a stable 2.0. Export `rebuild_mapping` and `rebuild_sequence` from `coola.recursive` (F1). Optionally add a multi-input `recursive_zip` (F6).    |
+| `coola`      | Done in `2.0.0a3`: `rebuild_mapping`, `rebuild_sequence` and `rebuild_set` are exported from `coola.recursive`. Left: release a stable 2.0, and optionally add a multi-input traversal (F6).    |
 | `batchtensor` users | Code that passes a dataclass or a set keeps working until a `coola` change breaks it. The migration guide says it is unsupported.                 |
 
 ## 6. Evidence
@@ -214,10 +214,11 @@ One pull request per step, each releasable.
 | 3    | State the container rule (D1), the cross-leaf rule and the empty-structure rule (F8) in `design_principles.md`. Remove "dataclass" from P5, the docs and the tests that promise it; add one test that pins the documented `TypeError` of `combine_tensors` on a dataclass. | Yes (doc) |
 | 4    | Add the contract test T3 (P8 table).                                                                                                                                | No       |
 | 5    | Add the admission rule (Section 3.4) to `CONTRIBUTING.md`.                                                                                                          | No       |
-| 6    | When `coola` 2.0 is released and exports the rebuild functions: depend on `coola>=2.0,<3.0` and import `rebuild_*` from `coola.recursive` (F1).                     | No       |
-| 7    | Set the classifier `Development Status` and the version to the first non-alpha release. Remove the `README` sentence "the API is not stable" only when D3 is answered. | No       |
+| 6    | Require `coola>=2.0.0a3` and import `rebuild_mapping` and `rebuild_sequence` from `coola.recursive` (F1). Verified on `a3`: tests, `ty`, `pyright` and `lint-imports` pass; `ruff` only asks to re-sort the import. Update `uv.lock`. | No       |
+| 7    | When `coola` 2.0 is stable: depend on `coola>=2.0,<3.0`.                                                                                                            | No       |
+| 8    | Set the classifier `Development Status` and the version to the first non-alpha release. Remove the `README` sentence "the API is not stable" only when D3 is answered. | No       |
 
-Steps 1 to 5 do not depend on `coola` and can ship now. Step 6 blocks the release.
+Steps 1 to 6 can ship now. Step 7 blocks the release.
 
 ## 8. Tests and gates
 
@@ -245,7 +246,7 @@ Steps 1 to 5 do not depend on `coola` and can ship now. Step 6 blocks the releas
 | --- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | D1  | Dataclasses and sets: supported or outside the contract?                                | **Outside the contract.** `combine_tensors` cannot rebuild a dataclass, and typing them needs a protocol that `NestedTensor` cannot express. Alternative: support them everywhere, which needs `coola` to rebuild dataclasses from several items. Not worth it for the use case (batches are dicts). |
 | D2  | Remove the `Note:` blocks or keep them as a reminder?                                   | **Remove.** The rule is in the module docstring and the properties. 550 lines, 136 places to update if the rule changes.                                |
-| D3  | When is the API stable?                                                                 | After step 6 and one release with no change. Until then keep "pre-1.0".                                                                                |
+| D3  | When is the API stable?                                                                 | After step 7 and one release with no change. Until then keep "pre-1.0".                                                                                |
 | D4  | Generate the nested twins instead of writing them?                                      | **No.** Generation hides the signature from the type checkers and the docs, and a nested function is already one line. The cost is docstrings, which are the product. |
 | D5  | Add pointwise nested functions back (`exp`, `clamp`)?                                   | **No.** `apply_to_tensors(data, torch.exp)` is the API; they were removed for that reason (migration guide).                                            |
 | D6  | Add a multi-input traversal to `coola` (F6)?                                            | **Yes, if `coola` agrees.** It removes `_combine_tensors` and its container walk. Otherwise keep the current walk with T4.                              |
@@ -286,4 +287,4 @@ The previous version listed 11 steps, all merged: the three structure helpers
 pointwise nested functions, the validation contract, `nested.batch_size` and `seq_len`,
 `pad_sequences`, the masked reductions, `pyright` in CI, the gates for P1, P4 and P7, and the
 migration guide. The findings G1 to G8 of that version are fixed on `main`. Of G9 to G11, G9 (the
-cost of repetition) is F5 here, G10 (small edges) is F8, and G11 (private `rebuild` import) is F1.
+cost of repetition) is F5 here, G10 (small edges) is F8, and G11 (private `rebuild` import) is F1: `coola 2.0.0a3` exports the functions, the import in `batchtensor` is step 6.
