@@ -37,6 +37,23 @@ We actively welcome your pull requests.
    pre-commit run --all-files
    ```
 
+## Adding an operation
+
+Every operation costs four functions (`tensor` and `nested`, `_along_batch` and `_along_seq`), four
+docstrings and four test blocks. An operation enters `tensor` and `nested` only if all of these
+hold:
+
+1. It needs the fixed dimension (`torch.f(x, dim=BATCH_DIM)`), or it composes two torch calls in a
+   way that is easy to get wrong (`masked_*`, `pad_sequences`). A pointwise function (`exp`,
+   `clamp`) does not: use `apply_to_tensors(data, torch.exp)`.
+2. It has a `nested` twin that is one call to `apply_to_tensors` (1 -> 1), `split_tensors`
+   (1 -> N) or `combine_tensors` (N -> 1). A function that does not fit one of these shapes
+   belongs in `batchtensor.utils.structure` as a helper, like `get_size`.
+3. It comes with the four functions, or a stated reason why only one dimension makes sense (as
+   `masked_*_along_seq`).
+4. It has a runnable example and a test for each property of the
+   [design principles](https://durandtibo.github.io/batchtensor/design_principles) it touches.
+
 ## Issues
 
 We use GitHub issues to track public bugs or feature requests.
