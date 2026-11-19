@@ -55,7 +55,7 @@ CASES = [
     pytest.param(
         lambda: nested.cat_along_batch([]),
         ValueError,
-        r"Cannot combine an empty sequence of structures",
+        r"items must contain at least one structure",
         id="combine-empty",
     ),
     pytest.param(
@@ -67,7 +67,7 @@ CASES = [
     pytest.param(
         lambda: nested.cat_along_seq(DIFFERENT_LENGTHS),
         ValueError,
-        r"The sequences must have the same length",
+        r"The containers must have the same length",
         id="combine-different-lengths",
     ),
     # Leaves disagree on the split, chunk or shuffle dimension

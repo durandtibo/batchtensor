@@ -30,11 +30,11 @@ def cat_along_batch(data: Sequence[T]) -> T:
     in the concatenating dimension) or be empty.
 
     Args:
-        data: The input data to concatenate. The dictionaries must have
+        data: The input data to concatenate. The structures must have
             the same keys.
 
     Raises:
-        KeyError: if the dictionaries do not all have the same keys.
+        ValueError: if the structures are empty, or do not have the same keys or lengths.
 
     Returns:
         The concatenated tensors along the batch dimension.
@@ -68,11 +68,11 @@ def cat_along_seq(data: Sequence[T]) -> T:
     in the concatenating dimension) or be empty.
 
     Args:
-        data: The input data to concatenate. The dictionaries must have
+        data: The input data to concatenate. The structures must have
             the same keys.
 
     Raises:
-        KeyError: if the dictionaries do not all have the same keys.
+        ValueError: if the structures are empty, or do not have the same keys or lengths.
 
     Returns:
         The concatenated tensors along the sequence dimension.
@@ -166,11 +166,11 @@ def stack_along_batch(data: Sequence[T]) -> T:
     tensor must have the same shape across all the samples.
 
     Args:
-        data: The input samples to stack. The dictionaries must have
+        data: The input samples to stack. The structures must have
             the same keys.
 
     Raises:
-        KeyError: if the dictionaries do not all have the same keys.
+        ValueError: if the structures are empty, or do not have the same keys or lengths.
 
     Returns:
         The stacked tensors along a new batch dimension.
@@ -205,11 +205,11 @@ def stack_along_seq(data: Sequence[T]) -> T:
     the samples.
 
     Args:
-        data: The input samples to stack. The dictionaries must have
+        data: The input samples to stack. The structures must have
             the same keys.
 
     Raises:
-        KeyError: if the dictionaries do not all have the same keys.
+        ValueError: if the structures are empty, or do not have the same keys or lengths.
 
     Returns:
         The stacked tensors along a new sequence dimension.

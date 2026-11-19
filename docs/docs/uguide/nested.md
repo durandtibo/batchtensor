@@ -27,8 +27,7 @@ tensors in these structures while preserving the nested structure.
   has the container type of the input.
 
 Other containers (sets, dataclasses) are outside the contract and the `NestedTensor` type. They
-may work through `coola`, but this is neither tested nor guaranteed. `cat_*`, `stack_*` and
-`pad_sequences` raise a `TypeError` on a dataclass.
+may work through `coola`, but this is neither tested nor guaranteed.
 
 **Leaves:**
 

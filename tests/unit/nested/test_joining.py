@@ -54,7 +54,7 @@ def test_cat_along_batch(data: Sequence[dict[Hashable, torch.Tensor]]) -> None:
 
 
 def test_cat_along_batch_empty() -> None:
-    with pytest.raises(ValueError, match="empty sequence"):
+    with pytest.raises(ValueError, match="items must contain at least one structure"):
         cat_along_batch([])
 
 
@@ -108,7 +108,7 @@ def test_cat_along_seq(data: Sequence[dict[Hashable, torch.Tensor]]) -> None:
 
 
 def test_cat_along_seq_empty() -> None:
-    with pytest.raises(ValueError, match="empty sequence"):
+    with pytest.raises(ValueError, match="items must contain at least one structure"):
         cat_along_seq([])
 
 
@@ -321,7 +321,7 @@ def test_stack_along_batch() -> None:
 
 
 def test_stack_along_batch_empty() -> None:
-    with pytest.raises(ValueError, match="empty sequence"):
+    with pytest.raises(ValueError, match="items must contain at least one structure"):
         stack_along_batch([])
 
 
@@ -353,7 +353,7 @@ def test_stack_along_seq() -> None:
 
 
 def test_stack_along_seq_empty() -> None:
-    with pytest.raises(ValueError, match="empty sequence"):
+    with pytest.raises(ValueError, match="items must contain at least one structure"):
         stack_along_seq([])
 
 
