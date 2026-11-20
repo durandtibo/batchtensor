@@ -2257,7 +2257,7 @@ stacks them into a batch, one leaf position at a time:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pad_sequences</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
 <span class="go">{'x': tensor([[1, 2, 3], [4, 0, 0]]), 'mask': tensor([[ True,  True,  True], [ True, False, False]])}</span>
 </code></pre></div>
-<p>The dtype of each leaf is the one of the leaf of the first sample.</p>
+<p>The tensors at a leaf position must have the same dtype and device, as in <code>tensor.pad_sequences</code>.</p>
 <h2 id="masked-reductions">Masked Reductions<a class="headerlink" href="#masked-reductions" title="Permanent link">&para;</a></h2>
 <p>The masked reductions take one <code>mask</code> of shape <code>(batch, seq)</code> that is shared by all the leaves:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>

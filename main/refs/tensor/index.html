@@ -7914,10 +7914,9 @@ sequences are <code>[t.shape[0] for t in tensors]</code>, and
 
 <details class="note" open>
   <summary>Note</summary>
-  <p>The dtype and device of the output are the ones of the first tensor.
-The other tensors are copied into it, which casts them to this dtype
-(e.g. <code>1.5</code> becomes <code>1</code> when the first tensor is a <code>long</code>
-tensor). No type promotion is done.</p>
+  <p>All the tensors must have the same dtype and the same device, and the
+output has them. No cast, type promotion or device move is done. Cast
+the tensors first (e.g. <code>t.to(torch.float)</code>) if their dtypes differ.</p>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -8003,7 +8002,7 @@ representable in the dtype of the tensors.</p>
             <td>
               <div class="doc-md-description">
                 <p>The padded tensor of shape <code>(batch_size, max_len, ...)</code>. The
-dtype and device are the ones of the first tensor.</p>
+dtype and device are the ones of the tensors.</p>
               </div>
             </td>
           </tr>

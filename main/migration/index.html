@@ -653,6 +653,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#pad_sequences-does-not-cast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pad_sequences does not cast
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#new" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1111,6 +1122,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#pad_sequences-does-not-cast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pad_sequences does not cast
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#new" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1291,6 +1313,11 @@
 <h2 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h2>
 <p><code>cat_*</code>, <code>stack_*</code>, <code>chunk_*</code> and <code>split_*</code> keep <code>OrderedDict</code>, <code>defaultdict</code> and named-tuple types
 (they returned plain <code>dict</code> and <code>tuple</code>).</p>
+<h2 id="pad_sequences-does-not-cast"><code>pad_sequences</code> does not cast<a class="headerlink" href="#pad_sequences-does-not-cast" title="Permanent link">&para;</a></h2>
+<p><code>pad_sequences</code> (<code>tensor</code> and <code>nested</code>) raises a <code>ValueError</code> when the tensors have different dtypes
+or devices. It used to cast them silently to the dtype of the first tensor (<code>1.5</code> became <code>1</code>).
+Cast the tensors first: <code>[t.to(torch.float) for t in tensors]</code>, or
+<code>nested.to(sample, dtype=torch.float)</code> for each sample.</p>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <p><code>pad_along_*(..., side="left")</code>, <code>repeat_along_batch</code>, <code>pad_sequences</code>, an <code>int</code> seed for
 <code>shuffle_*(generator=...)</code>, and <code>batchtensor.utils.structure</code> (<code>apply_to_tensors</code>, <code>split_tensors</code>,

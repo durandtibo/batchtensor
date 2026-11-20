@@ -8480,11 +8480,10 @@ The container types of the output are the ones of the first sample.</p>
 
 <details class="note" open>
   <summary>Note</summary>
-  <p>Like <code>batchtensor.tensor.pad_sequences</code>, the dtype and device of
-a leaf of the output are the ones of the leaf of the first sample.
-The tensors of the other samples are copied into it, which casts
-them to this dtype (e.g. a <code>float</code> value is truncated when the
-first sample has an integer tensor).</p>
+  <p>Like <code>batchtensor.tensor.pad_sequences</code>, the tensors at a leaf
+position must have the same dtype and the same device. No cast or
+device move is done. Cast the samples first with
+<code>batchtensor.nested.to</code> if their dtypes differ.</p>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -8606,9 +8605,10 @@ tensor of shape <code>(batch_size, max_len, ...)</code>.</p>
               <div class="doc-md-description">
                 <p>if <code>samples</code> is empty, if the samples do not have the
 same keys or lengths, if the trailing shapes of the tensors at
-a leaf position differ, if a tensor is a scalar, if <code>value</code>
-cannot be represented in the dtype of the tensors, or if
-<code>side</code> is not <code>"left"</code> or <code>"right"</code>.</p>
+a leaf position differ, if their dtypes or devices differ, if a
+tensor is a scalar, if <code>value</code> cannot be represented in the
+dtype of the tensors, or if <code>side</code> is not <code>"left"</code> or
+<code>"right"</code>.</p>
               </div>
             </td>
           </tr>
