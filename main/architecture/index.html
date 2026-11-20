@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#architecture-and-design" class="md-skip">
+        <a href="#architecture" class="md-skip">
           Skip to content
         </a>
       
@@ -555,10 +555,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#library-structure" class="md-nav__link">
+  <a href="#layers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Library Structure
+        Layers
       
     </span>
   </a>
@@ -566,282 +566,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#design-principles" class="md-nav__link">
+  <a href="#the-tensor-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design Principles
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Design Principles">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-consistency" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Consistency
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-separation-of-concerns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Separation of Concerns
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-minimal-dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Minimal Dependencies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-type-safety" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Type Safety
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#module-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Module Details
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Module Details">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#constants-module" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constants Module
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tensor-module" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tensor Module
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nested-module" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Nested Module
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utils-module" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utils Module
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implementation-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementation Patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Implementation Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pattern-1-tensor-operations-use-constants" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern 1: Tensor Operations Use Constants
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pattern-2-nested-operations-delegate-to-tensor-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern 2: Nested Operations Delegate to Tensor Operations
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pattern-3-joining-and-splitting-use-structure-helpers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern 3: Joining and Splitting Use Structure Helpers
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#extension-points" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Extension Points
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Extension Points">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-new-tensor-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Adding New Tensor Operations
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adding-new-nested-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Adding New Nested Operations
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adding-new-data-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Adding New Data Types
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Performance Considerations
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Performance Considerations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#memory-efficiency" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Memory Efficiency
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#computational-efficiency" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Computational Efficiency
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nested-structure-overhead" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Nested Structure Overhead
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing-strategy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing Strategy
+        The tensor level
       
     </span>
   </a>
@@ -849,10 +577,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#future-directions" class="md-nav__link">
+  <a href="#the-nested-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Future Directions
+        The nested level
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-an-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding an operation
       
     </span>
   </a>
@@ -863,7 +602,7 @@
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
-        See Also
+        See also
       
     </span>
   </a>
@@ -1328,10 +1067,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#library-structure" class="md-nav__link">
+  <a href="#layers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Library Structure
+        Layers
       
     </span>
   </a>
@@ -1339,282 +1078,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#design-principles" class="md-nav__link">
+  <a href="#the-tensor-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design Principles
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Design Principles">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-consistency" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Consistency
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-separation-of-concerns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Separation of Concerns
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-minimal-dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Minimal Dependencies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-type-safety" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Type Safety
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#module-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Module Details
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Module Details">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#constants-module" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constants Module
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tensor-module" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tensor Module
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nested-module" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Nested Module
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utils-module" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utils Module
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implementation-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementation Patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Implementation Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pattern-1-tensor-operations-use-constants" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern 1: Tensor Operations Use Constants
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pattern-2-nested-operations-delegate-to-tensor-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern 2: Nested Operations Delegate to Tensor Operations
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pattern-3-joining-and-splitting-use-structure-helpers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pattern 3: Joining and Splitting Use Structure Helpers
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#extension-points" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Extension Points
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Extension Points">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-new-tensor-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Adding New Tensor Operations
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adding-new-nested-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Adding New Nested Operations
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adding-new-data-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Adding New Data Types
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Performance Considerations
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Performance Considerations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#memory-efficiency" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Memory Efficiency
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#computational-efficiency" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Computational Efficiency
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nested-structure-overhead" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Nested Structure Overhead
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing-strategy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing Strategy
+        The tensor level
       
     </span>
   </a>
@@ -1622,10 +1089,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#future-directions" class="md-nav__link">
+  <a href="#the-nested-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Future Directions
+        The nested level
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-an-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding an operation
       
     </span>
   </a>
@@ -1636,7 +1114,7 @@
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
-        See Also
+        See also
       
     </span>
   </a>
@@ -1663,242 +1141,82 @@
   
 
 
-<h1 id="architecture-and-design">Architecture and Design<a class="headerlink" href="#architecture-and-design" title="Permanent link">&para;</a></h1>
-<p>This document provides an overview of the <code>batchtensor</code> library architecture, design principles, and
-implementation details.</p>
-<h2 id="library-structure">Library Structure<a class="headerlink" href="#library-structure" title="Permanent link">&para;</a></h2>
-<p>The <code>batchtensor</code> library is organized into four main modules:</p>
-<div class="highlight"><pre><span></span><code>batchtensor/
-├── nested/         # Operations for nested data structures
-├── tensor/         # Operations for individual tensors
-├── utils/          # Seed management and the structure helpers
-└── constants.py    # Dimension constants
+<h1 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h1>
+<p>This page describes how <code>batchtensor</code> is built. The properties it guarantees (P1 to P15) are in
+<a href="../design_principles/">Design principles</a>. They are not repeated here.</p>
+<h2 id="layers">Layers<a class="headerlink" href="#layers" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>constants          BATCH_DIM, SEQ_DIM
+   ^
+utils              types      NestedTensor, T
+                   structure  apply_to_tensors, split_tensors, combine_tensors, get_size
+                   seed       setup_torch_generator, random_permutation
+   ^
+tensor             one torch call with the dim fixed (+ masked_*, lengths_to_mask, pad_sequences)
+   ^
+nested             one helper call per function
 </code></pre></div>
-<h2 id="design-principles">Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">&para;</a></h2>
-<h3 id="1-consistency">1. Consistency<a class="headerlink" href="#1-consistency" title="Permanent link">&para;</a></h3>
-<p>All functions in batchtensor follow consistent conventions:</p>
-<ul>
-<li><strong>Batch dimension is always dimension 0</strong>: The first dimension of tensors represents the batch</li>
-<li><strong>Sequence dimension is always dimension 1</strong>: The second dimension represents sequences/time steps</li>
-<li><strong>Function naming</strong>: Functions are named with the pattern <code>operation_along_dimension</code></li>
-</ul>
-<h3 id="2-separation-of-concerns">2. Separation of Concerns<a class="headerlink" href="#2-separation-of-concerns" title="Permanent link">&para;</a></h3>
-<p>The library separates operations into two levels:</p>
-<ul>
-<li><strong><code>tensor</code> module</strong>: Low-level operations on individual tensors</li>
-<li><strong><code>nested</code> module</strong>: High-level operations that recursively apply tensor operations to nested
-  structures</li>
-</ul>
-<p>This separation allows users to:</p>
-<ul>
-<li>Use tensor operations directly when working with single tensors</li>
-<li>Use nested operations when working with complex data structures</li>
-<li>Compose operations from both modules as needed</li>
-</ul>
-<h3 id="3-minimal-dependencies">3. Minimal Dependencies<a class="headerlink" href="#3-minimal-dependencies" title="Permanent link">&para;</a></h3>
-<p>The library has minimal dependencies:</p>
-<ul>
-<li><strong>PyTorch</strong>: Core tensor operations</li>
-<li><strong>coola</strong>: Recursive operations on nested structures</li>
-</ul>
-<p>This keeps the library lightweight and reduces potential conflicts with other packages.</p>
-<h3 id="4-type-safety">4. Type Safety<a class="headerlink" href="#4-type-safety" title="Permanent link">&para;</a></h3>
-<p>All functions include comprehensive type hints:</p>
-<ul>
-<li>Input and output types are explicitly declared</li>
-<li>Generic types are used appropriately</li>
-<li>TYPE_CHECKING blocks avoid runtime overhead</li>
-</ul>
-<h2 id="module-details">Module Details<a class="headerlink" href="#module-details" title="Permanent link">&para;</a></h2>
-<h3 id="constants-module">Constants Module<a class="headerlink" href="#constants-module" title="Permanent link">&para;</a></h3>
-<p>Defines dimension indices used throughout the library:</p>
-<ul>
-<li><code>BATCH_DIM = 0</code>: Identifies the batch dimension</li>
-<li><code>SEQ_DIM = 1</code>: Identifies the sequence dimension</li>
-</ul>
-<p>Using constants instead of magic numbers improves code clarity and maintainability.</p>
-<h3 id="tensor-module">Tensor Module<a class="headerlink" href="#tensor-module" title="Permanent link">&para;</a></h3>
-<p>The tensor module provides low-level operations for individual tensors. It's organized into
-sub-modules by operation type:</p>
-<ul>
-<li><strong>slicing.py</strong>: Slice, chunk, split operations</li>
-<li><strong>indexing.py</strong>: Index selection operations</li>
-<li><strong>joining.py</strong>: Concatenation and repetition</li>
-<li><strong>reduction.py</strong>: Sum, mean, min, max, median, etc.</li>
-<li><strong>comparison.py</strong>: Sorting and comparison</li>
-<li><strong>math.py</strong>: Cumulative operations</li>
-<li><strong>permutation.py</strong>: Shuffling and permuting</li>
-<li><strong>masking.py</strong>: Sequence length masks</li>
-<li><strong>padding.py</strong>: Padding along the batch and sequence dimensions</li>
-</ul>
-<p>Each function:</p>
-<ul>
-<li>Operates on a single PyTorch tensor</li>
-<li>Assumes standard dimension conventions (batch=0, seq=1)</li>
-<li>Returns a new tensor (or tuple of tensors)</li>
-<li>Includes comprehensive docstrings with examples</li>
-</ul>
-<h3 id="nested-module">Nested Module<a class="headerlink" href="#nested-module" title="Permanent link">&para;</a></h3>
-<p>The nested module provides high-level operations for nested data structures. It's organized to
-mirror the tensor module:</p>
-<ul>
-<li><strong>slicing.py</strong>: Nested slicing operations</li>
-<li><strong>indexing.py</strong>: Nested index selection</li>
-<li><strong>joining.py</strong>: Nested concatenation and repetition</li>
-<li><strong>reduction.py</strong>: Nested reductions</li>
-<li><strong>comparison.py</strong>: Nested sorting</li>
-<li><strong>math.py</strong>: Nested cumulative operations</li>
-<li><strong>permutation.py</strong>: Nested shuffling and permuting</li>
-<li><strong>padding.py</strong>: Nested padding</li>
-<li><strong>conversion.py</strong>: NumPy conversion</li>
-<li><strong>misc.py</strong>: Miscellaneous utilities</li>
-<li><strong>size.py</strong>: Batch size and sequence length of a nested structure</li>
-</ul>
-<p>Each nested function:</p>
-<ul>
-<li>Recursively applies the corresponding tensor operation</li>
-<li>Preserves the nested structure (dict, list, tuple, named tuple, ...)</li>
-<li>Goes through <code>apply_to_tensors</code>, <code>split_tensors</code> and <code>combine_tensors</code> (see Utils Module)</li>
-<li>Handles arbitrary nesting depth</li>
-</ul>
-<h3 id="utils-module">Utils Module<a class="headerlink" href="#utils-module" title="Permanent link">&para;</a></h3>
-<p>The utils module provides supporting functionality:</p>
-<ul>
-<li><strong>seed.py</strong>: Random seed management for reproducibility</li>
-<li><code>setup_torch_generator()</code>: Flexible generator setup</li>
-<li><code>random_permutation()</code>: Random permutation from a generator, a seed or the global RNG</li>
-<li><strong>structure.py</strong>: The only code that traverses nested structures</li>
-<li><code>apply_to_tensors()</code>: Map a tensor function over the leaves (<code>TypeError</code> for a non-tensor leaf)</li>
-<li><code>split_tensors()</code> / <code>combine_tensors()</code>: One structure to N, and N to one</li>
-<li><code>get_size()</code>: Common size of the leaves along a dimension</li>
-</ul>
-<p>The layering is <code>constants</code> &lt;- <code>utils</code> &lt;- <code>tensor</code> &lt;- <code>nested</code>, enforced by <code>import-linter</code>.
-See <a href="../design_principles/">Design principles</a> and the <a href="../migration/">Migration guide</a>.</p>
-<h2 id="implementation-patterns">Implementation Patterns<a class="headerlink" href="#implementation-patterns" title="Permanent link">&para;</a></h2>
-<h3 id="pattern-1-tensor-operations-use-constants">Pattern 1: Tensor Operations Use Constants<a class="headerlink" href="#pattern-1-tensor-operations-use-constants" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">BATCH_DIM</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">sum_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Sum all elements along the batch dimension.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        tensor: The input tensor.</span>
-<span class="sd">        keepdim: Whether to keep the reduced dimension.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        The sum along the batch dimension.</span>
-<span class="sd">    """</span>
+<p>A module imports only from the layers on its left in this list: <code>constants</code> &lt;- <code>utils</code> &lt;-
+<code>tensor</code> &lt;- <code>nested</code>. <code>import-linter</code> enforces it in CI.</p>
+<h2 id="the-tensor-level">The <code>tensor</code> level<a class="headerlink" href="#the-tensor-level" title="Permanent link">&para;</a></h2>
+<p>A function of <code>tensor</code> is one torch call with the dimension taken from <code>BATCH_DIM</code> or <code>SEQ_DIM</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sum_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">BATCH_DIM</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="n">keepdim</span><span class="p">)</span>
 </code></pre></div>
-<p>This ensures consistency and makes the code self-documenting.</p>
-<h3 id="pattern-2-nested-operations-delegate-to-tensor-operations">Pattern 2: Nested Operations Delegate to Tensor Operations<a class="headerlink" href="#pattern-2-nested-operations-delegate-to-tensor-operations" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">coola.recursive</span><span class="w"> </span><span class="kn">import</span> <span class="n">recursive_apply</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensor</span> <span class="k">as</span> <span class="n">bt</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">slice_along_batch</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-    <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">stop</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Slice all tensors along the batch dimension.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        data: Nested structure containing tensors.</span>
-<span class="sd">        start: Start index.</span>
-<span class="sd">        stop: Stop index.</span>
-<span class="sd">        step: Step size.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Sliced nested structure.</span>
-<span class="sd">    """</span>
-    <span class="k">return</span> <span class="n">recursive_apply</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">bt</span><span class="o">.</span><span class="n">slice_along_batch</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">))</span>
+<p>The sub-modules group the functions by operation: <code>slicing</code>, <code>indexing</code>, <code>joining</code>, <code>reduction</code>,
+<code>comparison</code>, <code>math</code>, <code>permutation</code>, <code>masking</code> and <code>padding</code>.</p>
+<h2 id="the-nested-level">The <code>nested</code> level<a class="headerlink" href="#the-nested-level" title="Permanent link">&para;</a></h2>
+<p>The sub-modules of <code>nested</code> mirror the ones of <code>tensor</code>, plus <code>conversion</code> (NumPy), <code>misc</code>
+(<code>clone</code>, <code>detach</code>, <code>to</code>, ...) and <code>size</code> (<code>batch_size</code>, <code>seq_len</code>). A nested function has no
+logic. It is one call to one of three helpers of <code>batchtensor.utils.structure</code>, which are the only
+code that traverses a nested structure:</p>
+<table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>Helper</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 -&gt; 1</td>
+<td><code>apply_to_tensors(data, fn)</code></td>
+<td>reductions, math, indexing, slicing, padding, masking</td>
+</tr>
+<tr>
+<td>1 -&gt; N</td>
+<td><code>split_tensors(data, fn)</code></td>
+<td><code>chunk_*</code>, <code>split_*</code></td>
+</tr>
+<tr>
+<td>N -&gt; 1</td>
+<td><code>combine_tensors(items, fn)</code></td>
+<td><code>cat_*</code>, <code>stack_*</code>, <code>pad_sequences</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sum_along_batch</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">apply_to_tensors</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">bt</span><span class="o">.</span><span class="n">sum_along_batch</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="n">keepdim</span><span class="p">))</span>
 </code></pre></div>
-<p>This reduces code duplication and ensures nested operations behave consistently.</p>
-<h3 id="pattern-3-joining-and-splitting-use-structure-helpers">Pattern 3: Joining and Splitting Use Structure Helpers<a class="headerlink" href="#pattern-3-joining-and-splitting-use-structure-helpers" title="Permanent link">&para;</a></h3>
-<p><code>cat_along_batch</code>, <code>stack_along_batch</code> and the <code>chunk_*</code> / <code>split_*</code> functions cannot use
-<code>recursive_apply</code> because they combine several structures or return several structures. They use
-<code>batchtensor.utils.structure.combine_tensors</code> and <code>split_tensors</code>, which walk the structures and
-call the tensor function on each leaf. Container types (<code>OrderedDict</code>, named tuples, ...) are kept:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensor</span> <span class="k">as</span> <span class="n">bt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">split_tensors</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">chunk_along_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">chunks</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">split_tensors</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">bt</span><span class="o">.</span><span class="n">chunk_along_batch</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">))</span>
-</code></pre></div>
-<p>This keeps the structure of the output aligned with the structure of the input.</p>
-<h2 id="extension-points">Extension Points<a class="headerlink" href="#extension-points" title="Permanent link">&para;</a></h2>
-<p>The library can be extended in several ways:</p>
-<h3 id="adding-new-tensor-operations">Adding New Tensor Operations<a class="headerlink" href="#adding-new-tensor-operations" title="Permanent link">&para;</a></h3>
+<p><code>apply_to_tensors</code> and <code>split_tensors</code> use <code>coola.recursive.recursive_apply</code>, so the container
+types, keys and order are the ones of <code>coola</code>. <code>combine_tensors</code> walks several structures in
+parallel because <code>coola</code> has no multi-input traversal. A function that does not fit one of the
+three shapes is not a nested wrapper: it is a helper of <code>utils.structure</code>, like <code>get_size</code>.</p>
+<h2 id="adding-an-operation">Adding an operation<a class="headerlink" href="#adding-an-operation" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Add the function to the appropriate sub-module in <code>tensor/</code></li>
-<li>Follow existing naming conventions</li>
-<li>Include comprehensive docstring with example</li>
-<li>Export from <code>tensor/__init__.py</code></li>
+<li>Add the function to the sub-module of <code>tensor</code> and export it from <code>tensor/__init__.py</code>.</li>
+<li>Add its twin to the sub-module of <code>nested</code> with the same name, options and defaults, using one
+   of the three helpers, and export it from <code>nested/__init__.py</code>.</li>
+<li>Add the <code>_along_batch</code> and <code>_along_seq</code> variants, with a docstring and a runnable example.</li>
+<li>Add the unit tests, and update the parity and property tests if the function is an exception.</li>
 </ol>
-<h3 id="adding-new-nested-operations">Adding New Nested Operations<a class="headerlink" href="#adding-new-nested-operations" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Add the corresponding function to <code>nested/</code></li>
-<li>Use <code>recursive_apply</code> to delegate to tensor operations</li>
-<li>Export from <code>nested/__init__.py</code></li>
-</ol>
-<h3 id="adding-new-data-types">Adding New Data Types<a class="headerlink" href="#adding-new-data-types" title="Permanent link">&para;</a></h3>
-<p>The nested operations work with any data structure that <code>coola.recursive_apply</code> supports:</p>
+<p>A pointwise function (<code>exp</code>, <code>clamp</code>) is not added: use <code>apply_to_tensors(data, torch.exp)</code>.</p>
+<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Dictionaries</li>
-<li>Lists</li>
-<li>Tuples</li>
-<li>Custom classes: register a transformer with <code>coola.recursive.register_transformers</code></li>
-</ul>
-<h2 id="performance-considerations">Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">&para;</a></h2>
-<h3 id="memory-efficiency">Memory Efficiency<a class="headerlink" href="#memory-efficiency" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Operations use views when possible (e.g., <code>slice</code>, <code>select</code>)</li>
-<li>Avoid unnecessary copies</li>
-<li>Leverage PyTorch's memory management</li>
-</ul>
-<h3 id="computational-efficiency">Computational Efficiency<a class="headerlink" href="#computational-efficiency" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Delegate to PyTorch's optimized operations</li>
-<li>Minimize Python overhead</li>
-<li>Support GPU acceleration through PyTorch</li>
-</ul>
-<h3 id="nested-structure-overhead">Nested Structure Overhead<a class="headerlink" href="#nested-structure-overhead" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Recursive operations have minimal overhead</li>
-<li>Dictionary access is O(1)</li>
-<li>Most time is spent in PyTorch operations, not structure traversal</li>
-</ul>
-<h2 id="testing-strategy">Testing Strategy<a class="headerlink" href="#testing-strategy" title="Permanent link">&para;</a></h2>
-<p>The library uses comprehensive testing:</p>
-<ul>
-<li><strong>Unit tests</strong>: Test individual functions with various inputs</li>
-<li><strong>Integration tests</strong>: Test combinations of operations</li>
-<li><strong>Doctests</strong>: Verify examples in docstrings</li>
-<li><strong>Type checking</strong>: Use ty for static type checking</li>
-</ul>
-<h2 id="future-directions">Future Directions<a class="headerlink" href="#future-directions" title="Permanent link">&para;</a></h2>
-<p>Potential areas for expansion:</p>
-<ol>
-<li><strong>Additional operations</strong>: More mathematical and statistical functions</li>
-<li><strong>Custom data structures</strong>: Support for more complex nested types</li>
-<li><strong>Performance optimizations</strong>: Specialized implementations for common patterns</li>
-<li><strong>Batch dataset utilities</strong>: Higher-level abstractions for common workflows</li>
-</ol>
-<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="../uguide/tensor/">Tensor Operations Guide</a></li>
-<li><a href="../uguide/nested/">Nested Operations Guide</a></li>
-<li><a href="../uguide/utils/">Utils Guide</a></li>
-<li><a href="../uguide/constants/">Constants Documentation</a></li>
+<li><a href="../design_principles/">Design principles</a></li>
+<li><a href="../migration/">Migration guide</a></li>
+<li><a href="../uguide/tensor/">Tensor</a>, <a href="../uguide/nested/">Nested</a>, <a href="../uguide/utils/">Utils</a> and
+  <a href="../uguide/constants/">Constants</a> guides</li>
 </ul>
 
 
