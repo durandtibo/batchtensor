@@ -4684,7 +4684,7 @@ in the concatenating dimension) or be empty.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The input data to concatenate. The dictionaries must have
+                <p>The input data to concatenate. The structures must have
 the same keys.</p>
               </div>
             </td>
@@ -4707,11 +4707,11 @@ the same keys.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="KeyError">KeyError</span></code>
+                  <code><span title="ValueError">ValueError</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>if the dictionaries do not all have the same keys.</p>
+                <p>if the structures are empty, or do not have the same keys or lengths.</p>
               </div>
             </td>
           </tr>
@@ -4802,7 +4802,7 @@ in the concatenating dimension) or be empty.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The input data to concatenate. The dictionaries must have
+                <p>The input data to concatenate. The structures must have
 the same keys.</p>
               </div>
             </td>
@@ -4825,11 +4825,11 @@ the same keys.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="KeyError">KeyError</span></code>
+                  <code><span title="ValueError">ValueError</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>if the dictionaries do not all have the same keys.</p>
+                <p>if the structures are empty, or do not have the same keys or lengths.</p>
               </div>
             </td>
           </tr>
@@ -8594,8 +8594,7 @@ tensor of shape <code>(batch_size, max_len, ...)</code>.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>if a leaf is not a <code>torch.Tensor</code>, or if a sample is
-a dataclass.</p>
+                <p>if a leaf is not a <code>torch.Tensor</code>.</p>
               </div>
             </td>
           </tr>
@@ -11047,7 +11046,7 @@ tensor must have the same shape across all the samples.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The input samples to stack. The dictionaries must have
+                <p>The input samples to stack. The structures must have
 the same keys.</p>
               </div>
             </td>
@@ -11070,11 +11069,11 @@ the same keys.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="KeyError">KeyError</span></code>
+                  <code><span title="ValueError">ValueError</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>if the dictionaries do not all have the same keys.</p>
+                <p>if the structures are empty, or do not have the same keys or lengths.</p>
               </div>
             </td>
           </tr>
@@ -11169,7 +11168,7 @@ the samples.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The input samples to stack. The dictionaries must have
+                <p>The input samples to stack. The structures must have
 the same keys.</p>
               </div>
             </td>
@@ -11192,11 +11191,11 @@ the same keys.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="KeyError">KeyError</span></code>
+                  <code><span title="ValueError">ValueError</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>if the dictionaries do not all have the same keys.</p>
+                <p>if the structures are empty, or do not have the same keys or lengths.</p>
               </div>
             </td>
           </tr>
