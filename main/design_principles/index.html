@@ -1177,17 +1177,59 @@ Each principle below is enforced by a test.</p>
 <ul>
 <li><strong>Thin wrappers (P2).</strong> A <code>tensor</code> function is one torch call with the dimension fixed. It has
   the same semantics and result as torch, with no hidden copy, cast or device move. The one
-  documented exception is <code>masked_{sum,mean,amax,amin}_along_seq</code>: a fixed composition of
-  <code>masked_fill</code> and a reduction, tested against the manual form.</li>
-<li><strong>Two symmetric levels (P3).</strong> Every <code>tensor</code> function that maps batch data has a <code>nested</code>
+  closed list of exceptions is below. A function that is not in it is one torch call.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Why it is not one torch call</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>masked_{sum,mean,amax,amin}_along_seq</code></td>
+<td><code>masked_fill</code> + reduction; the mask is validated (no sync)</td>
+</tr>
+<tr>
+<td><code>lengths_to_mask</code></td>
+<td>no torch equivalent; a sync only without <code>max_len</code></td>
+</tr>
+<tr>
+<td><code>pad_sequences</code></td>
+<td>no torch equivalent (<code>pad_sequence</code> is sequence-first)</td>
+</tr>
+<tr>
+<td><code>pad_along_*</code></td>
+<td><code>F.pad</code> with the dim fixed; checks <code>value</code> against the dtype</td>
+</tr>
+<tr>
+<td><code>repeat_along_*</code></td>
+<td>builds the <code>repeat</code> sizes; checks the number of dims</td>
+</tr>
+<tr>
+<td><code>index_select_along_*</code></td>
+<td>checks the index is 1-D (batch); a 2-D index is a per-sample gather (seq)</td>
+</tr>
+<tr>
+<td><code>permute_*</code>, <code>shuffle_*</code></td>
+<td><code>index_select</code> + a length check (<code>shuffle_*</code> draws the permutation)</td>
+</tr>
+<tr>
+<td><code>topk_*</code></td>
+<td>option <code>sort_output</code> for <code>sorted</code> (it shadows a builtin)</td>
+</tr>
+</tbody>
+</table>
+<p><code>test_thin_wrappers</code> fails for a new function that is neither one torch call nor in this list.
+- <strong>Two symmetric levels (P3).</strong> Every <code>tensor</code> function that maps batch data has a <code>nested</code>
   twin with the same name, options and defaults. The one exception is <code>lengths_to_mask</code> (its input
   is not a batch of tensors). In <code>nested</code>, the <code>mask</code> of a masked reduction is one tensor shared
   by all the leaves. <code>nested</code> also has <code>clone</code>, <code>detach</code>,
-  <code>contiguous</code>, <code>pin_memory</code>, <code>to</code>, <code>to_numpy</code> and <code>from_numpy</code>.</li>
-<li><strong>One traversal (P4).</strong> All the nested functions go through <code>apply_to_tensors</code>,
+  <code>contiguous</code>, <code>pin_memory</code>, <code>to</code>, <code>to_numpy</code> and <code>from_numpy</code>.
+- <strong>One traversal (P4).</strong> All the nested functions go through <code>apply_to_tensors</code>,
   <code>split_tensors</code> and <code>combine_tensors</code> of <code>batchtensor.utils.structure</code>. A nested function has no
-  logic of its own.</li>
-</ul>
+  logic of its own.</p>
 <h2 id="structure-and-leaves">Structure and leaves<a class="headerlink" href="#structure-and-leaves" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Structure-preserving (P5).</strong> A map function returns the input structure with every leaf
@@ -1212,8 +1254,10 @@ Each principle below is enforced by a test.</p>
 </ul>
 <h2 id="behaviour">Behaviour<a class="headerlink" href="#behaviour" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Pure (P7).</strong> Inputs are never modified. A function returns a view where torch returns a view
-  (<code>slice</code>, <code>select</code>, <code>chunk</code>, <code>split</code>, <code>from_numpy</code>, <code>to_numpy</code> on CPU), otherwise a new tensor.</li>
+<li><strong>Pure (P7).</strong> Inputs are never modified. The output never aliases the input, except where torch
+  returns a view (<code>slice</code>, <code>select</code>, <code>chunk</code>, <code>split</code>, <code>detach</code>, <code>from_numpy</code>, <code>to_numpy</code> on CPU)
+  or the input itself (<code>to</code>, <code>contiguous</code>, <code>pin_memory</code>). A function adds no shortcut that returns
+  its input: <code>pad_along_*(x, 0)</code> is a new tensor.</li>
 <li><strong>One error contract (P8).</strong> A bad leaf type is a <code>TypeError</code>. An argument that <code>batchtensor</code>
   validates is a <code>ValueError</code>. Anything else is the torch error, unchanged. <code>batchtensor</code> validates
   only what torch cannot see or what torch accepts but means something else.</li>
@@ -1243,6 +1287,18 @@ Each principle below is enforced by a test.</p>
 <td><code>ValueError</code></td>
 </tr>
 <tr>
+<td><code>cat</code>/<code>stack</code> combines a mapping with a sequence</td>
+<td><code>ValueError</code></td>
+</tr>
+<tr>
+<td><code>repeat_*</code>, <code>seq_len</code>, <code>shuffle_*</code> on a tensor with too few dims</td>
+<td><code>ValueError</code></td>
+</tr>
+<tr>
+<td><code>select_along_seq</code>, <code>slice_along_seq</code>, <code>sum_along_seq</code> on a 1-D tensor</td>
+<td>torch's <code>IndexError</code></td>
+</tr>
+<tr>
 <td><code>pad_sequences</code> receives tensors of different dtype or device</td>
 <td><code>ValueError</code></td>
 </tr>
@@ -1265,10 +1321,73 @@ Each principle below is enforced by a test.</p>
   <code>torch.Generator</code> or an <code>int</code> seed). Without it, the global torch RNG is used. One permutation
   is shared by all the leaves.</li>
 <li><strong>Device and dtype agnostic (P10).</strong> No function moves data between devices or casts dtype.
-  There is no host-device sync, except <code>lengths_to_mask</code> without <code>max_len</code>.</li>
-<li><strong>Differentiable (P11).</strong> Autograd flows through every function whose torch op is
-  differentiable. Only <code>to_numpy</code> detaches.</li>
+  There is no host-device sync, except <code>lengths_to_mask</code> without <code>max_len</code>. A function that
+  would need a sync to validate documents its behaviour instead (P16).</li>
+<li><strong>Defined on edge cases (P16).</strong> Every function has a documented result on empty and degenerate
+  input. "Undefined" is not an answer; "torch's behaviour" is. <code>test_edge_case</code> pins the results:</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Case</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>masked_mean_along_seq</code></td>
+<td>a row without valid step</td>
+<td><code>nan</code> (0 / 0)</td>
+</tr>
+<tr>
+<td><code>masked_amax_along_seq</code>, <code>masked_amin_*</code></td>
+<td>a row without valid step</td>
+<td>the lowest (highest) value of the dtype</td>
+</tr>
+<tr>
+<td><code>masked_sum_along_seq</code></td>
+<td>a row without valid step</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>permute_*</code></td>
+<td>a repeated index</td>
+<td>not checked: only the length is</td>
+</tr>
+<tr>
+<td><code>lengths_to_mask</code></td>
+<td>a negative length</td>
+<td>a row of <code>False</code></td>
+</tr>
+<tr>
+<td><code>lengths_to_mask</code></td>
+<td><code>max_len</code> below a length</td>
+<td>the row is truncated to <code>max_len</code></td>
+</tr>
+<tr>
+<td><code>pad_*</code></td>
+<td><code>pad_size == 0</code></td>
+<td>a new tensor equal to the input</td>
+</tr>
+<tr>
+<td><code>pad_sequences</code></td>
+<td>tensors of different dtype</td>
+<td><code>ValueError</code></td>
+</tr>
+<tr>
+<td><code>pad_sequences</code></td>
+<td>a zero-length tensor</td>
+<td>a row of <code>value</code></td>
+</tr>
+</tbody>
+</table>
+<p>A guard against a fully masked row is <code>mask.any(dim=1)</code>, tested by the caller.
+- <strong>Containers of <code>cat_*</code>, <code>stack_*</code> and <code>pad_sequences</code>.</strong> The container types of the output are
+  the ones of the first item. <code>[list, tuple]</code> gives a list and <code>[dict, OrderedDict]</code> gives a
+  dict. A mapping combined with a sequence raises a <code>ValueError</code>.
+- <strong>Differentiable (P11).</strong> Autograd flows through every function whose torch op is
+  differentiable. Only <code>to_numpy</code> detaches.</p>
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Keyword-only options (P12).</strong> The positional arguments are the data and the arguments that

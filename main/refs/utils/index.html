@@ -1808,8 +1808,10 @@ e.g. <code>lambda tensors: torch.cat(tensors, dim=0)</code>.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>if <code>items</code> is empty, or if the structures do not have
-the same keys, the same lengths or the same kind of containers.</p>
+                <p>if <code>items</code> is empty, if the structures do not have
+the same keys or the same lengths, or if a mapping is combined
+with a sequence. Two mappings (or two sequences) of different
+types are accepted: the output follows the first item.</p>
               </div>
             </td>
           </tr>
