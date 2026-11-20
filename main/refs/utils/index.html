@@ -1705,10 +1705,9 @@ of <code>fn</code> as leaves.</p>
     <div class="doc doc-contents ">
 
         <p>Combine structures with the same layout into one structure.</p>
-<p>The structures are traversed in parallel with
-<code>coola.recursive.recursive_zip_apply</code> and <code>fn</code> is applied to the
+<p>The structures are traversed in parallel and <code>fn</code> is applied to the
 list of tensors found at each leaf position. The container types of the
-output are the ones of the first item.</p>
+output are the ones of the first item. Dataclasses are not supported.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1798,7 +1797,8 @@ e.g. <code>lambda tensors: torch.cat(tensors, dim=0)</code>.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>if a leaf is not a <code>torch.Tensor</code>.</p>
+                <p>if a leaf is not a <code>torch.Tensor</code>, or if an item is a
+dataclass.</p>
               </div>
             </td>
           </tr>
@@ -1809,7 +1809,7 @@ e.g. <code>lambda tensors: torch.cat(tensors, dim=0)</code>.</p>
             <td>
               <div class="doc-md-description">
                 <p>if <code>items</code> is empty, or if the structures do not have
-the same keys, the same lengths or the same kind of containers.</p>
+the same keys or the same lengths.</p>
               </div>
             </td>
           </tr>

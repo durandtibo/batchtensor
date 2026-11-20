@@ -2057,7 +2057,8 @@ tensors in these structures while preserving the nested structure.</p>
   has the container type of the input.</li>
 </ul>
 <p>Other containers (sets, dataclasses) are outside the contract and the <code>NestedTensor</code> type. They
-may work through <code>coola</code>, but this is neither tested nor guaranteed.</p>
+may work through <code>coola</code>, but this is neither tested nor guaranteed. <code>cat_*</code>, <code>stack_*</code> and
+<code>pad_sequences</code> raise a <code>TypeError</code> on a dataclass.</p>
 <p><strong>Leaves:</strong></p>
 <p>Every leaf must be a <code>torch.Tensor</code>. Non-tensor leaves (<code>str</code>, <code>None</code>, <code>int</code>, ...)
 are not skipped: the call raises a <code>TypeError</code>.</p>
