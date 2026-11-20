@@ -2053,13 +2053,12 @@ tensors in these structures while preserving the nested structure.</p>
 <li>Lists: <code>[tensor1, tensor2, ...]</code></li>
 <li>Tuples: <code>(tensor1, tensor2, ...)</code></li>
 <li>Nested combinations: <code>{'key': [tensor1, tensor2], ...}</code></li>
-<li>Other containers handled by <code>coola.recursive</code> (for example <code>OrderedDict</code>,
-  <code>defaultdict</code>, named tuples and dataclasses) are supported by the functions
-  that map a tensor function over the leaves, and by <code>chunk_*</code> and <code>split_*</code>.
-  <code>cat_*</code> and <code>stack_*</code> do not support dataclasses and raise a <code>TypeError</code>.</li>
-<li>Dataclasses work at runtime but are not part of the <code>NestedTensor</code> type, so
-  the type checkers reject them.</li>
+<li>Subclasses of these containers (<code>OrderedDict</code>, <code>defaultdict</code>, named tuples) are kept: the output
+  has the container type of the input.</li>
 </ul>
+<p>Other containers (sets, dataclasses) are outside the contract and the <code>NestedTensor</code> type. They
+may work through <code>coola</code>, but this is neither tested nor guaranteed. <code>cat_*</code>, <code>stack_*</code> and
+<code>pad_sequences</code> raise a <code>TypeError</code> on a dataclass.</p>
 <p><strong>Leaves:</strong></p>
 <p>Every leaf must be a <code>torch.Tensor</code>. Non-tensor leaves (<code>str</code>, <code>None</code>, <code>int</code>, ...)
 are not skipped: the call raises a <code>TypeError</code>.</p>

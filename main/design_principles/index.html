@@ -1191,12 +1191,20 @@ Each principle below is enforced by a test.</p>
 <h2 id="structure-and-leaves">Structure and leaves<a class="headerlink" href="#structure-and-leaves" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Structure-preserving (P5).</strong> A map function returns the input structure with every leaf
-  replaced. Container types, keys and order follow <code>coola.recursive</code>: dicts, lists, tuples, named
-  tuples, <code>OrderedDict</code>, <code>defaultdict</code> and dataclasses. <code>cat_*</code>, <code>stack_*</code>, <code>chunk_*</code> and
-  <code>split_*</code> also keep these types. Dataclasses are supported at runtime by every map function and
-  by <code>chunk_*</code>/<code>split_*</code>, not by <code>cat_*</code>/<code>stack_*</code> (<code>combine_tensors</code> raises a <code>TypeError</code>).
-  Dataclasses are not typed: <code>NestedTensor</code> does not include them, so the type checkers reject a
-  dataclass argument.</li>
+  replaced. Container types, keys and order follow <code>coola.recursive</code>. <code>cat_*</code>, <code>stack_*</code>,
+  <code>chunk_*</code> and <code>split_*</code> also keep these types.</li>
+<li><strong>Supported containers (D1).</strong> The supported structure is <code>dict</code>, <code>list</code>, <code>tuple</code> and their
+  subclasses (named tuples, <code>OrderedDict</code>, <code>defaultdict</code>). This is exactly <code>NestedTensor</code>, and the
+  three helpers of <code>batchtensor.utils.structure</code> share this rule. Anything else (sets,
+  dataclasses) is outside the contract: it may work through <code>coola</code>, and no test, doc or type
+  promises it. The one documented limit is that <code>combine_tensors</code> (and so <code>cat_*</code>, <code>stack_*</code> and
+  <code>pad_sequences</code>) raises a <code>TypeError</code> on a dataclass.</li>
+<li><strong>Cross-leaf rule.</strong> The functions that map a tensor function do not compare the sizes of the
+  leaves. <code>chunk_*</code>, <code>split_*</code> and <code>shuffle_*</code> do, because the alignment of their output depends
+  on it. <code>cat_*</code> and <code>stack_*</code> check that the structures have the same layout (keys and lengths).</li>
+<li><strong>Empty structures.</strong> A function that does not need a size keeps the empty structure:
+  <code>sum_along_batch({})</code> returns <code>{}</code>. A function that needs a size raises a <code>ValueError</code>:
+  <code>chunk_*</code>, <code>split_*</code> and <code>shuffle_*</code> on a structure without tensor.</li>
 <li><strong>Tensor leaves only (P6).</strong> A leaf that is not a <code>torch.Tensor</code> raises a <code>TypeError</code> that names
   the leaf type. Nothing is skipped silently. <code>from_numpy</code> is the only exception: its leaves
   are arrays, and the leaf type error is the <code>TypeError</code> of <code>torch.from_numpy</code>.</li>
