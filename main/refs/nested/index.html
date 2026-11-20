@@ -6598,7 +6598,8 @@ step. It is shared by all the leaves.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A structure with the same layout as <code>data</code>. Each leaf is the maximum of the valid steps.</p>
+                <p>A structure with the same layout as <code>data</code>. Each leaf is the maximum of the valid steps (the lowest value of the dtype
+for a row without valid step).</p>
               </div>
             </td>
           </tr>
@@ -6763,7 +6764,8 @@ step. It is shared by all the leaves.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A structure with the same layout as <code>data</code>. Each leaf is the minimum of the valid steps.</p>
+                <p>A structure with the same layout as <code>data</code>. Each leaf is the minimum of the valid steps (the highest value of the dtype
+for a row without valid step).</p>
               </div>
             </td>
           </tr>
@@ -7093,7 +7095,7 @@ step. It is shared by all the leaves.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A structure with the same layout as <code>data</code>. Each leaf is the sum of the valid steps.</p>
+                <p>A structure with the same layout as <code>data</code>. Each leaf is the sum of the valid steps (<code>0</code> for a row without valid step).</p>
               </div>
             </td>
           </tr>
@@ -8483,7 +8485,8 @@ The container types of the output are the ones of the first sample.</p>
   <p>Like <code>batchtensor.tensor.pad_sequences</code>, the tensors at a leaf
 position must have the same dtype and the same device. No cast or
 device move is done. Cast the samples first with
-<code>batchtensor.nested.to</code> if their dtypes differ.</p>
+<code>batchtensor.nested.to</code> if their dtypes differ. A tensor of length 0
+gives a row of <code>value</code>.</p>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -8656,6 +8659,13 @@ dtype of the tensors, or if <code>side</code> is not <code>"left"</code> or
         <p>Permute all the tensors along the batch dimension.</p>
 
 
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Only the length of <code>permutation</code> is checked, not that it is a
+permutation (it would need a host-device sync). A repeated index
+repeats a row and drops another one.</p>
+</details>
+
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -8786,6 +8796,13 @@ shape does not match the batch dimension of the tensor.</p>
 
         <p>Permute all the tensors along the sequence dimension.</p>
 
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Only the length of <code>permutation</code> is checked, not that it is a
+permutation (it would need a host-device sync). A repeated index
+repeats a step and drops another one.</p>
+</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>

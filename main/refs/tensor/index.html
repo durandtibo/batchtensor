@@ -7918,7 +7918,8 @@ sequences are <code>[t.shape[0] for t in tensors]</code>, and
   <summary>Note</summary>
   <p>All the tensors must have the same dtype and the same device, and the
 output has them. No cast, type promotion or device move is done. Cast
-the tensors first (e.g. <code>t.to(torch.float)</code>) if their dtypes differ.</p>
+the tensors first (e.g. <code>t.to(torch.float)</code>) if their dtypes differ.
+A tensor of length 0 gives a row of <code>value</code>.</p>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -8084,6 +8085,13 @@ to a specified permutation. The permutation defines a mapping from new
 positions to original positions: <code>output[i] = input[permutation[i]]</code>.</p>
 
 
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Only the length of <code>permutation</code> is checked, not that it is a
+permutation (it would need a host-device sync). A repeated index
+repeats a row and drops another one.</p>
+</details>
+
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -8236,6 +8244,13 @@ shape does not match the batch dimension of the tensor.</p>
 
         <p>Permute the tensor along the sequence dimension.</p>
 
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Only the length of <code>permutation</code> is checked, not that it is a
+permutation (it would need a host-device sync). A repeated index
+repeats a step and drops another one.</p>
+</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
