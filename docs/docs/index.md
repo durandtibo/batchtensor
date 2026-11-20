@@ -58,28 +58,42 @@
 ## Overview
 
 `batchtensor` is a lightweight library built on top of [PyTorch](https://pytorch.org/) to manipulate
-nested data structures with PyTorch tensors.
-This library provides functions for tensors where the first dimension is the batch dimension.
-It also provides functions for tensors representing a batch of sequences where the first dimension
-is the batch dimension and the second dimension is the sequence dimension.
+batches of tensors, and nested data structures (dictionaries, lists and tuples) of such batches.
+
+It assumes one data layout:
+
+- the **batch** dimension is the first dimension (dimension 0);
+- the **sequence** dimension is the second dimension (dimension 1).
+
+A function name says on which dimension it works: `sum_along_batch` reduces dimension 0 and
+`slice_along_seq` slices dimension 1. No function takes a `dim` argument.
 
 ## Key Features
 
-- **Nested Structure Support**: Work with dictionaries, lists, and tuples containing tensors
-- **Batch Operations**: Efficiently process batches of data along the batch dimension
-- **Sequence Operations**: Handle sequential/temporal data along the sequence dimension
-- **Consistent API**: Unified interface for both single tensors and nested structures
-- **Type Safety**: Fully typed with comprehensive type hints
-- **Well Documented**: Extensive documentation with examples for all functions
-- **Lightweight**: Minimal dependencies (PyTorch and coola)
-- **Performance**: Leverages PyTorch's optimized operations
+- **Two levels with the same API**: `batchtensor.tensor` works on one tensor and
+  `batchtensor.nested` works on a dict, list or tuple of tensors. A function has the same name and
+  options at both levels.
+- **Structure preserving**: a nested function returns the structure it received, with the same
+  container types and keys.
+- **Thin over PyTorch**: a `tensor` function is one torch call with the dimension fixed. It does
+  not copy, cast or move data on its own, and autograd works.
+- **Strict on inputs**: a leaf that is not a tensor raises a `TypeError`; arguments that torch would
+  accept with another meaning are validated.
+- **Padded batches**: `pad_sequences`, `lengths_to_mask` and the masked reductions handle batches of
+  sequences of different lengths.
+- **Typed and documented**: every function has type hints and a docstring with a runnable example.
+- **Lightweight**: the only required dependencies are PyTorch and
+  [coola](https://github.com/durandtibo/coola).
 
 ## Main Modules
 
-- **[batchtensor.nested](refs/nested.md)**: Operations for nested data structures
-- **[batchtensor.tensor](refs/tensor.md)**: Operations for individual tensors
-- **[batchtensor.utils](refs/utils.md)**: Utility functions for seed management
-- **[batchtensor.constants](refs/constants.md)**: Dimension constants
+- **[batchtensor.tensor](refs/tensor.md)**: operations on individual tensors
+- **[batchtensor.nested](refs/nested.md)**: the same operations on nested data structures, plus
+  `to`, `clone`, `detach`, `batch_size`, `seq_len` and NumPy conversion
+- **[batchtensor.utils](refs/utils.md)**: the helpers that traverse nested structures
+  (`apply_to_tensors`, `split_tensors`, `combine_tensors`, `get_size`), the `NestedTensor` type and
+  random-permutation helpers
+- **[batchtensor.constants](refs/constants.md)**: `BATCH_DIM` and `SEQ_DIM`
 
 ## Motivation
 
@@ -121,12 +135,15 @@ function `split_along_batch`:
 Please check the [user guide](uguide/nested.md) and [API reference](refs/nested.md) to see all the
 implemented functions and detailed examples.
 
-## Quick Links
+## Where to go next
 
-- **[Get Started](get_started.md)**: Installation instructions
-- **[User Guide](uguide/tensor.md)**: Comprehensive tutorials and examples
-- **[API Reference](refs/nested.md)**: Complete function documentation
-- **[GitHub Repository](https://github.com/durandtibo/batchtensor)**: Source code and issue tracker
+- **[Get Started](get_started.md)**: installation instructions
+- **[User Guide](uguide/tensor.md)**: tutorials and examples
+- **[Design principles](design_principles.md)**: how the library behaves, and the trade-offs of
+  each choice
+- **[Architecture](architecture.md)**: how the library is built
+- **[API Reference](refs/nested.md)**: complete function documentation
+- **[GitHub Repository](https://github.com/durandtibo/batchtensor)**: source code and issue tracker
 
 ## API stability
 
@@ -139,4 +156,4 @@ that was using the old version of `batchtensor`.
 ## License
 
 `batchtensor` is licensed under BSD 3-Clause "New" or "Revised" license available
-in [LICENSE](LICENSE) file.
+in the [LICENSE](https://github.com/durandtibo/batchtensor/blob/main/LICENSE) file.

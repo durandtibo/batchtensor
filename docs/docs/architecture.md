@@ -1,7 +1,8 @@
 # Architecture
 
-This page describes how `batchtensor` is built. The properties it guarantees (P1 to P15) are in
-[Design principles](design_principles.md). They are not repeated here.
+This page describes how `batchtensor` is built, so you can read the source, extend it, or reuse its
+building blocks. What the library guarantees, and the trade-offs of each choice, are in
+[Design principles](design_principles.md).
 
 ## Layers
 
@@ -57,17 +58,16 @@ three shapes is not a nested wrapper: it is a helper of `utils.structure`, like 
 
 ## Adding an operation
 
-1. Add the function to the sub-module of `tensor` and export it from `tensor/__init__.py`.
-2. Add its twin to the sub-module of `nested` with the same name, options and defaults, using one
-   of the three helpers, and export it from `nested/__init__.py`.
-3. Add the `_along_batch` and `_along_seq` variants, with a docstring and a runnable example.
-4. Add the unit tests, and update the parity and property tests if the function is an exception.
+The rules for a new operation (when it belongs in the library, the four variants, the tests) are in
+[CONTRIBUTING.md](https://github.com/durandtibo/batchtensor/blob/main/CONTRIBUTING.md). In short:
+add the function to `tensor`, add its twin to `nested` with the same name, options and defaults,
+and build the twin with one of the three helpers above.
 
-A pointwise function (`exp`, `clamp`) is not added: use `apply_to_tensors(data, torch.exp)`.
+A pointwise function (`exp`, `clamp`) is not part of the library: use
+`apply_to_tensors(data, torch.exp)`.
 
 ## See also
 
 - [Design principles](design_principles.md)
-- [Migration guide](migration.md)
 - [Tensor](uguide/tensor.md), [Nested](uguide/nested.md), [Utils](uguide/utils.md) and
   [Constants](uguide/constants.md) guides

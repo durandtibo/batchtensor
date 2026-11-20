@@ -97,7 +97,8 @@ After installation, explore the documentation:
 
 - **[Tensor Operations Guide](uguide/tensor.md)**: Learn about single tensor operations
 - **[Nested Operations Guide](uguide/nested.md)**: Learn about nested structure operations
-- **[Utils Guide](uguide/utils.md)**: Learn about utility functions
+- **[Utils Guide](uguide/utils.md)**: Learn about the structure helpers and random permutations
+- **[Design principles](design_principles.md)**: Learn how the functions behave
 - **[API Reference](refs/nested.md)**: Browse the complete API
 
 ## Quick Example

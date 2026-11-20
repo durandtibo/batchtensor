@@ -40,6 +40,11 @@ are not skipped: the call raises a `TypeError`.
 - Sequence dimension: Always dimension 1
 - See [Constants](constants.md) for more details
 
+**Same API as `tensor`:** a function has the same name, options and defaults in
+`batchtensor.nested` and in `batchtensor.tensor`. `lengths_to_mask` is only in `tensor`, since its
+input is not a batch of tensors. `nested` adds `clone`, `detach`, `contiguous`, `pin_memory`, `to`,
+`to_numpy`, `from_numpy`, `batch_size` and `seq_len`.
+
 ## Slicing Operations
 
 ### Slicing Along Batch Dimension
@@ -396,23 +401,6 @@ Convert between PyTorch tensors and NumPy arrays:
 
 ```
 
-## Additional Operations
-
-### Type Conversion
-
-Convert tensor types in nested structures:
-
-```pycon
->>> import torch
->>> from batchtensor.nested import to
->>> batch = {"values": torch.tensor([[1, 2], [3, 4]], dtype=torch.int32)}
->>> to(batch, dtype=torch.float32)
-{'values': tensor([[1., 2.], [3., 4.]])}
-
-```
-
-See the [Type Conversion](#type-conversion) section for more examples.
-
 ## Additional Reductions and Reordering
 
 ### std
@@ -542,26 +530,87 @@ indices=tensor([[2, 1, 1, 1],
 
 ```
 
-## Best Practices
+## Behaviour to know
 
-1. **Consistent Dimensions**: Ensure all tensors in your nested structure have compatible
-   batch/sequence dimensions
-2. **Memory Efficiency**: Many operations like `chunk` and `slice` return views when possible, not
-   copies
-3. **Type Safety**: Use the same data types across tensors in a batch for predictable behavior
-4. **Error Handling**: Functions will raise clear errors if tensors have incompatible shapes
+### The structure is kept
 
-## Performance Considerations
+The output has the container types and keys of the input, including `OrderedDict`, `defaultdict` and
+named tuples. `cat_*`, `stack_*`, `chunk_*` and `split_*` keep them too. For `cat_*` and `stack_*`
+the container types are the ones of the first item.
 
-- Operations are applied recursively to nested structures
-- Views are used when possible to avoid copying data
-- All functions leverage PyTorch's efficient tensor operations
-- For very deep nesting, consider flattening your data structure
-- Nested operations have minimal overhead compared to manual iteration
+```pycon
+>>> import torch
+>>> from collections import OrderedDict
+>>> from batchtensor.nested import slice_along_batch
+>>> batch = OrderedDict(a=torch.arange(4), b=[torch.arange(4)])
+>>> out = slice_along_batch(batch, stop=2)
+>>> type(out).__name__
+'OrderedDict'
+>>> out["b"]
+[tensor([0, 1])]
+
+```
+
+### Leaves must be tensors
+
+A leaf that is not a `torch.Tensor` raises a `TypeError` that names its type. Nothing is skipped. If
+a batch carries metadata, separate it from the tensors before the call.
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import sum_along_batch
+>>> sum_along_batch({"x": torch.ones(2, 3), "name": "train"})
+Traceback (most recent call last):
+    ...
+TypeError: Expected a torch.Tensor leaf but received str
+
+```
+
+### Leaves are independent
+
+A mapped function (`slice_*`, `sum_*`, `index_select_*`, ...) treats each leaf on its own and does
+not compare their sizes. Use `batch_size(data)` or `seq_len(data)` to check that the leaves share a
+size: they raise a `ValueError` if they do not.
+
+Three groups of functions need the leaves to line up and raise a `ValueError` otherwise:
+
+- `shuffle_*`: all the leaves must have the same size along the dimension. One permutation is drawn
+  and applied to every leaf, so the leaves stay aligned.
+- `chunk_*` and `split_*`: all the leaves must be split into the same number of pieces.
+- `cat_*` and `stack_*`: all the structures must have the same layout (same keys and lengths).
+
+```pycon
+>>> import torch
+>>> from batchtensor.nested import cat_along_batch
+>>> cat_along_batch([{"a": torch.ones(1)}, {"b": torch.ones(1)}])
+Traceback (most recent call last):
+    ...
+ValueError: The mappings must have the same keys but item 0 has keys ['a'] and item 1 has keys ['b']
+
+```
+
+### Empty structures
+
+A function that needs no size returns the empty structure: `sum_along_batch({})` is `{}`.
+`chunk_*`, `split_*`, `shuffle_*`, `batch_size`, `seq_len` and `cat_*`/`stack_*` on an empty list
+raise a `ValueError`.
+
+### Custom operations
+
+For an operation that `batchtensor` does not provide, build it on the helpers of
+[`batchtensor.utils.structure`](utils.md#structure-helpers), the same ones the functions of this
+module use. They give your function the same structure handling and errors.
+
+### Views and copies
+
+The nested functions return what the matching `tensor` function returns for each leaf: views for
+`slice`, `select`, `chunk` and `split`, new tensors otherwise. See
+[Tensor Operations](tensor.md#views-and-copies).
 
 ## See Also
 
 - [Tensor Operations](tensor.md) - Operations for single tensors
+- [Design principles](../design_principles.md) - Behaviour guarantees and trade-offs
 - [API Reference](../refs/nested.md) - Complete function reference
-- [Utils Module](utils.md) - Utility functions for seed management
+- [Utils Module](utils.md) - Structure helpers and random permutations
 - [Constants](constants.md) - Dimension constants used throughout the library
