@@ -2686,6 +2686,9 @@ second dimension (index 1) is the sequence dimension.</p>
 <li>Functions ending with <code>_along_seq</code> operate on the sequence dimension (dim=1)</li>
 <li>The batch dimension always represents independent samples</li>
 <li>The sequence dimension represents sequential/temporal data within each sample</li>
+<li>The batch dimension is the first dimension (index 0) and the sequence
+  dimension is the second dimension (index 1) of every tensor. This is
+  stated here, not in each docstring</li>
 </ul>
 </details>
 
@@ -2775,12 +2778,6 @@ second dimension (index 1) is the sequence dimension.</p>
 
         <p>Return whether all the elements are true along the batch dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -2887,12 +2884,6 @@ second dimension (index 1) is the sequence dimension.</p>
 
         <p>Return whether all the elements are true along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -3002,12 +2993,6 @@ second dimension (index 1) is the sequence dimension.</p>
         <p>Return the maximum of all elements along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -3113,12 +3098,6 @@ second dimension (index 1) is the sequence dimension.</p>
 
         <p>Return the maximum of all elements along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -3226,12 +3205,6 @@ second dimension (index 1) is the sequence dimension.</p>
         <p>Return the minimum of all elements along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -3337,12 +3310,6 @@ second dimension (index 1) is the sequence dimension.</p>
 
         <p>Return the minimum of all elements along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -3450,12 +3417,6 @@ second dimension (index 1) is the sequence dimension.</p>
         <p>Return whether any element is true along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -3561,12 +3522,6 @@ second dimension (index 1) is the sequence dimension.</p>
 
         <p>Return whether any element is true along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -3677,12 +3632,6 @@ second dimension (index 1) is the sequence dimension.</p>
 batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -3790,12 +3739,6 @@ batch dimension.</p>
         <p>Return the indices of the maximum value of all elements along the
 sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -3905,12 +3848,6 @@ sequence dimension.</p>
 batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -4018,12 +3955,6 @@ batch dimension.</p>
         <p>Return the indices of the minimum value of all elements along the
 sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -4138,12 +4069,6 @@ in ascending order by value.</p>
 batch dimension. The actual sorted values can be obtained by using
 <code>sort_along_batch</code> or by indexing with the returned indices.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -4283,12 +4208,6 @@ batch dimension. Has the same shape as the input tensor.</p>
 dimension in ascending order by value.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -4419,12 +4338,6 @@ batch dimension sizes can differ, but all other dimensions must match.</p>
 in the concatenating dimension) or be empty.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -4543,12 +4456,6 @@ have batch size <code>b1 + b2 + ... + bn</code>.</p>
 in the concatenating dimension) or be empty.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -4643,12 +4550,6 @@ split the tensor into the specified number of chunks of approximately
 equal size. If the tensor size is not evenly divisible by the number
 of chunks, the last chunk will be smaller.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -4766,12 +4667,6 @@ a view of the original tensor (shares memory).</p>
 <p>Each chunk is a view of the input tensor.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -4879,12 +4774,6 @@ where each element in the output is the product of all elements up to
 that position in the batch. This is useful for computing running products
 or compound growth factors over batch items.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <details class="warning" open>
   <summary>Warning</summary>
@@ -4994,12 +4883,6 @@ Element <code>output[i]</code> is the product of <code>input[0]</code> through
 sequence dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -5091,12 +4974,6 @@ where each element in the output is the sum of all elements up to that
 position in the batch. This is useful for computing running totals or
 prefix sums over batch items.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -5200,12 +5077,6 @@ Element <code>output[i]</code> is the sum of <code>input[0]</code> through
 dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -5293,12 +5164,6 @@ dimension.</p>
         <p>Return the tensor with the order of the elements reversed along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -5385,12 +5250,6 @@ dimension.</p>
 
         <p>Return the tensor with the order of the elements reversed along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -5486,12 +5345,6 @@ Unlike <code>select_along_batch</code> which selects a single item and reduces
 dimensionality, this function maintains the batch dimension and can select
 multiple items, duplicate items, or reorder items.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -5649,12 +5502,6 @@ size matches the length of the index tensor.</p>
 sequence dimension using the entries in <code>index</code> which is a
 <code>LongTensor</code>.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -5939,12 +5786,6 @@ an integer dtype.</p>
         <p>Return the log of the sum of exponentials along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -6050,12 +5891,6 @@ an integer dtype.</p>
 
         <p>Return the log of the sum of exponentials along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -6169,9 +6004,8 @@ value of the dtype of <code>tensor</code> before the reduction.</p>
 
 <details class="note" open>
   <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension. It is a fixed composition of torch operations,
-    not a single torch call.</p>
+  <p>This function is a fixed composition of torch operations, not a single
+    torch call.</p>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -6334,9 +6168,8 @@ value of the dtype of <code>tensor</code> before the reduction.</p>
 
 <details class="note" open>
   <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension. It is a fixed composition of torch operations,
-    not a single torch call.</p>
+  <p>This function is a fixed composition of torch operations, not a single
+    torch call.</p>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -6499,9 +6332,8 @@ steps.</p>
 
 <details class="note" open>
   <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension. It is a fixed composition of torch operations,
-    not a single torch call.</p>
+  <p>This function is a fixed composition of torch operations, not a single
+    torch call.</p>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -6668,9 +6500,8 @@ the sum, i.e. this is <code>tensor.masked_fill(~mask, 0).sum(dim=1)</code>.</p>
 
 <details class="note" open>
   <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension. It is a fixed composition of torch operations,
-    not a single torch call.</p>
+  <p>This function is a fixed composition of torch operations, not a single
+    torch call.</p>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -6830,12 +6661,6 @@ step. It is broadcast over the trailing dimensions of
         <p>Return the maximum of all elements along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -6947,12 +6772,6 @@ indices in the batch dimension.</p>
 
         <p>Return the maximum of all elements along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -7066,12 +6885,6 @@ indices in the sequence dimension.</p>
         <p>Return the mean of all elements along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -7178,12 +6991,6 @@ indices in the sequence dimension.</p>
         <p>Return the mean of all elements along the sequence dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -7289,12 +7096,6 @@ indices in the sequence dimension.</p>
 
         <p>Return the median of all elements along the batch dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -7408,12 +7209,6 @@ indices in the batch dimension.</p>
         <p>Return the median of all elements along the sequence dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -7526,12 +7321,6 @@ indices in the sequence dimension.</p>
         <p>Return the minimum of all elements along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -7643,12 +7432,6 @@ indices in the batch dimension.</p>
 
         <p>Return the minimum of all elements along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -7767,12 +7550,6 @@ indices in the sequence dimension.</p>
 <p>The padding is added at the end of the batch dimension by default,
 or at the start with <code>side="left"</code>.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -7953,12 +7730,6 @@ is not <code>"left"</code> or <code>"right"</code>.</p>
 <p>The padding is added at the end of the sequence dimension by default,
 or at the start with <code>side="left"</code>.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension (index 1).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -8312,12 +8083,6 @@ to a specified permutation. The permutation defines a mapping from new
 positions to original positions: <code>output[i] = input[permutation[i]]</code>.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -8471,12 +8236,6 @@ shape does not match the batch dimension of the tensor.</p>
         <p>Permute the tensor along the sequence dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -8607,12 +8366,6 @@ shape does not match the sequence dimension of the tensor.</p>
         <p>Return the product of all elements along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -8718,12 +8471,6 @@ shape does not match the sequence dimension of the tensor.</p>
 
         <p>Return the product of all elements along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -8831,12 +8578,6 @@ shape does not match the sequence dimension of the tensor.</p>
 original batch size. The batch items are repeated as a block (like
 <code>torch.Tensor.repeat</code>), not item by item.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -8977,12 +8718,6 @@ effectively duplicating the sequence content. The resulting tensor has
 a sequence length that is <code>repeats</code> times the original sequence length.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension (index 1).</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -9101,12 +8836,6 @@ will have shape <code>(batch_size, seq_len * repeats, ...)</code>.</p>
         <p>Return the tensor with the elements rolled along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -9214,12 +8943,6 @@ will have shape <code>(batch_size, seq_len * repeats, ...)</code>.</p>
 
         <p>Return the tensor with the elements rolled along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -9332,12 +9055,6 @@ index.</p>
 removed. It selects a single element from the batch dimension, reducing the
 tensor's dimensionality by one.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -9456,12 +9173,6 @@ index.</p>
 <p>This function returns a view of the original tensor with the sequence dimension removed.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -9569,12 +9280,6 @@ index.</p>
 creating a random permutation of the batch items. All elements within
 each batch item are kept together and maintain their relative positions.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -9702,12 +9407,6 @@ the batch dimension are reordered randomly.</p>
         <p>Shuffle the tensor along the sequence dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -9815,12 +9514,6 @@ the batch dimension are reordered randomly.</p>
 
         <p>Slice the tensor along the batch dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -9974,12 +9667,6 @@ the batch dimension are reordered randomly.</p>
         <p>Slice the tensor along the sequence dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -10131,12 +9818,6 @@ in ascending order by value.</p>
 both the sorted values and the corresponding indices. This is useful
 when you need both the sorted data and the permutation that created it.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension (index 0).</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -10296,12 +9977,6 @@ order.</p>
 dimension in ascending order by value.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -10433,12 +10108,6 @@ in the original input tensor.</p>
 <p>Each chunk is a view of the original tensor.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -10546,12 +10215,6 @@ sizes for each chunk</p>
         <p>Split the tensor into chunks along the sequence dimension.</p>
 <p>Each chunk is a view of the original tensor.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -10868,12 +10531,6 @@ has shape <code>(batch_size, n, *)</code>.</p>
         <p>Return the standard deviation along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -10999,12 +10656,6 @@ has shape <code>(batch_size, n, *)</code>.</p>
         <p>Return the standard deviation along the sequence dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -11129,12 +10780,6 @@ has shape <code>(batch_size, n, *)</code>.</p>
         <p>Return the sum of all elements along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -11240,12 +10885,6 @@ has shape <code>(batch_size, n, *)</code>.</p>
 
         <p>Return the sum of all elements along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -11356,12 +10995,6 @@ has shape <code>(batch_size, n, *)</code>.</p>
 
         <p>Return the k largest (or smallest) elements along the batch dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -11512,12 +11145,6 @@ has shape <code>(batch_size, n, *)</code>.</p>
 
         <p>Return the k largest (or smallest) elements along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -11672,12 +11299,6 @@ has shape <code>(batch_size, n, *)</code>.</p>
         <p>Return the variance along the batch dimension.</p>
 
 
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the batch dimension is the first
-    dimension.</p>
-</details>
-
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
@@ -11802,12 +11423,6 @@ has shape <code>(batch_size, n, *)</code>.</p>
 
         <p>Return the variance along the sequence dimension.</p>
 
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>This function assumes the sequence dimension is the second
-    dimension.</p>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
