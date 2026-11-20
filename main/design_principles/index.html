@@ -1221,15 +1221,17 @@ Each principle below is enforced by a test.</p>
 </tr>
 </tbody>
 </table>
-<p><code>test_thin_wrappers</code> fails for a new function that is neither one torch call nor in this list.
-- <strong>Two symmetric levels (P3).</strong> Every <code>tensor</code> function that maps batch data has a <code>nested</code>
+<p><code>test_thin_wrappers</code> fails for a new function that is neither one torch call nor in this list.</p>
+<ul>
+<li><strong>Two symmetric levels (P3).</strong> Every <code>tensor</code> function that maps batch data has a <code>nested</code>
   twin with the same name, options and defaults. The one exception is <code>lengths_to_mask</code> (its input
   is not a batch of tensors). In <code>nested</code>, the <code>mask</code> of a masked reduction is one tensor shared
   by all the leaves. <code>nested</code> also has <code>clone</code>, <code>detach</code>,
-  <code>contiguous</code>, <code>pin_memory</code>, <code>to</code>, <code>to_numpy</code> and <code>from_numpy</code>.
-- <strong>One traversal (P4).</strong> All the nested functions go through <code>apply_to_tensors</code>,
+  <code>contiguous</code>, <code>pin_memory</code>, <code>to</code>, <code>to_numpy</code> and <code>from_numpy</code>.</li>
+<li><strong>One traversal (P4).</strong> All the nested functions go through <code>apply_to_tensors</code>,
   <code>split_tensors</code> and <code>combine_tensors</code> of <code>batchtensor.utils.structure</code>. A nested function has no
-  logic of its own.</p>
+  logic of its own.</li>
+</ul>
 <h2 id="structure-and-leaves">Structure and leaves<a class="headerlink" href="#structure-and-leaves" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Structure-preserving (P5).</strong> A map function returns the input structure with every leaf
@@ -1382,12 +1384,14 @@ Each principle below is enforced by a test.</p>
 </tr>
 </tbody>
 </table>
-<p>A guard against a fully masked row is <code>mask.any(dim=1)</code>, tested by the caller.
-- <strong>Containers of <code>cat_*</code>, <code>stack_*</code> and <code>pad_sequences</code>.</strong> The container types of the output are
+<p>A guard against a fully masked row is <code>mask.any(dim=1)</code>, tested by the caller.</p>
+<ul>
+<li><strong>Containers of <code>cat_*</code>, <code>stack_*</code> and <code>pad_sequences</code>.</strong> The container types of the output are
   the ones of the first item. <code>[list, tuple]</code> gives a list and <code>[dict, OrderedDict]</code> gives a
-  dict. A mapping combined with a sequence raises a <code>ValueError</code>.
-- <strong>Differentiable (P11).</strong> Autograd flows through every function whose torch op is
-  differentiable. Only <code>to_numpy</code> detaches.</p>
+  dict. A mapping combined with a sequence raises a <code>ValueError</code>.</li>
+<li><strong>Differentiable (P11).</strong> Autograd flows through every function whose torch op is
+  differentiable. Only <code>to_numpy</code> detaches.</li>
+</ul>
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Keyword-only options (P12).</strong> The positional arguments are the data and the arguments that
