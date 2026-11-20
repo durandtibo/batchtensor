@@ -29,6 +29,9 @@ jobs:
       matrix:
         os: ${{ fromJson(inputs.test-matrix).os_matrix }}
         python-version: ${{ fromJson(inputs.test-matrix).python_versions }}
+        # torch has no cp313t wheel (only cp314t), so the locked install fails on 3.13t
+        exclude:
+          - python-version: 3.13t
 
     steps:
       - name: Checkout
