@@ -7649,7 +7649,8 @@ representable in the dtype of the tensor.</p>
             <td>
               <div class="doc-md-description">
                 <p>The padded tensor. If the input has batch size <code>b</code>, the output
-has batch size <code>b + pad_size</code>.</p>
+has batch size <code>b + pad_size</code>. It is a new tensor, also
+when <code>pad_size</code> is 0.</p>
               </div>
             </td>
           </tr>
@@ -7829,7 +7830,8 @@ representable in the dtype of the tensor.</p>
             <td>
               <div class="doc-md-description">
                 <p>The padded tensor. If the input has sequence length <code>s</code>, the
-output has sequence length <code>s + pad_size</code>.</p>
+output has sequence length <code>s + pad_size</code>. It is a new
+tensor, also when <code>pad_size</code> is 0.</p>
               </div>
             </td>
           </tr>
