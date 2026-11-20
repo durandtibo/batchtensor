@@ -32,6 +32,9 @@ jobs:
         python-version: ${{ fromJson(inputs.test-matrix).python_versions }}
         # Test with each version of the specified package
         package-version: ${{ fromJson(inputs.package-versions) }}
+        # torch has no cp313t wheel (only cp314t), so the locked install fails on 3.13t
+        exclude:
+          - python-version: 3.13t
 
     steps:
       # Install specific version of dependency for compatibility testing
