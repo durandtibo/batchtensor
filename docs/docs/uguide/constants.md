@@ -5,9 +5,9 @@ identify batch and sequence dimensions.
 
 ## Overview
 
-The constants module provides standardized dimension indices that ensure consistency across all
-batchtensor operations. These constants are used internally by the library and can also be used in
-your own code when working with batchtensor functions.
+The constants module provides the two dimension indices that every batchtensor function uses. The
+library does not take a `dim` argument anywhere: the batch is always `BATCH_DIM` and the sequence is
+always `SEQ_DIM`. You can use the constants in your own code to stay consistent with it.
 
 ## Available Constants
 
@@ -51,14 +51,12 @@ dimension (dimension 1) of tensors when using batchtensor functions.
 - The sequence dimension contains sequential/temporal data
 - Operations along this dimension process time steps or sequence positions
 
-## Why Use Constants?
+## Why Constants?
 
-Using constants instead of hard-coded numbers provides several benefits:
-
-1. **Code Clarity**: `BATCH_DIM` is more readable than `0`
-2. **Consistency**: Ensures all operations use the same dimension conventions
-3. **Maintainability**: If dimension conventions ever change, updating the constant updates all uses
-4. **Self-Documentation**: Code using these constants is self-explanatory
+The layout is a single definition that every function reads. Code that needs a dimension of a
+batchtensor-style tensor, for example to call `torch` directly, can refer to the same definition
+instead of a bare `0` or `1`, which makes the intent explicit. The values are fixed: they are not a
+setting, and changing them is not supported.
 
 ## Practical Examples
 
@@ -146,22 +144,18 @@ Sequence length: 2
 
 ## Internal Usage
 
-These constants are used internally throughout batchtensor. For example (simplified pseudocode):
+The functions of `batchtensor.tensor` read the constants. For example (simplified):
 
 ```python
 # In batchtensor.tensor.reduction
-def sum_along_batch(tensor: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
-    """Sum tensor along the batch dimension."""
+def sum_along_batch(tensor: torch.Tensor, *, keepdim: bool = False) -> torch.Tensor:
     return tensor.sum(dim=BATCH_DIM, keepdim=keepdim)
 
 
-# In batchtensor.tensor.slicing (simplified for illustration)
+# In batchtensor.tensor.slicing
 def select_along_seq(tensor: torch.Tensor, index: int) -> torch.Tensor:
-    """Select a specific index along the sequence dimension."""
     return tensor.select(dim=SEQ_DIM, index=index)
 ```
-
-This ensures consistency across all functions in the library.
 
 ## Compatibility with Other Libraries
 
@@ -175,14 +169,24 @@ practices:
 - **NLP sequence models**: With `batch_first=True`, sequences are `(batch, seq_len, features)`,
   matching our conventions
 
-## Best Practices
+## Data in Another Layout
 
-1. **Import the constants** when you need to reference dimensions explicitly
-2. **Use in assertions** to validate tensor shapes in your code
-3. **Prefer batchtensor functions** over manual dimension handling when possible
-4. **Document assumptions** about tensor shapes in your own functions
+Data laid out as `(seq, batch, ...)`, such as the default input of `torch.nn.LSTM`, must be
+transposed before it is passed to batchtensor. For any operation on another dimension, call `torch`
+directly. See [Design principles](../design_principles.md#the-layout-is-fixed-p1) for the trade-off.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import sum_along_seq
+>>> seq_first = torch.ones(5, 2, 3)  # (seq, batch, features)
+>>> sum_along_seq(seq_first.transpose(0, 1))  # (batch, seq, features) -> (batch, features)
+tensor([[5., 5., 5.],
+        [5., 5., 5.]])
+
+```
 
 ## See Also
 
 - [Tensor Operations](tensor.md) - Functions that use these dimension constants
 - [Nested Operations](nested.md) - Nested operations following the same conventions
+- [Design principles](../design_principles.md) - Why the layout is fixed

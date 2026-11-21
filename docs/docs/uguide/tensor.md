@@ -6,7 +6,7 @@ be used directly when working with single tensors.
 
 ## Overview
 
-The tensor module operates on individual tensors with two primary dimensional conventions:
+The tensor module operates on individual tensors with two dimensional conventions:
 
 - **Batch dimension**: The first dimension (dimension 0) represents the batch
 - **Sequence dimension**: The second dimension (dimension 1) represents the sequence/time steps
@@ -15,6 +15,26 @@ All functions in this module follow these conventions. The shape assumptions are
 
 - Batch operations: `(batch_size, *)` where `*` means any additional dimensions
 - Sequence operations: `(batch_size, seq_len, *)` where `*` means any additional dimensions
+
+A function that works on a dimension comes in two variants, `<name>_along_batch` and
+`<name>_along_seq`, and takes no `dim` argument. Apart from the functions listed in
+[Design principles](../design_principles.md#tensor-functions-are-thin-wrappers-p2), each function is
+one torch call with the dimension fixed: it has the semantics of the torch function, and does not
+copy, cast or move data.
+
+## Functions by family
+
+| Family      | Functions (each with `_along_batch` and `_along_seq`, unless noted)                                                        |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Slicing     | `slice`, `select`, `chunk`, `split`                                                                                        |
+| Indexing    | `index_select`                                                                                                             |
+| Joining     | `cat`, `stack`, `repeat`                                                                                                   |
+| Padding     | `pad`, and `pad_sequences` (no variant)                                                                                    |
+| Masking     | `lengths_to_mask` (no variant), `masked_sum`, `masked_mean`, `masked_amax`, `masked_amin` (`_along_seq` only)              |
+| Reduction   | `sum`, `mean`, `prod`, `amax`, `amin`, `max`, `min`, `argmax`, `argmin`, `median`, `std`, `var`, `any`, `all`, `logsumexp` |
+| Ordering    | `sort`, `argsort`, `topk`, `flip`, `roll`                                                                                  |
+| Cumulative  | `cumsum`, `cumprod`                                                                                                        |
+| Permutation | `permute`, `shuffle`                                                                                                       |
 
 ## Slicing Operations
 
@@ -610,26 +630,98 @@ indices=tensor([[2, 1, 1, 1],
 
 ```
 
-## Best Practices
+## Behaviour to know
 
-1. **Dimension Awareness**: Always ensure your tensors follow the expected shape conventions
-   (batch dimension first, sequence dimension second)
-2. **Memory Efficiency**: Many operations like `slice` and `select` return views when possible,
-   not copies
-3. **Batch Processing**: These functions are optimized for batch processing, making them efficient
-   for handling multiple samples simultaneously
-4. **Consistency**: Use these functions instead of direct indexing to maintain code clarity and
-   reduce errors
+### Views and copies
 
-## Performance Considerations
+`slice`, `select`, `chunk` and `split` return views of the input, as torch does. Writing to the
+output writes to the input. The other functions return new tensors, and no function modifies its
+input. Even `pad_along_seq(x, 0)` returns a new tensor.
 
-- Operations leverage PyTorch's optimized tensor operations
-- Views are used when possible to avoid data copying
-- Batch operations are more efficient than processing items one at a time
-- GPU acceleration is available through PyTorch's device management
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import pad_along_seq, slice_along_batch
+>>> x = torch.tensor([[1, 2], [3, 4]])
+>>> view = slice_along_batch(x, stop=1)
+>>> view[0, 0] = 9
+>>> x
+tensor([[9, 2],
+        [3, 4]])
+>>> pad_along_seq(x, 0) is x
+False
+
+```
+
+### Options are keyword-only
+
+The positional arguments are the data and the arguments that define the operation. Options such as
+`keepdim`, `descending`, `stable`, `step`, `value`, `side`, `generator` and `max_len` must be passed
+by keyword:
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import slice_along_batch, sort_along_seq
+>>> x = torch.tensor([[3, 1, 2], [6, 5, 4]])
+>>> sort_along_seq(x, descending=True).values
+tensor([[3, 2, 1],
+        [6, 5, 4]])
+>>> slice_along_batch(torch.arange(6).reshape(6, 1), step=2)
+tensor([[0],
+        [2],
+        [4]])
+
+```
+
+### Errors
+
+An argument that torch cannot validate, or accepts with another meaning, is checked and raises a
+`ValueError`. Everything else is the torch error, unchanged.
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import pad_along_seq, permute_along_batch
+>>> permute_along_batch(torch.ones(3, 2), torch.tensor([0, 1]))
+Traceback (most recent call last):
+    ...
+ValueError: ...
+>>> pad_along_seq(torch.ones(2, 2, dtype=torch.long), 1, value=1.5)
+Traceback (most recent call last):
+    ...
+ValueError: value (1.5) cannot be represented with dtype torch.int64
+
+```
+
+The full table is in [Design principles](../design_principles.md#one-error-contract-p8).
+
+### Randomness
+
+`shuffle_along_batch` and `shuffle_along_seq` draw a permutation. By default they use the global
+torch random state. Pass `generator=` a `torch.Generator` or an `int` seed to make it reproducible:
+
+```pycon
+>>> import torch
+>>> from batchtensor.tensor import shuffle_along_batch
+>>> x = torch.arange(5).reshape(5, 1)
+>>> bool((shuffle_along_batch(x, generator=42) == shuffle_along_batch(x, generator=42)).all())
+True
+
+```
+
+### Devices and dtypes
+
+No function moves data between devices or changes the dtype. The only function that can force a
+host-device synchronization is `lengths_to_mask` without `max_len`, because it reads the largest
+length. Pass `max_len` inside a training step on an accelerator.
+
+### Edge cases
+
+The results on degenerate input (a row of a masked reduction without valid step, a repeated index in
+`permute_*`, `pad_size=0`, ...) are listed in
+[Design principles](../design_principles.md#edge-cases-have-a-documented-result-p16).
 
 ## See Also
 
 - [Nested Operations](nested.md) - Operations for nested data structures
+- [Design principles](../design_principles.md) - Behaviour guarantees and trade-offs
 - [API Reference](../refs/tensor.md) - Complete function reference
 - [Constants](constants.md) - Dimension constants used throughout the library
