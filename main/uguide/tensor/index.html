@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://durandtibo.github.io/batchtensor/main/uguide/tensor/">
       
       
-        <link rel="prev" href="../../migration/">
+        <link rel="prev" href="../../design_principles/">
       
       
         <link rel="next" href="../nested/">
@@ -313,25 +313,6 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../../migration/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Migration guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
     
   
   
@@ -546,33 +527,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../../migration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Migration guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -592,10 +546,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -613,8 +567,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -695,6 +649,17 @@
     <span class="md-ellipsis">
       
         Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functions-by-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions by family
       
     </span>
   </a>
@@ -1163,24 +1128,85 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#behaviour-to-know" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Best Practices
+        Behaviour to know
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behaviour to know">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#views-and-copies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Views and copies
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-considerations" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#options-are-keyword-only" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Performance Considerations
+        Options are keyword-only
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Randomness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#devices-and-dtypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Devices and dtypes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge cases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1315,10 +1341,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -1336,8 +1362,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1531,6 +1557,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#functions-by-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions by family
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#slicing-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1992,24 +2029,85 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#behaviour-to-know" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Best Practices
+        Behaviour to know
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behaviour to know">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#views-and-copies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Views and copies
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-considerations" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#options-are-keyword-only" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Performance Considerations
+        Options are keyword-only
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Randomness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#devices-and-dtypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Devices and dtypes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge cases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2049,7 +2147,7 @@
 batch and sequence dimensions. These functions are the foundation for the nested operations and can
 be used directly when working with single tensors.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>The tensor module operates on individual tensors with two primary dimensional conventions:</p>
+<p>The tensor module operates on individual tensors with two dimensional conventions:</p>
 <ul>
 <li><strong>Batch dimension</strong>: The first dimension (dimension 0) represents the batch</li>
 <li><strong>Sequence dimension</strong>: The second dimension (dimension 1) represents the sequence/time steps</li>
@@ -2059,6 +2157,58 @@ be used directly when working with single tensors.</p>
 <li>Batch operations: <code>(batch_size, *)</code> where <code>*</code> means any additional dimensions</li>
 <li>Sequence operations: <code>(batch_size, seq_len, *)</code> where <code>*</code> means any additional dimensions</li>
 </ul>
+<p>A function that works on a dimension comes in two variants, <code>&lt;name&gt;_along_batch</code> and
+<code>&lt;name&gt;_along_seq</code>, and takes no <code>dim</code> argument. Apart from the functions listed in
+<a href="../../design_principles/#tensor-functions-are-thin-wrappers-p2">Design principles</a>, each function is
+one torch call with the dimension fixed: it has the semantics of the torch function, and does not
+copy, cast or move data.</p>
+<h2 id="functions-by-family">Functions by family<a class="headerlink" href="#functions-by-family" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Functions (each with <code>_along_batch</code> and <code>_along_seq</code>, unless noted)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slicing</td>
+<td><code>slice</code>, <code>select</code>, <code>chunk</code>, <code>split</code></td>
+</tr>
+<tr>
+<td>Indexing</td>
+<td><code>index_select</code></td>
+</tr>
+<tr>
+<td>Joining</td>
+<td><code>cat</code>, <code>stack</code>, <code>repeat</code></td>
+</tr>
+<tr>
+<td>Padding</td>
+<td><code>pad</code>, and <code>pad_sequences</code> (no variant)</td>
+</tr>
+<tr>
+<td>Masking</td>
+<td><code>lengths_to_mask</code> (no variant), <code>masked_sum</code>, <code>masked_mean</code>, <code>masked_amax</code>, <code>masked_amin</code> (<code>_along_seq</code> only)</td>
+</tr>
+<tr>
+<td>Reduction</td>
+<td><code>sum</code>, <code>mean</code>, <code>prod</code>, <code>amax</code>, <code>amin</code>, <code>max</code>, <code>min</code>, <code>argmax</code>, <code>argmin</code>, <code>median</code>, <code>std</code>, <code>var</code>, <code>any</code>, <code>all</code>, <code>logsumexp</code></td>
+</tr>
+<tr>
+<td>Ordering</td>
+<td><code>sort</code>, <code>argsort</code>, <code>topk</code>, <code>flip</code>, <code>roll</code></td>
+</tr>
+<tr>
+<td>Cumulative</td>
+<td><code>cumsum</code>, <code>cumprod</code></td>
+</tr>
+<tr>
+<td>Permutation</td>
+<td><code>permute</code>, <code>shuffle</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="slicing-operations">Slicing Operations<a class="headerlink" href="#slicing-operations" title="Permanent link">&para;</a></h2>
 <h3 id="slicing-along-batch-dimension">Slicing Along Batch Dimension<a class="headerlink" href="#slicing-along-batch-dimension" title="Permanent link">&para;</a></h3>
 <p>Extract a subset of the batch:</p>
@@ -2482,27 +2632,73 @@ or the sequence dimension.</p>
 <span class="go">indices=tensor([[2, 1, 1, 1],</span>
 <span class="go">        [1, 2, 0, 0]]))</span>
 </code></pre></div>
-<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>Dimension Awareness</strong>: Always ensure your tensors follow the expected shape conventions
-   (batch dimension first, sequence dimension second)</li>
-<li><strong>Memory Efficiency</strong>: Many operations like <code>slice</code> and <code>select</code> return views when possible,
-   not copies</li>
-<li><strong>Batch Processing</strong>: These functions are optimized for batch processing, making them efficient
-   for handling multiple samples simultaneously</li>
-<li><strong>Consistency</strong>: Use these functions instead of direct indexing to maintain code clarity and
-   reduce errors</li>
-</ol>
-<h2 id="performance-considerations">Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Operations leverage PyTorch's optimized tensor operations</li>
-<li>Views are used when possible to avoid data copying</li>
-<li>Batch operations are more efficient than processing items one at a time</li>
-<li>GPU acceleration is available through PyTorch's device management</li>
-</ul>
+<h2 id="behaviour-to-know">Behaviour to know<a class="headerlink" href="#behaviour-to-know" title="Permanent link">&para;</a></h2>
+<h3 id="views-and-copies">Views and copies<a class="headerlink" href="#views-and-copies" title="Permanent link">&para;</a></h3>
+<p><code>slice</code>, <code>select</code>, <code>chunk</code> and <code>split</code> return views of the input, as torch does. Writing to the
+output writes to the input. The other functions return new tensors, and no function modifies its
+input. Even <code>pad_along_seq(x, 0)</code> returns a new tensor.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">pad_along_seq</span><span class="p">,</span> <span class="n">slice_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">view</span> <span class="o">=</span> <span class="n">slice_along_batch</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">tensor([[9, 2],</span>
+<span class="go">        [3, 4]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_seq</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">is</span> <span class="n">x</span>
+<span class="go">False</span>
+</code></pre></div>
+<h3 id="options-are-keyword-only">Options are keyword-only<a class="headerlink" href="#options-are-keyword-only" title="Permanent link">&para;</a></h3>
+<p>The positional arguments are the data and the arguments that define the operation. Options such as
+<code>keepdim</code>, <code>descending</code>, <code>stable</code>, <code>step</code>, <code>value</code>, <code>side</code>, <code>generator</code> and <code>max_len</code> must be passed
+by keyword:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">slice_along_batch</span><span class="p">,</span> <span class="n">sort_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sort_along_seq</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="go">tensor([[3, 2, 1],</span>
+<span class="go">        [6, 5, 4]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slice_along_batch</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">tensor([[0],</span>
+<span class="go">        [2],</span>
+<span class="go">        [4]])</span>
+</code></pre></div>
+<h3 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h3>
+<p>An argument that torch cannot validate, or accepts with another meaning, is checked and raises a
+<code>ValueError</code>. Everything else is the torch error, unchanged.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">pad_along_seq</span><span class="p">,</span> <span class="n">permute_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">permute_along_batch</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">ValueError</span>: <span class="n">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad_along_seq</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">ValueError</span>: <span class="n">value (1.5) cannot be represented with dtype torch.int64</span>
+</code></pre></div>
+<p>The full table is in <a href="../../design_principles/#one-error-contract-p8">Design principles</a>.</p>
+<h3 id="randomness">Randomness<a class="headerlink" href="#randomness" title="Permanent link">&para;</a></h3>
+<p><code>shuffle_along_batch</code> and <code>shuffle_along_seq</code> draw a permutation. By default they use the global
+torch random state. Pass <code>generator=</code> a <code>torch.Generator</code> or an <code>int</code> seed to make it reproducible:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">shuffle_along_batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">((</span><span class="n">shuffle_along_batch</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="n">shuffle_along_batch</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+<span class="go">True</span>
+</code></pre></div>
+<h3 id="devices-and-dtypes">Devices and dtypes<a class="headerlink" href="#devices-and-dtypes" title="Permanent link">&para;</a></h3>
+<p>No function moves data between devices or changes the dtype. The only function that can force a
+host-device synchronization is <code>lengths_to_mask</code> without <code>max_len</code>, because it reads the largest
+length. Pass <code>max_len</code> inside a training step on an accelerator.</p>
+<h3 id="edge-cases">Edge cases<a class="headerlink" href="#edge-cases" title="Permanent link">&para;</a></h3>
+<p>The results on degenerate input (a row of a masked reduction without valid step, a repeated index in
+<code>permute_*</code>, <code>pad_size=0</code>, ...) are listed in
+<a href="../../design_principles/#edge-cases-have-a-documented-result-p16">Design principles</a>.</p>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../nested/">Nested Operations</a> - Operations for nested data structures</li>
+<li><a href="../../design_principles/">Design principles</a> - Behaviour guarantees and trade-offs</li>
 <li><a href="../../refs/tensor/">API Reference</a> - Complete function reference</li>
 <li><a href="../constants/">Constants</a> - Dimension constants used throughout the library</li>
 </ul>

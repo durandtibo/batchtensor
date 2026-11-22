@@ -313,25 +313,6 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../../migration/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Migration guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
     
   
   
@@ -546,33 +527,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../../migration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Migration guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -592,10 +546,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -613,8 +567,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -747,33 +701,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#structure-helpers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        Structure Helpers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure Helpers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apply-a-function-to-every-tensor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply a function to every tensor
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#seed-management" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#split-every-tensor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Seed Management
+        Split every tensor
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Seed Management">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#generator-setup" class="md-nav__link">
+  <a href="#combine-structures" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Generator Setup
+        Combine structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-a-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read a size
       
     </span>
   </a>
@@ -786,60 +762,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#practical-examples" class="md-nav__link">
+  <a href="#types" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Practical Examples
+        Types
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Practical Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reproducible-shuffling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reproducible Shuffling
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multiple-independent-random-streams" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Multiple Independent Random Streams
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#device-specific-generators" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Device-Specific Generators
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#random-permutations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Best Practices
+        Random Permutations
       
     </span>
   </a>
@@ -851,17 +788,6 @@
     <span class="md-ellipsis">
       
         See Also
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#structure-helpers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Structure Helpers
       
     </span>
   </a>
@@ -932,10 +858,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -953,8 +879,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1137,33 +1063,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#structure-helpers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        Structure Helpers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure Helpers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apply-a-function-to-every-tensor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply a function to every tensor
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#seed-management" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#split-every-tensor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Seed Management
+        Split every tensor
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Seed Management">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#generator-setup" class="md-nav__link">
+  <a href="#combine-structures" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Generator Setup
+        Combine structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-a-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read a size
       
     </span>
   </a>
@@ -1176,60 +1124,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#practical-examples" class="md-nav__link">
+  <a href="#types" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Practical Examples
+        Types
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Practical Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reproducible-shuffling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reproducible Shuffling
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multiple-independent-random-streams" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Multiple Independent Random Streams
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#device-specific-generators" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Device-Specific Generators
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#random-permutations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Best Practices
+        Random Permutations
       
     </span>
   </a>
@@ -1241,17 +1150,6 @@
     <span class="md-ellipsis">
       
         See Also
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#structure-helpers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Structure Helpers
       
     </span>
   </a>
@@ -1279,111 +1177,153 @@
 
 
 <h1 id="utility-functions">Utility Functions<a class="headerlink" href="#utility-functions" title="Permanent link">&para;</a></h1>
-<p>The <code>batchtensor.utils</code> module provides utility functions that support the main tensor operations,
-particularly for managing random seeds and ensuring reproducibility.</p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>The utils module currently contains seed management utilities that are essential for:</p>
+<p>The <code>batchtensor.utils</code> module contains the building blocks of the library. You can use them to
+write your own operations on nested data structures, and to draw reproducible permutations.</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>batchtensor.utils.structure</code></td>
+<td><code>apply_to_tensors</code>, <code>split_tensors</code>, <code>combine_tensors</code>, <code>get_size</code></td>
+</tr>
+<tr>
+<td><code>batchtensor.utils.types</code></td>
+<td>the <code>NestedTensor</code> type and the type variable <code>T</code></td>
+</tr>
+<tr>
+<td><code>batchtensor.utils.seed</code></td>
+<td><code>setup_torch_generator</code>, <code>random_permutation</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="structure-helpers">Structure Helpers<a class="headerlink" href="#structure-helpers" title="Permanent link">&para;</a></h2>
+<p>All the functions of <code>batchtensor.nested</code> are built on three helpers, one for each shape of
+operation. They are the only code that walks a nested structure, so they define the rules for
+containers and leaves:</p>
 <ul>
-<li>Generating reproducible random operations</li>
-<li>Managing PyTorch random number generators</li>
-<li>Ensuring consistent behavior across different runs</li>
+<li>The structure is a tensor, or a <code>dict</code>, <code>list</code> or <code>tuple</code> of structures (and their subclasses).</li>
+<li>The output keeps the container types and the keys of the input.</li>
+<li>A leaf that is not a <code>torch.Tensor</code> raises a <code>TypeError</code>.</li>
 </ul>
-<h2 id="seed-management">Seed Management<a class="headerlink" href="#seed-management" title="Permanent link">&para;</a></h2>
-<p>Seeds and generators are created with <a href="https://durandtibo.github.io/coola/"><code>coola.random</code></a>:
-<code>make_torch_generator(seed, device=...)</code> creates a seeded <code>torch.Generator</code> and
-<code>sample_torch_seed(seed)</code> derives a deterministic seed from a master seed.</p>
-<h3 id="generator-setup">Generator Setup<a class="headerlink" href="#generator-setup" title="Permanent link">&para;</a></h3>
-<p>Set up a generator from either a seed or an existing generator:</p>
+<table>
+<thead>
+<tr>
+<th>Helper</th>
+<th>Shape</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>apply_to_tensors(data, fn)</code></td>
+<td>1 -&gt; 1</td>
+<td>apply <code>fn</code> to every leaf and keep the structure</td>
+</tr>
+<tr>
+<td><code>split_tensors(data, fn)</code></td>
+<td>1 -&gt; N</td>
+<td>split every leaf with <code>fn</code> and regroup the pieces</td>
+</tr>
+<tr>
+<td><code>combine_tensors(items, fn)</code></td>
+<td>N -&gt; 1</td>
+<td>combine N structures with the same layout, leaf by leaf</td>
+</tr>
+</tbody>
+</table>
+<p><code>get_size(data, dim)</code> is a fourth helper: it returns the size along <code>dim</code> shared by all the tensors.</p>
+<h3 id="apply-a-function-to-every-tensor">Apply a function to every tensor<a class="headerlink" href="#apply-a-function-to-every-tensor" title="Permanent link">&para;</a></h3>
+<p>Use <code>apply_to_tensors</code> for an operation that has no <code>batchtensor</code> function, such as an element-wise
+function:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.seed</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_torch_generator</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># From a seed</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">setup_torch_generator</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span>
-<span class="go">&lt;torch._C.Generator object at 0x...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># From an existing generator (returns the same generator)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">existing_generator</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">existing_generator</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<span class="go">&lt;torch._C.Generator object at 0x...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">setup_torch_generator</span><span class="p">(</span><span class="n">existing_generator</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="ow">is</span> <span class="n">existing_generator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_to_tensors</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]]),</span> <span class="s2">"y"</span><span class="p">:</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">3.0</span><span class="p">])]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apply_to_tensors</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">)</span>
+<span class="go">{'x': tensor([[1., 2.]]), 'y': [tensor([3.])]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apply_to_tensors</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="go">{'x': tensor([[0., 2.]]), 'y': [tensor([0.])]}</span>
+</code></pre></div>
+<h3 id="split-every-tensor">Split every tensor<a class="headerlink" href="#split-every-tensor" title="Permanent link">&para;</a></h3>
+<p><code>fn</code> returns a tuple of tensors. The i-th output has the structure of the input and the i-th piece
+of every leaf. All the leaves must give the same number of pieces:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">split_tensors</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">split_tensors</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="go">({'a': tensor([0, 1]), 'b': [tensor([0, 1])]}, {'a': tensor([2, 3]), 'b': [tensor([2, 3])]})</span>
+</code></pre></div>
+<h3 id="combine-structures">Combine structures<a class="headerlink" href="#combine-structures" title="Permanent link">&para;</a></h3>
+<p><code>fn</code> receives the list of the tensors found at the same position in each structure, and returns one
+tensor. The structures must have the same layout (the same keys and lengths):</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">combine_tensors</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">items</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])},</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">])}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">combine_tensors</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">)</span>
+<span class="go">{'a': tensor([1, 2, 3])}</span>
+</code></pre></div>
+<h3 id="read-a-size">Read a size<a class="headerlink" href="#read-a-size" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_size</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_size</span><span class="p">({</span><span class="s2">"x"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">"y"</span><span class="p">:</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)]},</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">4</span>
+</code></pre></div>
+<p><code>get_size</code> raises a <code>ValueError</code> if the structure has no tensor, if a tensor has too few
+dimensions, or if the sizes differ. <code>batchtensor.nested.batch_size</code> and <code>seq_len</code> call it with the
+batch and sequence dimensions.</p>
+<h2 id="types">Types<a class="headerlink" href="#types" title="Permanent link">&para;</a></h2>
+<p><code>NestedTensor</code> is the type of a tensor, or of a mapping, list or tuple of <code>NestedTensor</code>.
+<code>batchtensor.nested</code> re-exports it. <code>str</code> and <code>bytes</code> are not accepted, and sets and dataclasses are
+outside the contract. <code>T</code> is a type variable bound to <code>NestedTensor</code>: a function typed <code>T -&gt; T</code>
+returns the type it receives, so a dict in gives a dict out.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_to_tensors</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">T</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">negate</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">apply_to_tensors</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="o">-</span><span class="n">t</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="random-permutations">Random Permutations<a class="headerlink" href="#random-permutations" title="Permanent link">&para;</a></h2>
+<p><code>random_permutation(size, generator=None)</code> returns a 1-D <code>torch.long</code> tensor with a random
+permutation of <code>0..size-1</code>. <code>generator</code> is a <code>torch.Generator</code>, an <code>int</code> seed or <code>None</code>, in which
+case the global torch random state is used. The permutation is created on the device of the
+generator. <code>setup_torch_generator</code> turns a seed or a generator into a <code>torch.Generator</code>: a
+generator is returned as is, and a seed makes a new one.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.seed</span><span class="w"> </span><span class="kn">import</span> <span class="n">random_permutation</span><span class="p">,</span> <span class="n">setup_torch_generator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">((</span><span class="n">random_permutation</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="n">random_permutation</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">()</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">setup_torch_generator</span><span class="p">(</span><span class="n">generator</span><span class="p">)</span> <span class="ow">is</span> <span class="n">generator</span>
 <span class="go">True</span>
 </code></pre></div>
-<p>This function is particularly useful in library code where you want to accept either a seed or a
-generator as input.</p>
-<h2 id="practical-examples">Practical Examples<a class="headerlink" href="#practical-examples" title="Permanent link">&para;</a></h2>
-<h3 id="reproducible-shuffling">Reproducible Shuffling<a class="headerlink" href="#reproducible-shuffling" title="Permanent link">&para;</a></h3>
-<p>Use generators to ensure reproducible shuffling:</p>
+<p>The <code>shuffle_along_*</code> functions draw one permutation with <code>random_permutation</code> and apply it to
+every tensor. To control the randomness of your own code, create generators with
+<a href="https://durandtibo.github.io/coola/"><code>coola.random</code></a>: <code>make_torch_generator(seed, device=...)</code>
+creates a seeded <code>torch.Generator</code> and <code>sample_torch_seed(seed)</code> derives a deterministic seed from a
+master seed.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">shuffle_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">coola.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_torch_generator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">shuffle_along_batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># First run with seed 42</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">make_torch_generator</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">shuffled</span> <span class="o">=</span> <span class="n">shuffle_along_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="n">generator</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Second run with same seed produces same result</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">make_torch_generator</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">shuffled</span> <span class="o">=</span> <span class="n">shuffle_along_batch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="n">generator</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="multiple-independent-random-streams">Multiple Independent Random Streams<a class="headerlink" href="#multiple-independent-random-streams" title="Permanent link">&para;</a></h3>
-<p>Create multiple independent random streams from a master seed:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">coola.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_torch_generator</span><span class="p">,</span> <span class="n">sample_torch_seed</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">master_seed</span> <span class="o">=</span> <span class="mi">42</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create seeds for different purposes</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">train_seed</span> <span class="o">=</span> <span class="n">sample_torch_seed</span><span class="p">(</span><span class="n">master_seed</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">val_seed</span> <span class="o">=</span> <span class="n">sample_torch_seed</span><span class="p">(</span><span class="n">master_seed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">test_seed</span> <span class="o">=</span> <span class="n">sample_torch_seed</span><span class="p">(</span><span class="n">master_seed</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create independent generators</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">train_gen</span> <span class="o">=</span> <span class="n">make_torch_generator</span><span class="p">(</span><span class="n">train_seed</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">val_gen</span> <span class="o">=</span> <span class="n">make_torch_generator</span><span class="p">(</span><span class="n">val_seed</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">test_gen</span> <span class="o">=</span> <span class="n">make_torch_generator</span><span class="p">(</span><span class="n">test_seed</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="device-specific-generators">Device-Specific Generators<a class="headerlink" href="#device-specific-generators" title="Permanent link">&para;</a></h3>
-<p>Create generators for different devices:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">coola.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_torch_generator</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># CPU generator</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cpu_gen</span> <span class="o">=</span> <span class="n">make_torch_generator</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># GPU generator (if CUDA is available)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>  <span class="c1"># doctest: +SKIP</span>
-<span class="gp">... </span>    <span class="n">gpu_gen</span> <span class="o">=</span> <span class="n">make_torch_generator</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">"cuda"</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>Always Use Seeds in Tests</strong>: When writing tests, always use seeded generators to ensure
-   reproducible results</li>
-<li><strong>Document Random Behavior</strong>: When using random operations in your code, document the expected
-   behavior and how to control it with seeds</li>
-<li><strong>Separate Random Streams</strong>: Use different seeds for different purposes (training, validation,
-   testing) to avoid correlations</li>
-<li><strong>Generator Reuse</strong>: Reuse generators when you want to maintain a sequence of random operations,
-   create new ones when you want independence</li>
-</ol>
+<p>A generator is stateful: reuse one to continue a sequence of random operations, and create a new one
+from the same seed to repeat it.</p>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../tensor/">Tensor Operations</a> - Operations that use random number generators</li>
-<li><a href="../nested/">Nested Operations</a> - Nested operations with randomness</li>
+<li><a href="../nested/">Nested Operations</a> - Functions built on the structure helpers</li>
+<li><a href="../../design_principles/">Design principles</a> - The rules the helpers define</li>
 <li><a href="https://pytorch.org/docs/stable/random.html">PyTorch Random Sampling</a> - PyTorch's random number
   generation documentation</li>
 </ul>
-<h2 id="structure-helpers">Structure Helpers<a class="headerlink" href="#structure-helpers" title="Permanent link">&para;</a></h2>
-<p><code>batchtensor.utils.structure</code> contains the three helpers that all the nested functions use:</p>
-<ul>
-<li><code>apply_to_tensors(data, fn)</code>: apply <code>fn</code> to every tensor leaf and keep the structure.</li>
-<li><code>split_tensors(data, fn)</code>: split every tensor with <code>fn</code> and regroup the pieces in N structures.</li>
-<li><code>combine_tensors(items, fn)</code>: combine N structures with the same layout, leaf by leaf.</li>
-<li><code>get_size(data, dim)</code>: the size shared by all the tensors along a dimension.</li>
-</ul>
-<p>A leaf that is not a tensor raises a <code>TypeError</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.utils.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_to_tensors</span><span class="p">,</span> <span class="n">get_size</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">"y"</span><span class="p">:</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">get_size</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="go">4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">apply_to_tensors</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">neg</span><span class="p">)</span>
-<span class="go">{'x': tensor([[-1., -1., -1.],</span>
-<span class="go">              [-1., -1., -1.],</span>
-<span class="go">              [-1., -1., -1.],</span>
-<span class="go">              [-1., -1., -1.]]), 'y': [tensor([-0., -0., -0., -0.])]}</span>
-</code></pre></div>
 
 
 

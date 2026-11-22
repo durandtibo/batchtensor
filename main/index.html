@@ -314,25 +314,6 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="migration/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Migration guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
     
     
       <li class="md-tabs__item">
@@ -543,10 +524,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-links" class="md-nav__link">
+  <a href="#where-to-go-next" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Links
+        Where to go next
       
     </span>
   </a>
@@ -670,33 +651,6 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="migration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Migration guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
     
     
     
@@ -711,10 +665,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -732,8 +686,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -882,10 +836,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -903,8 +857,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1131,10 +1085,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-links" class="md-nav__link">
+  <a href="#where-to-go-next" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Links
+        Where to go next
       
     </span>
   </a>
@@ -1241,27 +1195,40 @@
 
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p><code>batchtensor</code> is a lightweight library built on top of <a href="https://pytorch.org/">PyTorch</a> to manipulate
-nested data structures with PyTorch tensors.
-This library provides functions for tensors where the first dimension is the batch dimension.
-It also provides functions for tensors representing a batch of sequences where the first dimension
-is the batch dimension and the second dimension is the sequence dimension.</p>
+batches of tensors, and nested data structures (dictionaries, lists and tuples) of such batches.</p>
+<p>It assumes one data layout:</p>
+<ul>
+<li>the <strong>batch</strong> dimension is the first dimension (dimension 0);</li>
+<li>the <strong>sequence</strong> dimension is the second dimension (dimension 1).</li>
+</ul>
+<p>A function name says on which dimension it works: <code>sum_along_batch</code> reduces dimension 0 and
+<code>slice_along_seq</code> slices dimension 1. No function takes a <code>dim</code> argument.</p>
 <h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Nested Structure Support</strong>: Work with dictionaries, lists, and tuples containing tensors</li>
-<li><strong>Batch Operations</strong>: Efficiently process batches of data along the batch dimension</li>
-<li><strong>Sequence Operations</strong>: Handle sequential/temporal data along the sequence dimension</li>
-<li><strong>Consistent API</strong>: Unified interface for both single tensors and nested structures</li>
-<li><strong>Type Safety</strong>: Fully typed with comprehensive type hints</li>
-<li><strong>Well Documented</strong>: Extensive documentation with examples for all functions</li>
-<li><strong>Lightweight</strong>: Minimal dependencies (PyTorch and coola)</li>
-<li><strong>Performance</strong>: Leverages PyTorch's optimized operations</li>
+<li><strong>Two levels with the same API</strong>: <code>batchtensor.tensor</code> works on one tensor and
+  <code>batchtensor.nested</code> works on a dict, list or tuple of tensors. A function has the same name and
+  options at both levels.</li>
+<li><strong>Structure preserving</strong>: a nested function returns the structure it received, with the same
+  container types and keys.</li>
+<li><strong>Thin over PyTorch</strong>: a <code>tensor</code> function is one torch call with the dimension fixed. It does
+  not copy, cast or move data on its own, and autograd works.</li>
+<li><strong>Strict on inputs</strong>: a leaf that is not a tensor raises a <code>TypeError</code>; arguments that torch would
+  accept with another meaning are validated.</li>
+<li><strong>Padded batches</strong>: <code>pad_sequences</code>, <code>lengths_to_mask</code> and the masked reductions handle batches of
+  sequences of different lengths.</li>
+<li><strong>Typed and documented</strong>: every function has type hints and a docstring with a runnable example.</li>
+<li><strong>Lightweight</strong>: the only required dependencies are PyTorch and
+  <a href="https://github.com/durandtibo/coola">coola</a>.</li>
 </ul>
 <h2 id="main-modules">Main Modules<a class="headerlink" href="#main-modules" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><a href="refs/nested/">batchtensor.nested</a></strong>: Operations for nested data structures</li>
-<li><strong><a href="refs/tensor/">batchtensor.tensor</a></strong>: Operations for individual tensors</li>
-<li><strong><a href="refs/utils/">batchtensor.utils</a></strong>: Utility functions for seed management</li>
-<li><strong><a href="refs/constants/">batchtensor.constants</a></strong>: Dimension constants</li>
+<li><strong><a href="refs/tensor/">batchtensor.tensor</a></strong>: operations on individual tensors</li>
+<li><strong><a href="refs/nested/">batchtensor.nested</a></strong>: the same operations on nested data structures, plus
+  <code>to</code>, <code>clone</code>, <code>detach</code>, <code>batch_size</code>, <code>seq_len</code> and NumPy conversion</li>
+<li><strong><a href="refs/utils/">batchtensor.utils</a></strong>: the helpers that traverse nested structures
+  (<code>apply_to_tensors</code>, <code>split_tensors</code>, <code>combine_tensors</code>, <code>get_size</code>), the <code>NestedTensor</code> type and
+  random-permutation helpers</li>
+<li><strong><a href="refs/constants/">batchtensor.constants</a></strong>: <code>BATCH_DIM</code> and <code>SEQ_DIM</code></li>
 </ul>
 <h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
 <p>Let's imagine you have a batch which is represented by a dictionary with three tensors, and you want
@@ -1293,12 +1260,15 @@ function <code>split_along_batch</code>:</p>
 </code></pre></div>
 <p>Please check the <a href="uguide/nested/">user guide</a> and <a href="refs/nested/">API reference</a> to see all the
 implemented functions and detailed examples.</p>
-<h2 id="quick-links">Quick Links<a class="headerlink" href="#quick-links" title="Permanent link">&para;</a></h2>
+<h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><a href="get_started/">Get Started</a></strong>: Installation instructions</li>
-<li><strong><a href="uguide/tensor/">User Guide</a></strong>: Comprehensive tutorials and examples</li>
-<li><strong><a href="refs/nested/">API Reference</a></strong>: Complete function documentation</li>
-<li><strong><a href="https://github.com/durandtibo/batchtensor">GitHub Repository</a></strong>: Source code and issue tracker</li>
+<li><strong><a href="get_started/">Get Started</a></strong>: installation instructions</li>
+<li><strong><a href="uguide/tensor/">User Guide</a></strong>: tutorials and examples</li>
+<li><strong><a href="design_principles/">Design principles</a></strong>: how the library behaves, and the trade-offs of
+  each choice</li>
+<li><strong><a href="architecture/">Architecture</a></strong>: how the library is built</li>
+<li><strong><a href="refs/nested/">API Reference</a></strong>: complete function documentation</li>
+<li><strong><a href="https://github.com/durandtibo/batchtensor">GitHub Repository</a></strong>: source code and issue tracker</li>
 </ul>
 <h2 id="api-stability">API stability<a class="headerlink" href="#api-stability" title="Permanent link">&para;</a></h2>
 <p><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a0.svg" title=":warning:" /> While <code>batchtensor</code> is in development stage, no API is guaranteed to be stable from one
@@ -1308,7 +1278,7 @@ In practice, this means that upgrading <code>batchtensor</code> to a new version
 that was using the old version of <code>batchtensor</code>.</p>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p><code>batchtensor</code> is licensed under BSD 3-Clause "New" or "Revised" license available
-in <a href="LICENSE">LICENSE</a> file.</p>
+in the <a href="https://github.com/durandtibo/batchtensor/blob/main/LICENSE">LICENSE</a> file.</p>
 
 
 

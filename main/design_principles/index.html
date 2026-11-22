@@ -14,7 +14,7 @@
         <link rel="prev" href="../architecture/">
       
       
-        <link rel="next" href="../migration/">
+        <link rel="next" href="../uguide/tensor/">
       
       
         
@@ -316,25 +316,6 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="../migration/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Migration guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
     
     
       <li class="md-tabs__item">
@@ -590,27 +571,166 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#two-symmetric-levels" class="md-nav__link">
+    <nav class="md-nav" aria-label="Layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-layout-is-fixed-p1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Two symmetric levels
+        The layout is fixed (P1)
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#structure-and-leaves" class="md-nav__link">
+  <a href="#two-levels" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Structure and leaves
+        Two levels
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Two levels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tensor-functions-are-thin-wrappers-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tensor functions are thin wrappers (P2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nested-mirrors-tensor-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nested mirrors tensor (P3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-traversal-for-the-nested-level-p4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One traversal for the nested level (P4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structures-and-leaves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structures and leaves
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structures and leaves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-structure-is-preserved-p5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The structure is preserved (P5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-containers-d1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported containers (D1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaves-must-be-tensors-p6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leaves must be tensors (P6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaves-are-independent-except-where-alignment-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leaves are independent, except where alignment matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empty-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empty structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#containers-of-cat_-stack_-and-pad_sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Containers of cat_*, stack_* and pad_sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#named-tuple-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Named-tuple results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -623,6 +743,78 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Behaviour">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions-are-pure-p7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions are pure (P7)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-error-contract-p8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One error contract (P8)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomness-is-explicit-p9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Randomness is explicit (P9)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-device-or-dtype-changes-p10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No device or dtype changes (P10)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge-cases-have-a-documented-result-p16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge cases have a documented result (P16)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autograd-works-p11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autograd works (P11)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -633,6 +825,56 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options-are-keyword-only-p12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Options are keyword-only (P12)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions-are-typed-p13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions are typed (P13)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layers-only-import-downward-p14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers only import downward (P14)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#every-function-has-an-example-p15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Every function has an example (P15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -661,33 +903,6 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../migration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Migration guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
     
     
     
@@ -702,10 +917,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -723,8 +938,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -873,10 +1088,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -894,8 +1109,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1086,27 +1301,166 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#two-symmetric-levels" class="md-nav__link">
+    <nav class="md-nav" aria-label="Layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-layout-is-fixed-p1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Two symmetric levels
+        The layout is fixed (P1)
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#structure-and-leaves" class="md-nav__link">
+  <a href="#two-levels" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Structure and leaves
+        Two levels
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Two levels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tensor-functions-are-thin-wrappers-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tensor functions are thin wrappers (P2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nested-mirrors-tensor-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nested mirrors tensor (P3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-traversal-for-the-nested-level-p4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One traversal for the nested level (P4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structures-and-leaves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structures and leaves
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structures and leaves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-structure-is-preserved-p5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The structure is preserved (P5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-containers-d1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported containers (D1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaves-must-be-tensors-p6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leaves must be tensors (P6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaves-are-independent-except-where-alignment-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leaves are independent, except where alignment matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empty-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empty structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#containers-of-cat_-stack_-and-pad_sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Containers of cat_*, stack_* and pad_sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#named-tuple-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Named-tuple results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1119,6 +1473,78 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Behaviour">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions-are-pure-p7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions are pure (P7)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-error-contract-p8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One error contract (P8)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomness-is-explicit-p9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Randomness is explicit (P9)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-device-or-dtype-changes-p10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No device or dtype changes (P10)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge-cases-have-a-documented-result-p16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge cases have a documented result (P16)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autograd-works-p11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autograd works (P11)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1129,6 +1555,56 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options-are-keyword-only-p12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Options are keyword-only (P12)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions-are-typed-p13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions are typed (P13)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layers-only-import-downward-p14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers only import downward (P14)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#every-function-has-an-example-p15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Every function has an example (P15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1164,21 +1640,34 @@
 
 
 <h1 id="design-principles">Design principles<a class="headerlink" href="#design-principles" title="Permanent link">&para;</a></h1>
-<p><code>batchtensor</code> is a set of thin wrappers around <code>torch</code> for batches whose first dimension is the
-batch and whose second dimension is the sequence. The package is pre-1.0 and the API is not stable.
-Each principle below is enforced by a test.</p>
+<p>This page describes the choices that shape <code>batchtensor</code>, what each choice gives you, and what it
+costs. Knowing them helps you predict how a function behaves, and decide whether the library fits
+your code or whether a plain <code>torch</code> call is a better tool for a given case.</p>
+<p>The labels in parentheses (P1, D1, ...) are stable names for the choices. The integration tests in
+<code>tests/integration</code> refer to them.</p>
+<blockquote>
+<p><code>batchtensor</code> is pre-1.0. The behaviour described here is the current one, but the API is not
+guaranteed to be stable between releases.</p>
+</blockquote>
 <h2 id="layout">Layout<a class="headerlink" href="#layout" title="Permanent link">&para;</a></h2>
+<h3 id="the-layout-is-fixed-p1">The layout is fixed (P1)<a class="headerlink" href="#the-layout-is-fixed-p1" title="Permanent link">&para;</a></h3>
+<p>The batch is dimension 0 and the sequence is dimension 1. Both come from
+<a href="../uguide/constants/"><code>BATCH_DIM</code> and <code>SEQ_DIM</code></a>, and no function takes a <code>dim</code> argument. A
+function name says what it does and where: <code>sum_along_batch</code>, <code>slice_along_seq</code>.</p>
 <ul>
-<li><strong>Fixed layout (P1).</strong> Batch is dim 0 and sequence is dim 1. The dims come only from
-  <code>BATCH_DIM</code> and <code>SEQ_DIM</code>. No function takes a <code>dim</code> argument. Data laid out as
-  <code>(seq, batch, ...)</code> must be transposed first.</li>
+<li><strong>Gain:</strong> the call site is short and cannot pass the wrong dimension. All the functions agree on
+  what "batch" and "sequence" mean, so the <code>tensor</code> and <code>nested</code> APIs stay small and symmetric.</li>
+<li><strong>Cost:</strong> the library cannot operate on another dimension. Data laid out as <code>(seq, batch, ...)</code>
+  (the default of <code>torch.nn.LSTM</code>) must be transposed first, and an operation along a feature
+  dimension is a plain <code>torch</code> call.</li>
 </ul>
-<h2 id="two-symmetric-levels">Two symmetric levels<a class="headerlink" href="#two-symmetric-levels" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Thin wrappers (P2).</strong> A <code>tensor</code> function is one torch call with the dimension fixed. It has
-  the same semantics and result as torch, with no hidden copy, cast or device move. The one
-  closed list of exceptions is below. A function that is not in it is one torch call.</li>
-</ul>
+<h2 id="two-levels">Two levels<a class="headerlink" href="#two-levels" title="Permanent link">&para;</a></h2>
+<h3 id="tensor-functions-are-thin-wrappers-p2"><code>tensor</code> functions are thin wrappers (P2)<a class="headerlink" href="#tensor-functions-are-thin-wrappers-p2" title="Permanent link">&para;</a></h3>
+<p>A function of <code>batchtensor.tensor</code> is one torch call with the dimension fixed. It has the semantics
+of that call and its result. It does not copy, cast or move data on its own. Its documentation
+therefore doubles as a pointer to the matching torch function.</p>
+<p>A small closed list of functions is more than one torch call. In each case the extra work is either
+validation that prevents a silent mistake, or a combination of calls that is easy to get wrong:</p>
 <table>
 <thead>
 <tr>
@@ -1221,49 +1710,104 @@ Each principle below is enforced by a test.</p>
 </tr>
 </tbody>
 </table>
-<p><code>test_thin_wrappers</code> fails for a new function that is neither one torch call nor in this list.</p>
 <ul>
-<li><strong>Two symmetric levels (P3).</strong> Every <code>tensor</code> function that maps batch data has a <code>nested</code>
-  twin with the same name, options and defaults. The one exception is <code>lengths_to_mask</code> (its input
-  is not a batch of tensors). In <code>nested</code>, the <code>mask</code> of a masked reduction is one tensor shared
-  by all the leaves. <code>nested</code> also has <code>clone</code>, <code>detach</code>,
-  <code>contiguous</code>, <code>pin_memory</code>, <code>to</code>, <code>to_numpy</code> and <code>from_numpy</code>.</li>
-<li><strong>One traversal (P4).</strong> All the nested functions go through <code>apply_to_tensors</code>,
-  <code>split_tensors</code> and <code>combine_tensors</code> of <code>batchtensor.utils.structure</code>. A nested function has no
-  logic of its own.</li>
+<li><strong>Gain:</strong> no surprise. If you know the torch function, you know the result, including the dtype,
+  the device and whether the output is a view.</li>
+<li><strong>Cost:</strong> the library adds no convenience that torch does not have. For example, a reduction over
+  a ragged batch needs an explicit mask (see <code>masked_*</code>); it is not inferred.</li>
 </ul>
-<h2 id="structure-and-leaves">Structure and leaves<a class="headerlink" href="#structure-and-leaves" title="Permanent link">&para;</a></h2>
+<h3 id="nested-mirrors-tensor-p3"><code>nested</code> mirrors <code>tensor</code> (P3)<a class="headerlink" href="#nested-mirrors-tensor-p3" title="Permanent link">&para;</a></h3>
+<p>Every <code>tensor</code> function that maps batch data has a <code>nested</code> function with the same name, options and
+defaults. <code>nested</code> adds <code>clone</code>, <code>detach</code>, <code>contiguous</code>, <code>pin_memory</code>, <code>to</code>, <code>to_numpy</code>,
+<code>from_numpy</code>, <code>batch_size</code> and <code>seq_len</code>. <code>lengths_to_mask</code> has no <code>nested</code> twin because its input
+is not a batch of tensors. In the nested masked reductions, the <code>mask</code> is one tensor shared by all
+the leaves.</p>
 <ul>
-<li><strong>Structure-preserving (P5).</strong> A map function returns the input structure with every leaf
-  replaced. Container types, keys and order follow <code>coola.recursive</code>. <code>cat_*</code>, <code>stack_*</code>,
-  <code>chunk_*</code> and <code>split_*</code> also keep these types.</li>
-<li><strong>Supported containers (D1).</strong> The supported structure is <code>dict</code>, <code>list</code>, <code>tuple</code> and their
-  subclasses (named tuples, <code>OrderedDict</code>, <code>defaultdict</code>). This is exactly <code>NestedTensor</code>, and the
-  three helpers of <code>batchtensor.utils.structure</code> share this rule. Anything else (sets,
-  dataclasses) is outside the contract: it may work through <code>coola</code>, and no test, doc or type
-  promises it.</li>
-<li><strong>Cross-leaf rule.</strong> The functions that map a tensor function do not compare the sizes of the
-  leaves. <code>chunk_*</code>, <code>split_*</code> and <code>shuffle_*</code> do, because the alignment of their output depends
-  on it. <code>cat_*</code> and <code>stack_*</code> check that the structures have the same layout (keys and lengths).</li>
-<li><strong>Empty structures.</strong> A function that does not need a size keeps the empty structure:
-  <code>sum_along_batch({})</code> returns <code>{}</code>. A function that needs a size raises a <code>ValueError</code>:
-  <code>chunk_*</code>, <code>split_*</code> and <code>shuffle_*</code> on a structure without tensor.</li>
-<li><strong>Tensor leaves only (P6).</strong> A leaf that is not a <code>torch.Tensor</code> raises a <code>TypeError</code> that names
-  the leaf type. Nothing is skipped silently. <code>from_numpy</code> is the only exception: its leaves
-  are arrays, and the leaf type error is the <code>TypeError</code> of <code>torch.from_numpy</code>.</li>
-<li><strong>Named-tuple results.</strong> <code>max</code>, <code>min</code>, <code>median</code> and <code>sort</code> keep their <code>torch.return_types.*</code>
-  type as the leaf of the nested output.</li>
+<li><strong>Gain:</strong> code written for a single tensor moves to a dict of tensors by changing an import.</li>
+<li><strong>Cost:</strong> the nested level cannot express an operation that needs different arguments per leaf.
+  Apply the <code>tensor</code> function to each leaf yourself for that.</li>
 </ul>
+<h3 id="one-traversal-for-the-nested-level-p4">One traversal for the nested level (P4)<a class="headerlink" href="#one-traversal-for-the-nested-level-p4" title="Permanent link">&para;</a></h3>
+<p>A nested function contains no recursion of its own. It calls one of three helpers of
+<a href="../uguide/utils/"><code>batchtensor.utils.structure</code></a>: <code>apply_to_tensors</code> (one structure in, one out),
+<code>split_tensors</code> (one in, several out) and <code>combine_tensors</code> (several in, one out). The traversal,
+the type check on the leaves and the error messages are therefore identical for all the functions.</p>
+<ul>
+<li><strong>Gain:</strong> one place defines how structures are walked. You can use the same helpers for an
+  operation <code>batchtensor</code> does not provide.</li>
+<li><strong>Cost:</strong> an operation that does not fit one of the three shapes is not a nested function.</li>
+<li><strong>Consequence:</strong> element-wise functions (<code>exp</code>, <code>log</code>, <code>clamp</code>, ...) have no nested version, since
+  they do not depend on the layout. Use <code>apply_to_tensors(data, torch.exp)</code>.</li>
+</ul>
+<h2 id="structures-and-leaves">Structures and leaves<a class="headerlink" href="#structures-and-leaves" title="Permanent link">&para;</a></h2>
+<h3 id="the-structure-is-preserved-p5">The structure is preserved (P5)<a class="headerlink" href="#the-structure-is-preserved-p5" title="Permanent link">&para;</a></h3>
+<p>A function that maps every leaf returns the input structure with each leaf replaced. Container types,
+keys and the order of the keys are those of <code>coola.recursive</code>. <code>cat_*</code>, <code>stack_*</code>, <code>chunk_*</code> and
+<code>split_*</code> also keep the container types (see below for <code>cat_*</code> and <code>stack_*</code>).</p>
+<h3 id="supported-containers-d1">Supported containers (D1)<a class="headerlink" href="#supported-containers-d1" title="Permanent link">&para;</a></h3>
+<p>The supported structure is a tensor, or a <code>dict</code>, <code>list</code> or <code>tuple</code> of supported structures, and
+their subclasses (<code>OrderedDict</code>, <code>defaultdict</code>, named tuples). This is the <code>NestedTensor</code> type, and
+the three structure helpers apply the same rule. Sets and dataclasses are outside the contract: they
+may work through <code>coola</code>, but nothing in the tests or the documentation promises it.</p>
+<ul>
+<li><strong>Gain:</strong> a small contract that is fully tested and typed.</li>
+<li><strong>Cost:</strong> a custom container (a dataclass batch, for example) must be converted to a dict first.</li>
+</ul>
+<h3 id="leaves-must-be-tensors-p6">Leaves must be tensors (P6)<a class="headerlink" href="#leaves-must-be-tensors-p6" title="Permanent link">&para;</a></h3>
+<p>A leaf that is not a <code>torch.Tensor</code> raises a <code>TypeError</code> that names the type of the leaf. Nothing is
+skipped silently. <code>from_numpy</code> is the one exception: its leaves are arrays.</p>
+<ul>
+<li><strong>Gain:</strong> a typo or an unexpected <code>None</code> or <code>str</code> in a batch is reported where it happens, not
+  later as a shape mismatch.</li>
+<li><strong>Cost:</strong> a batch with metadata (names, ids) cannot be passed as is. Split the tensors from the
+  metadata first.</li>
+</ul>
+<h3 id="leaves-are-independent-except-where-alignment-matters">Leaves are independent, except where alignment matters<a class="headerlink" href="#leaves-are-independent-except-where-alignment-matters" title="Permanent link">&para;</a></h3>
+<p>Functions that map a tensor function do not compare the sizes of the leaves. Three families check
+something, because the output of different leaves must line up:</p>
+<ul>
+<li><code>shuffle_*</code> requires all the leaves to have the same size along the dimension, since one
+  permutation is shared.</li>
+<li><code>chunk_*</code> and <code>split_*</code> require every leaf to be split into the same number of pieces. They do not
+  require the same sizes: leaves of size 4 and 3 split by <code>chunks=2</code> give pieces of different
+  lengths, and no error.</li>
+<li><code>cat_*</code> and <code>stack_*</code> require all the structures to have the same layout (the same keys and
+  lengths).</li>
+</ul>
+<p>All of these raise a <code>ValueError</code>.</p>
+<ul>
+<li><strong>Gain:</strong> the cheap functions do no extra work; the functions that would silently misalign the
+  number of pieces or the permutation check.</li>
+<li><strong>Cost:</strong> a mapped function does not tell you that two leaves have different batch sizes, and
+  <code>chunk_*</code> does not detect leaves of different sizes. Check with <code>batch_size(data)</code>, which raises
+  when the sizes differ.</li>
+</ul>
+<h3 id="empty-structures">Empty structures<a class="headerlink" href="#empty-structures" title="Permanent link">&para;</a></h3>
+<p>A function that does not need a size keeps the empty structure: <code>sum_along_batch({})</code> returns <code>{}</code>.
+A function that needs a size raises a <code>ValueError</code>: <code>chunk_*</code>, <code>split_*</code> and <code>shuffle_*</code> on a
+structure without tensor, and <code>cat_*</code> and <code>stack_*</code> on an empty sequence of structures.</p>
+<h3 id="containers-of-cat_-stack_-and-pad_sequences">Containers of <code>cat_*</code>, <code>stack_*</code> and <code>pad_sequences</code><a class="headerlink" href="#containers-of-cat_-stack_-and-pad_sequences" title="Permanent link">&para;</a></h3>
+<p>The container types of the output are the ones of the first item. <code>[list, tuple]</code> gives a list and
+<code>[dict, OrderedDict]</code> gives a dict. A mapping combined with a sequence raises a <code>ValueError</code>.</p>
+<h3 id="named-tuple-results">Named-tuple results<a class="headerlink" href="#named-tuple-results" title="Permanent link">&para;</a></h3>
+<p><code>max</code>, <code>min</code>, <code>median</code>, <code>sort</code> and <code>topk</code> return a <code>torch.return_types.*</code> object. In the nested
+output it is the leaf, so <code>max_along_batch({"a": x})</code> is <code>{"a": torch.return_types.max(...)}</code>.</p>
 <h2 id="behaviour">Behaviour<a class="headerlink" href="#behaviour" title="Permanent link">&para;</a></h2>
+<h3 id="functions-are-pure-p7">Functions are pure (P7)<a class="headerlink" href="#functions-are-pure-p7" title="Permanent link">&para;</a></h3>
+<p>Inputs are never modified. The output does not alias the input, except where torch returns a view
+(<code>slice</code>, <code>select</code>, <code>chunk</code>, <code>split</code>, <code>detach</code>, <code>from_numpy</code>, and <code>to_numpy</code> on CPU) or the input
+itself (<code>to</code>, <code>contiguous</code>, <code>pin_memory</code>). <code>batchtensor</code> adds no shortcut that returns its input:
+<code>pad_along_seq(x, 0)</code> is a new tensor.</p>
 <ul>
-<li><strong>Pure (P7).</strong> Inputs are never modified. The output never aliases the input, except where torch
-  returns a view (<code>slice</code>, <code>select</code>, <code>chunk</code>, <code>split</code>, <code>detach</code>, <code>from_numpy</code>, <code>to_numpy</code> on CPU)
-  or the input itself (<code>to</code>, <code>contiguous</code>, <code>pin_memory</code>). A function adds no shortcut that returns
-  its input: <code>pad_along_*(x, 0)</code> is a new tensor.</li>
-<li><strong>One error contract (P8).</strong> A bad leaf type is a <code>TypeError</code>. An argument that <code>batchtensor</code>
-  validates is a <code>ValueError</code>. Anything else is the torch error, unchanged. <code>batchtensor</code> validates
-  only what torch cannot see or what torch accepts but means something else.</li>
+<li><strong>Gain:</strong> you can write to the output of a function that is not in the list above without
+  touching the input.</li>
+<li><strong>Cost:</strong> a no-op call such as <code>pad_along_seq(x, 0)</code> still allocates. Skip the call yourself if
+  you know it is a no-op.</li>
 </ul>
+<h3 id="one-error-contract-p8">One error contract (P8)<a class="headerlink" href="#one-error-contract-p8" title="Permanent link">&para;</a></h3>
+<p>A leaf that is not a tensor is a <code>TypeError</code>. An argument that <code>batchtensor</code> validates is a
+<code>ValueError</code>. Anything else is the torch error, unchanged. The library validates only what torch
+cannot see, or what torch accepts but with another meaning than the one you intend.</p>
 <table>
 <thead>
 <tr>
@@ -1281,7 +1825,7 @@ Each principle below is enforced by a test.</p>
 <td><code>ValueError</code></td>
 </tr>
 <tr>
-<td>Leaves disagree on the split, chunk or shuffle dimension</td>
+<td>Leaves of different size (<code>shuffle_*</code>) or piece count (<code>chunk_*</code>, <code>split_*</code>)</td>
 <td><code>ValueError</code></td>
 </tr>
 <tr>
@@ -1319,15 +1863,26 @@ Each principle below is enforced by a test.</p>
 </tbody>
 </table>
 <ul>
-<li><strong>Explicit randomness (P9).</strong> Randomness comes only from an explicit <code>generator</code> (a
-  <code>torch.Generator</code> or an <code>int</code> seed). Without it, the global torch RNG is used. One permutation
-  is shared by all the leaves.</li>
-<li><strong>Device and dtype agnostic (P10).</strong> No function moves data between devices or casts dtype.
-  There is no host-device sync, except <code>lengths_to_mask</code> without <code>max_len</code>. A function that
-  would need a sync to validate documents its behaviour instead (P16).</li>
-<li><strong>Defined on edge cases (P16).</strong> Every function has a documented result on empty and degenerate
-  input. "Undefined" is not an answer; "torch's behaviour" is. <code>test_edge_case</code> pins the results:</li>
+<li><strong>Gain:</strong> the type of the exception tells you whether the data or the arguments are wrong.</li>
+<li><strong>Cost:</strong> two kinds of message. Torch errors keep their torch wording, and are not translated.</li>
 </ul>
+<h3 id="randomness-is-explicit-p9">Randomness is explicit (P9)<a class="headerlink" href="#randomness-is-explicit-p9" title="Permanent link">&para;</a></h3>
+<p>Randomness comes only from an explicit <code>generator</code> (a <code>torch.Generator</code> or an <code>int</code> seed). Without
+one, the global torch random state is used. One permutation is drawn and shared by all the leaves,
+so the leaves stay aligned.</p>
+<h3 id="no-device-or-dtype-changes-p10">No device or dtype changes (P10)<a class="headerlink" href="#no-device-or-dtype-changes-p10" title="Permanent link">&para;</a></h3>
+<p>No function moves data between devices or casts a dtype. A function does not trigger a host-device
+synchronization either, except <code>lengths_to_mask</code> without <code>max_len</code> (it must read the largest
+length). A function that would need a synchronization to validate its input documents its behaviour
+instead of checking.</p>
+<ul>
+<li><strong>Gain:</strong> the functions are safe inside a training step on an accelerator.</li>
+<li><strong>Cost:</strong> some mistakes are not caught. <code>permute_*</code> checks the length of the permutation but not
+  that it has no repeated index, because that check would synchronize.</li>
+</ul>
+<h3 id="edge-cases-have-a-documented-result-p16">Edge cases have a documented result (P16)<a class="headerlink" href="#edge-cases-have-a-documented-result-p16" title="Permanent link">&para;</a></h3>
+<p>A function never has an "undefined" result on empty or degenerate input. The result is either
+documented here or "whatever torch does":</p>
 <table>
 <thead>
 <tr>
@@ -1384,34 +1939,36 @@ Each principle below is enforced by a test.</p>
 </tr>
 </tbody>
 </table>
-<p>A guard against a fully masked row is <code>mask.any(dim=1)</code>, tested by the caller.</p>
-<ul>
-<li><strong>Containers of <code>cat_*</code>, <code>stack_*</code> and <code>pad_sequences</code>.</strong> The container types of the output are
-  the ones of the first item. <code>[list, tuple]</code> gives a list and <code>[dict, OrderedDict]</code> gives a
-  dict. A mapping combined with a sequence raises a <code>ValueError</code>.</li>
-<li><strong>Differentiable (P11).</strong> Autograd flows through every function whose torch op is
-  differentiable. Only <code>to_numpy</code> detaches.</li>
-</ul>
+<p>To guard against a fully masked row, test <code>mask.any(dim=1)</code> yourself. The library does not do it
+because the test needs a synchronization.</p>
+<h3 id="autograd-works-p11">Autograd works (P11)<a class="headerlink" href="#autograd-works-p11" title="Permanent link">&para;</a></h3>
+<p>Gradients flow through every function whose torch operation is differentiable. Only <code>to_numpy</code>
+detaches, since a NumPy array has no graph.</p>
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Keyword-only options (P12).</strong> The positional arguments are the data and the arguments that
-  define the operation. Options (<code>keepdim</code>, <code>descending</code>, <code>stable</code>, <code>step</code>, <code>value</code>, <code>side</code>,
-  <code>generator</code>, <code>max_len</code>, <code>memory_format</code>) are keyword-only.</li>
-<li><strong>Typed (P13).</strong> A map function has the type <code>T -&gt; T</code> with <code>T</code> bound to <code>NestedTensor</code>: dict in,
-  dict out, tensor in, tensor out. The functions that return named tuples return <code>NestedTensor</code>.</li>
-<li><strong>Layered (P14).</strong> <code>constants</code> &lt;- <code>utils</code> &lt;- <code>tensor</code> &lt;- <code>nested</code>, enforced by <code>import-linter</code>.
-  <code>torch</code> and <code>coola</code> are the only required dependencies. <code>numpy</code> is only needed for <code>from_numpy</code>
-  and <code>to_numpy</code> and is imported lazily.</li>
-<li><strong>Documented by example (P15).</strong> Every public function has a docstring with a runnable example.</li>
-</ul>
+<h3 id="options-are-keyword-only-p12">Options are keyword-only (P12)<a class="headerlink" href="#options-are-keyword-only-p12" title="Permanent link">&para;</a></h3>
+<p>The positional arguments are the data and the arguments that define the operation. Options
+(<code>keepdim</code>, <code>descending</code>, <code>stable</code>, <code>step</code>, <code>value</code>, <code>side</code>, <code>generator</code>, <code>max_len</code>,
+<code>memory_format</code>) are keyword-only, so <code>pad_along_seq(x, 2, value=1.0)</code> is readable and a new option
+never shifts an existing argument.</p>
+<h3 id="functions-are-typed-p13">Functions are typed (P13)<a class="headerlink" href="#functions-are-typed-p13" title="Permanent link">&para;</a></h3>
+<p>A function that maps a structure has the type <code>T -&gt; T</code>, with <code>T</code> bound to <code>NestedTensor</code>: a dict in
+gives a dict out, a tensor in gives a tensor out. The functions that return named tuples return
+<code>NestedTensor</code>, because the leaf type changes.</p>
+<h3 id="layers-only-import-downward-p14">Layers only import downward (P14)<a class="headerlink" href="#layers-only-import-downward-p14" title="Permanent link">&para;</a></h3>
+<p><code>constants</code> &lt;- <code>utils</code> &lt;- <code>tensor</code> &lt;- <code>nested</code>; a module imports only from the layers on its left,
+and <code>import-linter</code> checks it in CI. <code>torch</code> and <code>coola</code> are the only required dependencies. NumPy
+is needed only for <code>from_numpy</code> and <code>to_numpy</code>, and it is imported lazily.</p>
+<h3 id="every-function-has-an-example-p15">Every function has an example (P15)<a class="headerlink" href="#every-function-has-an-example-p15" title="Permanent link">&para;</a></h3>
+<p>Every public function has a docstring with a runnable example that is run as a doctest.</p>
 <h2 id="not-guaranteed">Not guaranteed<a class="headerlink" href="#not-guaranteed" title="Permanent link">&para;</a></h2>
+<p>These behaviours exist today, but do not rely on them:</p>
 <ul>
-<li>Shared references: two keys that point to the same tensor are processed twice.</li>
+<li>Two keys that point to the same tensor are processed twice (shared references are not detected).</li>
 <li>Memory sharing between input and output, except for the views listed above.</li>
 <li>The order of the leaves inside a set.</li>
-<li>Dim-last or sequence-first layouts.</li>
-<li>Cross-leaf validation, except where the output alignment depends on it (<code>shuffle_*</code>, <code>chunk_*</code>,
-  <code>split_*</code>).</li>
+<li>Dim-last or sequence-first layouts: they are not supported.</li>
+<li>Cross-leaf validation beyond the checks listed in "Leaves are independent, except where alignment
+  matters".</li>
 </ul>
 
 

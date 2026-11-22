@@ -316,25 +316,6 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="../migration/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Migration guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
     
     
       <li class="md-tabs__item">
@@ -650,33 +631,6 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../migration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Migration guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
     
     
     
@@ -691,10 +645,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -712,8 +666,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -862,10 +816,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -883,8 +837,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1142,8 +1096,9 @@
 
 
 <h1 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h1>
-<p>This page describes how <code>batchtensor</code> is built. The properties it guarantees (P1 to P15) are in
-<a href="../design_principles/">Design principles</a>. They are not repeated here.</p>
+<p>This page describes how <code>batchtensor</code> is built, so you can read the source, extend it, or reuse its
+building blocks. What the library guarantees, and the trade-offs of each choice, are in
+<a href="../design_principles/">Design principles</a>.</p>
 <h2 id="layers">Layers<a class="headerlink" href="#layers" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>constants          BATCH_DIM, SEQ_DIM
    ^
@@ -1203,18 +1158,15 @@ types, keys and order are the ones of <code>coola</code>. <code>combine_tensors<
 parallel because <code>coola</code> has no multi-input traversal. A function that does not fit one of the
 three shapes is not a nested wrapper: it is a helper of <code>utils.structure</code>, like <code>get_size</code>.</p>
 <h2 id="adding-an-operation">Adding an operation<a class="headerlink" href="#adding-an-operation" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Add the function to the sub-module of <code>tensor</code> and export it from <code>tensor/__init__.py</code>.</li>
-<li>Add its twin to the sub-module of <code>nested</code> with the same name, options and defaults, using one
-   of the three helpers, and export it from <code>nested/__init__.py</code>.</li>
-<li>Add the <code>_along_batch</code> and <code>_along_seq</code> variants, with a docstring and a runnable example.</li>
-<li>Add the unit tests, and update the parity and property tests if the function is an exception.</li>
-</ol>
-<p>A pointwise function (<code>exp</code>, <code>clamp</code>) is not added: use <code>apply_to_tensors(data, torch.exp)</code>.</p>
+<p>The rules for a new operation (when it belongs in the library, the four variants, the tests) are in
+<a href="https://github.com/durandtibo/batchtensor/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>. In short:
+add the function to <code>tensor</code>, add its twin to <code>nested</code> with the same name, options and defaults,
+and build the twin with one of the three helpers above.</p>
+<p>A pointwise function (<code>exp</code>, <code>clamp</code>) is not part of the library: use
+<code>apply_to_tensors(data, torch.exp)</code>.</p>
 <h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../design_principles/">Design principles</a></li>
-<li><a href="../migration/">Migration guide</a></li>
 <li><a href="../uguide/tensor/">Tensor</a>, <a href="../uguide/nested/">Nested</a>, <a href="../uguide/utils/">Utils</a> and
   <a href="../uguide/constants/">Constants</a> guides</li>
 </ul>

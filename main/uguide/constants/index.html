@@ -313,25 +313,6 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../../migration/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Migration guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
     
   
   
@@ -546,33 +527,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../../migration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Migration guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -592,10 +546,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -613,8 +567,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -825,10 +779,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-use-constants" class="md-nav__link">
+  <a href="#why-constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why Use Constants?
+        Why Constants?
       
     </span>
   </a>
@@ -919,10 +873,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#data-in-another-layout" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Best Practices
+        Data in Another Layout
       
     </span>
   </a>
@@ -976,10 +930,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -997,8 +951,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1231,10 +1185,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-use-constants" class="md-nav__link">
+  <a href="#why-constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why Use Constants?
+        Why Constants?
       
     </span>
   </a>
@@ -1325,10 +1279,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#data-in-another-layout" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Best Practices
+        Data in Another Layout
       
     </span>
   </a>
@@ -1370,9 +1324,9 @@
 <p>The <code>batchtensor.constants</code> module defines important constants used throughout the library to
 identify batch and sequence dimensions.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>The constants module provides standardized dimension indices that ensure consistency across all
-batchtensor operations. These constants are used internally by the library and can also be used in
-your own code when working with batchtensor functions.</p>
+<p>The constants module provides the two dimension indices that every batchtensor function uses. The
+library does not take a <code>dim</code> argument anywhere: the batch is always <code>BATCH_DIM</code> and the sequence is
+always <code>SEQ_DIM</code>. You can use the constants in your own code to stay consistent with it.</p>
 <h2 id="available-constants">Available Constants<a class="headerlink" href="#available-constants" title="Permanent link">&para;</a></h2>
 <h3 id="batch_dim">BATCH_DIM<a class="headerlink" href="#batch_dim" title="Permanent link">&para;</a></h3>
 <p>The batch dimension constant identifies the dimension used for batching in tensors.</p>
@@ -1402,14 +1356,11 @@ dimension (dimension 1) of tensors when using batchtensor functions.</p>
 <li>The sequence dimension contains sequential/temporal data</li>
 <li>Operations along this dimension process time steps or sequence positions</li>
 </ul>
-<h2 id="why-use-constants">Why Use Constants?<a class="headerlink" href="#why-use-constants" title="Permanent link">&para;</a></h2>
-<p>Using constants instead of hard-coded numbers provides several benefits:</p>
-<ol>
-<li><strong>Code Clarity</strong>: <code>BATCH_DIM</code> is more readable than <code>0</code></li>
-<li><strong>Consistency</strong>: Ensures all operations use the same dimension conventions</li>
-<li><strong>Maintainability</strong>: If dimension conventions ever change, updating the constant updates all uses</li>
-<li><strong>Self-Documentation</strong>: Code using these constants is self-explanatory</li>
-</ol>
+<h2 id="why-constants">Why Constants?<a class="headerlink" href="#why-constants" title="Permanent link">&para;</a></h2>
+<p>The layout is a single definition that every function reads. Code that needs a dimension of a
+batchtensor-style tensor, for example to call <code>torch</code> directly, can refer to the same definition
+instead of a bare <code>0</code> or <code>1</code>, which makes the intent explicit. The values are fixed: they are not a
+setting, and changing them is not supported.</p>
 <h2 id="practical-examples">Practical Examples<a class="headerlink" href="#practical-examples" title="Permanent link">&para;</a></h2>
 <h3 id="using-constants-in-your-code">Using Constants in Your Code<a class="headerlink" href="#using-constants-in-your-code" title="Permanent link">&para;</a></h3>
 <p>When working with batchtensor functions, you can use these constants to make your code more
@@ -1474,19 +1425,16 @@ batchtensor conventions:</p>
 <span class="go">Sequence length: 2</span>
 </code></pre></div>
 <h2 id="internal-usage">Internal Usage<a class="headerlink" href="#internal-usage" title="Permanent link">&para;</a></h2>
-<p>These constants are used internally throughout batchtensor. For example (simplified pseudocode):</p>
+<p>The functions of <code>batchtensor.tensor</code> read the constants. For example (simplified):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># In batchtensor.tensor.reduction</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">sum_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Sum tensor along the batch dimension."""</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sum_along_batch</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">keepdim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">BATCH_DIM</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="n">keepdim</span><span class="p">)</span>
 
 
-<span class="c1"># In batchtensor.tensor.slicing (simplified for illustration)</span>
+<span class="c1"># In batchtensor.tensor.slicing</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">select_along_seq</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Select a specific index along the sequence dimension."""</span>
     <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">SEQ_DIM</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
 </code></pre></div>
-<p>This ensures consistency across all functions in the library.</p>
 <h2 id="compatibility-with-other-libraries">Compatibility with Other Libraries<a class="headerlink" href="#compatibility-with-other-libraries" title="Permanent link">&para;</a></h2>
 <p>While batchtensor uses these specific dimension conventions, they are compatible with common PyTorch
 practices:</p>
@@ -1498,17 +1446,22 @@ practices:</p>
 <li><strong>NLP sequence models</strong>: With <code>batch_first=True</code>, sequences are <code>(batch, seq_len, features)</code>,
   matching our conventions</li>
 </ul>
-<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>Import the constants</strong> when you need to reference dimensions explicitly</li>
-<li><strong>Use in assertions</strong> to validate tensor shapes in your code</li>
-<li><strong>Prefer batchtensor functions</strong> over manual dimension handling when possible</li>
-<li><strong>Document assumptions</strong> about tensor shapes in your own functions</li>
-</ol>
+<h2 id="data-in-another-layout">Data in Another Layout<a class="headerlink" href="#data-in-another-layout" title="Permanent link">&para;</a></h2>
+<p>Data laid out as <code>(seq, batch, ...)</code>, such as the default input of <code>torch.nn.LSTM</code>, must be
+transposed before it is passed to batchtensor. For any operation on another dimension, call <code>torch</code>
+directly. See <a href="../../design_principles/#the-layout-is-fixed-p1">Design principles</a> for the trade-off.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">batchtensor.tensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">sum_along_seq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq_first</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># (seq, batch, features)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sum_along_seq</span><span class="p">(</span><span class="n">seq_first</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># (batch, seq, features) -&gt; (batch, features)</span>
+<span class="go">tensor([[5., 5., 5.],</span>
+<span class="go">        [5., 5., 5.]])</span>
+</code></pre></div>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../tensor/">Tensor Operations</a> - Functions that use these dimension constants</li>
 <li><a href="../nested/">Nested Operations</a> - Nested operations following the same conventions</li>
+<li><a href="../../design_principles/">Design principles</a> - Why the layout is fixed</li>
 </ul>
 
 
