@@ -5,16 +5,17 @@ import logging
 import torch
 from coola.equality import objects_are_equal
 
+from batchtensor import nested, tensor
+from batchtensor.utils.structure import apply_to_tensors
+
 logger = logging.getLogger(__name__)
 
 
 def check_nested() -> None:
     logger.info("Checking batchtensor.nested package...")
 
-    from batchtensor.nested import index_select_along_batch
-
     assert objects_are_equal(
-        index_select_along_batch(
+        nested.index_select_along_batch(
             {
                 "a": torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]),
                 "b": torch.tensor([[5], [4], [3], [2], [1]]),
@@ -31,8 +32,6 @@ def check_nested() -> None:
 def check_utils() -> None:
     logger.info("Checking batchtensor.utils package...")
 
-    from batchtensor.utils.structure import apply_to_tensors
-
     assert objects_are_equal(
         apply_to_tensors({"a": torch.ones(2), "b": [torch.zeros(1)]}, torch.neg),
         {"a": -torch.ones(2), "b": [-torch.zeros(1)]},
@@ -42,10 +41,8 @@ def check_utils() -> None:
 def check_tensor() -> None:
     logger.info("Checking batchtensor.tensor package...")
 
-    from batchtensor.tensor import index_select_along_batch
-
     assert objects_are_equal(
-        index_select_along_batch(
+        tensor.index_select_along_batch(
             torch.tensor([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]), torch.tensor([4, 3, 2, 1, 0])
         ),
         torch.tensor([[8, 9], [6, 7], [4, 5], [2, 3], [0, 1]]),

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from typing import TYPE_CHECKING, Any, cast
 
 import pytest
@@ -393,8 +394,6 @@ def test_cat_along_batch_length_mismatch() -> None:
 
 
 def test_cat_along_batch_defaultdict() -> None:
-    from collections import defaultdict
-
     d = defaultdict(torch.Tensor, {"a": torch.ones(1)})
     assert cast("Any", cat_along_batch([d, d]))["a"].shape == (2,)
 

@@ -133,7 +133,7 @@ SKIPPED = {"nested.from_numpy", "nested.pin_memory", "tensor.lengths_to_mask"}
 def get_operation(name: str) -> str:
     r"""Return the operation of a function (the name without the
     dimension)."""
-    return name.split(".")[1].split("_along_")[0]
+    return name.split(".")[1].split("_along_", maxsplit=1)[0]
 
 
 def get_inputs(name: str) -> tuple[list[Any], dict[str, Any]]:
