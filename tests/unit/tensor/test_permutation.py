@@ -299,3 +299,22 @@ def test_roll_along_seq_does_not_modify_input() -> None:
 def test_roll_along_seq_1d_tensor() -> None:
     with pytest.raises(IndexError, match="Dimension out of range"):
         roll_along_seq(torch.tensor([0, 4, 8]), 1)
+
+
+def test_roll_along_batch_shifts_larger_than_batch_size() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1], [2, 3]]), 5), torch.tensor([[2, 3], [0, 1]])
+    )
+
+
+def test_roll_along_seq_shifts_larger_than_seq_len() -> None:
+    assert objects_are_equal(
+        roll_along_seq(torch.tensor([[0, 1, 2], [3, 4, 5]]), 4),
+        torch.tensor([[2, 0, 1], [5, 3, 4]]),
+    )
+
+
+def test_roll_along_batch_shifts_0() -> None:
+    assert objects_are_equal(
+        roll_along_batch(torch.tensor([[0, 1], [2, 3]]), 0), torch.tensor([[0, 1], [2, 3]])
+    )

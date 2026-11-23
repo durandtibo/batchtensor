@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
+import pytest
 import torch
 from coola.equality import objects_are_equal
 
@@ -13,6 +16,9 @@ from batchtensor.tensor import (
     split_along_batch,
     split_along_seq,
 )
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 INDEX_DTYPES = [torch.int, torch.long]
 
@@ -279,4 +285,41 @@ def test_split_along_seq_split_size_list() -> None:
             torch.tensor([[2, 3], [7, 8]]),
             torch.tensor([[4], [9]]),
         ),
+    )
+
+
+###########################################
+#     Tests for invalid slicing sizes     #
+###########################################
+
+
+@pytest.mark.parametrize("func", [chunk_along_batch, chunk_along_seq])
+def test_chunk_chunks_0_raises(func: Callable) -> None:
+    with pytest.raises(RuntimeError, match="chunks"):
+        func(torch.ones(2, 3), chunks=0)
+
+
+@pytest.mark.parametrize("func", [split_along_batch, split_along_seq])
+def test_split_split_size_0_raises(func: Callable) -> None:
+    with pytest.raises(RuntimeError, match="split_size"):
+        func(torch.ones(2, 3), split_size_or_sections=0)
+
+
+@pytest.mark.parametrize("func", [slice_along_batch, slice_along_seq])
+def test_slice_step_0_raises(func: Callable) -> None:
+    with pytest.raises(ValueError, match="slice step cannot be zero"):
+        func(torch.ones(2, 3), step=0)
+
+
+def test_slice_along_batch_start_after_stop_is_empty() -> None:
+    assert objects_are_equal(
+        slice_along_batch(torch.arange(6).view(3, 2), start=2, stop=1),
+        torch.zeros(0, 2, dtype=torch.long),
+    )
+
+
+def test_slice_along_seq_negative_start() -> None:
+    assert objects_are_equal(
+        slice_along_seq(torch.tensor([[0, 1, 2], [3, 4, 5]]), start=-1),
+        torch.tensor([[2], [5]]),
     )

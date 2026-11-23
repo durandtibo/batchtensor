@@ -889,3 +889,27 @@ def test_logsumexp_along_seq_does_not_modify_input() -> None:
 def test_logsumexp_along_seq_1d_tensor() -> None:
     with pytest.raises(IndexError, match="Dimension out of range"):
         logsumexp_along_seq(torch.tensor([0.0, 4.0, 8.0]))
+
+
+###################################
+#     Tests for empty batches     #
+###################################
+
+
+def test_sum_along_batch_empty_batch() -> None:
+    assert objects_are_equal(sum_along_batch(torch.zeros(0, 3)), torch.zeros(3))
+
+
+def test_mean_along_batch_empty_batch() -> None:
+    assert objects_are_equal(
+        mean_along_batch(torch.zeros(0, 3)), torch.full((3,), float("nan")), equal_nan=True
+    )
+
+
+def test_amax_along_batch_empty_batch_raises() -> None:
+    with pytest.raises(IndexError, match="non-zero size"):
+        amax_along_batch(torch.zeros(0, 3))
+
+
+def test_sum_along_seq_empty_seq() -> None:
+    assert objects_are_equal(sum_along_seq(torch.zeros(2, 0)), torch.zeros(2))

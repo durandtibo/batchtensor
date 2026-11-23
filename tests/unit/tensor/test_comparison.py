@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pytest
 import torch
 from coola.equality import objects_are_equal
@@ -12,6 +14,9 @@ from batchtensor.tensor import (
     topk_along_batch,
     topk_along_seq,
 )
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 from tests.conftest import torch_greater_equal_1_13
 
 #########################################
@@ -294,3 +299,17 @@ def test_topk_along_seq_does_not_modify_input() -> None:
 def test_topk_along_seq_1d_tensor() -> None:
     with pytest.raises(IndexError, match="Dimension out of range"):
         topk_along_seq(torch.tensor([0, 4, 8]), 2)
+
+
+def test_topk_along_batch_k_0_values() -> None:
+    assert objects_are_equal(topk_along_batch(torch.ones(2, 3), 0).values, torch.zeros(0, 3))
+
+
+def test_topk_along_seq_k_0_values() -> None:
+    assert objects_are_equal(topk_along_seq(torch.ones(2, 3), 0).values, torch.zeros(2, 0))
+
+
+@pytest.mark.parametrize("func", [topk_along_batch, topk_along_seq])
+def test_topk_k_larger_than_size_raises(func: Callable) -> None:
+    with pytest.raises(RuntimeError, match="out of range"):
+        func(torch.ones(2, 3), 5)
