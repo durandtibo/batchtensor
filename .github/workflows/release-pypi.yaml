@@ -49,7 +49,7 @@ jobs:
       contents: write
     steps:
       - name: Sign and release package
-        uses: durandtibo/sign-pypi-package-action@5f8c22801ccd4af3d171e3e395fd44e40018f1f5 # ratchet:durandtibo/sign-pypi-package-action@v0.0.1
+        uses: durandtibo/sign-pypi-package-action@0add3d41c042f2c855d4ac39bfd51e57987ca8fe # ratchet:durandtibo/sign-pypi-package-action@v0.1.1
 
   publish:
     needs: [build, sign-and-release]
