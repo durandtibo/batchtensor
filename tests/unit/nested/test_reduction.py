@@ -31,6 +31,7 @@ from batchtensor.nested import (
     min_along_seq,
     prod_along_batch,
     prod_along_seq,
+    sort_along_seq,
     std_along_batch,
     std_along_seq,
     sum_along_batch,
@@ -1394,8 +1395,6 @@ def test_max_along_batch_keeps_namedtuple() -> None:
 
 
 def test_sort_along_seq_keeps_namedtuple() -> None:
-    from batchtensor.nested import sort_along_seq
-
     out = cast("Any", sort_along_seq({"a": torch.rand(3, 4)}))
     assert isinstance(out["a"], torch.return_types.sort)
 

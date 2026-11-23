@@ -7,11 +7,12 @@ on:
   workflow_call:
   workflow_dispatch: # to trigger manually
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   type-checking:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -19,19 +20,15 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7
 
       - name: Setup python environment
-        uses: durandtibo/setup-venv-uv-action@a592cf6a2b2788f2e5846e4e29151f8895e1c643 # ratchet:durandtibo/setup-venv-uv-action@v0.3.0
+        uses: durandtibo/setup-venv-uv-action@4445098aa662d3d72aa0455918bc46a091b2a7f8 # ratchet:durandtibo/setup-venv-uv-action@v0.3.1
 
-      # Type-check the source code with ty (see pyproject.toml)
+      # Type-check the source code and the tests with ty and pyright (see pyproject.toml)
       - name: Check types
         run: |
-          ty check
+          inv types.check --complete
 
-      # Type-check the source code and the typing test with pyright (see pyproject.toml)
-      - name: Check types with pyright
+      # Type-check the typing test with pyright, which is outside of the pyright
+      # `include` of pyproject.toml
+      - name: Check types of the typing test with pyright
         run: |
-          pyright src tests/integration/test_typing.py
-
-      # Verify the type completeness of the public API
-      - name: Verify public API types
-        run: |
-          inv types.check
+          pyright tests/integration/test_typing.py
